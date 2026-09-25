@@ -4,7 +4,9 @@ from types import SimpleNamespace
 from unittest.mock import MagicMock
 
 import pytest
-import streamlit as st
+
+# 관리 화면은 맥북 전용이라 GitHub Actions에는 streamlit을 설치하지 않는다 → 없으면 이 파일을 건너뜀
+st = pytest.importorskip('streamlit')
 from streamlit.testing.v1 import AppTest
 
 from ui import catalog, envfile
