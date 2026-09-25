@@ -2,7 +2,7 @@
 # 이 맥북에서만 접속 가능 (외부 네트워크 차단)
 address = "127.0.0.1"
 port = 8501
-headless = false
+headless = true  # 첫 실행 이메일 질문 없이 켜기 (브라우저는 실행 아이콘이 직접 연다)
 # 다른 웹사이트가 이 관리 화면을 몰래 조작하지 못하게 하는 보호 (Streamlit 기본값이지만 명시적으로 고정)
 enableXsrfProtection = true
 enableCORS = true
