@@ -1,10 +1,11 @@
+from datetime import datetime
 from types import SimpleNamespace
 from unittest.mock import MagicMock
 
 import pytest
 from googleapiclient.errors import HttpError
 
-from src import history, http_client
+from src import history, http_client, schedule
 from src import main as pipeline
 from src.llm import DEFAULT_MAX_CALLS
 from tests.helpers import make_article, make_draft
@@ -75,6 +76,7 @@ def test_llm_budget_covers_worst_case():
 # --- 초안 생성 직후 이력 기록 ---
 
 COMPOSED = pipeline.Composed(make_article(), make_draft())
+TARGET = pipeline.Target('2026-09-26T20:00', datetime(2026, 9, 26, 20, 0, tzinfo=schedule.KST), 'schedule')
 
 
 def _config():
@@ -89,11 +91,15 @@ def test_publish_records_draft_before_scheduling_and_updates_status(tmp_path):
     service.posts().publish().execute.return_value = {
         'id': '42', 'status': 'SCHEDULED', 'url': 'https://w/x.html', 'published': '2026-09-26T20:00:00+09:00'
     }
-    result = pipeline.publish(service, _config(), COMPOSED, 'schedule', (), '2026-09-26', None, None, path)
+    result = pipeline.publish(service, _config(), COMPOSED, TARGET, (), path)
     assert result['status'] == 'SCHEDULED'
+    service.posts().publish.assert_called_with(
+        blogId='123', postId='42', publishDate='2026-09-26T20:00:00+09:00'
+    )
     saved = history.load_history(path)
     assert len(saved) == 1
     assert saved[0].status == 'SCHEDULED' and saved[0].url == 'https://w/x.html'
+    assert saved[0].slot == '2026-09-26T20:00' and saved[0].publish_date == '2026-09-26'
 
 
 def test_publish_failure_keeps_draft_in_history(tmp_path):
@@ -103,7 +109,7 @@ def test_publish_failure_keeps_draft_in_history(tmp_path):
     resp = MagicMock(status=403, reason='Forbidden')
     service.posts().publish().execute.side_effect = HttpError(resp, b'{}')
     with pytest.raises(HttpError):
-        pipeline.publish(service, _config(), COMPOSED, 'schedule', (), '2026-09-26', None, None, path)
+        pipeline.publish(service, _config(), COMPOSED, TARGET, (), path)
     saved = history.load_history(path)
     assert [(e.post_id, e.status) for e in saved] == [('42', 'DRAFT')]
-    assert history.has_entry_for(saved, '2026-09-26')  # 다음 실행이 초안을 또 만들지 않음
+    assert '2026-09-26T20:00' in history.done_slots(saved)  # 다음 실행이 같은 슬롯 초안을 또 만들지 않음

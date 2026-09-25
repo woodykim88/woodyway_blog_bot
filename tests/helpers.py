@@ -9,6 +9,7 @@ from typing import Any
 from src.history import HistoryEntry
 from src.llm import LLMClient
 from src.models import Article, Candidate, PostDraft, Section
+from src.providers import OpenAITextBackend
 
 FIXTURES = Path(__file__).parent / 'fixtures'
 NOW = datetime(2026, 9, 25, 11, 0, tzinfo=timezone.utc)  # 20:00 KST
@@ -30,7 +31,7 @@ class FakeOpenAI:
 
 def fake_llm(responses: dict[str, list[Any]], max_calls: int = 12) -> tuple[LLMClient, FakeOpenAI]:
     client = FakeOpenAI(responses)
-    return LLMClient(client, max_calls=max_calls), client
+    return LLMClient(OpenAITextBackend(client), max_calls=max_calls), client
 
 
 def make_candidate(i: int = 0, title: str | None = None) -> Candidate:

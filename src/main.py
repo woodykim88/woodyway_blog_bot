@@ -1,9 +1,17 @@
-"""매일 1편: 수집 → 선별 → 원문 → 작성 → 검수 → 렌더링 → (초안/예약) 발행 → 이력 기록.
+"""블로그 글 생성·발행 파이프라인.
+
+수집 → 선별 → 원문 → 작성 → 검수 → 대표 이미지 → 렌더링 → 발행 → 이력/실행 기록.
+
+실행 모드:
+    auto      PUBLISH_TIMES 중 앞으로 6시간 안에 돌아오는 슬롯을 준비해 예약 (GitHub Actions 정기 실행)
+    schedule  아직 준비 안 된 가장 가까운 슬롯(또는 --at 시각)에 1편 예약
+    draft     1편을 초안으로만 저장
+    now       1편을 즉시 공개 발행
+    preview   Blogger에 올리지 않고 output/preview.html만 생성
 
 사용법:
-    python -m src.main --dry-run            # Blogger에 올리지 않고 output/preview.html만 생성
-    python -m src.main                      # 초안으로 저장 (검수 모드)
-    python -m src.main --mode schedule      # PUBLISH_HOUR(기본 20시) KST에 예약 발행
+    python -m src.main --mode preview
+    python -m src.main --mode auto
 """
 from __future__ import annotations
 
@@ -22,20 +30,48 @@ from dotenv import load_dotenv
 from googleapiclient.errors import HttpError
 
 import auto_blogger
-from src import collector, fetcher, history, image, notifier, quality, renderer, selector, writer
+from src import (
+    collector,
+    fetcher,
+    history,
+    image,
+    notifier,
+    providers,
+    quality,
+    renderer,
+    runlog,
+    schedule,
+    selector,
+    writer,
+)
 from src.http_client import HttpGet, http_get, url_is_alive
 from src.llm import LLMClient, LLMError
 from src.models import Article, PostDraft, RankedCandidate, ShortNews
 
-try:  # 이미지 단계에서 잡을 외부 라이브러리 오류
-    from botocore.exceptions import BotoCoreError, ClientError
-    from openai import OpenAIError
-    IMAGE_ERRORS: tuple[type[Exception], ...] = (OpenAIError, BotoCoreError, ClientError, OSError, ValueError)
-except ImportError:  # pragma: no cover
-    IMAGE_ERRORS = (OSError, ValueError)
 
-DEFAULT_WRITER_MODEL = 'gpt-5.5'
-DEFAULT_FAST_MODEL = 'gpt-5.4-mini'
+def _image_errors() -> tuple[type[Exception], ...]:
+    """이미지 단계에서 잡을 외부 라이브러리 오류 (설치된 것만)."""
+    errors: list[type[Exception]] = [OSError, ValueError]
+    try:
+        from botocore.exceptions import BotoCoreError, ClientError
+        errors += [BotoCoreError, ClientError]
+    except ImportError:  # pragma: no cover
+        pass
+    try:
+        from openai import OpenAIError
+        errors.append(OpenAIError)
+    except ImportError:  # pragma: no cover
+        pass
+    try:
+        from google.genai.errors import APIError
+        errors.append(APIError)
+    except ImportError:  # pragma: no cover
+        pass
+    return tuple(errors)
+
+
+IMAGE_ERRORS = _image_errors()
+MODES = ('auto', 'schedule', 'draft', 'now', 'preview')
 MAX_TOPIC_ATTEMPTS = 3
 MAX_WRITE_ATTEMPTS = 2
 SHORT_NEWS_COUNT = 3
@@ -45,7 +81,7 @@ PREVIEW_IMAGE_NAME = 'hero.webp'
 
 
 class PipelineError(Exception):
-    """오늘 발행할 글을 만들지 못했을 때 발생합니다."""
+    """발행할 글을 만들지 못했을 때 발생합니다."""
 
 
 @dataclass(frozen=True)
@@ -75,12 +111,22 @@ class Composed:
         )
 
 
-def load_models(env: Mapping[str, str]) -> Models:
-    return Models(
-        writer=env.get('OPENAI_MODEL_WRITER', DEFAULT_WRITER_MODEL),
-        fast=env.get('OPENAI_MODEL_FAST', DEFAULT_FAST_MODEL),
-    )
+@dataclass(frozen=True)
+class Target:
+    """이번 실행에서 만들 글 1편의 목표."""
 
+    slot: str                   # 슬롯 키 또는 manual-/preview 키
+    publish_at: datetime | None  # schedule일 때만
+    action: str                 # schedule / draft / now / preview
+
+    @property
+    def publish_date(self) -> str:
+        if self.publish_at is not None:
+            return self.publish_at.astimezone(schedule.KST).date().isoformat()
+        return datetime.now(schedule.KST).date().isoformat()
+
+
+# --- 글 만들기 ---
 
 def draft_article(
     llm: LLMClient,
@@ -117,7 +163,7 @@ def compose_post(
     is_alive: Callable[[str], bool] = url_is_alive,
     footer_url: str | None = DEFAULT_FOOTER_URL,
 ) -> Composed:
-    """오늘 글 한 편을 완성합니다. 상위 후보부터 차례로 시도합니다."""
+    """글 한 편을 완성합니다. 상위 후보부터 차례로 시도합니다."""
     theme = selector.WEEKDAY_THEMES[now.astimezone(auto_blogger.KST).weekday()]
     candidates = [c for c in collector.fetch_candidates(get, now) if not selector.is_duplicate(c, past)]
     print(f'[수집] 새 후보 {len(candidates)}건, 오늘의 테마: {theme}')
@@ -145,7 +191,40 @@ def compose_post(
     raise PipelineError(f'상위 {MAX_TOPIC_ATTEMPTS}개 주제 모두 원문 추출 또는 검수에 실패했습니다.')
 
 
-def make_entry(composed: Composed, result: dict, publish_date: str) -> history.HistoryEntry:
+def attach_hero_image(
+    composed: Composed,
+    backend: providers.ImageBackend,
+    model: str,
+    image_quality: str,
+    r2: image.R2Config | None,
+    key_date: str,
+    dry_run: bool,
+    make_s3: Callable[[image.R2Config], Any] = image.make_s3_client,
+    preview_dir: Path = PREVIEW_PATH.parent,
+) -> Composed:
+    """대표 이미지를 만들어 붙입니다. 실패해도 글 발행은 막지 않고 이미지 없이 진행합니다."""
+    if not dry_run and r2 is None:
+        print('[이미지 생략] R2 설정이 없어 이미지 없이 진행합니다. (.env의 R2_* 값 확인)')
+        return composed
+    try:
+        raw = image.generate_image(backend, model, image_quality, composed.draft.image_prompt)
+        data = image.optimize_image(raw)
+        if dry_run:
+            preview_dir.mkdir(parents=True, exist_ok=True)
+            (preview_dir / PREVIEW_IMAGE_NAME).write_bytes(data)
+            url = PREVIEW_IMAGE_NAME
+        else:
+            url = image.upload_to_r2(make_s3(r2), r2, image.object_key(key_date, composed.draft.title), data)
+    except IMAGE_ERRORS as e:
+        print(f'[이미지 실패] {e.__class__.__name__}: {e} → 이미지 없이 진행합니다.')
+        return composed
+    print(f'[이미지] {len(data) // 1024}KB → {url}')
+    return replace(composed, hero_image_url=url)
+
+
+# --- 발행 ---
+
+def make_entry(composed: Composed, result: dict, publish_date: str, slot: str = '') -> history.HistoryEntry:
     return history.HistoryEntry(
         publish_date=publish_date,
         post_id=result['id'],
@@ -156,6 +235,7 @@ def make_entry(composed: Composed, result: dict, publish_date: str) -> history.H
         geeknews_url=composed.article.candidate.geeknews_url,
         labels=tuple(composed.draft.labels),
         status=result.get('status', ''),
+        slot=slot,
     )
 
 
@@ -163,58 +243,68 @@ def publish(
     service: Any,
     config: auto_blogger.Config,
     composed: Composed,
-    mode: str,
+    target: Target,
     past: tuple[history.HistoryEntry, ...],
-    publish_date: str,
-    now: datetime | None,
-    at: tuple[int, int] | None,
-    path: Path = history.DEFAULT_HISTORY_PATH,
+    path: Path | None = None,
 ) -> dict[str, Any]:
-    """초안을 만들자마자 이력에 기록한 뒤 예약합니다.
+    """초안을 만들자마자 이력에 기록한 뒤 예약/발행합니다.
 
-    예약 단계가 실패해도 초안이 이력에 남아 있으므로, 다음 실행이 같은 날 초안을 또 만들지 않습니다.
+    예약 단계가 실패해도 초안이 이력에 남아 있으므로, 다음 실행이 같은 슬롯의 초안을 또 만들지 않습니다.
     """
     body = auto_blogger.build_post_body(composed.draft.title, composed.html, composed.draft.labels)
     draft = auto_blogger.create_draft(service, config.blog_id, body)
-    with_draft = history.append_entry(past, make_entry(composed, draft, publish_date))
-    history.save_history(with_draft, path)
+    history.save_history(history.append_entry(past, make_entry(composed, draft, target.publish_date, target.slot)), path)
     print(f"[초안 저장] 글 ID {draft['id']}")
-    if mode == 'draft':
+    if target.action == 'draft':
         return draft
 
-    result = auto_blogger.publish_existing(service, config, draft['id'], mode, now, at)
-    history.save_history(history.append_entry(past, make_entry(composed, result, publish_date)), path)
+    publish_at = target.publish_at if target.action == 'schedule' else None
+    result = auto_blogger.publish_post(service, config.blog_id, draft['id'], publish_at)
+    history.save_history(
+        history.append_entry(past, make_entry(composed, result, target.publish_date, target.slot)), path
+    )
     return result
 
 
-def attach_hero_image(
-    composed: Composed,
-    openai_client: Any,
-    settings: image.ImageSettings,
-    r2: image.R2Config | None,
-    publish_date: str,
-    dry_run: bool,
-    make_s3: Callable[[image.R2Config], Any] = image.make_s3_client,
-    preview_dir: Path = PREVIEW_PATH.parent,
-) -> Composed:
-    """대표 이미지를 만들어 붙입니다. 실패해도 글 발행은 막지 않고 이미지 없이 진행합니다."""
-    if not dry_run and r2 is None:
-        print('[이미지 생략] R2 설정이 없어 이미지 없이 진행합니다. (.env의 R2_* 값 확인)')
-        return composed
-    try:
-        raw = image.generate_image(openai_client, settings, composed.draft.image_prompt)
-        data = image.optimize_image(raw)
-        if dry_run:
-            preview_dir.mkdir(parents=True, exist_ok=True)
-            (preview_dir / PREVIEW_IMAGE_NAME).write_bytes(data)
-            url = PREVIEW_IMAGE_NAME
-        else:
-            url = image.upload_to_r2(make_s3(r2), r2, image.object_key(publish_date, composed.draft.title), data)
-    except IMAGE_ERRORS as e:
-        print(f'[이미지 실패] {e.__class__.__name__}: {e} → 이미지 없이 진행합니다.')
-        return composed
-    print(f'[이미지] {len(data) // 1024}KB → {url}')
-    return replace(composed, hero_image_url=url)
+def plan_targets(
+    mode: str,
+    now: datetime,
+    times: tuple[schedule.Time, ...],
+    done: set[str],
+    at: tuple[int, int] | None = None,
+) -> list[Target]:
+    """모드에 따라 이번 실행에서 만들 글 목록을 정합니다."""
+    stamp = now.astimezone(schedule.KST).strftime('%Y%m%d-%H%M%S')
+    if mode == 'auto':
+        return [Target(schedule.slot_key(s), s, 'schedule') for s in schedule.due_slots(now, times, done)]
+    if mode == 'schedule':
+        slot = schedule.next_open_slot(now, (at,) if at else times, done)
+        return [Target(schedule.slot_key(slot), slot, 'schedule')] if slot else []
+    if mode == 'draft':
+        return [Target(f'manual-draft-{stamp}', None, 'draft')]
+    if mode == 'now':
+        return [Target(f'manual-now-{stamp}', None, 'now')]
+    if mode == 'preview':
+        return [Target('preview', None, 'preview')]
+    raise ValueError(f'알 수 없는 모드: {mode}')
+
+
+def success_message(composed: Composed, result: dict[str, Any], action: str, edit_link: str) -> str:
+    headline = {'schedule': '✅ 글 예약 완료', 'now': '🚀 글 즉시 발행 완료', 'draft': '📝 글 초안 저장 완료'}
+    lines = [
+        headline.get(action, '✅ 완료'),
+        f'제목: {composed.draft.title}',
+        f'라벨: {", ".join(composed.draft.labels)}',
+        f'대표 이미지: {"있음" if composed.hero_image_url else "없음 ⚠️"}',
+    ]
+    if action == 'schedule':
+        lines.append(f"예약 시각: {result.get('published', '')}")
+        lines.append('문제가 있으면 편집 화면에서 "초안으로 되돌리기"를 누르세요.')
+    if action in ('schedule', 'now'):
+        lines.append(f"공개 주소: {result.get('url', '')}")
+    lines.append(f'편집/미리보기: {edit_link}')
+    lines.append(f'원문: {composed.article.source_url}')
+    return '\n'.join(lines)
 
 
 def write_preview(composed: Composed) -> Path:
@@ -230,94 +320,133 @@ def write_preview(composed: Composed) -> Path:
     return PREVIEW_PATH
 
 
-def success_message(composed: Composed, result: dict[str, Any], mode: str, edit_link: str) -> str:
-    lines = [
-        '✅ 오늘 글 준비 완료' if mode == 'schedule' else '📝 오늘 글 초안 저장 완료',
-        f'제목: {composed.draft.title}',
-        f'라벨: {", ".join(composed.draft.labels)}',
-        f'대표 이미지: {"있음" if composed.hero_image_url else "없음 ⚠️"}',
-    ]
-    if mode == 'schedule':
-        lines.append(f"예약 시각: {result.get('published', '')}")
-        lines.append(f"공개 주소: {result.get('url', '')}")
-        lines.append('문제가 있으면 편집 화면에서 "초안으로 되돌리기"를 누르세요.')
-    lines.append(f'편집/미리보기: {edit_link}')
-    lines.append(f'원문: {composed.article.source_url}')
-    return '\n'.join(lines)
+# --- 실행 ---
+
+@dataclass(frozen=True)
+class RunResult:
+    outcome: str
+    message: str
+    posts: tuple[runlog.PostRecord, ...] = ()
+    llm_calls: int = 0
 
 
-def build_openai() -> Any:
-    from openai import OpenAI
-
-    if not os.environ.get('OPENAI_API_KEY'):
-        raise auto_blogger.ConfigError('OPENAI_API_KEY가 없습니다. .env 파일을 확인하세요.')
-    return OpenAI()
+def is_paused(env: Mapping[str, str]) -> bool:
+    return (env.get('PAUSED') or '').strip().lower() in ('1', 'true', 'yes', 'on')
 
 
-def run(mode: str, dry_run: bool, at: tuple[int, int] | None, telegram: notifier.TelegramConfig | None) -> int:
-    config = auto_blogger.load_config(os.environ)
-    models = load_models(os.environ)
-    now = datetime.now(auto_blogger.UTC)
-    hour, minute = at or (config.publish_hour, 0)
-    publish_date = auto_blogger.next_publish_time(now, hour, minute).date().isoformat()
+def run(
+    mode: str,
+    at: tuple[int, int] | None,
+    env: Mapping[str, str],
+    ai: providers.AISettings,
+    telegram: notifier.TelegramConfig | None,
+    now: datetime | None = None,
+) -> RunResult:
+    now = now or datetime.now(auto_blogger.UTC)
+    if mode == 'auto' and is_paused(env):
+        return RunResult('skipped', '일시정지 상태라 자동 발행을 건너뜁니다.')
 
     past = history.load_history()
-    if not dry_run and history.has_entry_for(past, publish_date):
-        print(f'[건너뜀] {publish_date} 발행분이 이미 있습니다.')
-        return 0
+    times = schedule.parse_times(env.get('PUBLISH_TIMES'))
+    targets = plan_targets(mode, now, times, history.done_slots(past), at)
+    if not targets:
+        return RunResult('skipped', '지금 준비할 발행 시각이 없습니다.')
+    print(f'[계획] {len(targets)}편: ' + ', '.join(t.slot for t in targets))
 
-    r2 = image.load_r2_config(os.environ)
-    openai_client = build_openai()
-    llm = LLMClient(openai_client)
-    footer_url = os.environ.get('FOOTER_LINK_URL', DEFAULT_FOOTER_URL).strip() or None
-    composed = compose_post(llm, models, now, past, footer_url=footer_url)
-    print(f'[LLM] 이번 실행 호출 {llm.calls}회')
-    composed = attach_hero_image(
-        composed, openai_client, image.load_image_settings(os.environ), r2, publish_date, dry_run
-    )
+    dry_run = mode == 'preview'
+    config = None if dry_run else auto_blogger.load_config(env)
+    r2 = image.load_r2_config(env)
+    text_backend = providers.build_text_backend(ai.text_provider, env)
+    image_backend = providers.build_image_backend(ai.image_provider, env)
+    models = Models(ai.writer_model, ai.fast_model)
+    footer_url = (env.get('FOOTER_LINK_URL', DEFAULT_FOOTER_URL) or '').strip() or None
+    service = None
 
-    preview = write_preview(composed)
-    print(f'[미리보기] {preview}')
-    if dry_run:
-        return 0
+    posts: list[runlog.PostRecord] = []
+    errors: list[str] = []
+    calls = 0
+    for target in targets:
+        llm = LLMClient(text_backend)
+        try:
+            composed = compose_post(llm, models, now, past, footer_url=footer_url)
+            composed = attach_hero_image(
+                composed, image_backend, ai.image_model, ai.image_quality, r2, target.publish_date, dry_run
+            )
+            if dry_run:
+                print(f'[미리보기] {write_preview(composed)}')
+                posts.append(runlog.PostRecord(composed.draft.title, 'PREVIEW', target.slot, '', '',
+                                               bool(composed.hero_image_url)))
+                continue
+            service = service or auto_blogger.get_blogger_service(config)
+            result = publish(service, config, composed, target, past)
+            past = history.load_history()
+            edit_link = auto_blogger.edit_url(config.blog_id, result['id'])
+            print(f"[발행] {target.slot} status={result.get('status')} 편집: {edit_link}")
+            notifier.notify(telegram, success_message(composed, result, target.action, edit_link))
+            posts.append(runlog.PostRecord(
+                composed.draft.title, result.get('status', ''), target.slot,
+                '' if result.get('status') == 'DRAFT' else result.get('url', ''), edit_link,
+                bool(composed.hero_image_url),
+            ))
+        except (PipelineError, LLMError) as e:
+            errors.append(f'{target.slot}: {e}')
+            print(f'[실패] {target.slot}: {e}')
+        finally:
+            calls += llm.calls
 
-    service = auto_blogger.get_blogger_service(config)
-    result = publish(service, config, composed, mode, past, publish_date, now, at)
-    print(f"[발행] mode={mode}, status={result.get('status')}")
-    if mode == 'schedule':
-        print(f"예약 시각: {result.get('published')}")
-    edit_link = auto_blogger.edit_url(config.blog_id, result['id'])
-    print(f'편집 화면: {edit_link}')
-    notifier.notify(telegram, success_message(composed, result, mode, edit_link))
-    return 0
+    if errors:
+        return RunResult('failed', ' / '.join(errors), tuple(posts), calls)
+    return RunResult('success', f'{len(posts)}편 완료', tuple(posts), calls)
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description='직장인 인사이트 글 자동 생성/발행')
-    parser.add_argument('--mode', choices=['draft', 'schedule'], default='draft')
-    parser.add_argument('--dry-run', action='store_true', help='Blogger에 올리지 않고 미리보기만 생성')
-    parser.add_argument('--at', help='예약 시각 HH:MM (KST). 없으면 PUBLISH_HOUR 정각')
+    parser.add_argument('--mode', choices=MODES, default='preview')
+    parser.add_argument('--dry-run', action='store_true', help='--mode preview와 같음')
+    parser.add_argument('--at', help='schedule 모드에서 예약할 시각 HH:MM (KST)')
     args = parser.parse_args(argv)
+    mode = 'preview' if args.dry_run else args.mode
     try:
         at = auto_blogger.parse_hhmm(args.at) if args.at else None
     except ValueError as e:
         parser.error(str(e))
 
     load_dotenv(Path(__file__).resolve().parent.parent / '.env')
-    telegram = notifier.load_telegram_config(os.environ)
+    env = os.environ
+    telegram = notifier.load_telegram_config(env)
+    started = datetime.now(schedule.KST)
+    ai: providers.AISettings | None = None
     try:
-        return run(args.mode, args.dry_run, at, telegram)
-    except (auto_blogger.ConfigError, image.ImageConfigError, PipelineError, LLMError) as e:
-        reason = str(e)
+        ai = providers.load_ai_settings(env)
+        print(f'[AI] 글: {ai.text_provider} {ai.writer_model} / 검수: {ai.fast_model} / 이미지: {ai.image_model}')
+        result = run(mode, at, env, ai, telegram)
+    except (auto_blogger.ConfigError, image.ImageConfigError, providers.ProviderConfigError,
+            schedule.ScheduleError, PipelineError, LLMError) as e:
+        result = RunResult('failed', str(e))
     except HttpError as e:
-        reason = f'Blogger API 오류 HTTP {e.resp.status}: {e.reason}'
+        result = RunResult('failed', f'Blogger API 오류 HTTP {e.resp.status}: {e.reason}')
     except Exception as e:  # noqa: BLE001 - 무인 실행이므로 예상 못한 오류도 로그를 남기고 반드시 알린다
         traceback.print_exc()
-        reason = f'예상하지 못한 오류 {e.__class__.__name__}: {e}'
-    print(f'[실패] {reason}')
-    if not args.dry_run:
-        notifier.notify(telegram, f'❌ 오늘 글 발행 실패\n원인: {reason}\nGitHub Actions 로그를 확인하세요.')
-    return 1
+        result = RunResult('failed', f'예상하지 못한 오류 {e.__class__.__name__}: {e}')
+
+    print(f'[결과] {result.outcome}: {result.message}')
+    if result.outcome == 'failed' and mode != 'preview':
+        notifier.notify(telegram, f'❌ 글 발행 실패 ({mode})\n원인: {result.message}\n관리 화면의 실행 기록을 확인하세요.')
+    if env.get('GITHUB_ACTIONS') == 'true':
+        runlog.append_run(runlog.RunRecord(
+            started_at=started.isoformat(timespec='seconds'),
+            finished_at=datetime.now(schedule.KST).isoformat(timespec='seconds'),
+            mode=mode,
+            outcome=result.outcome,
+            message=result.message,
+            text_provider=ai.text_provider if ai else '',
+            writer_model=ai.writer_model if ai else '',
+            image_model=ai.image_model if ai else '',
+            llm_calls=result.llm_calls,
+            posts=result.posts,
+            **runlog.github_context(env),
+        ))
+    return 1 if result.outcome == 'failed' else 0
 
 
 if __name__ == '__main__':

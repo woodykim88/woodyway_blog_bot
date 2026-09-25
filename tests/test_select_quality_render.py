@@ -155,7 +155,9 @@ def test_history_roundtrip_and_helpers(tmp_path):
     past = history.append_entry(past, make_entry(title='둘', labels=('커리어',), publish_date='2026-09-25'))
     history.save_history(past, path)
     loaded = history.load_history(path)
-    assert loaded == past
+    assert [e.title for e in loaded] == ['하나', '둘']
+    assert [e.slot for e in loaded] == ['2026-09-24T20:00', '2026-09-25T20:00']  # 예전 기록은 20시 슬롯
+    assert history.done_slots(loaded) == {'2026-09-24T20:00', '2026-09-25T20:00'}
     assert history.has_entry_for(loaded, '2026-09-25')
     assert not history.has_entry_for(loaded, '2026-09-26')
     assert [e.title for e in history.related_posts(loaded, ('AI활용', '툴추천'))] == ['하나']

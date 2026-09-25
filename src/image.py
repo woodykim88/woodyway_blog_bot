@@ -1,7 +1,6 @@
-"""대표 이미지 생성(OpenAI) → 최적화(Pillow) → Cloudflare R2 업로드."""
+"""대표 이미지 생성(OpenAI/Gemini) → 최적화(Pillow) → Cloudflare R2 업로드."""
 from __future__ import annotations
 
-import base64
 import hashlib
 import io
 from collections.abc import Mapping
@@ -10,9 +9,8 @@ from typing import Any
 
 from PIL import Image
 
-DEFAULT_IMAGE_MODEL = 'gpt-image-2'
-DEFAULT_IMAGE_QUALITY = 'medium'
-IMAGE_SIZE = '1536x1024'
+from src.providers import ImageBackend
+
 TARGET_WIDTH = 1200
 MAX_BYTES = 200 * 1024
 WEBP_QUALITIES = (82, 72, 62, 52)
@@ -26,12 +24,6 @@ class ImageConfigError(Exception):
 
 
 @dataclass(frozen=True)
-class ImageSettings:
-    model: str
-    quality: str
-
-
-@dataclass(frozen=True)
 class R2Config:
     account_id: str
     access_key_id: str
@@ -42,13 +34,6 @@ class R2Config:
     @property
     def endpoint_url(self) -> str:
         return f'https://{self.account_id}.r2.cloudflarestorage.com'
-
-
-def load_image_settings(env: Mapping[str, str]) -> ImageSettings:
-    return ImageSettings(
-        model=env.get('OPENAI_IMAGE_MODEL', DEFAULT_IMAGE_MODEL),
-        quality=env.get('OPENAI_IMAGE_QUALITY', DEFAULT_IMAGE_QUALITY),
-    )
 
 
 def load_r2_config(env: Mapping[str, str]) -> R2Config | None:
@@ -75,16 +60,9 @@ def with_style(prompt: str) -> str:
     return prompt if STYLE_SUFFIX in prompt else f'{prompt.rstrip(" .,")}, {STYLE_SUFFIX}'
 
 
-def generate_image(client: Any, settings: ImageSettings, prompt: str) -> bytes:
-    response = client.images.generate(
-        model=settings.model,
-        prompt=with_style(prompt),
-        size=IMAGE_SIZE,
-        quality=settings.quality,
-        output_format='webp',
-        n=1,
-    )
-    return base64.b64decode(response.data[0].b64_json)
+def generate_image(backend: ImageBackend, model: str, quality: str, prompt: str) -> bytes:
+    """선택한 AI 회사의 이미지 모델로 대표 이미지를 만듭니다. 스타일/금지 조건은 항상 붙입니다."""
+    return backend.generate(model, with_style(prompt), quality)
 
 
 def optimize_image(data: bytes, width: int = TARGET_WIDTH, max_bytes: int = MAX_BYTES) -> bytes:

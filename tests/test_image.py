@@ -7,7 +7,7 @@ import pytest
 from openai import OpenAIError
 from PIL import Image
 
-from src import image
+from src import image, providers
 from src import main as pipeline
 from tests.helpers import make_article, make_draft
 
@@ -18,7 +18,6 @@ R2_ENV = {
     'R2_BUCKET': 'blog-images',
     'R2_PUBLIC_BASE_URL': 'https://pub-abc.r2.dev/',
 }
-SETTINGS = image.ImageSettings(model='gpt-image-2', quality='medium')
 
 
 def noisy_webp(width=1536, height=1024) -> bytes:
@@ -37,6 +36,11 @@ def fake_openai(data: bytes):
         data=[SimpleNamespace(b64_json=base64.b64encode(data).decode())]
     )
     return client
+
+
+def backend(data: bytes):
+    client = fake_openai(data)
+    return providers.OpenAIImageBackend(client), client
 
 
 # --- 설정 ---
@@ -61,10 +65,6 @@ def test_load_r2_config_requires_https():
         image.load_r2_config({**R2_ENV, 'R2_PUBLIC_BASE_URL': 'http://pub.r2.dev'})
 
 
-def test_load_image_settings_defaults():
-    assert image.load_image_settings({}) == image.ImageSettings('gpt-image-2', 'medium')
-
-
 # --- 생성 / 최적화 / 업로드 ---
 
 def test_with_style_appends_suffix_once():
@@ -74,8 +74,8 @@ def test_with_style_appends_suffix_once():
 
 
 def test_generate_image_requests_webp_landscape():
-    client = fake_openai(b'webp-bytes')
-    assert image.generate_image(client, SETTINGS, 'a desk') == b'webp-bytes'
+    image_backend, client = backend(b'webp-bytes')
+    assert image.generate_image(image_backend, 'gpt-image-2', 'medium', 'a desk') == b'webp-bytes'
     kwargs = client.images.generate.call_args.kwargs
     assert kwargs['model'] == 'gpt-image-2'
     assert kwargs['size'] == '1536x1024' and kwargs['output_format'] == 'webp'
@@ -114,7 +114,8 @@ COMPOSED = pipeline.Composed(make_article(), make_draft())
 
 def test_attach_hero_image_dry_run_saves_preview_file(tmp_path):
     result = pipeline.attach_hero_image(
-        COMPOSED, fake_openai(noisy_webp(300, 200)), SETTINGS, None, '2026-09-26', True, preview_dir=tmp_path
+        COMPOSED, backend(noisy_webp(300, 200))[0], 'gpt-image-2', 'medium', None, '2026-09-26', True,
+        preview_dir=tmp_path,
     )
     assert result.hero_image_url == 'hero.webp'
     assert (tmp_path / 'hero.webp').exists()
@@ -125,7 +126,7 @@ def test_attach_hero_image_dry_run_saves_preview_file(tmp_path):
 def test_attach_hero_image_uploads_to_r2():
     s3 = MagicMock()
     result = pipeline.attach_hero_image(
-        COMPOSED, fake_openai(noisy_webp(300, 200)), SETTINGS, image.load_r2_config(R2_ENV),
+        COMPOSED, backend(noisy_webp(300, 200))[0], 'gpt-image-2', 'medium', image.load_r2_config(R2_ENV),
         '2026-09-26', False, make_s3=lambda cfg: s3,
     )
     assert result.hero_image_url.startswith('https://pub-abc.r2.dev/posts/2026/09/2026-09-26-')
@@ -133,8 +134,10 @@ def test_attach_hero_image_uploads_to_r2():
 
 
 def test_attach_hero_image_skips_without_r2_when_publishing():
-    client = fake_openai(b'')
-    assert pipeline.attach_hero_image(COMPOSED, client, SETTINGS, None, '2026-09-26', False) is COMPOSED
+    image_backend, client = backend(b'')
+    assert pipeline.attach_hero_image(
+        COMPOSED, image_backend, 'gpt-image-2', 'medium', None, '2026-09-26', False
+    ) is COMPOSED
     client.images.generate.assert_not_called()
 
 
@@ -142,6 +145,7 @@ def test_attach_hero_image_failure_continues_without_image():
     client = MagicMock()
     client.images.generate.side_effect = OpenAIError('rate limited')
     result = pipeline.attach_hero_image(
-        COMPOSED, client, SETTINGS, image.load_r2_config(R2_ENV), '2026-09-26', False, make_s3=lambda c: MagicMock()
+        COMPOSED, providers.OpenAIImageBackend(client), 'gpt-image-2', 'medium', image.load_r2_config(R2_ENV),
+        '2026-09-26', False, make_s3=lambda c: MagicMock(),
     )
     assert result is COMPOSED

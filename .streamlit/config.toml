@@ -1,0 +1,12 @@
+[server]
+# 이 맥북에서만 접속 가능 (외부 네트워크 차단)
+address = "127.0.0.1"
+port = 8501
+headless = false
+
+[browser]
+gatherUsageStats = false
+serverAddress = "127.0.0.1"
+
+[theme]
+primaryColor = "#ff8a3d"

@@ -2,56 +2,69 @@ name: daily-post
 
 on:
   schedule:
-    # GitHub cron은 UTC 기준이며 수십 분 지연될 수 있다. 발행 시각은 Blogger 예약(20:00 KST)이 보장한다.
-    - cron: '0 6 * * *'   # 15:00 KST 본 실행
-    - cron: '0 8 * * *'   # 17:00 KST 재시도 (이미 예약돼 있으면 자동으로 건너뜀)
+    # 2시간마다 "지금 준비할 발행 시각이 있는지"만 가볍게 확인한다 (UTC 기준, KST 09:17/11:17/.../07:17).
+    # 발행 시각 자체는 Blogger 예약이 정확히 지키고, 각 시각마다 준비 기회가 약 3번 있다.
+    - cron: '17 */2 * * *'
   workflow_dispatch:
     inputs:
       mode:
-        description: 'schedule = 20시 예약 발행, draft = 초안만 저장'
+        description: 'auto=설정된 시각 중 곧 돌아오는 것 준비 / schedule=다음 시각 1편 예약 / draft=초안 / now=즉시 발행 / preview=미리보기'
         type: choice
-        options: [schedule, draft]
-        default: schedule
-      dry_run:
-        description: 'Blogger에 올리지 않고 미리보기만 생성'
-        type: boolean
-        default: false
+        options: [auto, schedule, draft, now, preview]
+        default: preview
+      at:
+        description: 'schedule 모드에서만: 예약 시각 HH:MM (KST). 비우면 설정된 다음 시각'
+        type: string
+        required: false
 
-# 수동 실행과 예약 실행이 겹쳐도 한 번에 하나씩만 돈다 (중복 발행 방지)
+# 수동 실행과 정기 실행이 겹쳐도 한 번에 하나씩만 돈다 (중복 발행 방지)
 concurrency:
   group: daily-post
   cancel-in-progress: false
 
 permissions:
-  contents: write   # data/history.json 커밋용
+  contents: write   # data/history.json, data/runs.jsonl 커밋용
 
 jobs:
   post:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
+    env:
+      PUBLISH_TIMES: ${{ vars.PUBLISH_TIMES || '20:00' }}
+      PAUSED: ${{ vars.PAUSED || 'false' }}
     steps:
       - uses: actions/checkout@v4
 
+      - name: Check due slots
+        id: due
+        if: github.event_name == 'schedule'
+        run: python3 scripts/due_check.py
+
       - uses: actions/setup-python@v5
+        if: github.event_name != 'schedule' || steps.due.outputs.due == 'true'
         with:
           python-version: '3.12'
           cache: pip
           cache-dependency-path: requirements*.txt
 
       - name: Install dependencies
+        if: github.event_name != 'schedule' || steps.due.outputs.due == 'true'
         run: pip install -r requirements-dev.txt
 
       - name: Run tests
+        if: github.event_name != 'schedule' || steps.due.outputs.due == 'true'
         run: python -m pytest -q
 
       - name: Generate and publish
+        if: github.event_name != 'schedule' || steps.due.outputs.due == 'true'
         env:
           BLOG_ID: ${{ secrets.BLOG_ID }}
-          PUBLISH_HOUR: ${{ vars.PUBLISH_HOUR || '20' }}
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
           R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
@@ -59,12 +72,24 @@ jobs:
           R2_PUBLIC_BASE_URL: ${{ secrets.R2_PUBLIC_BASE_URL }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          MODE: ${{ inputs.mode || vars.PUBLISH_MODE || 'schedule' }}
-          DRY_RUN: ${{ inputs.dry_run && '--dry-run' || '' }}
-        run: python -m src.main --mode "$MODE" $DRY_RUN
+          TEXT_PROVIDER: ${{ vars.TEXT_PROVIDER }}
+          WRITER_MODEL: ${{ vars.WRITER_MODEL }}
+          FAST_MODEL: ${{ vars.FAST_MODEL }}
+          IMAGE_PROVIDER: ${{ vars.IMAGE_PROVIDER }}
+          IMAGE_MODEL: ${{ vars.IMAGE_MODEL }}
+          IMAGE_QUALITY: ${{ vars.IMAGE_QUALITY }}
+          FOOTER_LINK_URL: ${{ vars.FOOTER_LINK_URL || 'https://link.inpock.co.kr/shoperwoody' }}
+          MODE: ${{ inputs.mode || 'auto' }}
+          AT: ${{ inputs.at }}
+        run: |
+          if [ -n "$AT" ]; then
+            python -m src.main --mode "$MODE" --at "$AT"
+          else
+            python -m src.main --mode "$MODE"
+          fi
 
       - name: Upload preview
-        if: always()
+        if: always() && inputs.mode == 'preview'
         uses: actions/upload-artifact@v4
         with:
           name: preview
@@ -72,15 +97,16 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
-      - name: Commit history
-        if: always()
+      - name: Commit history and run log
+        if: always() && (github.event_name != 'schedule' || steps.due.outputs.due == 'true')
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/history.json
+          git add data/history.json data/runs.jsonl 2>/dev/null || true
           if git diff --cached --quiet; then
-            echo "history 변경 없음"
+            echo "기록 변경 없음"
           else
-            git commit -m "chore: update post history [skip ci]"
+            git commit -m "chore: update post history and run log [skip ci]"
+            git pull --rebase --quiet
             git push
           fi
