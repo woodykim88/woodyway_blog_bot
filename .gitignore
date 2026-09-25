@@ -1,0 +1,15 @@
+# 비밀 정보 (절대 커밋 금지)
+client_secret.json
+client_secret*.json
+token.json
+.env
+GPT API
+Blog_ID
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+output/

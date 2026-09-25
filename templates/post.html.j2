@@ -1,0 +1,64 @@
+{% if hero_image_url %}
+<div style="text-align:center;margin:0 0 24px;">
+  <img src="{{ hero_image_url }}" alt="{{ draft.image_alt }}" width="1200" style="max-width:100%;height:auto;border-radius:8px;" loading="eager">
+</div>
+{% endif %}
+<p style="font-size:1.1em;padding:14px 18px;background:#f4f6fa;border-left:4px solid #3b6fd8;border-radius:4px;"><strong>한 줄 요약</strong> · {{ draft.one_line_summary }}</p>
+
+<h3>핵심 내용</h3>
+<ul>
+{% for point in draft.key_points %}
+  <li>{{ point }}</li>
+{% endfor %}
+</ul>
+
+{% for heading, paragraphs in sections %}
+<h3>{{ heading }}</h3>
+{% for p in paragraphs %}
+<p>{{ p }}</p>
+{% endfor %}
+{% endfor %}
+
+<h3>왜 중요한가</h3>
+<p>{{ draft.why_it_matters }}</p>
+
+<h3>내일 바로 써먹기</h3>
+<ol>
+{% for item in draft.action_items %}
+  <li>{{ item }}</li>
+{% endfor %}
+</ol>
+
+<h3>출처</h3>
+<ul>
+  <li>원문: <a href="{{ source_url }}" target="_blank" rel="noopener nofollow">{{ source_url }}</a></li>
+  <li>via <a href="{{ geeknews_url }}" target="_blank" rel="noopener">GeekNews</a></li>
+</ul>
+{% if short_news %}
+
+<h3>오늘의 짧은 소식</h3>
+<ul>
+{% for news in short_news %}
+  <li><a href="{{ news.url }}" target="_blank" rel="noopener">{{ news.title }}</a> · {{ news.one_line }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+{% if related %}
+
+<h3>함께 읽으면 좋은 글</h3>
+<ul>
+{% for post in related %}
+  <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+{% endfor %}
+</ul>
+{% endif %}
+
+{% if footer_url %}
+
+<div style="margin-top:40px;padding:20px;text-align:center;background:#fff8ee;border:1px solid #f3dcb8;border-radius:8px;">
+  <p style="margin:0 0 12px;">오늘 글이 재미있으셨다면, 제 공간에도 한 번 놀러 와 주세요 🙂</p>
+  <a href="{{ footer_url }}" target="_blank" rel="noopener" style="display:inline-block;padding:10px 22px;background:#ff8a3d;color:#fff;border-radius:999px;text-decoration:none;font-weight:bold;">제 인포크 링크 둘러보기</a>
+</div>
+{% endif %}
+
+<p style="margin-top:32px;font-size:0.85em;color:#888;">이 글은 AI의 도움을 받아 원문을 바탕으로 작성되었습니다. 정확한 내용은 원문을 확인해 주세요.</p>

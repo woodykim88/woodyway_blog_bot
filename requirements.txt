@@ -1,0 +1,12 @@
+google-api-python-client>=2.140
+google-auth>=2.34
+google-auth-oauthlib>=1.2
+python-dotenv>=1.0
+openai>=1.60
+pydantic>=2.7
+feedparser>=6.0
+trafilatura>=1.12
+jinja2>=3.1
+requests>=2.32
+pillow>=10.4
+boto3>=1.35

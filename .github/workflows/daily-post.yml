@@ -1,0 +1,86 @@
+name: daily-post
+
+on:
+  schedule:
+    # GitHub cron은 UTC 기준이며 수십 분 지연될 수 있다. 발행 시각은 Blogger 예약(20:00 KST)이 보장한다.
+    - cron: '0 6 * * *'   # 15:00 KST 본 실행
+    - cron: '0 8 * * *'   # 17:00 KST 재시도 (이미 예약돼 있으면 자동으로 건너뜀)
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'schedule = 20시 예약 발행, draft = 초안만 저장'
+        type: choice
+        options: [schedule, draft]
+        default: schedule
+      dry_run:
+        description: 'Blogger에 올리지 않고 미리보기만 생성'
+        type: boolean
+        default: false
+
+# 수동 실행과 예약 실행이 겹쳐도 한 번에 하나씩만 돈다 (중복 발행 방지)
+concurrency:
+  group: daily-post
+  cancel-in-progress: false
+
+permissions:
+  contents: write   # data/history.json 커밋용
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements*.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Run tests
+        run: python -m pytest -q
+
+      - name: Generate and publish
+        env:
+          BLOG_ID: ${{ secrets.BLOG_ID }}
+          PUBLISH_HOUR: ${{ vars.PUBLISH_HOUR || '20' }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET: ${{ secrets.R2_BUCKET }}
+          R2_PUBLIC_BASE_URL: ${{ secrets.R2_PUBLIC_BASE_URL }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          MODE: ${{ inputs.mode || vars.PUBLISH_MODE || 'schedule' }}
+          DRY_RUN: ${{ inputs.dry_run && '--dry-run' || '' }}
+        run: python -m src.main --mode "$MODE" $DRY_RUN
+
+      - name: Upload preview
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview
+          path: output/
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Commit history
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/history.json
+          if git diff --cached --quiet; then
+            echo "history 변경 없음"
+          else
+            git commit -m "chore: update post history [skip ci]"
+            git push
+          fi
