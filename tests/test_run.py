@@ -118,3 +118,10 @@ def test_main_writes_runlog_on_github(monkeypatch, tmp_path):
     assert pipeline.main(['--mode', 'auto']) == 0
     row = pipeline.runlog.parse_runs(runs.read_text())[0]
     assert row['mode'] == 'auto' and row['outcome'] == 'skipped' and row['trigger'] == 'schedule'
+
+
+def test_tests_never_touch_real_data_files():
+    from src import history as h
+    from src import runlog as r
+    assert h.DEFAULT_HISTORY_PATH.parent.name != 'data'
+    assert r.DEFAULT_RUNS_PATH.parent.name != 'data'

@@ -3,6 +3,9 @@
 address = "127.0.0.1"
 port = 8501
 headless = false
+# 다른 웹사이트가 이 관리 화면을 몰래 조작하지 못하게 하는 보호 (Streamlit 기본값이지만 명시적으로 고정)
+enableXsrfProtection = true
+enableCORS = true
 
 [browser]
 gatherUsageStats = false

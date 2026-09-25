@@ -32,6 +32,9 @@ def update_env(updates: dict[str, str], path: Path | None = None) -> None:
             new_lines.append(line)
     new_lines.extend(f'{k}={v}' for k, v in remaining.items())
     tmp = path.with_suffix('.tmp')
-    tmp.write_text('\n'.join(new_lines) + '\n', encoding='utf-8')
-    os.chmod(tmp, 0o600)
+    # 처음부터 본인만 읽을 수 있는 권한(600)으로 만든다 (쓰고 나서 권한을 바꾸면 잠깐 노출될 수 있음)
+    fd = os.open(tmp, os.O_CREAT | os.O_WRONLY | os.O_TRUNC, 0o600)
+    with os.fdopen(fd, 'w', encoding='utf-8') as f:
+        f.write('\n'.join(new_lines) + '\n')
+    os.chmod(tmp, 0o600)  # 이미 있던 .tmp 파일이면 권한을 다시 고정
     tmp.replace(path)
