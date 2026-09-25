@@ -12,5 +12,19 @@
     ],
     "status": "SCHEDULED",
     "slot": "2026-09-26T20:00"
+  },
+  {
+    "publish_date": "2026-09-25",
+    "post_id": "3045618755440702154",
+    "title": "a16z 아카데미가 말하는 커리어 3가지",
+    "url": "https://www.woodyway88.com/2026/09/a16z-3.html",
+    "source_url": "https://www.a16z.news/p/introducing-the-horowitz-andreessen",
+    "geeknews_url": "https://news.hada.io/topic?id=34254",
+    "labels": [
+      "커리어",
+      "AI활용"
+    ],
+    "status": "LIVE",
+    "slot": "manual-now-20260925-230320"
   }
 ]
