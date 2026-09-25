@@ -26,5 +26,19 @@
     ],
     "status": "LIVE",
     "slot": "manual-now-20260925-230320"
+  },
+  {
+    "publish_date": "2026-09-25",
+    "post_id": "178004654100925433",
+    "title": "LLM API 선택 전 보는 3가지 기준",
+    "url": "",
+    "source_url": "https://bestmodelforyourbudget.terrydjony.com/",
+    "geeknews_url": "https://news.hada.io/topic?id=34242",
+    "labels": [
+      "AI활용",
+      "커리어"
+    ],
+    "status": "DRAFT",
+    "slot": "manual-draft-20260925-230919"
   }
 ]
