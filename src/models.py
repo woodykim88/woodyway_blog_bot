@@ -7,9 +7,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Literal
+from typing import Any, Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 Label = Literal['AI활용', '업무생산성', 'IT트렌드', '툴추천', '커리어']
 LABELS: tuple[str, ...] = ('AI활용', '업무생산성', 'IT트렌드', '툴추천', '커리어')
@@ -75,7 +75,17 @@ class GlossaryItem(BaseModel):
     meaning: str = Field(description='비개발 직장인이 이해할 수 있는 쉬운 설명 1~2문장')
 
 
+def _require_all_fields(schema: dict[str, Any]) -> None:
+    """기본값은 옛 데이터 호환용일 뿐이다. LLM에 보내는 스키마에서는 모든 칸을 필수로 표시한다."""
+    properties = schema.get('properties', {})
+    for prop in properties.values():
+        prop.pop('default', None)
+    schema['required'] = list(properties)
+
+
 class PostDraft(BaseModel):
+    model_config = ConfigDict(json_schema_extra=_require_all_fields)
+
     search_keyword: str = Field(description='한국 독자가 검색창에 실제로 입력할 핵심 검색어 (2~4단어)')
     title: str = Field(description='40자 이내. 검색어를 앞쪽에 넣고, 원문에서 가장 의외인 사실로 궁금증을 만든다')
     hook: str = Field(description='시선을 사로잡는 도입부 2~4문장. 독자가 겪는 장면이나 가장 의외인 사실로 시작. 짧은 문단은 빈 줄로 구분')
@@ -86,8 +96,15 @@ class PostDraft(BaseModel):
     glossary: list[GlossaryItem] = Field(description='글 하단 용어사전. 본문에서 뺀 어려운 용어 0~6개')
     labels: list[Label] = Field(description='라벨 1~2개')
     meta_description: str = Field(description='검색 결과용 설명 150자 이내')
-    image_prompt: str = Field(description='대표 이미지용 영문 프롬프트. 글자, 실존 인물, 로고 없이')
+    image_prompt: str = Field(description='대표 이미지용 영문 프롬프트. 주제를 상징하는 강렬한 사물 하나. 글자, 실존 인물, 로고 없이')
     image_alt: str = Field(description='대표 이미지 대체 텍스트 (한국어)')
+    thumbnail_text: str = Field(
+        default='',
+        description='대표 이미지에 얹을 2줄 썸네일 문구. 줄바꿈(\\n) 1개, 줄바꿈 빼고 14자 이내. 제목과 다른 말로, 원문 사실 범위 안에서',
+    )
+    thumbnail_highlight: str = Field(
+        default='', description='thumbnail_text 안에 그대로 있는 강조 단어·숫자 하나 (6자 이내). 노란 형광펜으로 칠한다',
+    )
 
 
 ClaimKind = Literal['supported_fact', 'unsupported_fact', 'opinion_or_advice']

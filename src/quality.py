@@ -15,6 +15,10 @@ MIN_BODY_CHARS = 700
 MAX_TITLE_CHARS = 40
 MAX_META_CHARS = 150
 BANNED_WORDS = ('충격', '경악', '필수', '모르면 손해', '대박', '역대급', '무조건', '100%')
+# 썸네일 문구는 짧아서 낚시성 표현이 더 도드라진다
+THUMBNAIL_BANNED_WORDS = (*BANNED_WORDS, '소름', '미쳤다', '실화냐', '레전드')
+MAX_THUMBNAIL_CHARS = 14
+MAX_HIGHLIGHT_CHARS = 6
 # 모든 글이 "OO 3가지", "OO 3단계"로 똑같아 보이는 것을 막는다
 FORMULAIC_TITLE = re.compile(r'\d+\s*(가지|단계)')
 # 공백을 뺀 이 글자 수 이상이 원문과 똑같이 이어지면 옮겨 쓴 것으로 본다 (한국어 기사 표절 방지)
@@ -56,6 +60,7 @@ def fact_check_text(draft: PostDraft) -> str:
         *(f'{s.heading}\n{s.body}' for s in draft.sections),
         draft.why_it_matters,
         *(f'{g.term}: {g.meaning}' for g in draft.glossary),
+        draft.thumbnail_text.replace('\n', ' '),
     ]
     return '\n'.join(parts)
 
@@ -148,6 +153,27 @@ def check_banned_words(draft: PostDraft) -> list[str]:
     return [f'과장/낚시성 표현을 빼세요: {", ".join(found)}'] if found else []
 
 
+def check_thumbnail(draft: PostDraft) -> list[str]:
+    """썸네일 문구: 2줄, 14자 이내, 강조 단어는 문구 안에 그대로, 낚시성 표현 금지. 비어 있으면 검사하지 않는다."""
+    text, highlight = draft.thumbnail_text.strip(), draft.thumbnail_highlight.strip()
+    if not text:
+        return []
+    issues = []
+    length = len(text.replace('\n', ''))
+    if length > MAX_THUMBNAIL_CHARS:
+        issues.append(f'썸네일 문구는 줄바꿈 빼고 {MAX_THUMBNAIL_CHARS}자 이내로 줄이세요 (현재 {length}자).')
+    if text.count('\n') > 1:
+        issues.append('썸네일 문구는 두 줄까지만 쓰세요 (줄바꿈 1개).')
+    if highlight and highlight not in text:
+        issues.append(f'썸네일 강조 단어 "{highlight}"가 썸네일 문구 안에 그대로 있어야 합니다.')
+    if len(highlight) > MAX_HIGHLIGHT_CHARS:
+        issues.append(f'썸네일 강조 단어는 {MAX_HIGHLIGHT_CHARS}자 이내 한 단어로 고르세요 (현재 {len(highlight)}자).')
+    found = [w for w in THUMBNAIL_BANNED_WORDS if w in text]
+    if found:
+        issues.append(f'썸네일 문구에서 과장/낚시성 표현을 빼세요: {", ".join(found)}')
+    return issues
+
+
 def check_duplicate_title(draft: PostDraft, history: tuple[HistoryEntry, ...]) -> list[str]:
     for e in history[-30:]:
         if title_similarity(e.title, draft.title) >= TITLE_SIMILARITY_THRESHOLD:
@@ -185,6 +211,7 @@ def run_quality_gate(
         *check_copying(draft, article),
         *check_length(draft),
         *check_banned_words(draft),
+        *check_thumbnail(draft),
         *check_duplicate_title(draft, history),
         *check_source(article, is_alive),
     ]

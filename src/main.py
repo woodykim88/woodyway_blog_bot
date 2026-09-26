@@ -42,6 +42,7 @@ from src import (
     runlog,
     schedule,
     selector,
+    thumbnail,
     writer,
 )
 from src.http_client import HttpGet, http_get, url_is_alive
@@ -191,6 +192,12 @@ def compose_post(
     raise PipelineError(f'상위 {MAX_TOPIC_ATTEMPTS}개 주제 모두 원문 추출 또는 검수에 실패했습니다.')
 
 
+def headline_of(draft: PostDraft) -> thumbnail.Headline:
+    """대표 이미지에 얹을 썸네일 문구. 왼쪽 위 라벨은 글의 첫 번째 라벨."""
+    label = draft.labels[0] if draft.labels else ''
+    return thumbnail.Headline(draft.thumbnail_text, draft.thumbnail_highlight, label)
+
+
 def attach_hero_image(
     composed: Composed,
     backend: providers.ImageBackend,
@@ -201,6 +208,7 @@ def attach_hero_image(
     dry_run: bool,
     make_s3: Callable[[image.R2Config], Any] = image.make_s3_client,
     preview_dir: Path = PREVIEW_PATH.parent,
+    find_font: Callable[[], thumbnail.FontSpec | None] = thumbnail.find_font,
 ) -> Composed:
     """대표 이미지를 만들어 붙입니다. 실패해도 글 발행은 막지 않고 이미지 없이 진행합니다."""
     if not dry_run and r2 is None:
@@ -208,7 +216,7 @@ def attach_hero_image(
         return composed
     try:
         raw = image.generate_image(backend, model, image_quality, composed.draft.image_prompt)
-        data = image.optimize_image(raw)
+        data = image.optimize_image(thumbnail.add_headline(raw, headline_of(composed.draft), find_font()))
         if dry_run:
             preview_dir.mkdir(parents=True, exist_ok=True)
             (preview_dir / PREVIEW_IMAGE_NAME).write_bytes(data)

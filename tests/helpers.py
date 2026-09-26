@@ -69,6 +69,8 @@ def make_draft(**overrides: Any) -> PostDraft:
         'meta_description': '회의록 AI 요약으로 정리 시간을 줄이는 활용법',
         'image_prompt': 'people at a desk, flat illustration, no text',
         'image_alt': '책상에서 회의록을 정리하는 모습',
+        'thumbnail_text': '회의록 정리\n1분이면 끝',
+        'thumbnail_highlight': '1분',
     }
     return PostDraft(**{**fields, **overrides})
 

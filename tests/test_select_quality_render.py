@@ -254,3 +254,36 @@ def test_fact_check_excludes_action_items():
     sent = client.requests[0]['input']
     assert '폴더 3개를 만드세요' not in sent
     assert draft.key_points[0] in sent and draft.title in sent
+
+
+# --- 썸네일 문구 ---
+
+@pytest.mark.parametrize('overrides, expected', [
+    ({'thumbnail_text': '가나다라마바사\n아자차카타파하거'}, '14자'),
+    ({'thumbnail_text': '월 3만원\n아끼는\n설정'}, '두 줄'),
+    ({'thumbnail_text': '월 3만원\n아끼는 설정', 'thumbnail_highlight': '5만원'}, '강조'),
+    ({'thumbnail_text': '월 3만원\n아끼는 설정', 'thumbnail_highlight': '월 3만원 아끼는'}, '6자'),
+    ({'thumbnail_text': '충격적인\n요금 인상'}, '과장'),
+    ({'thumbnail_text': '무조건\n끄세요', 'thumbnail_highlight': '무조건'}, '과장'),
+])
+def test_check_thumbnail_failures(overrides, expected):
+    issues = quality.check_thumbnail(make_draft(**overrides))
+    assert any(expected in issue and '썸네일' in issue for issue in issues), issues
+
+
+def test_check_thumbnail_passes_good_and_empty_text():
+    assert quality.check_thumbnail(make_draft(thumbnail_text='이 기능 끄면\n배터리 2배', thumbnail_highlight='2배')) == []
+    assert quality.check_thumbnail(make_draft(thumbnail_text='코파일럿\n24시간 일한다?', thumbnail_highlight='')) == []
+    assert quality.check_thumbnail(make_draft(thumbnail_text='', thumbnail_highlight='')) == []
+
+
+def test_quality_gate_runs_thumbnail_check_before_fact_check():
+    llm, client = fake_llm({})
+    report = quality.run_quality_gate(llm, 'fast', make_draft(thumbnail_text='대박\n요금'), make_article(), (), ALIVE)
+    assert not report.passed and any('썸네일' in i for i in report.issues)
+    assert client.requests == []
+
+
+def test_fact_check_text_includes_thumbnail_text():
+    draft = make_draft(thumbnail_text='회의록 정리\n1분이면 끝')
+    assert '회의록 정리 1분이면 끝' in quality.fact_check_text(draft)

@@ -7,7 +7,7 @@ import pytest
 from openai import OpenAIError
 from PIL import Image
 
-from src import image, providers
+from src import image, providers, thumbnail
 from src import main as pipeline
 from tests.helpers import make_article, make_draft
 
@@ -66,6 +66,15 @@ def test_load_r2_config_requires_https():
 
 
 # --- 생성 / 최적화 / 업로드 ---
+
+def test_style_suffix_is_bold_thumbnail_style_with_bans():
+    suffix = image.STYLE_SUFFIX
+    for ban in ('no text', 'no letters', 'no numbers', 'no logos', 'no real people'):
+        assert ban in suffix
+    for word in ('3D', 'vivid', 'high contrast', 'dramatic lighting', 'negative space on the left'):
+        assert word in suffix
+    assert 'pastel' not in suffix and 'office' not in suffix and 'flat illustration' not in suffix
+
 
 def test_with_style_appends_suffix_once():
     assert image.with_style('a desk.').endswith(image.STYLE_SUFFIX)
@@ -149,3 +158,35 @@ def test_attach_hero_image_failure_continues_without_image():
         '2026-09-26', False, make_s3=lambda c: MagicMock(),
     )
     assert result is COMPOSED
+
+
+def captured_headlines():
+    """attach_hero_image가 add_headline에 넘긴 값을 기록하는 가짜 함수."""
+    calls = []
+
+    def fake(data, headline, font):
+        calls.append((headline, font))
+        return data
+    return calls, fake
+
+
+def test_attach_hero_image_overlays_thumbnail_text(tmp_path, monkeypatch):
+    calls, fake = captured_headlines()
+    monkeypatch.setattr(thumbnail, 'add_headline', fake)
+    font = thumbnail.FontSpec('/fonts/x.ttc', 1)
+    pipeline.attach_hero_image(
+        COMPOSED, backend(noisy_webp(300, 200))[0], 'gpt-image-2', 'medium', None, '2026-09-26', True,
+        preview_dir=tmp_path, find_font=lambda: font,
+    )
+    headline, used_font = calls[0]
+    draft = COMPOSED.draft
+    assert headline == thumbnail.Headline(draft.thumbnail_text, draft.thumbnail_highlight, draft.labels[0])
+    assert used_font == font
+
+
+def test_attach_hero_image_without_font_still_attaches_image(tmp_path):
+    result = pipeline.attach_hero_image(
+        COMPOSED, backend(noisy_webp(300, 200))[0], 'gpt-image-2', 'medium', None, '2026-09-26', True,
+        preview_dir=tmp_path, find_font=lambda: None,
+    )
+    assert result.hero_image_url == 'hero.webp'
