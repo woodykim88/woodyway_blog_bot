@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from src import history, providers, schedule
+from src import history, providers, runlog, schedule
 from src import main as pipeline
 from tests.helpers import make_article, make_draft
 
@@ -125,3 +125,12 @@ def test_tests_never_touch_real_data_files():
     from src import runlog as r
     assert h.DEFAULT_HISTORY_PATH.parent.name != 'data'
     assert r.DEFAULT_RUNS_PATH.parent.name != 'data'
+
+
+def test_llm_calls_warning_per_post():
+    post = runlog.PostRecord('제목', 'SCHEDULED', '2026-09-27T08:00', 'https://w/x', 'https://e', True)
+    assert pipeline.llm_calls_warning(pipeline.RunResult('success', 'ok', (post,), 3), 'gpt-5.6-terra') is None
+    assert pipeline.llm_calls_warning(pipeline.RunResult('success', 'ok', (post, post), 12), 'm') is None
+    message = pipeline.llm_calls_warning(pipeline.RunResult('success', 'ok', (post,), 10), 'gpt-5.6-terra')
+    assert '10회' in message and 'gpt-5.6-terra' in message
+    assert pipeline.llm_calls_warning(pipeline.RunResult('failed', 'x', (), 13), 'm') is not None

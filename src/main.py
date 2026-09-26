@@ -330,6 +330,19 @@ class RunResult:
     llm_calls: int = 0
 
 
+HIGH_LLM_CALLS_PER_POST = 10  # 평소 글당 3회 안팎. 이 이상이면 원고가 검수에 자주 떨어져 다시 쓰고 있다는 뜻
+
+
+def llm_calls_warning(result: RunResult, writer_model: str) -> str | None:
+    """글당 AI 호출이 많으면 알림 문구를, 아니면 None을 반환합니다. 글 없는 실패 실행은 1편으로 칩니다."""
+    count = max(len(result.posts), 1)
+    if result.llm_calls < HIGH_LLM_CALLS_PER_POST * count:
+        return None
+    return (f'⚠️ AI 호출이 많았습니다: {result.llm_calls}회 ({count}편, 평소 글당 3회 안팎)\n'
+            f'원고 모델({writer_model})이 검수에 자주 떨어져 다시 쓰는 중일 수 있습니다. '
+            '반복되면 원고 모델을 점검하세요.')
+
+
 def is_paused(env: Mapping[str, str]) -> bool:
     return (env.get('PAUSED') or '').strip().lower() in ('1', 'true', 'yes', 'on')
 
@@ -432,6 +445,10 @@ def main(argv: Sequence[str] | None = None) -> int:
     print(f'[결과] {result.outcome}: {result.message}')
     if result.outcome == 'failed' and mode != 'preview':
         notifier.notify(telegram, f'❌ 글 발행 실패 ({mode})\n원인: {result.message}\n관리 화면의 실행 기록을 확인하세요.')
+    warning = llm_calls_warning(result, ai.writer_model) if ai and mode != 'preview' else None
+    if warning:
+        print(warning)
+        notifier.notify(telegram, warning)
     if env.get('GITHUB_ACTIONS') == 'true':
         runlog.append_run(runlog.RunRecord(
             started_at=started.isoformat(timespec='seconds'),
