@@ -1,6 +1,7 @@
 """발행 전 자동 품질 검수. 문제 목록이 비어 있으면 통과."""
 from __future__ import annotations
 
+import re
 from collections.abc import Callable
 from dataclasses import dataclass
 
@@ -14,6 +15,8 @@ MAX_BODY_CHARS = 2500
 MAX_TITLE_CHARS = 40
 MAX_META_CHARS = 150
 BANNED_WORDS = ('충격', '경악', '필수', '모르면 손해', '대박', '역대급', '무조건', '100%')
+# 모든 글이 "OO 3가지", "OO 3단계"로 똑같아 보이는 것을 막는다
+FORMULAIC_TITLE = re.compile(r'\d+\s*(가지|단계)')
 
 
 @dataclass(frozen=True)
@@ -28,7 +31,7 @@ class QualityReport:
 def body_text(draft: PostDraft) -> str:
     """분량 계산용 본문 평문."""
     parts = [
-        draft.one_line_summary,
+        draft.hook,
         *draft.key_points,
         *(f'{s.heading}\n{s.body}' for s in draft.sections),
         draft.why_it_matters,
@@ -41,7 +44,7 @@ def fact_check_text(draft: PostDraft) -> str:
     """사실 검증 대상 본문. '내일 바로 써먹기'는 원래 원문에 없는 조언을 쓰는 자리라 제외합니다."""
     parts = [
         draft.title,
-        draft.one_line_summary,
+        draft.hook,
         *draft.key_points,
         *(f'{s.heading}\n{s.body}' for s in draft.sections),
         draft.why_it_matters,
@@ -63,6 +66,25 @@ def check_structure(draft: PostDraft) -> list[str]:
         issues.append(f'제목이 {MAX_TITLE_CHARS}자를 넘습니다 (현재 {len(draft.title)}자).')
     if len(draft.meta_description) > MAX_META_CHARS:
         issues.append(f'메타 설명이 {MAX_META_CHARS}자를 넘습니다 (현재 {len(draft.meta_description)}자).')
+    return issues
+
+
+def _contains_ignoring_spaces(text: str, keyword: str) -> bool:
+    return keyword.replace(' ', '') in text.replace(' ', '')
+
+
+def check_seo(draft: PostDraft) -> list[str]:
+    """검색 유입의 기본: 검색어가 제목과 메타 설명에 들어가 있어야 합니다."""
+    keyword = draft.search_keyword.strip()
+    issues = []
+    if not keyword:
+        return ['검색 키워드(search_keyword)가 비어 있습니다.']
+    if not _contains_ignoring_spaces(draft.title, keyword):
+        issues.append(f'제목에 검색 키워드 "{keyword}"를 그대로 넣으세요 (앞쪽일수록 좋습니다).')
+    if not _contains_ignoring_spaces(draft.meta_description, keyword):
+        issues.append(f'메타 설명에 검색 키워드 "{keyword}"를 넣으세요.')
+    if FORMULAIC_TITLE.search(draft.title):
+        issues.append('제목에 "N가지", "N단계" 같은 뻔한 틀을 쓰지 말고, 원문의 의외인 사실로 궁금증을 만드세요.')
     return issues
 
 
@@ -111,6 +133,7 @@ def run_quality_gate(
     """값싼 규칙 검사를 먼저 하고, 모두 통과했을 때만 LLM 사실 검증을 호출합니다."""
     issues = [
         *check_structure(draft),
+        *check_seo(draft),
         *check_length(draft),
         *check_banned_words(draft),
         *check_duplicate_title(draft, history),

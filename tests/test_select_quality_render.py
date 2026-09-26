@@ -78,6 +78,10 @@ def test_sample_draft_is_within_length():
     ({'title': '가' * 41}, '제목이'),
     ({'meta_description': '가' * 151}, '메타 설명'),
     ({'why_it_matters': '이건 충격적인 소식입니다.'}, '과장'),
+    ({'title': '회의록 정리에 쓰는 AI 도구 비교'}, '검색 키워드'),
+    ({'meta_description': '정리 시간을 줄이는 방법'}, '메타 설명에 검색 키워드'),
+    ({'title': '회의록 AI 요약 방법 3가지'}, '틀'),
+    ({'title': '회의록 AI 요약, 구독비 점검 3단계'}, '틀'),
 ])
 def test_quality_gate_rule_failures(overrides, expected):
     llm, client = fake_llm({})
@@ -87,13 +91,22 @@ def test_quality_gate_rule_failures(overrides, expected):
     assert client.requests == []  # 규칙 검사 실패 시 LLM 사실 검증은 호출하지 않음
 
 
+def test_keyword_match_ignores_spaces():
+    draft = make_draft(title='회의록AI요약, 1분이면 끝나는 이유', meta_description='회의록 AI요약 활용법')
+    assert quality.check_seo(draft) == []
+
+
+def test_fact_check_text_includes_hook():
+    assert make_draft().hook in quality.fact_check_text(make_draft())
+
+
 def test_quality_gate_length_bounds():
     short = make_draft(sections=[Section(heading='a', body='짧음'), Section(heading='b', body='짧음')])
     assert any('분량' in i for i in quality.check_length(short))
 
 
 def test_quality_gate_dead_source_and_duplicate_title():
-    past = (make_entry(title='회의록 정리 30분을 1분으로 줄이는 방법 3가지'),)
+    past = (make_entry(title='회의록 AI 요약, 30분 걸리던 정리가 1분이면 끝나는 이유'),)
     llm, _ = fake_llm({})
     report = quality.run_quality_gate(llm, 'fast', make_draft(), make_article(), past, DEAD)
     assert any('출처 링크' in i for i in report.issues)
@@ -127,7 +140,9 @@ def test_render_post_contains_sections_and_sources():
         related=[make_entry(title='관련 글')],
         hero_image_url='https://img.example.com/a.webp',
     )
-    for text in ('한 줄 요약', '핵심 내용', '배경', '작동 방식', '왜 중요한가', '내일 바로 써먹기',
+    assert '한 줄 요약' not in html
+    assert html.index('매주 회의록 정리에') < html.index('핵심 내용')  # 도입부가 맨 앞
+    for text in ('핵심 내용', '배경', '작동 방식', '왜 중요한가', '내일 바로 써먹기',
                  'https://example.com/original', 'GeekNews', '오늘의 짧은 소식', '관련 글',
                  'https://img.example.com/a.webp', 'AI의 도움'):
         assert text in html

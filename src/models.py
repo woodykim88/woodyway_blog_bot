@@ -67,8 +67,9 @@ class Section(BaseModel):
 
 
 class PostDraft(BaseModel):
-    title: str = Field(description='40자 이내, 숫자나 구체성 포함, 과장 금지')
-    one_line_summary: str = Field(description='이 글을 읽어야 하는 이유 한 문장')
+    search_keyword: str = Field(description='한국 독자가 검색창에 실제로 입력할 핵심 검색어 (2~4단어)')
+    title: str = Field(description='40자 이내. 검색어를 앞쪽에 넣고, 원문에서 가장 의외인 사실로 궁금증을 만든다')
+    hook: str = Field(description='도입부 2~3문장. 가장 의외인 사실이나 독자가 겪는 상황으로 시작')
     key_points: list[str] = Field(description='핵심 내용 불릿 3~5개, 각 1~2문장')
     sections: list[Section] = Field(description='자세히 보기 섹션 2~3개')
     why_it_matters: str = Field(description='직장인 입장에서 왜 중요한지 2~3문장')

@@ -54,8 +54,9 @@ def make_article(candidate: Candidate | None = None) -> Article:
 def make_draft(**overrides: Any) -> PostDraft:
     paragraph = '회의록 정리는 많은 직장인이 매일 반복하는 일입니다. ' * 10
     fields: dict[str, Any] = {
-        'title': '회의록 정리 30분을 1분으로 줄이는 방법 3가지',
-        'one_line_summary': '반복되는 회의록 정리를 AI에 맡기는 구체적인 방법을 소개합니다.',
+        'title': '회의록 AI 요약, 30분 걸리던 정리가 1분이면 끝나는 이유',
+        'search_keyword': '회의록 AI 요약',
+        'hook': '매주 회의록 정리에 30분씩 쓰고 있다면, 그 시간은 이제 1분으로 줄일 수 있습니다. 녹음 파일 하나면 됩니다.',
         'key_points': ['첫째 핵심 내용입니다.', '둘째 핵심 내용입니다.', '셋째 핵심 내용입니다.'],
         'sections': [
             Section(heading='배경', body=f'{paragraph}\n\n{paragraph}'),
@@ -64,7 +65,7 @@ def make_draft(**overrides: Any) -> PostDraft:
         'why_it_matters': '회의가 많은 조직일수록 정리 시간이 누적됩니다. 이를 줄이면 본업에 집중할 수 있습니다.',
         'action_items': ['다음 회의 녹음 파일을 요약 도구에 넣어 보세요.'],
         'labels': ['AI활용'],
-        'meta_description': '회의록 정리 시간을 줄이는 AI 활용법',
+        'meta_description': '회의록 AI 요약으로 정리 시간을 줄이는 활용법',
         'image_prompt': 'people at a desk, flat illustration, no text',
         'image_alt': '책상에서 회의록을 정리하는 모습',
     }
