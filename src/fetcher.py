@@ -1,4 +1,4 @@
-"""GeekNews 토픽 페이지에서 원문 링크를 찾고, 원문 본문을 추출한다."""
+"""후보의 원문 기사 주소를 정하고(GeekNews는 토픽 페이지에서 찾음), 원문 본문을 추출한다."""
 from __future__ import annotations
 
 from html.parser import HTMLParser
@@ -54,7 +54,10 @@ def extract_article_text(page_html: str, url: str) -> str | None:
 def fetch_article(get: HttpGet, candidate: Candidate) -> Article | None:
     """후보의 원문을 가져옵니다. 실패하면 이유를 출력하고 None을 반환합니다."""
     try:
-        source_url = extract_original_url(get(candidate.geeknews_url), candidate.geeknews_url)
+        if candidate.direct:
+            source_url: str | None = candidate.link
+        else:
+            source_url = extract_original_url(get(candidate.link), candidate.link)
         if source_url is None:
             print(f'[건너뜀] 외부 원문 링크 없음: {candidate.title}')
             return None

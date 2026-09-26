@@ -31,8 +31,12 @@
 
 <h3>출처</h3>
 <ul>
+{% if via_url %}
   <li>원문: <a href="{{ source_url }}" target="_blank" rel="noopener nofollow">{{ source_url }}</a></li>
-  <li>via <a href="{{ geeknews_url }}" target="_blank" rel="noopener">GeekNews</a></li>
+  <li>via <a href="{{ via_url }}" target="_blank" rel="noopener">{{ source_name }}</a></li>
+{% else %}
+  <li>원문: {{ source_name }} · <a href="{{ source_url }}" target="_blank" rel="noopener nofollow">{{ source_url }}</a></li>
+{% endif %}
 </ul>
 {% if short_news %}
 

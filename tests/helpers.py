@@ -37,7 +37,7 @@ def fake_llm(responses: dict[str, list[Any]], max_calls: int = 12) -> tuple[LLMC
 def make_candidate(i: int = 0, title: str | None = None) -> Candidate:
     return Candidate(
         title=title or f'후보 제목 {i}',
-        geeknews_url=f'https://news.hada.io/topic?id={1000 + i}',
+        link=f'https://news.hada.io/topic?id={1000 + i}',
         summary=f'요약 {i}',
         published=NOW,
     )

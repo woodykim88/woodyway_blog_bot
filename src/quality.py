@@ -17,6 +17,11 @@ MAX_META_CHARS = 150
 BANNED_WORDS = ('충격', '경악', '필수', '모르면 손해', '대박', '역대급', '무조건', '100%')
 # 모든 글이 "OO 3가지", "OO 3단계"로 똑같아 보이는 것을 막는다
 FORMULAIC_TITLE = re.compile(r'\d+\s*(가지|단계)')
+# 공백을 뺀 이 글자 수 이상이 원문과 똑같이 이어지면 옮겨 쓴 것으로 본다 (한국어 기사 표절 방지)
+COPY_WINDOW = 30
+# 그중 한글이 이 글자 수 이상일 때만 센다. 영어 제품명처럼 바꿔 쓸 수 없는 고유명사는 제외
+MIN_HANGUL_IN_COPY = 15
+_HANGUL_RE = re.compile(r'[가-힣]')
 
 
 @dataclass(frozen=True)
@@ -88,6 +93,28 @@ def check_seo(draft: PostDraft) -> list[str]:
     return issues
 
 
+def copied_phrases(text: str, source: str, window: int = COPY_WINDOW) -> list[str]:
+    """text 중 source와 공백 제외 window자 이상 똑같이 이어지는 부분을 찾습니다."""
+    squashed, src = re.sub(r'\s+', '', text), re.sub(r'\s+', '', source)
+    found, i = [], 0
+    while i + window <= len(squashed):
+        chunk = squashed[i:i + window]
+        if chunk in src and len(_HANGUL_RE.findall(chunk)) >= MIN_HANGUL_IN_COPY:
+            found.append(chunk)
+            i += window
+        else:
+            i += 1
+    return found
+
+
+def check_copying(draft: PostDraft, article: Article) -> list[str]:
+    found = copied_phrases(body_text(draft), article.text)
+    if not found:
+        return []
+    examples = ' / '.join(f'"{c}"' for c in found[:2])
+    return [f'원문 문장을 그대로 옮긴 부분이 {len(found)}곳 있습니다. 자신의 말로 바꿔 쓰세요: {examples}']
+
+
 def check_length(draft: PostDraft) -> list[str]:
     length = len(body_text(draft))
     if not MIN_BODY_CHARS <= length <= MAX_BODY_CHARS:
@@ -134,6 +161,7 @@ def run_quality_gate(
     issues = [
         *check_structure(draft),
         *check_seo(draft),
+        *check_copying(draft, article),
         *check_length(draft),
         *check_banned_words(draft),
         *check_duplicate_title(draft, history),

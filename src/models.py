@@ -20,9 +20,11 @@ class Candidate:
     """RSS에서 수집한 주제 후보. summary는 선별 판단용으로만 쓰고 글에 옮기지 않는다."""
 
     title: str
-    geeknews_url: str
+    link: str  # 피드 항목 주소 (GeekNews 토픽 페이지 또는 뉴스 기사)
     summary: str
     published: datetime
+    source: str = 'GeekNews'
+    direct: bool = False  # True면 link가 곧 원문 기사, False면 link 페이지에서 원문 링크를 찾는다
 
 
 @dataclass(frozen=True)
@@ -55,6 +57,7 @@ class CandidateScore(BaseModel):
     score: int = Field(description='직장인 유용도 1~10점')
     reason: str = Field(description='점수 근거 한 문장')
     one_line: str = Field(description='직장인에게 이 소식이 왜 쓸모 있는지 30자 내외 한 줄 (자신의 말로)')
+    story: str = Field(description='소식의 주인공인 회사·서비스·제품 이름만 한국어로. 동사·수식어 없이 (예: "마이크로소프트 코파일럿", "엑셀", "메타 뮤즈")')
 
 
 class SelectionResult(BaseModel):

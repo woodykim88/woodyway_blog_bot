@@ -16,7 +16,7 @@ class HistoryEntry:
     title: str
     url: str
     source_url: str
-    geeknews_url: str
+    geeknews_url: str  # 후보 링크(GeekNews 토픽 또는 뉴스 기사). 기존 기록과 호환하려고 이름 유지
     labels: tuple[str, ...]
     status: str
     slot: str = ''  # 예약 슬롯 "YYYY-MM-DDTHH:MM" 또는 수동 실행 키 "manual-..."

@@ -10,6 +10,7 @@ from src.models import Article, PostDraft
 def build_writer_input(article: Article, theme: str, feedback: Sequence[str] = ()) -> str:
     parts = [
         f'오늘의 테마: {theme}',
+        f'원문 출처: {article.candidate.source}',
         f'원문 URL: {article.source_url}',
         f'원문 제목(참고): {article.candidate.title}',
         '--- 원문 본문 시작 ---',

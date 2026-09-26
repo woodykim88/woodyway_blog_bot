@@ -7,6 +7,8 @@ from tests.helpers import FIXTURES, NOW, make_candidate
 
 FEED = (FIXTURES / 'geeknews_feed.xml').read_text(encoding='utf-8')
 TOPIC = (FIXTURES / 'geeknews_topic.html').read_text(encoding='utf-8')
+NEWS_FEED = (FIXTURES / 'news_feed.xml').read_text(encoding='utf-8')
+NEWS = collector.FeedSource('테스트일보', 'https://www.news.example.com/rss', direct=True, limit=10)
 
 
 # --- collector ---
@@ -16,7 +18,8 @@ def test_parse_feed_reads_real_geeknews_feed():
     assert 0 < len(candidates) <= collector.DEFAULT_LIMIT
     first = candidates[0]
     assert first.title == '네덜란드 정부, NixOS 기반 Microsoft 대안 구축'
-    assert first.geeknews_url == 'https://news.hada.io/topic?id=34262'
+    assert first.link == 'https://news.hada.io/topic?id=34262'
+    assert first.source == 'GeekNews' and not first.direct
     assert '<' not in first.summary and first.summary
 
 
@@ -36,6 +39,38 @@ def test_parse_feed_excludes_video_and_ask_gn():
     titles = [c.title for c in collector.parse_feed(feed, NOW)]
     assert '[영상] 네덜란드 정부 발표' not in titles
     assert all('Ask GN' not in t for t in titles)
+
+
+def test_parse_news_feed_marks_source_and_skips_photo_and_old():
+    candidates = collector.parse_feed(NEWS_FEED, NOW, source=NEWS)
+    assert [c.title for c in candidates] == ["4년 묵은 메일까지 치웠다…'무료 AI 비서' 써보니", '엑셀 새 기능, 한 셀에 여러 값']
+    assert all(c.source == '테스트일보' and c.direct for c in candidates)
+    assert candidates[0].link == 'https://www.news.example.com/article/1'
+
+
+def test_parse_feed_applies_source_limit():
+    one = collector.FeedSource('테스트일보', NEWS.url, direct=True, limit=1)
+    assert len(collector.parse_feed(NEWS_FEED, NOW, source=one)) == 1
+
+
+def test_fetch_candidates_merges_sources_and_survives_broken_feed():
+    broken = collector.FeedSource('고장일보', 'https://broken.example.com/rss', direct=True, limit=10)
+
+    def get(url):
+        if url == broken.url:
+            raise requests.ConnectionError('down')
+        return {collector.GEEKNEWS.url: FEED, NEWS.url: NEWS_FEED}[url]
+
+    candidates = collector.fetch_candidates(get, NOW, (collector.GEEKNEWS, broken, NEWS))
+    sources = [c.source for c in candidates]
+    assert sources[0] == 'GeekNews'  # 출처 순서대로 이어 붙인다
+    assert sources.count('테스트일보') == 2
+    assert '고장일보' not in sources
+
+
+def test_default_sources_do_not_scrape_naver():
+    # 네이버 뉴스는 robots.txt로 봇 접근과 AI 활용을 금지한다
+    assert all('naver.com' not in s.url for s in collector.DEFAULT_SOURCES)
 
 
 def test_html_to_text():
@@ -72,6 +107,13 @@ def test_fetch_article_success():
     assert article is not None
     assert article.source_url == 'https://example.com/a'
     assert len(article.text) >= fetcher.MIN_ARTICLE_CHARS
+
+
+def test_fetch_article_direct_source_reads_link_itself():
+    candidate = collector.parse_feed(NEWS_FEED, NOW, source=NEWS)[0]
+    article = fetcher.fetch_article({candidate.link: _article_page(30)}.__getitem__, candidate)
+    assert article is not None
+    assert article.source_url == candidate.link
 
 
 def test_fetch_article_too_short_returns_none():

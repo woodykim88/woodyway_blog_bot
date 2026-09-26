@@ -1,10 +1,13 @@
 import pytest
 
+from src import collector
 from src import main as pipeline
 from src.models import CandidateScore, FactCheck, SelectionResult
 from tests.helpers import FIXTURES, NOW, fake_llm, make_draft
 
 FEED = (FIXTURES / 'geeknews_feed.xml').read_text(encoding='utf-8')
+NEWS_FEED_URLS = {s.url for s in collector.NEWS_SOURCES}
+EMPTY_FEED = '<?xml version="1.0"?><rss version="2.0"><channel><title>t</title></channel></rss>'
 MODELS = pipeline.Models(writer='writer-model', fast='fast-model')
 ARTICLE_HTML = '<html><body><article>' + ''.join(
     f'<p>원문 기사의 {i}번째 문단입니다. 직장인에게 도움이 되는 충분히 긴 내용이 여기에 들어갑니다.</p>' for i in range(30)
@@ -15,6 +18,8 @@ def fake_get(broken_topics: set[str] = frozenset()):
     def get(url: str) -> str:
         if url == 'https://news.hada.io/rss/news':
             return FEED
+        if url in NEWS_FEED_URLS:
+            return EMPTY_FEED
         if url.startswith('https://news.hada.io/topic?id='):
             topic_id = url.split('=')[1]
             if topic_id in broken_topics:
@@ -28,7 +33,7 @@ def fake_get(broken_topics: set[str] = frozenset()):
 
 def selection(*indexes_scores):
     return SelectionResult(scores=[
-        CandidateScore(index=i, score=s, reason='r', one_line=f'한 줄 {i}') for i, s in indexes_scores
+        CandidateScore(index=i, score=s, reason='r', one_line=f'한 줄 {i}', story=f'소식 {i}') for i, s in indexes_scores
     ])
 
 

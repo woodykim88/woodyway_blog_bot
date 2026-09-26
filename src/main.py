@@ -150,8 +150,8 @@ def draft_article(
 
 
 def pick_short_news(ranked: Sequence[RankedCandidate], used_url: str) -> list[ShortNews]:
-    others = [r for r in ranked if r.candidate.geeknews_url != used_url]
-    return [ShortNews(r.candidate.title, r.one_line, r.candidate.geeknews_url) for r in others[:SHORT_NEWS_COUNT]]
+    others = [r for r in ranked if r.candidate.link != used_url]
+    return [ShortNews(r.candidate.title, r.one_line, r.candidate.link) for r in others[:SHORT_NEWS_COUNT]]
 
 
 def compose_post(
@@ -184,7 +184,7 @@ def compose_post(
         return Composed(
             article=article,
             draft=draft,
-            short_news=tuple(pick_short_news(ranked, r.candidate.geeknews_url)),
+            short_news=tuple(pick_short_news(ranked, r.candidate.link)),
             related=history.related_posts(past, tuple(draft.labels)),
             footer_url=footer_url,
         )
@@ -232,7 +232,7 @@ def make_entry(composed: Composed, result: dict, publish_date: str, slot: str = 
         # 초안은 Blogger가 글 주소 대신 블로그 첫 화면 주소를 돌려주므로 저장하지 않는다
         url='' if result.get('status') == 'DRAFT' else result.get('url', ''),
         source_url=composed.article.source_url,
-        geeknews_url=composed.article.candidate.geeknews_url,
+        geeknews_url=composed.article.candidate.link,
         labels=tuple(composed.draft.labels),
         status=result.get('status', ''),
         slot=slot,

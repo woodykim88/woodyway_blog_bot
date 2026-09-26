@@ -2,7 +2,7 @@ import pytest
 
 from src import history, quality, renderer, selector
 from src.llm import LLMError
-from src.models import CandidateScore, ClaimCheck, FactCheck, Section, SelectionResult, ShortNews
+from src.models import Candidate, CandidateScore, ClaimCheck, FactCheck, Section, SelectionResult, ShortNews
 from tests.helpers import fake_llm, make_article, make_candidate, make_draft, make_entry
 
 ALIVE = lambda url: True
@@ -37,11 +37,11 @@ def test_is_duplicate_by_url_and_similar_title():
 def test_rank_candidates_filters_low_scores_and_sorts():
     candidates = [make_candidate(i) for i in range(4)]
     result = SelectionResult(scores=[
-        CandidateScore(index=0, score=5, reason='r', one_line='a'),
-        CandidateScore(index=1, score=9, reason='r', one_line=' b '),
-        CandidateScore(index=2, score=7, reason='r', one_line='c'),
-        CandidateScore(index=9, score=10, reason='r', one_line='범위 밖'),
-        CandidateScore(index=2, score=10, reason='r', one_line='중복 index'),
+        CandidateScore(index=0, score=5, reason='r', one_line='a', story='s0'),
+        CandidateScore(index=1, score=9, reason='r', one_line=' b ', story='s1'),
+        CandidateScore(index=2, score=7, reason='r', one_line='c', story='s2'),
+        CandidateScore(index=9, score=10, reason='r', one_line='범위 밖', story='s9'),
+        CandidateScore(index=2, score=10, reason='r', one_line='중복 index', story='s2b'),
     ])
     llm, client = fake_llm({'SelectionResult': [result]})
     ranked = selector.rank_candidates(llm, 'fast', candidates, 'AI활용')
@@ -50,6 +50,18 @@ def test_rank_candidates_filters_low_scores_and_sorts():
         ('후보 제목 2', 7, 'c'),
     ]
     assert '오늘의 테마: AI활용' in client.requests[0]['input']
+
+
+def test_rank_candidates_keeps_one_candidate_per_story():
+    candidates = [make_candidate(i) for i in range(3)]
+    result = SelectionResult(scores=[
+        CandidateScore(index=0, score=8, reason='r', one_line='a', story='Microsoft Copilot 개편'),
+        CandidateScore(index=1, score=9, reason='r', one_line='b', story='Microsoft의 copilot 개편'),
+        CandidateScore(index=2, score=7, reason='r', one_line='c', story='엑셀 새 기능'),
+    ])
+    llm, _ = fake_llm({'SelectionResult': [result]})
+    ranked = selector.rank_candidates(llm, 'fast', candidates, '자유 주제')
+    assert [r.candidate.title for r in ranked] == ['후보 제목 1', '후보 제목 2']
 
 
 def test_rank_candidates_empty_does_not_call_llm():
@@ -89,6 +101,20 @@ def test_quality_gate_rule_failures(overrides, expected):
     assert not report.passed
     assert any(expected in issue for issue in report.issues)
     assert client.requests == []  # 규칙 검사 실패 시 LLM 사실 검증은 호출하지 않음
+
+
+def test_check_copying_flags_long_verbatim_phrase():
+    article = make_article()
+    copied = '원문 본문입니다. 원문 본문입니다. 원문 본문입니다. 원문 본문입니다.'
+    assert any('그대로' in i for i in quality.check_copying(make_draft(why_it_matters=copied), article))
+    assert quality.check_copying(make_draft(), article) == []
+
+
+def test_check_copying_ignores_shared_english_product_names():
+    article = make_article()
+    article = type(article)(article.candidate, article.source_url, article.text + ' Microsoft Copilot Managed Runtime')
+    draft = make_draft(why_it_matters='Microsoft Copilot Managed Runtime은 회사 전산팀이 먼저 검토할 대상입니다.')
+    assert quality.check_copying(draft, article) == []
 
 
 def test_keyword_match_ignores_spaces():
@@ -147,6 +173,20 @@ def test_render_post_contains_sections_and_sources():
                  'https://img.example.com/a.webp', 'AI의 도움'):
         assert text in html
     assert html.count('<p>회의록') == 4  # 섹션 2개 x 문단 2개
+
+
+def test_render_post_direct_news_source_has_no_geeknews_via():
+    news = make_article(Candidate(title='t', link='https://www.hankyung.com/article/1', summary='',
+                                  published=make_candidate().published, source='한국경제', direct=True))
+    html = renderer.render_post(make_draft(), news)
+    assert '한국경제' in html
+    assert 'GeekNews' not in html
+
+
+def test_format_candidates_shows_source():
+    news = Candidate(title='뉴스 제목', link='https://x', summary='s', published=make_candidate().published,
+                     source='한국경제', direct=True)
+    assert '(한국경제) 뉴스 제목' in selector.format_candidates([news])
 
 
 def test_render_post_escapes_llm_output():
