@@ -2,7 +2,7 @@ import pytest
 
 from src import history, quality, renderer, selector
 from src.llm import LLMError
-from src.models import Candidate, CandidateScore, ClaimCheck, FactCheck, Section, SelectionResult, ShortNews
+from src.models import Candidate, CandidateScore, ClaimCheck, FactCheck, GlossaryItem, Section, SelectionResult, ShortNews
 from tests.helpers import fake_llm, make_article, make_candidate, make_draft, make_entry
 
 ALIVE = lambda url: True
@@ -79,12 +79,17 @@ def test_quality_gate_passes_good_draft():
 
 
 def test_sample_draft_is_within_length():
-    assert quality.MIN_BODY_CHARS <= len(quality.body_text(make_draft())) <= quality.MAX_BODY_CHARS
+    assert len(quality.body_text(make_draft())) >= quality.MIN_BODY_CHARS
+    assert not hasattr(quality, 'MAX_BODY_CHARS')  # 분량 상한 없음: 품질과 클릭률이 기준
 
 
 @pytest.mark.parametrize('overrides, expected', [
     ({'key_points': ['a', 'b']}, '핵심 내용 불릿'),
-    ({'sections': [Section(heading='h', body='b' * 1500)]}, '자세히 보기 섹션'),
+    ({'sections': [Section(heading='h', body='b' * 1500, tip='t')]}, '자세히 보기 섹션'),
+    ({'hook': '회의록 AI 요약 기능이 새로 나왔습니다. 무엇이 달라졌는지 정리했습니다.'}, '도입부'),
+    ({'hook': '회의가 끝나면 늘 한숨부터 나옵니다. 오늘은 회의록 요약 도구를 살펴봅니다.'}, '도입부'),
+    ({'sections': [Section(heading='a', body='가' * 800, tip=' '), Section(heading='b', body='나' * 800, tip='t')]}, '꿀팁'),
+    ({'glossary': [GlossaryItem(term='STT', meaning=' ')]}, '용어사전'),
     ({'action_items': []}, '내일 바로 써먹기'),
     ({'labels': []}, '라벨'),
     ({'title': '가' * 41}, '제목이'),
@@ -127,8 +132,8 @@ def test_fact_check_text_includes_hook():
 
 
 def test_quality_gate_length_bounds():
-    short = make_draft(sections=[Section(heading='a', body='짧음'), Section(heading='b', body='짧음')])
-    assert any('분량' in i for i in quality.check_length(short))
+    short = make_draft(sections=[Section(heading='a', body='짧음', tip='t'), Section(heading='b', body='짧음', tip='t')])
+    assert any('너무 짧' in i for i in quality.check_length(short))
 
 
 def test_quality_gate_dead_source_and_duplicate_title():
@@ -167,12 +172,28 @@ def test_render_post_contains_sections_and_sources():
         hero_image_url='https://img.example.com/a.webp',
     )
     assert '한 줄 요약' not in html
-    assert html.index('매주 회의록 정리에') < html.index('핵심 내용')  # 도입부가 맨 앞
-    for text in ('핵심 내용', '배경', '작동 방식', '왜 중요한가', '내일 바로 써먹기',
+    assert html.index('회의는 30분 만에') < html.index('핵심 내용')  # 도입부가 맨 앞
+    for text in ('핵심 내용', '배경', '작동 방식', '그래서 나에게 무엇이 달라질까', '내일 바로 써먹기',
                  'https://example.com/original', 'GeekNews', '오늘의 짧은 소식', '관련 글',
                  'https://img.example.com/a.webp', 'AI의 도움'):
         assert text in html
     assert html.count('<p>회의록') == 4  # 섹션 2개 x 문단 2개
+
+
+def test_render_post_hook_tips_and_glossary():
+    html = renderer.render_post(make_draft(), make_article())
+    assert html.count('<p style="font-size:1.2em') == 2  # 도입부 문단 2개
+    assert '회의 시작 전에 녹음 버튼부터 누르세요.' in html and '💡' in html
+    assert '용어사전' in html and 'STT' in html
+    assert html.index('내일 바로 써먹기') < html.index('용어사전') < html.index('출처')
+
+
+def test_render_post_without_glossary_has_no_glossary_heading():
+    assert '용어사전' not in renderer.render_post(make_draft(glossary=[]), make_article())
+
+
+def test_fact_check_text_includes_glossary():
+    assert 'STT' in quality.fact_check_text(make_draft())
 
 
 def test_render_post_direct_news_source_has_no_geeknews_via():

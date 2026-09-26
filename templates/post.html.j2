@@ -3,7 +3,9 @@
   <img src="{{ hero_image_url }}" alt="{{ draft.image_alt }}" width="1200" style="max-width:100%;height:auto;border-radius:8px;" loading="eager">
 </div>
 {% endif %}
-<p style="font-size:1.15em;line-height:1.8;">{{ draft.hook }}</p>
+{% for p in hook_paragraphs %}
+<p style="font-size:1.2em;line-height:1.8;font-weight:500;">{{ p }}</p>
+{% endfor %}
 
 <h3>핵심 내용</h3>
 <ul>
@@ -12,14 +14,15 @@
 {% endfor %}
 </ul>
 
-{% for heading, paragraphs in sections %}
+{% for heading, paragraphs, tip in sections %}
 <h3>{{ heading }}</h3>
 {% for p in paragraphs %}
 <p>{{ p }}</p>
 {% endfor %}
+<p style="padding:12px 16px;background:#fff8e6;border-left:4px solid #f5b400;border-radius:4px;">💡 <strong>꿀팁</strong> · {{ tip }}</p>
 {% endfor %}
 
-<h3>왜 중요한가</h3>
+<h3>그래서 나에게 무엇이 달라질까</h3>
 <p>{{ draft.why_it_matters }}</p>
 
 <h3>내일 바로 써먹기</h3>
@@ -29,6 +32,15 @@
 {% endfor %}
 </ol>
 
+{% if draft.glossary %}
+<h3>용어사전</h3>
+<ul>
+{% for item in draft.glossary %}
+  <li><strong>{{ item.term }}</strong> · {{ item.meaning }}</li>
+{% endfor %}
+</ul>
+
+{% endif %}
 <h3>출처</h3>
 <ul>
 {% if via_url %}

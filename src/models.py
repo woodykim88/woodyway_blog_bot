@@ -65,18 +65,25 @@ class SelectionResult(BaseModel):
 
 
 class Section(BaseModel):
-    heading: str = Field(description='소제목 (20자 이내)')
-    body: str = Field(description='문단 2~3개. 문단 사이는 빈 줄 한 개로 구분')
+    heading: str = Field(description='궁금증을 담은 소제목 (20자 이내)')
+    body: str = Field(description='문단 2~3개. 공감 → 원문 사실 → 해결 실마리. 문단 사이는 빈 줄 한 개로 구분')
+    tip: str = Field(description='이 섹션에서 독자가 바로 써먹을 꿀팁 한 문장')
+
+
+class GlossaryItem(BaseModel):
+    term: str = Field(description='본문에서 뺀 어려운 용어 (원래 이름 그대로)')
+    meaning: str = Field(description='비개발 직장인이 이해할 수 있는 쉬운 설명 1~2문장')
 
 
 class PostDraft(BaseModel):
     search_keyword: str = Field(description='한국 독자가 검색창에 실제로 입력할 핵심 검색어 (2~4단어)')
     title: str = Field(description='40자 이내. 검색어를 앞쪽에 넣고, 원문에서 가장 의외인 사실로 궁금증을 만든다')
-    hook: str = Field(description='도입부 2~3문장. 가장 의외인 사실이나 독자가 겪는 상황으로 시작')
+    hook: str = Field(description='시선을 사로잡는 도입부 2~4문장. 독자가 겪는 장면이나 가장 의외인 사실로 시작. 짧은 문단은 빈 줄로 구분')
     key_points: list[str] = Field(description='핵심 내용 불릿 3~5개, 각 1~2문장')
     sections: list[Section] = Field(description='자세히 보기 섹션 2~3개')
     why_it_matters: str = Field(description='직장인 입장에서 왜 중요한지 2~3문장')
     action_items: list[str] = Field(description='내일 바로 해볼 수 있는 구체적 행동 1~3개')
+    glossary: list[GlossaryItem] = Field(description='글 하단 용어사전. 본문에서 뺀 어려운 용어 0~6개')
     labels: list[Label] = Field(description='라벨 1~2개')
     meta_description: str = Field(description='검색 결과용 설명 150자 이내')
     image_prompt: str = Field(description='대표 이미지용 영문 프롬프트. 글자, 실존 인물, 로고 없이')

@@ -8,7 +8,7 @@ from typing import Any
 
 from src.history import HistoryEntry
 from src.llm import LLMClient
-from src.models import Article, Candidate, PostDraft, Section
+from src.models import Article, Candidate, GlossaryItem, PostDraft, Section
 from src.providers import OpenAITextBackend
 
 FIXTURES = Path(__file__).parent / 'fixtures'
@@ -56,14 +56,15 @@ def make_draft(**overrides: Any) -> PostDraft:
     fields: dict[str, Any] = {
         'title': '회의록 AI 요약, 30분 걸리던 정리가 1분이면 끝나는 이유',
         'search_keyword': '회의록 AI 요약',
-        'hook': '매주 회의록 정리에 30분씩 쓰고 있다면, 그 시간은 이제 1분으로 줄일 수 있습니다. 녹음 파일 하나면 됩니다.',
+        'hook': '회의는 30분 만에 끝났는데, 회의록 정리는 왜 한 시간이 걸릴까요?\n\n녹음 파일 하나로 그 시간을 1분으로 줄인 사람들이 있습니다.',
         'key_points': ['첫째 핵심 내용입니다.', '둘째 핵심 내용입니다.', '셋째 핵심 내용입니다.'],
         'sections': [
-            Section(heading='배경', body=f'{paragraph}\n\n{paragraph}'),
-            Section(heading='작동 방식', body=f'{paragraph}\n\n{paragraph}'),
+            Section(heading='배경', body=f'{paragraph}\n\n{paragraph}', tip='회의 시작 전에 녹음 버튼부터 누르세요.'),
+            Section(heading='작동 방식', body=f'{paragraph}\n\n{paragraph}', tip='요약 결과는 담당자별로 나눠 달라고 하세요.'),
         ],
         'why_it_matters': '회의가 많은 조직일수록 정리 시간이 누적됩니다. 이를 줄이면 본업에 집중할 수 있습니다.',
         'action_items': ['다음 회의 녹음 파일을 요약 도구에 넣어 보세요.'],
+        'glossary': [GlossaryItem(term='STT', meaning='말소리를 글자로 바꿔 주는 기술입니다.')],
         'labels': ['AI활용'],
         'meta_description': '회의록 AI 요약으로 정리 시간을 줄이는 활용법',
         'image_prompt': 'people at a desk, flat illustration, no text',

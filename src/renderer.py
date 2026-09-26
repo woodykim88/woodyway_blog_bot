@@ -34,7 +34,8 @@ def render_post(
 ) -> str:
     return _env.get_template('post.html.j2').render(
         draft=draft,
-        sections=[(s.heading, split_paragraphs(s.body)) for s in draft.sections],
+        hook_paragraphs=split_paragraphs(draft.hook),
+        sections=[(s.heading, split_paragraphs(s.body), s.tip) for s in draft.sections],
         source_url=article.source_url,
         source_name=article.candidate.source,
         # GeekNews처럼 다른 곳에서 원문을 찾아온 경우에만 "via" 링크를 단다

@@ -10,8 +10,8 @@ from src.llm import LLMClient, load_prompt
 from src.models import Article, FactCheck, PostDraft
 from src.selector import TITLE_SIMILARITY_THRESHOLD, title_similarity
 
-MIN_BODY_CHARS = 1200
-MAX_BODY_CHARS = 2500
+# 목표 분량이 아니라 생성이 깨졌는지(빈 섹션 등)만 거르는 하한. 상한은 두지 않는다
+MIN_BODY_CHARS = 700
 MAX_TITLE_CHARS = 40
 MAX_META_CHARS = 150
 BANNED_WORDS = ('충격', '경악', '필수', '모르면 손해', '대박', '역대급', '무조건', '100%')
@@ -19,6 +19,8 @@ BANNED_WORDS = ('충격', '경악', '필수', '모르면 손해', '대박', '역
 FORMULAIC_TITLE = re.compile(r'\d+\s*(가지|단계)')
 # 공백을 뺀 이 글자 수 이상이 원문과 똑같이 이어지면 옮겨 쓴 것으로 본다 (한국어 기사 표절 방지)
 COPY_WINDOW = 30
+# 도입부가 "알아봅니다/정리했습니다" 같은 안내문으로 흐르면 시선을 끌지 못한다
+WEAK_HOOK_PHRASES = ('정리했습니다', '알아봅니다', '알아보겠습니다', '살펴봅니다', '살펴보겠습니다', '소개합니다')
 # 그중 한글이 이 글자 수 이상일 때만 센다. 영어 제품명처럼 바꿔 쓸 수 없는 고유명사는 제외
 MIN_HANGUL_IN_COPY = 15
 _HANGUL_RE = re.compile(r'[가-힣]')
@@ -38,7 +40,7 @@ def body_text(draft: PostDraft) -> str:
     parts = [
         draft.hook,
         *draft.key_points,
-        *(f'{s.heading}\n{s.body}' for s in draft.sections),
+        *(f'{s.heading}\n{s.body}\n{s.tip}' for s in draft.sections),
         draft.why_it_matters,
         *draft.action_items,
     ]
@@ -53,6 +55,7 @@ def fact_check_text(draft: PostDraft) -> str:
         *draft.key_points,
         *(f'{s.heading}\n{s.body}' for s in draft.sections),
         draft.why_it_matters,
+        *(f'{g.term}: {g.meaning}' for g in draft.glossary),
     ]
     return '\n'.join(parts)
 
@@ -67,6 +70,10 @@ def check_structure(draft: PostDraft) -> list[str]:
         issues.append(f'내일 바로 써먹기는 1~3개여야 합니다 (현재 {len(draft.action_items)}개).')
     if not 1 <= len(draft.labels) <= 2:
         issues.append(f'라벨은 1~2개여야 합니다 (현재 {len(draft.labels)}개).')
+    if any(not s.tip.strip() for s in draft.sections):
+        issues.append('섹션마다 꿀팁(tip) 한 문장이 있어야 합니다.')
+    if any(not g.term.strip() or not g.meaning.strip() for g in draft.glossary):
+        issues.append('용어사전 항목에 용어와 쉬운 설명을 모두 적으세요.')
     if len(draft.title) > MAX_TITLE_CHARS:
         issues.append(f'제목이 {MAX_TITLE_CHARS}자를 넘습니다 (현재 {len(draft.title)}자).')
     if len(draft.meta_description) > MAX_META_CHARS:
@@ -115,10 +122,23 @@ def check_copying(draft: PostDraft, article: Article) -> list[str]:
     return [f'원문 문장을 그대로 옮긴 부분이 {len(found)}곳 있습니다. 자신의 말로 바꿔 쓰세요: {examples}']
 
 
+def check_hook(draft: PostDraft) -> list[str]:
+    """뉴스 기사처럼 "회사·제품 이름이 ~를 발표했다"로 시작하거나 안내문으로 흐르는 도입부를 거릅니다."""
+    hook = draft.hook.strip()
+    issues = []
+    keyword = draft.search_keyword.strip()
+    if keyword and hook.replace(' ', '').startswith(keyword.replace(' ', '')):
+        issues.append('도입부를 검색어(회사·제품 이름)로 시작하지 마세요. 독자가 겪는 장면이나 의외의 사실로 시작하세요.')
+    found = [p for p in WEAK_HOOK_PHRASES if p in hook]
+    if found:
+        issues.append(f'도입부에 "{found[0]}" 같은 안내문을 쓰지 마세요. 긴장감이나 질문으로 끝내세요.')
+    return issues
+
+
 def check_length(draft: PostDraft) -> list[str]:
     length = len(body_text(draft))
-    if not MIN_BODY_CHARS <= length <= MAX_BODY_CHARS:
-        return [f'본문 분량은 {MIN_BODY_CHARS}~{MAX_BODY_CHARS}자여야 합니다 (현재 {length}자).']
+    if length < MIN_BODY_CHARS:
+        return [f'본문이 너무 짧습니다 (현재 {length}자). 섹션 내용을 채워 주세요.']
     return []
 
 
@@ -161,6 +181,7 @@ def run_quality_gate(
     issues = [
         *check_structure(draft),
         *check_seo(draft),
+        *check_hook(draft),
         *check_copying(draft, article),
         *check_length(draft),
         *check_banned_words(draft),
