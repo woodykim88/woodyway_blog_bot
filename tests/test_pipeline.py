@@ -53,8 +53,8 @@ def test_compose_post_happy_path():
     assert '오늘의 짧은 소식' in composed.html
     assert all(f'한 줄 {i}' in composed.html for i in (1, 2, 3))  # 메인 제외 상위 3건
     assert '한 줄 0' not in composed.html
-    assert [r['model'] for r in client.requests] == ['fast-model', 'writer-model', 'fast-model']
-    assert llm.calls == 3
+    assert [r['model'] for r in client.requests] == ['fast-model', 'writer-model', 'writer-model', 'fast-model']  # 선별·작성·윤문·검증
+    assert llm.calls == 4  # 선별·작성·윤문·검증
 
 
 def test_compose_post_rewrites_once_with_feedback():
@@ -65,7 +65,7 @@ def test_compose_post_rewrites_once_with_feedback():
     })
     composed = pipeline.compose_post(llm, MODELS, NOW, (), get=fake_get(), is_alive=lambda u: True)
     assert composed.draft.action_items
-    assert '검수에서 아래 이유로 탈락' in client.requests[2]['input']
+    assert any('검수에서 아래 이유로 탈락' in r['input'] for r in client.requests)
 
 
 def test_compose_post_falls_back_to_next_topic_when_source_missing():

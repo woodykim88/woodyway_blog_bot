@@ -9,7 +9,7 @@ from pydantic import BaseModel
 from src.providers import TextBackend
 
 PROMPTS_DIR = Path(__file__).resolve().parent.parent / 'prompts'
-DEFAULT_MAX_CALLS = 16  # 최악의 경우 1 + 3주제 x 2회 x (작성+검증) = 13회
+DEFAULT_MAX_CALLS = 24  # 최악의 경우 1 + 3주제 x 2회 x (작성+윤문+검증) = 19회
 
 T = TypeVar('T', bound=BaseModel)
 

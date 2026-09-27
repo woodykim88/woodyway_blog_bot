@@ -43,6 +43,7 @@ from src import (
     schedule,
     selector,
     thumbnail,
+    polish,
     writer,
 )
 from src.http_client import HttpGet, http_get, url_is_alive
@@ -137,10 +138,10 @@ def draft_article(
     past: tuple[history.HistoryEntry, ...],
     is_alive: Callable[[str], bool],
 ) -> PostDraft | None:
-    """글을 쓰고 검수합니다. 탈락하면 검수 의견을 반영해 한 번 더 씁니다."""
+    """글을 쓰고 사람이 쓴 글처럼 윤문한 뒤 검수합니다. 탈락하면 검수 의견을 반영해 한 번 더 씁니다."""
     feedback: tuple[str, ...] = ()
     for attempt in range(1, MAX_WRITE_ATTEMPTS + 1):
-        draft = writer.write_post(llm, models.writer, article, theme, feedback)
+        draft = polish.polish_draft(llm, models.writer, writer.write_post(llm, models.writer, article, theme, feedback))
         report = quality.run_quality_gate(llm, models.fast, draft, article, past, is_alive)
         if report.passed:
             print(f'[검수 통과] {draft.title} (시도 {attempt})')

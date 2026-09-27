@@ -175,8 +175,9 @@ def test_render_post_contains_sections_and_sources():
     assert html.index('회의는 30분 만에') < html.index('핵심 내용')  # 도입부가 맨 앞
     for text in ('핵심 내용', '배경', '작동 방식', '그래서 나에게 무엇이 달라질까', '내일 바로 써먹기',
                  'https://example.com/original', 'GeekNews', '오늘의 짧은 소식', '관련 글',
-                 'https://img.example.com/a.webp', 'AI의 도움'):
+                 'https://img.example.com/a.webp'):
         assert text in html
+    assert 'AI의 도움' not in html  # AI 작성 고지는 붙이지 않는다 (사용자 결정 2026-09-27)
     assert html.count('<p>회의록') == 4  # 섹션 2개 x 문단 2개
 
 
@@ -243,7 +244,7 @@ def test_render_post_footer_link():
     url = 'https://link.inpock.co.kr/shoperwoody'
     html = renderer.render_post(make_draft(), make_article(), footer_url=url)
     assert f'href="{url}"' in html
-    assert html.index(url) < html.index('AI의 도움')  # AI 고지문 바로 위
+    assert html.rstrip().endswith('</div>') and html.rindex(url) > html.index('출처')  # 인포크 안내가 글의 마지막
     assert 'inpock' not in renderer.render_post(make_draft(), make_article())
 
 

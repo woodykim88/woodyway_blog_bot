@@ -107,6 +107,18 @@ class PostDraft(BaseModel):
     )
 
 
+class PolishedProse(BaseModel):
+    """윤문 결과: 초안의 문장 부분만. 제목·검색어·소제목·썸네일은 받지 않는다 (바꾸면 안 되는 값)."""
+
+    model_config = ConfigDict(json_schema_extra=_require_all_fields)
+
+    hook: str = Field(description='다듬은 도입부 (문단 수와 뜻은 그대로)')
+    key_points: list[str] = Field(description='다듬은 핵심 내용 (개수와 순서 그대로)')
+    sections: list[Section] = Field(description='다듬은 섹션 (개수와 순서 그대로. heading은 원래 값을 그대로 옮긴다)')
+    why_it_matters: str = Field(description='다듬은 "나에게 무엇이 달라질까"')
+    action_items: list[str] = Field(description='다듬은 실천 항목 (개수와 순서 그대로)')
+
+
 ClaimKind = Literal['supported_fact', 'unsupported_fact', 'opinion_or_advice']
 
 

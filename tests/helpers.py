@@ -15,6 +15,9 @@ FIXTURES = Path(__file__).parent / 'fixtures'
 NOW = datetime(2026, 9, 25, 11, 0, tzinfo=timezone.utc)  # 20:00 KST
 
 
+OPTIONAL_SCHEMAS = {'PolishedProse'}
+
+
 class FakeOpenAI:
     """schema 이름별로 준비된 응답을 순서대로 돌려주는 가짜 OpenAI 클라이언트."""
 
@@ -25,7 +28,10 @@ class FakeOpenAI:
 
     def _parse(self, **kwargs: Any) -> SimpleNamespace:
         self.requests.append(kwargs)
-        queue = self._responses[kwargs['text_format'].__name__]
+        name = kwargs['text_format'].__name__
+        if name in OPTIONAL_SCHEMAS and not self._responses.get(name):
+            return SimpleNamespace(output_parsed=None)  # 선택 단계(윤문)는 준비 안 했으면 실패로 보고 원고를 그대로 쓴다
+        queue = self._responses[name]
         return SimpleNamespace(output_parsed=queue.pop(0))
 
 
