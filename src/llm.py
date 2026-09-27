@@ -28,12 +28,12 @@ class LLMClient:
         self._max_calls = max_calls
         self.calls = 0
 
-    def parse(self, model: str, instructions: str, user_input: str, schema: type[T]) -> T:
-        """schema 형태의 응답을 받아 검증된 pydantic 객체로 반환합니다."""
+    def parse(self, model: str, instructions: str, user_input: str, schema: type[T], effort: str | None = None) -> T:
+        """schema 형태의 응답을 받아 검증된 pydantic 객체로 반환합니다. effort는 생각하는 양 (None이면 모델 기본값)."""
         if self.calls >= self._max_calls:
             raise LLMError(f'이번 실행의 LLM 호출 상한({self._max_calls}회)을 넘었습니다.')
         self.calls += 1
-        parsed = self._backend.parse(model, instructions, user_input, schema)
+        parsed = self._backend.parse(model, instructions, user_input, schema, effort)
         if parsed is None:
             raise LLMError(f'{schema.__name__} 응답을 해석하지 못했습니다 (거절 또는 형식 오류).')
         return parsed

@@ -30,6 +30,16 @@ ANTHROPIC_MAX_TOKENS = 8000
 IMAGE_SIZE = '1536x1024'
 
 
+REASONING_MODEL_PREFIXES = ('gpt-5', 'o')  # 생각하는 양(reasoning effort)을 받는 OpenAI 모델
+
+
+def reasoning_option(model: str, effort: str | None) -> dict:
+    """effort를 받는 모델에만 reasoning 옵션을 붙입니다 (안 받는 모델에 붙이면 요청이 거절된다)."""
+    if not effort or not model.startswith(REASONING_MODEL_PREFIXES):
+        return {}
+    return {'reasoning': {'effort': effort}}
+
+
 class ProviderConfigError(Exception):
     """AI 회사/모델/키 설정이 잘못되었을 때 발생합니다."""
 
@@ -79,16 +89,20 @@ def api_key(env: Mapping[str, str], provider: str) -> str:
 # --- 텍스트 ---
 
 class TextBackend(Protocol):
-    def parse(self, model: str, instructions: str, user_input: str, schema: type[T]) -> T | None: ...
+    def parse(
+        self, model: str, instructions: str, user_input: str, schema: type[T], effort: str | None = None
+    ) -> T | None: ...
 
 
 class OpenAITextBackend:
     def __init__(self, client: Any) -> None:
         self._client = client
 
-    def parse(self, model: str, instructions: str, user_input: str, schema: type[T]) -> T | None:
+    def parse(
+        self, model: str, instructions: str, user_input: str, schema: type[T], effort: str | None = None
+    ) -> T | None:
         response = self._client.responses.parse(
-            model=model, instructions=instructions, input=user_input, text_format=schema
+            model=model, instructions=instructions, input=user_input, text_format=schema, **reasoning_option(model, effort)
         )
         usage.record(model, response)
         return response.output_parsed
@@ -98,7 +112,9 @@ class AnthropicTextBackend:
     def __init__(self, client: Any) -> None:
         self._client = client
 
-    def parse(self, model: str, instructions: str, user_input: str, schema: type[T]) -> T | None:
+    def parse(
+        self, model: str, instructions: str, user_input: str, schema: type[T], effort: str | None = None
+    ) -> T | None:
         response = self._client.messages.parse(
             model=model,
             max_tokens=ANTHROPIC_MAX_TOKENS,
@@ -114,7 +130,9 @@ class GeminiTextBackend:
     def __init__(self, client: Any) -> None:
         self._client = client
 
-    def parse(self, model: str, instructions: str, user_input: str, schema: type[T]) -> T | None:
+    def parse(
+        self, model: str, instructions: str, user_input: str, schema: type[T], effort: str | None = None
+    ) -> T | None:
         from google.genai import types
 
         response = self._client.models.generate_content(

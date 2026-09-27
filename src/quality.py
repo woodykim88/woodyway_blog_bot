@@ -30,6 +30,7 @@ WEAK_HOOK_PHRASES = ('정리했습니다', '알아봅니다', '알아보겠습�
 # 그중 한글이 이 글자 수 이상일 때만 센다. 영어 제품명처럼 바꿔 쓸 수 없는 고유명사는 제외
 MIN_HANGUL_IN_COPY = 15
 _HANGUL_RE = re.compile(r'[가-힣]')
+CHECK_EFFORT = 'low'  # 사실검증은 원문과 대조만 하면 돼서 생각하는 양을 낮춘다 (원고 쓰기는 기본값 유지)
 
 
 @dataclass(frozen=True)
@@ -189,7 +190,7 @@ def check_source(article: Article, is_alive: Callable[[str], bool]) -> list[str]
 
 def check_facts(llm: LLMClient, model: str, draft: PostDraft, article: Article) -> list[str]:
     user_input = f'--- 원문 ---\n{article.text}\n\n--- 작성된 글 ---\n{fact_check_text(draft)}'
-    result = llm.parse(model, load_prompt('factcheck'), user_input, FactCheck)
+    result = llm.parse(model, load_prompt('factcheck'), user_input, FactCheck, effort=CHECK_EFFORT)
     return [
         f'원문에 근거 없는 사실: "{c.sentence}" ({c.reason})'
         for c in result.claims
