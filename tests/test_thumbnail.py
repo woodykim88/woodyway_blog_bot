@@ -97,13 +97,16 @@ def test_add_headline_crops_wide_image_to_3_2():
 
 
 @needs_font
-def test_add_headline_paints_highlight_box():
-    def yellow_pixels(headline):
+def test_add_headline_paints_half_transparent_highlight_box():
+    def count(headline, test):
         im = opened(thumbnail.add_headline(solid(color=(0, 0, 0)), headline, FONT))
-        return sum(1 for r, g, b in pixels(im) if r > 200 and g > 180 and b < 80)
+        return sum(1 for p in pixels(im) if test(*p))
 
-    assert yellow_pixels(HEADLINE) > 5000
-    assert yellow_pixels(thumbnail.Headline('코파일럿\n24시간 일한다?', '없는말')) == 0
+    half_yellow = lambda r, g, b: 105 < r < 150 and 85 < g < 130 and b < 40  # 검정 위 노랑 50% ≈ (128, 107, 5)
+    solid_yellow = lambda r, g, b: r > 200 and g > 180 and b < 80
+    assert count(HEADLINE, half_yellow) > 5000
+    assert count(HEADLINE, solid_yellow) == 0  # 불투명 노랑은 없어야 한다 (뒤 글자가 비쳐 보이게)
+    assert count(thumbnail.Headline('코파일럿\n24시간 일한다?', '없는말'), half_yellow) == 0
 
 
 @needs_font

@@ -23,8 +23,8 @@ SIZE_STEP = 4
 GRADIENT_ALPHA = 0.9       # 맨 왼쪽 검정 농도
 GRADIENT_END = 0.65        # 이 비율 지점에서 그라데이션이 0이 된다
 TEXT_COLOR = (255, 255, 255)
-HIGHLIGHT_COLOR = '#FFD60A'
-HIGHLIGHT_TEXT_COLOR = '#111111'
+HIGHLIGHT_COLOR = (255, 214, 10, 128)  # 노랑 50%: 위 줄 글자와 겹쳐도 비쳐 보이게 (인스타 표지와 같은 스타일)
+HIGHLIGHT_TEXT_COLOR = TEXT_COLOR
 SHADOW_OFFSET = 5
 SHADOW_BLUR = 6
 SHADOW_ALPHA = 200
@@ -133,20 +133,27 @@ def _draw_shadow(image: Image.Image, lines: Sequence[str], font: ImageFont.FreeT
     return Image.alpha_composite(image, layer)
 
 
-def _draw_line(draw: ImageDraw.ImageDraw, line: str, highlight: str, font: ImageFont.FreeTypeFont, y: int) -> None:
+def _paint_box(canvas: Image.Image, box: tuple[float, float, float, float], radius: int) -> None:
+    """반투명 상자는 별도 층에 그려 합성합니다 (RGBA 캔버스에 바로 칠하면 섞이지 않고 구멍이 난다)."""
+    layer = Image.new('RGBA', canvas.size, (0, 0, 0, 0))
+    ImageDraw.Draw(layer).rounded_rectangle(box, radius=radius, fill=HIGHLIGHT_COLOR)
+    canvas.alpha_composite(layer)
+
+
+def _draw_line(canvas: Image.Image, line: str, highlight: str, font: ImageFont.FreeTypeFont, y: int) -> None:
     before, marked, after = split_highlight(line, highlight)
     x = MARGIN_X
     stroke = _stroke(font)
+    draw = ImageDraw.Draw(canvas)
     draw.text((x, y), before, font=font, anchor='ls', fill=TEXT_COLOR, stroke_width=stroke, stroke_fill=TEXT_COLOR)
     x += font.getlength(before)
     if marked:
         top, bottom = _glyph_box(font)
         pad_x, pad_y = round(font.size * 0.14), round(font.size * 0.03)
         width = font.getlength(marked)
-        draw.rounded_rectangle(
-            (x - pad_x / 2, y + top - pad_y, x + width + pad_x, y + bottom + pad_y),
-            radius=round(font.size * 0.14), fill=HIGHLIGHT_COLOR,
-        )
+        _paint_box(canvas, (x - pad_x / 2, y + top - pad_y, x + width + pad_x, y + bottom + pad_y),
+                   round(font.size * 0.14))
+        draw = ImageDraw.Draw(canvas)
         draw.text((x + pad_x / 4, y), marked, font=font, anchor='ls', fill=HIGHLIGHT_TEXT_COLOR,
                   stroke_width=stroke, stroke_fill=HIGHLIGHT_TEXT_COLOR)
         x += width + pad_x * 1.25
@@ -168,11 +175,10 @@ def render(image: Image.Image, headline: Headline, font_spec: FontSpec) -> Image
     font = fit_font(font_spec, lines)
     baselines = _baselines(font, len(lines), CANVAS[1])
     canvas = _draw_shadow(darken_left(cover(image)).convert('RGBA'), lines, font, baselines)
-    draw = ImageDraw.Draw(canvas)
     for line, y in zip(lines, baselines):
-        _draw_line(draw, line, headline.highlight.strip(), font, y)
+        _draw_line(canvas, line, headline.highlight.strip(), font, y)
     if headline.label.strip():
-        _draw_label(draw, headline.label.strip(), font_spec)
+        _draw_label(ImageDraw.Draw(canvas), headline.label.strip(), font_spec)
     return canvas.convert('RGB')
 
 
