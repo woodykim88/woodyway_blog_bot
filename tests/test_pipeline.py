@@ -1,12 +1,13 @@
 import pytest
 
-from src import collector
+from src import collector, topics
 from src import main as pipeline
 from src.models import CandidateScore, FactCheck, SelectionResult
 from tests.helpers import FIXTURES, NOW, fake_llm, make_draft
 
 FEED = (FIXTURES / 'geeknews_feed.xml').read_text(encoding='utf-8')
 NEWS_FEED_URLS = {s.url for s in collector.NEWS_SOURCES}
+MONEY_FEED_URLS = {s.url for s in collector.MONEY_SOURCES}
 EMPTY_FEED = '<?xml version="1.0"?><rss version="2.0"><channel><title>t</title></channel></rss>'
 MODELS = pipeline.Models(writer='writer-model', fast='fast-model')
 ARTICLE_HTML = '<html><body><article>' + ''.join(
@@ -18,7 +19,7 @@ def fake_get(broken_topics: set[str] = frozenset()):
     def get(url: str) -> str:
         if url == 'https://news.hada.io/rss/news':
             return FEED
-        if url in NEWS_FEED_URLS:
+        if url in NEWS_FEED_URLS or url in MONEY_FEED_URLS:
             return EMPTY_FEED
         if url.startswith('https://news.hada.io/topic?id='):
             topic_id = url.split('=')[1]
@@ -29,6 +30,15 @@ def fake_get(broken_topics: set[str] = frozenset()):
             return ARTICLE_HTML
         raise AssertionError(f'unexpected url {url}')
     return get
+
+
+
+
+@pytest.fixture(autouse=True)
+def tech_first(monkeypatch, request):
+    """기존 테스트는 AI·IT 분야 흐름을 본다. 분야 선택 자체는 test_topics와 아래 분야 테스트에서 본다."""
+    if 'money' not in request.node.name:
+        monkeypatch.setattr(topics, 'choose_category', lambda past: topics.TECH)
 
 
 def selection(*indexes_scores):
@@ -128,3 +138,49 @@ def test_make_entry_drops_placeholder_url_for_drafts():
     composed = pipeline.compose_post(llm, MODELS, NOW, (), get=fake_get(), is_alive=lambda u: True)
     draft = pipeline.make_entry(composed, {'id': '1', 'url': 'https://www.woodyway88.com/', 'status': 'DRAFT'}, 'd')
     assert draft.url == ''
+
+
+MONEY_FEED = FEED.replace('https://news.hada.io/topic?id=', 'https://money.example.com/')
+
+
+def money_get():
+    """한국경제 경제 피드만 기사를 돌려주고, 기사 주소는 곧 원문이다 (direct 출처)."""
+    base = fake_get()
+
+    def get(url: str) -> str:
+        if url == 'https://www.hankyung.com/feed/economy':
+            return MONEY_FEED
+        if url.startswith('https://money.example.com/'):
+            return ARTICLE_HTML
+        return base(url)
+    return get
+
+
+def test_compose_post_money_first_uses_money_prompt_and_persona():
+    llm, client = fake_llm({
+        'SelectionResult': [selection((0, 9))],
+        'PostDraft': [make_draft(labels=['재테크'])],
+        'FactCheck': [OK],
+    })
+    composed = pipeline.compose_post(llm, MODELS, NOW, (), get=money_get(), is_alive=lambda u: True)
+    assert composed.draft.labels == ['재테크']
+    select, write = client.requests[0], client.requests[1]
+    assert '생활경제·재테크 블로그 글감의 편집장' in select['instructions']
+    assert '생활경제·재테크 필자' in write['instructions']
+    assert renderer_note_in(composed.html)
+
+
+def renderer_note_in(html: str) -> bool:
+    from src import renderer
+    return renderer.MONEY_NOTE in html
+
+
+def test_compose_post_money_falls_back_to_tech_when_no_money_topic():
+    llm, client = fake_llm({
+        'SelectionResult': [selection((0, 3)), selection((0, 9))],  # 생활경제는 기준 미달 → AI·IT로
+        'PostDraft': [make_draft()],
+        'FactCheck': [OK],
+    })
+    composed = pipeline.compose_post(llm, MODELS, NOW, (), get=money_get(), is_alive=lambda u: True)
+    assert composed.draft.title == make_draft().title
+    assert '생활경제·재테크' in client.requests[0]['instructions'] and '생활경제·재테크' not in client.requests[1]['instructions']

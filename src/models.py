@@ -11,7 +11,7 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-Label = Literal['AI활용', '업무생산성', 'IT트렌드', '툴추천', '커리어']
+Label = Literal['AI활용', '업무생산성', 'IT트렌드', '툴추천', '커리어', '재테크', '생활경제', '지원금·혜택', '절약꿀팁', '부동산']
 LABELS: tuple[str, ...] = ('AI활용', '업무생산성', 'IT트렌드', '툴추천', '커리어')
 
 

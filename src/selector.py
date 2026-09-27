@@ -11,10 +11,6 @@ TITLE_SIMILARITY_THRESHOLD = 0.6
 MIN_SCORE = 6
 RECENT_HISTORY_SIZE = 30
 
-# 월(0) ~ 일(6)
-WEEKDAY_THEMES = ('AI활용', '툴추천', 'IT트렌드', '업무생산성', '커리어', '자유 주제', '자유 주제')
-
-
 def title_similarity(a: str, b: str) -> float:
     return SequenceMatcher(None, a.replace(' ', ''), b.replace(' ', '')).ratio()
 
@@ -38,13 +34,13 @@ def format_candidates(candidates: list[Candidate]) -> str:
 
 
 def rank_candidates(
-    llm: LLMClient, model: str, candidates: list[Candidate], theme: str
+    llm: LLMClient, model: str, candidates: list[Candidate], theme: str, prompt: str = 'selector'
 ) -> list[RankedCandidate]:
     """MIN_SCORE 이상인 후보를 점수 높은 순으로 반환합니다. 같은 소식은 점수가 가장 높은 하나만 남깁니다."""
     if not candidates:
         return []
     user_input = f'오늘의 테마: {theme}\n\n후보 목록:\n{format_candidates(candidates)}'
-    result = llm.parse(model, load_prompt('selector'), user_input, SelectionResult)
+    result = llm.parse(model, load_prompt(prompt), user_input, SelectionResult)
 
     best: dict[int, tuple[RankedCandidate, str]] = {}
     for s in result.scores:

@@ -50,6 +50,9 @@
   <li>원문: {{ source_name }} · <a href="{{ source_url }}" target="_blank" rel="noopener nofollow">{{ source_url }}</a></li>
 {% endif %}
 </ul>
+{% if money_note %}
+<p style="font-size:0.9em;color:#666;">{{ money_note }}</p>
+{% endif %}
 {% if short_news %}
 
 <h3>오늘의 짧은 소식</h3>

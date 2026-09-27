@@ -129,3 +129,14 @@ def test_fetch_article_network_error_returns_none():
         raise requests.ConnectionError('down')
 
     assert fetcher.fetch_article(failing_get, make_candidate(0)) is None
+
+
+def test_parse_feed_reads_dates_without_space_after_comma():
+    from datetime import datetime, timezone
+
+    from src import collector
+    raw = ('<?xml version="1.0"?><rss version="2.0"><channel><title>t</title><item><title>파킹통장 금리</title>'
+           '<link>https://www.fnnews.com/news/1</link><pubDate>Sun,27 Sep 2026 08:45:12 +0900</pubDate></item></channel></rss>')
+    source = collector.FeedSource('파이낸셜뉴스', 'https://www.fnnews.com/rss/x.xml', direct=True, limit=5)
+    [c] = collector.parse_feed(raw, datetime(2026, 9, 27, 1, 0, tzinfo=timezone.utc), source=source)
+    assert c.published == datetime(2026, 9, 26, 23, 45, 12, tzinfo=timezone.utc)

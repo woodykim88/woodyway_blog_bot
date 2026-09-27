@@ -6,6 +6,7 @@ from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
 
+from src import topics
 from src.history import HistoryEntry
 from src.models import Article, PostDraft, ShortNews
 
@@ -22,6 +23,9 @@ _env = Environment(
 
 def split_paragraphs(text: str) -> list[str]:
     return [p.strip() for p in text.split('\n\n') if p.strip()]
+
+
+MONEY_NOTE = '※ 일반적인 정보이며, 세금·대출·혜택은 개인 상황에 따라 다를 수 있어요. 자세한 조건은 원문과 해당 기관에서 확인하세요.'
 
 
 def render_post(
@@ -44,4 +48,5 @@ def render_post(
         related=related,
         hero_image_url=hero_image_url,
         footer_url=footer_url,
+        money_note=MONEY_NOTE if topics.MONEY_LABELS & set(draft.labels) else '',
     )

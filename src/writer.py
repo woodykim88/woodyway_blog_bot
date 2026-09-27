@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 
+from src import topics
 from src.llm import LLMClient, load_prompt
 from src.models import Article, PostDraft
 
@@ -23,7 +24,13 @@ def build_writer_input(article: Article, theme: str, feedback: Sequence[str] = (
     return '\n'.join(parts)
 
 
+def instructions(category: str = topics.TECH) -> str:
+    """분야별 필자 설정(누구로서, 누구에게, 어떤 라벨) + 공통 글쓰기 규칙."""
+    return f"{load_prompt(topics.SPECS[category].persona_prompt).strip()}\n\n{load_prompt('writer')}"
+
+
 def write_post(
-    llm: LLMClient, model: str, article: Article, theme: str, feedback: Sequence[str] = ()
+    llm: LLMClient, model: str, article: Article, theme: str, feedback: Sequence[str] = (),
+    category: str = topics.TECH,
 ) -> PostDraft:
-    return llm.parse(model, load_prompt('writer'), build_writer_input(article, theme, feedback), PostDraft)
+    return llm.parse(model, instructions(category), build_writer_input(article, theme, feedback), PostDraft)

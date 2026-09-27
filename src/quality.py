@@ -14,7 +14,9 @@ from src.selector import TITLE_SIMILARITY_THRESHOLD, title_similarity
 MIN_BODY_CHARS = 700
 MAX_TITLE_CHARS = 40
 MAX_META_CHARS = 150
-BANNED_WORDS = ('충격', '경악', '필수', '모르면 손해', '대박', '역대급', '무조건', '100%')
+BANNED_WORDS = ('충격', '경악', '필수', '모르면 손해', '대박', '역대급', '무조건', '100%',
+                # 투자 권유로 읽히는 말 (생활경제·재테크 글)
+                '지금 사세요', '매수하세요', '매도하세요', '수익 보장', '원금 보장', '추천주', '급등주', '리딩방')
 # 썸네일 문구는 짧아서 낚시성 표현이 더 도드라진다
 THUMBNAIL_BANNED_WORDS = (*BANNED_WORDS, '소름', '미쳤다', '실화냐', '레전드')
 MAX_THUMBNAIL_CHARS = 14
