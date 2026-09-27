@@ -37,6 +37,7 @@ class RunRecord:
     image_model: str = ''
     llm_calls: int = 0
     posts: tuple[PostRecord, ...] = field(default_factory=tuple)
+    usage: tuple[dict[str, Any], ...] = field(default_factory=tuple)  # 모델별 호출·토큰 (src/usage.py)
 
 
 def github_context(env: Mapping[str, str]) -> dict[str, str]:

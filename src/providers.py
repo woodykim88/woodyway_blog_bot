@@ -10,6 +10,7 @@ from dataclasses import dataclass
 from typing import Any, Protocol, TypeVar
 
 from pydantic import BaseModel
+from src import usage
 
 T = TypeVar('T', bound=BaseModel)
 
@@ -89,6 +90,7 @@ class OpenAITextBackend:
         response = self._client.responses.parse(
             model=model, instructions=instructions, input=user_input, text_format=schema
         )
+        usage.record(model, response)
         return response.output_parsed
 
 
@@ -104,6 +106,7 @@ class AnthropicTextBackend:
             messages=[{'role': 'user', 'content': user_input}],
             output_format=schema,
         )
+        usage.record(model, response)
         return response.parsed_output
 
 
@@ -157,6 +160,7 @@ class OpenAIImageBackend:
         response = self._client.images.generate(
             model=model, prompt=prompt, size=IMAGE_SIZE, quality=quality, output_format='webp', n=1
         )
+        usage.record(model, response)
         return base64.b64decode(response.data[0].b64_json)
 
 

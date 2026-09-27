@@ -50,6 +50,7 @@ from src import (
 from src.http_client import HttpGet, http_get, url_is_alive
 from src.llm import LLMClient, LLMError
 from src.models import Article, PostDraft, RankedCandidate, ShortNews
+from src import usage
 
 
 def _image_errors() -> tuple[type[Exception], ...]:
@@ -470,6 +471,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         notifier.notify(telegram, warning)
     if env.get('GITHUB_ACTIONS') == 'true':
         runlog.append_run(runlog.RunRecord(
+            usage=usage.snapshot(),
             started_at=started.isoformat(timespec='seconds'),
             finished_at=datetime.now(schedule.KST).isoformat(timespec='seconds'),
             mode=mode,
