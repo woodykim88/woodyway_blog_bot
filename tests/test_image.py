@@ -67,13 +67,14 @@ def test_load_r2_config_requires_https():
 
 # --- 생성 / 최적화 / 업로드 ---
 
-def test_style_suffix_is_bold_thumbnail_style_with_bans():
+def test_style_suffix_is_hand_drawn_with_bans():
+    """AI 티 나는 광택 3D 대신 사람이 그린 듯한 감성 일러스트 (2026-09-27 지혜 님 요청)."""
     suffix = image.STYLE_SUFFIX
-    for ban in ('no text', 'no letters', 'no numbers', 'no logos', 'no real people'):
+    for ban in ('no text', 'no letters', 'no numbers', 'no logos', 'no real people', 'not 3D', 'not glossy'):
         assert ban in suffix
-    for word in ('3D', 'vivid', 'high contrast', 'dramatic lighting', 'negative space on the left'):
+    for word in ('hand-drawn', 'gouache', 'negative space on the left'):
         assert word in suffix
-    assert 'pastel' not in suffix and 'office' not in suffix and 'flat illustration' not in suffix
+    assert 'office' not in suffix and 'cinematic' not in suffix
 
 
 def test_with_style_appends_suffix_once():

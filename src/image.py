@@ -16,10 +16,12 @@ MAX_BYTES = 200 * 1024
 WEBP_QUALITIES = (82, 72, 62, 52)
 # 유튜브 썸네일처럼 한눈에 꽂히는 톤. 왼쪽 45%는 비워 두고 그 자리에 썸네일 문구를 얹는다 (src/thumbnail.py)
 STYLE_SUFFIX = (
-    'bold YouTube thumbnail style, one striking symbolic hero object, glossy 3D cinematic editorial render, '
-    'vivid saturated colors, high contrast, dramatic lighting, subject on the right side of a landscape frame, '
-    'dark uncluttered negative space on the left 45% of the frame, '
-    'no text, no letters, no numbers, no logos, no real people, no human faces'
+    'warm hand-drawn editorial illustration, gouache and colored pencil on textured paper, visible brush '
+    'strokes and pencil grain, soft imperfect organic lines, cozy emotional storybook mood, soft diffused '
+    'natural light, rich but gentle colors, one striking symbolic object as the hero, subject on the '
+    'right side of a landscape frame, dark uncluttered painted negative space on the left 45% of the '
+    'frame, not 3D, not glossy, not photorealistic, no CGI render look, no neon glow, no text, no '
+    'letters, no numbers, no logos, no real people, no human faces'
 )
 CACHE_CONTROL = 'public, max-age=31536000, immutable'
 R2_ENV_KEYS = ('R2_ACCOUNT_ID', 'R2_ACCESS_KEY_ID', 'R2_SECRET_ACCESS_KEY', 'R2_BUCKET', 'R2_PUBLIC_BASE_URL')
