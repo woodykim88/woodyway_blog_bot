@@ -1,4 +1,4 @@
-"""검수(사실검증)만 GPT의 생각하는 양을 낮춘다 (2026-09-27 지혜 님 요청). 글쓰기는 모델 기본값 유지."""
+"""GPT 생각하는 양 옵션. 사실검증은 9/28부터 다시 모델 기본값 (low는 후킹 문장까지 탈락시켜 재작성이 늘었다)."""
 import inspect
 from types import SimpleNamespace
 
@@ -29,6 +29,6 @@ def test_reasoning_effort_only_for_models_that_accept_it():
     assert [r.get('reasoning') for r in responses.requests] == [{'effort': 'low'}, None, None]
 
 
-def test_fact_check_asks_for_low_effort():
-    assert quality.CHECK_EFFORT == 'low'
+def test_fact_check_uses_default_effort():
+    assert quality.CHECK_EFFORT is None
     assert "load_prompt('factcheck'), user_input, FactCheck, effort=CHECK_EFFORT)" in inspect.getsource(quality)

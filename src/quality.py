@@ -30,7 +30,9 @@ WEAK_HOOK_PHRASES = ('정리했습니다', '알아봅니다', '알아보겠습�
 # 그중 한글이 이 글자 수 이상일 때만 센다. 영어 제품명처럼 바꿔 쓸 수 없는 고유명사는 제외
 MIN_HANGUL_IN_COPY = 15
 _HANGUL_RE = re.compile(r'[가-힣]')
-CHECK_EFFORT = 'low'  # 사실검증은 원문과 대조만 하면 돼서 생각하는 양을 낮춘다 (원고 쓰기는 기본값 유지)
+# 사실검증의 생각하는 양 (None = 모델 기본값). 9/28 'low'로 해 봤더니 후킹 문장·비유까지 '근거 없는 사실'로
+# 잡아 원고 재작성(비싼 원고 모델 호출)이 늘어서 기본값으로 되돌렸다.
+CHECK_EFFORT: str | None = None
 
 
 @dataclass(frozen=True)
