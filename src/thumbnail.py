@@ -9,6 +9,7 @@ import io
 import os
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
+from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 
@@ -198,4 +199,37 @@ def add_headline(data: bytes, headline: Headline, font: FontSpec | None) -> byte
         return data
     buffer = io.BytesIO()
     result.save(buffer, format='PNG')
+    return buffer.getvalue()
+
+
+# --- 루이 마스코트 (AI·IT·스킬 글에만, 2026-09-30 사용자 결정) ---
+# 루이 채널(@louis.ai.code) 캐릭터 시트에서 오린 투명 PNG. 그림을 새로 만들지 않아 매번 같은 모습이고 비용이 없다.
+MASCOT_DIR = Path(__file__).resolve().parent.parent / 'assets' / 'louis'
+MASCOTS = {'skill': 'louis-laptop.png', 'tech': 'louis-front.png'}
+MASCOT_HEIGHT_RATIO = 0.42   # 이미지 높이 대비 루이 키
+MASCOT_RIGHT_MARGIN = 0.02   # 오른쪽 여백 (이미지 너비 대비)
+
+
+def mascot_for(category: str) -> Path | None:
+    name = MASCOTS.get(category)
+    return MASCOT_DIR / name if name else None
+
+
+def add_mascot(data: bytes, mascot: Path | None) -> bytes:
+    """이미지 오른쪽 아래에 루이를 얹어 PNG bytes로. 제목이 있는 왼쪽은 건드리지 않는다. 못 얹으면 원본 그대로."""
+    if mascot is None:
+        return data
+    try:
+        with Image.open(io.BytesIO(data)) as source, Image.open(mascot) as louis:
+            canvas = source.convert('RGBA')
+            height = round(canvas.height * MASCOT_HEIGHT_RATIO)
+            width = round(louis.width * height / louis.height)
+            sprite = louis.convert('RGBA').resize((width, height), Image.LANCZOS)
+            x = canvas.width - width - round(canvas.width * MASCOT_RIGHT_MARGIN)
+            canvas.alpha_composite(sprite, (x, canvas.height - height))
+    except (OSError, ValueError) as e:
+        print(f'[루이 생략] {e.__class__.__name__}: {e} → 루이 없이 이미지만 씁니다.')
+        return data
+    buffer = io.BytesIO()
+    canvas.convert('RGB').save(buffer, format='PNG')
     return buffer.getvalue()

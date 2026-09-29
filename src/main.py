@@ -43,6 +43,8 @@ from src import (
     runlog,
     schedule,
     selector,
+    skill_topic,
+    skills,
     thumbnail,
     tools,
     topics,
@@ -79,6 +81,7 @@ def _image_errors() -> tuple[type[Exception], ...]:
 IMAGE_ERRORS = _image_errors()
 MODES = ('auto', 'schedule', 'draft', 'now', 'preview')
 MAX_TOPIC_ATTEMPTS = 3
+DEFAULT_SKILL_TIME = '12:30'  # 이 시각 칸은 Claude Code 스킬 글 (루이 채널과 원 소스 멀티 유즈)
 MAX_WRITE_ATTEMPTS = 2
 SHORT_NEWS_COUNT = 3
 DEFAULT_FOOTER_URL = 'https://link.inpock.co.kr/shoperwoody'
@@ -105,6 +108,8 @@ class Composed:
     footer_url: str | None = None
     hero_image_url: str | None = None
     tool: tools.Tool | None = None
+    category: str = topics.TECH
+    skill: skills.Skill | None = None
 
     @property
     def html(self) -> str:
@@ -116,6 +121,7 @@ class Composed:
             hero_image_url=self.hero_image_url,
             footer_url=self.footer_url,
             tool=self.tool,
+            skill=self.skill,
         )
 
 
@@ -164,6 +170,55 @@ def pick_short_news(ranked: Sequence[RankedCandidate], used_url: str) -> list[Sh
     return [ShortNews(r.candidate.title, r.one_line, r.candidate.link) for r in others[:SHORT_NEWS_COUNT]]
 
 
+def is_skill_slot(publish_at: datetime | None, skill_time: schedule.Time | None) -> bool:
+    """예약 발행 칸이 스킬 글 시각이면 True. 수동 발행(시각 없음)은 뉴스 글."""
+    if publish_at is None or skill_time is None:
+        return False
+    local = publish_at.astimezone(schedule.KST)
+    return (local.hour, local.minute) == skill_time
+
+
+def force_skill_labels(draft: PostDraft) -> PostDraft:
+    """스킬 글은 첫 라벨을 항상 AI스킬로 (분야 판별·썸네일 라벨·반반 계산 제외의 기준)."""
+    rest = [label for label in draft.labels if label != topics.SKILL_LABEL]
+    return draft.model_copy(update={'labels': [topics.SKILL_LABEL, *rest][:2]})
+
+
+def compose_skill_post(
+    llm: LLMClient,
+    models: Models,
+    now: datetime,
+    past: tuple[history.HistoryEntry, ...],
+    get: HttpGet = http_get,
+    is_alive: Callable[[str], bool] = url_is_alive,
+    footer_url: str | None = DEFAULT_FOOTER_URL,
+) -> Composed | None:
+    """skills.sh에서 스킬 하나를 골라 글을 씁니다. 고를 스킬이 없거나 검수를 못 넘으면 None (뉴스 글로 대신)."""
+    try:
+        skill = skill_topic.pick_skill(lambda: skills.fetch_candidates(get), lambda ref: skills.fetch_detail(get, ref), past)
+    except skills.SourceError as e:
+        print(f'[스킬] {e}')
+        return None
+    if skill is None:
+        print('[스킬] 기준을 통과한 새 스킬이 없어 뉴스 글로 대신합니다.')
+        return None
+    print(f'[스킬] {skill.key} (설치 {skill.installs:,}, 별 {skill.stars:,})')
+    article = skill_topic.to_article(skill, now)
+    theme = topics.SPECS[topics.SKILL].themes[0]
+    draft = draft_article(llm, models, article, theme, past, is_alive, topics.SKILL)
+    if draft is None:
+        return None
+    draft = force_skill_labels(draft)
+    return Composed(
+        article=article,
+        draft=draft,
+        related=history.related_posts(past, tuple(draft.labels)),
+        footer_url=footer_url,
+        category=topics.SKILL,
+        skill=skill,
+    )
+
+
 def compose_post(
     llm: LLMClient,
     models: Models,
@@ -203,6 +258,7 @@ def compose_post(
                 related=history.related_posts(past, tuple(draft.labels)),
                 footer_url=footer_url,
                 tool=tools.match_tool(draft, tools.load_tools()),
+                category=category,
             )
         if attempted:
             break  # 원고까지 써 본 분야에서 실패했으면 AI 호출 상한을 지키려고 다른 분야로 넘어가지 않는다
@@ -234,7 +290,8 @@ def attach_hero_image(
         return composed
     try:
         raw = image.generate_image(backend, model, image_quality, composed.draft.image_prompt)
-        data = image.optimize_image(thumbnail.add_headline(raw, headline_of(composed.draft), find_font()))
+        titled = thumbnail.add_headline(raw, headline_of(composed.draft), find_font())
+        data = image.optimize_image(thumbnail.add_mascot(titled, thumbnail.mascot_for(composed.category)))
         if dry_run:
             preview_dir.mkdir(parents=True, exist_ok=True)
             (preview_dir / PREVIEW_IMAGE_NAME).write_bytes(data)
@@ -396,6 +453,7 @@ def run(
 
     past = history.load_history()
     times = schedule.parse_times(env.get('PUBLISH_TIMES'))
+    skill_time = schedule.parse_times(env.get('SKILL_TIME') or DEFAULT_SKILL_TIME)[0]
     targets = plan_targets(mode, now, times, history.done_slots(past), at)
     if not targets:
         return RunResult('skipped', '지금 준비할 발행 시각이 없습니다.')
@@ -416,7 +474,10 @@ def run(
     for target in targets:
         llm = LLMClient(text_backend)
         try:
-            composed = compose_post(llm, models, now, past, footer_url=footer_url)
+            composed = None
+            if is_skill_slot(target.publish_at, skill_time):
+                composed = compose_skill_post(llm, models, now, past, footer_url=footer_url)
+            composed = composed or compose_post(llm, models, now, past, footer_url=footer_url)
             composed = attach_hero_image(
                 composed, image_backend, ai.image_model, ai.image_quality, r2, target.publish_date, dry_run
             )

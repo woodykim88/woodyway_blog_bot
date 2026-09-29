@@ -12,7 +12,9 @@ from src.history import HistoryEntry
 
 TECH = 'tech'
 MONEY = 'money'
+SKILL = 'skill'  # Claude Code 스킬 글: 12:30 전용 칸, 뉴스 반반 계산에서 뺀다 (2026-09-30 사용자 결정)
 CATEGORIES = (MONEY, TECH)
+SKILL_LABEL = 'AI스킬'
 BALANCE_WINDOW = 10  # 최근 이만큼의 글에서 분야 비율을 센다
 
 
@@ -39,17 +41,26 @@ SPECS = {
         labels=('재테크', '생활경제', '지원금·혜택', '절약꿀팁', '부동산'),
         selector_prompt='selector_money', persona_prompt='writer_persona_money',
     ),
+    SKILL: CategorySpec(
+        name='Claude Code 스킬', sources=(),
+        themes=('Claude Code 스킬',) * 7,
+        labels=(SKILL_LABEL, 'AI활용', '툴추천', '업무생산성'),
+        selector_prompt='', persona_prompt='writer_persona_skill',
+    ),
 }
 MONEY_LABELS = frozenset(SPECS[MONEY].labels)
 
 
 def category_of(entry: HistoryEntry) -> str:
+    if SKILL_LABEL in entry.labels:
+        return SKILL
     return MONEY if any(label in MONEY_LABELS for label in entry.labels) else TECH
 
 
 def choose_category(past: Sequence[HistoryEntry]) -> str:
     """최근 BALANCE_WINDOW편 중 적은 분야. 같으면 직전 글과 다른 분야, 기록이 없으면 생활경제부터."""
-    recent = [category_of(e) for e in past[-BALANCE_WINDOW:]]
+    news = [e for e in past if category_of(e) != SKILL]  # 스킬 글은 따로 칸이 있어 반반 계산에서 뺀다
+    recent = [category_of(e) for e in news[-BALANCE_WINDOW:]]
     if not recent:
         return MONEY
     money, tech = recent.count(MONEY), recent.count(TECH)

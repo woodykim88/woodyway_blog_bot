@@ -7,6 +7,7 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
 
 from src import topics
+from src.skills import Skill
 from src.tools import Tool
 from src.history import HistoryEntry
 from src.models import Article, PostDraft, ShortNews
@@ -37,6 +38,7 @@ def render_post(
     hero_image_url: str | None = None,
     footer_url: str | None = None,
     tool: Tool | None = None,
+    skill: Skill | None = None,
 ) -> str:
     return _env.get_template('post.html.j2').render(
         draft=draft,
@@ -51,5 +53,6 @@ def render_post(
         hero_image_url=hero_image_url,
         footer_url=footer_url,
         tool=tool,
+        skill=skill,
         money_note=MONEY_NOTE if topics.MONEY_LABELS & set(draft.labels) else '',
     )
