@@ -1,4 +1,4 @@
-"""분야 나누기: AI·IT 50% + 생활경제·재테크 50% (사용자 결정 2026-09-27)."""
+"""분야 나누기: AI·IT 2 : 생활경제·재테크 1 (사용자 결정 2026-09-30, 그 전에는 반반)."""
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -21,19 +21,29 @@ def test_category_of_uses_labels():
     assert topics.category_of(make_entry(labels=('AI활용',))) == topics.TECH
 
 
-def test_choose_category_keeps_recent_posts_half_and_half():
-    assert topics.choose_category(()) == topics.MONEY  # 처음엔 생활경제부터
-    assert topics.choose_category(entries(topics.TECH, topics.TECH, topics.MONEY)) == topics.MONEY
-    assert topics.choose_category(entries(topics.MONEY, topics.MONEY, topics.TECH)) == topics.TECH
-    # 개수가 같으면 직전 글과 다른 분야
-    assert topics.choose_category(entries(topics.MONEY, topics.TECH)) == topics.MONEY
+def test_choose_category_keeps_recent_posts_two_to_one_for_ai_it():
+    assert topics.choose_category(()) == topics.TECH  # 처음엔 AI·IT부터 (사용자 결정 2026-09-30: AI 비중 확대)
+    assert topics.choose_category(entries(topics.TECH)) == topics.MONEY
     assert topics.choose_category(entries(topics.TECH, topics.MONEY)) == topics.TECH
+    assert topics.choose_category(entries(topics.TECH, topics.MONEY, topics.TECH)) == topics.TECH  # 2:1이 맞으면 AI·IT 우선
+    assert topics.choose_category(entries(topics.TECH, topics.MONEY, topics.TECH, topics.TECH)) == topics.MONEY
+    assert topics.choose_category(entries(topics.MONEY, topics.MONEY)) == topics.TECH
+
+
+def test_choose_category_converges_to_two_thirds_ai_it():
+    past: tuple = ()
+    for i in range(12):
+        category = topics.choose_category(past)
+        labels = {topics.TECH: ('AI활용',), topics.MONEY: ('재테크',)}[category]
+        past = (*past, make_entry(title=f'글 {i}', labels=labels))
+    kinds = [topics.category_of(e) for e in past]
+    assert kinds.count(topics.TECH) == 8 and kinds.count(topics.MONEY) == 4
 
 
 def test_choose_category_looks_only_at_recent_window():
     old = entries(*([topics.MONEY] * 10))
-    recent = entries(*([topics.TECH, topics.MONEY] * (topics.BALANCE_WINDOW // 2)))
-    assert topics.choose_category(old + recent) == topics.TECH  # 최근 창은 반반, 직전 글이 생활경제
+    recent = entries(*([topics.TECH, topics.MONEY, topics.TECH] * (topics.BALANCE_WINDOW // 3)))
+    assert topics.choose_category(old + recent) == topics.TECH  # 최근 창은 정확히 2:1, 동률이면 AI·IT
 
 
 def test_every_category_has_sources_themes_and_prompts():

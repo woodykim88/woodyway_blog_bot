@@ -5,6 +5,8 @@ from src import main as pipeline
 from src.models import CandidateScore, ClaimCheck, FactCheck, SelectionResult, Section
 from tests.helpers import FIXTURES, NOW, fake_llm, make_draft, make_entry
 
+TECH_PAST = (make_entry(labels=('AI활용',)),)  # AI·IT 1편 뒤에는 생활경제 차례 (2:1 규칙)
+
 FEED = (FIXTURES / 'geeknews_feed.xml').read_text(encoding='utf-8')
 NEWS_FEED_URLS = {s.url for s in collector.NEWS_SOURCES}
 MONEY_FEED_URLS = {s.url for s in collector.MONEY_SOURCES}
@@ -116,7 +118,7 @@ def test_compose_post_money_prefers_strict_tech_over_relaxing_money():
         'PostDraft': [make_draft()],
         'FactCheck': [OK],
     })
-    composed = pipeline.compose_post(llm, MODELS, NOW, (), get=money_get(), is_alive=lambda u: True)
+    composed = pipeline.compose_post(llm, MODELS, NOW, TECH_PAST, get=money_get(), is_alive=lambda u: True)
     assert composed.category == topics.TECH  # 생활경제의 기준을 낮추기 전에 AI·IT의 정식 통과 글감을 쓴다
     assert llm.calls == 5  # 선별 2 + 작성·윤문·검증
 
@@ -187,7 +189,7 @@ def test_compose_post_money_first_uses_money_prompt_and_persona():
         'PostDraft': [make_draft(labels=['재테크'])],
         'FactCheck': [OK],
     })
-    composed = pipeline.compose_post(llm, MODELS, NOW, (), get=money_get(), is_alive=lambda u: True)
+    composed = pipeline.compose_post(llm, MODELS, NOW, TECH_PAST, get=money_get(), is_alive=lambda u: True)
     assert composed.draft.labels == ['재테크']
     select, write = client.requests[0], client.requests[1]
     assert '생활경제·재테크 블로그 글감의 편집장' in select['instructions']
@@ -206,7 +208,7 @@ def test_compose_post_money_falls_back_to_tech_when_no_money_topic():
         'PostDraft': [make_draft()],
         'FactCheck': [OK],
     })
-    composed = pipeline.compose_post(llm, MODELS, NOW, (), get=money_get(), is_alive=lambda u: True)
+    composed = pipeline.compose_post(llm, MODELS, NOW, TECH_PAST, get=money_get(), is_alive=lambda u: True)
     assert composed.draft.title == make_draft().title
     assert '생활경제·재테크' in client.requests[0]['instructions'] and '생활경제·재테크' not in client.requests[1]['instructions']
 

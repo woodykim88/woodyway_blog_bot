@@ -78,6 +78,18 @@ class SelectionResult(BaseModel):
     scores: list[CandidateScore]
 
 
+class SkillFitScore(BaseModel):
+    model_config = ConfigDict(json_schema_extra=_require_all_fields)
+
+    index: int = Field(description='스킬 목록의 번호')
+    score: int = Field(description='비개발 직장인 대중성 1~10점')
+    reason: str = Field(description='점수 근거 한 문장')
+
+
+class SkillFitResult(BaseModel):
+    scores: list[SkillFitScore]
+
+
 class Section(BaseModel):
     heading: str = Field(description='궁금증을 담은 소제목 (20자 이내)')
     body: str = Field(description='문단 2~3개. 공감 → 원문 사실 → 해결 실마리. 문단 사이는 빈 줄 한 개로 구분')

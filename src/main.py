@@ -213,12 +213,16 @@ def compose_skill_post(
 ) -> Composed | None:
     """skills.sh에서 스킬 하나를 골라 글을 씁니다. 고를 스킬이 없거나 검수를 못 넘으면 None (뉴스 글로 대신)."""
     try:
-        skill = skill_topic.pick_skill(lambda: skills.fetch_candidates(get), lambda ref: skills.fetch_detail(get, ref), past)
+        skill = skill_topic.pick_skill(
+            lambda: skills.fetch_candidates(get), lambda ref: skills.fetch_detail(get, ref), past,
+            choose=lambda found: skill_topic.choose_popular(llm, models.fast, found),
+            prefilter=lambda refs: skill_topic.rank_by_name(llm, models.fast, refs),
+        )
     except skills.SourceError as e:
         print(f'[스킬] {e}')
         return None
     if skill is None:
-        print('[스킬] 기준을 통과한 새 스킬이 없어 뉴스 글로 대신합니다.')
+        print('[스킬] 대중적인 새 스킬이 없어 뉴스 글로 대신합니다.')
         return None
     print(f'[스킬] {skill.key} (설치 {skill.installs:,}, 별 {skill.stars:,})')
     article = skill_topic.to_article(skill, now)

@@ -1,6 +1,7 @@
-"""글 분야: AI·IT와 생활경제·재테크를 반반씩 쓴다 (사용자 결정 2026-09-27: 블로그의 핵심은 최대한 많은 클릭).
+"""글 분야: AI·IT 2 : 생활경제·재테크 1 (사용자 결정 2026-09-30: AI 정보·소식을 늘리되 대중적으로. 그 전에는 반반).
 
-분야는 발행 시각이 아니라 최근 글의 분야 비율로 정한다. 수동 발행이 끼어도 반반이 유지된다.
+분야는 발행 시각이 아니라 최근 글의 분야 비율로 정한다. 수동 발행이 끼어도 비율이 유지된다.
+12:30 스킬 글은 이 계산에서 빠지지만 AI 글이라, 하루 3편 중 AI 관련이 평균 5/6이 된다.
 """
 from __future__ import annotations
 
@@ -15,7 +16,8 @@ MONEY = 'money'
 SKILL = 'skill'  # Claude Code 스킬 글: 12:30 전용 칸, 뉴스 반반 계산에서 뺀다 (2026-09-30 사용자 결정)
 CATEGORIES = (MONEY, TECH)
 SKILL_LABEL = 'AI스킬'
-BALANCE_WINDOW = 10  # 최근 이만큼의 글에서 분야 비율을 센다
+BALANCE_WINDOW = 9  # 최근 이만큼의 글에서 분야 비율을 센다 (2:1이 정확히 나눠떨어지는 수)
+WEIGHTS = {TECH: 2, MONEY: 1}  # 분야별 목표 비중
 
 
 @dataclass(frozen=True)
@@ -58,15 +60,11 @@ def category_of(entry: HistoryEntry) -> str:
 
 
 def choose_category(past: Sequence[HistoryEntry]) -> str:
-    """최근 BALANCE_WINDOW편 중 적은 분야. 같으면 직전 글과 다른 분야, 기록이 없으면 생활경제부터."""
-    news = [e for e in past if category_of(e) != SKILL]  # 스킬 글은 따로 칸이 있어 반반 계산에서 뺀다
+    """최근 BALANCE_WINDOW편에서 목표 비중보다 모자란 분야. 같으면 AI·IT (기록이 없어도 AI·IT부터)."""
+    news = [e for e in past if category_of(e) != SKILL]  # 스킬 글은 따로 칸이 있어 비율 계산에서 뺀다
     recent = [category_of(e) for e in news[-BALANCE_WINDOW:]]
-    if not recent:
-        return MONEY
-    money, tech = recent.count(MONEY), recent.count(TECH)
-    if money != tech:
-        return MONEY if money < tech else TECH
-    return TECH if recent[-1] == MONEY else MONEY
+    fill = {c: recent.count(c) / WEIGHTS[c] for c in CATEGORIES}
+    return MONEY if fill[MONEY] < fill[TECH] else TECH
 
 
 def other(category: str) -> str:

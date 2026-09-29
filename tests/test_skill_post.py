@@ -6,7 +6,8 @@ from PIL import Image
 from src import main as pipeline
 from src import schedule, skill_topic, skills, thumbnail, topics
 from src.renderer import render_post
-from tests.helpers import make_article, make_draft, make_entry
+from src.models import SkillFitResult, SkillFitScore
+from tests.helpers import fake_llm, make_article, make_draft, make_entry
 
 NOW = datetime(2026, 9, 30, 10, 17, tzinfo=schedule.KST)
 PASS3 = {'Gen Agent Trust Hub': 'Pass', 'Socket': 'Pass', 'Snyk': 'Pass'}
@@ -58,6 +59,78 @@ def test_pick_skill_survives_a_broken_detail_page_and_returns_none_when_nothing_
     broken = make_skill('broken').ref
     assert skill_topic.pick_skill(lambda: [broken, good.ref], detail, ()) == good
     assert skill_topic.pick_skill(lambda: [broken], detail, ()) is None
+
+
+def test_pick_skill_hands_all_passing_candidates_to_chooser():
+    skills_by_key = {s.ref.key: s for s in (make_skill('a'), make_skill('b', audits={}), make_skill('c'), make_skill('d'))}
+    seen = []
+
+    def choose(found):
+        seen.append([s.name for s in found])
+        return found[-1]
+
+    picked = skill_topic.pick_skill(lambda: [s.ref for s in skills_by_key.values()], lambda ref: skills_by_key[ref.key], (), choose=choose)
+    assert seen == [['a', 'c', 'd']]  # 검수 탈락(b)은 넘기지 않는다
+    assert picked.name == 'd'
+
+
+def test_pick_skill_returns_none_when_chooser_rejects_everything():
+    s = make_skill('dev-only')
+    assert skill_topic.pick_skill(lambda: [s.ref], lambda ref: s, (), choose=lambda found: None) is None
+
+
+def fit(*scores):
+    return SkillFitResult(scores=[SkillFitScore(index=i, score=sc, reason='r') for i, sc in scores])
+
+
+def test_choose_popular_picks_highest_scoring_skill_for_non_developers():
+    candidates = [make_skill('solana-dev', 'solana-foundation/solana-dev-skill'), make_skill('pdf'), make_skill('docx')]
+    llm, client = fake_llm({'SkillFitResult': [fit((0, 2), (1, 9), (2, 7))]})
+    assert skill_topic.choose_popular(llm, 'fast', candidates).name == 'pdf'
+    assert 'solana-dev' in client.requests[0]['input'] and 'Production-grade' in client.requests[0]['input']
+
+
+def test_choose_popular_returns_none_when_nothing_is_popular_enough():
+    llm, _ = fake_llm({'SkillFitResult': [fit((0, 3), (1, 5))]})
+    assert skill_topic.choose_popular(llm, 'fast', [make_skill('a'), make_skill('b')]) is None
+
+
+def test_choose_popular_ignores_out_of_range_index_and_breaks_ties_by_order():
+    llm, _ = fake_llm({'SkillFitResult': [fit((7, 10), (1, 8), (0, 8))]})
+    assert skill_topic.choose_popular(llm, 'fast', [make_skill('a'), make_skill('b')]).name == 'a'
+
+
+def refs_named(*names):
+    return [skills.SkillRef('some/repo', n, rank=i + 1, metric=1, board='trending') for i, n in enumerate(names)]
+
+
+def test_rank_by_name_puts_popular_names_first_and_drops_developer_only_ones():
+    refs = refs_named('solana-dev', 'research', 'slideshow', 'prisma-client-api')
+    llm, client = fake_llm({'SkillFitResult': [fit((0, 2), (1, 9), (2, 7), (3, 1))]})
+    ranked = skill_topic.rank_by_name(llm, 'fast', refs)
+    assert [r.name for r in ranked] == ['research', 'slideshow']
+    assert 'solana-dev (some/repo)' in client.requests[0]['input']
+
+
+def test_rank_by_name_keeps_original_order_for_ties_and_only_looks_at_pool():
+    refs = refs_named(*[f's{i}' for i in range(skill_topic.NAME_POOL + 5)])
+    scores = [(i, 8) for i in range(len(refs))]
+    llm, client = fake_llm({'SkillFitResult': [fit(*scores)]})
+    ranked = skill_topic.rank_by_name(llm, 'fast', refs)
+    assert [r.name for r in ranked][:3] == ['s0', 's1', 's2']
+    assert f'[{skill_topic.NAME_POOL}]' not in client.requests[0]['input']
+
+
+def test_pick_skill_applies_prefilter_before_reading_detail_pages():
+    a, b = make_skill('a'), make_skill('b')
+    fetched = []
+
+    def detail(ref):
+        fetched.append(ref.name)
+        return {'a': a, 'b': b}[ref.name]
+
+    picked = skill_topic.pick_skill(lambda: [a.ref, b.ref], detail, (), prefilter=lambda refs: [refs[-1]])
+    assert fetched == ['b'] and picked == b
 
 
 def test_skill_article_carries_facts_and_source_url():
