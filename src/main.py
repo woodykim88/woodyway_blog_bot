@@ -43,6 +43,7 @@ from src import (
     schedule,
     selector,
     thumbnail,
+    tools,
     topics,
     polish,
     writer,
@@ -102,6 +103,7 @@ class Composed:
     related: tuple[history.HistoryEntry, ...] = ()
     footer_url: str | None = None
     hero_image_url: str | None = None
+    tool: tools.Tool | None = None
 
     @property
     def html(self) -> str:
@@ -112,6 +114,7 @@ class Composed:
             related=self.related,
             hero_image_url=self.hero_image_url,
             footer_url=self.footer_url,
+            tool=self.tool,
         )
 
 
@@ -197,6 +200,7 @@ def compose_post(
                 short_news=tuple(pick_short_news(ranked, r.candidate.link)),
                 related=history.related_posts(past, tuple(draft.labels)),
                 footer_url=footer_url,
+                tool=tools.match_tool(draft, tools.load_tools()),
             )
         if attempted:
             break  # 원고까지 써 본 분야에서 실패했으면 AI 호출 상한을 지키려고 다른 분야로 넘어가지 않는다
@@ -271,7 +275,10 @@ def publish(
 
     예약 단계가 실패해도 초안이 이력에 남아 있으므로, 다음 실행이 같은 슬롯의 초안을 또 만들지 않습니다.
     """
-    body = auto_blogger.build_post_body(composed.draft.title, composed.html, composed.draft.labels)
+    title = composed.draft.title
+    # 초안(draft)은 사람이 검토하므로 한글 제목 그대로 둡니다.
+    url_title = auto_blogger.slug_title(composed.draft.url_slug) if target.action != 'draft' else None
+    body = auto_blogger.build_post_body(url_title or title, composed.html, composed.draft.labels)
     draft = auto_blogger.create_draft(service, config.blog_id, body)
     history.save_history(history.append_entry(past, make_entry(composed, draft, target.publish_date, target.slot)), path)
     print(f"[초안 저장] 글 ID {draft['id']}")
@@ -280,6 +287,8 @@ def publish(
 
     publish_at = target.publish_at if target.action == 'schedule' else None
     result = auto_blogger.publish_post(service, config.blog_id, draft['id'], publish_at)
+    if url_title:
+        result = auto_blogger.rename_post(service, config.blog_id, draft['id'], title)
     history.save_history(
         history.append_entry(past, make_entry(composed, result, target.publish_date, target.slot)), path
     )
@@ -324,6 +333,10 @@ def success_message(composed: Composed, result: dict[str, Any], action: str, edi
         lines.append(f"공개 주소: {result.get('url', '')}")
     lines.append(f'편집/미리보기: {edit_link}')
     lines.append(f'원문: {composed.article.source_url}')
+    if composed.tool:
+        lines.append(f'🧮 계산기 링크: {composed.tool.title}')
+    elif composed.draft.tool_idea.strip():
+        lines.append(f'🧮 계산기 아이디어: {composed.draft.tool_idea.strip()}')
     return '\n'.join(lines)
 
 

@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 import sys
 import time
 from collections.abc import Callable, Mapping, Sequence
@@ -238,6 +239,27 @@ def publish_existing(
     if mode == 'now':
         return publish_post(service, config.blog_id, post_id)
     raise ValueError(f'기존 초안에는 schedule 또는 now만 쓸 수 있습니다. (현재: {mode})')
+
+
+SLUG_MIN_WORDS = 2
+SLUG_MAX_WORDS = 6
+
+
+def slug_title(slug: str) -> str | None:
+    """영문 슬러그를 글 주소용 임시 제목으로 바꿉니다. 영어 단어가 2개 미만이면 None.
+
+    Blogger는 처음 발행할 때의 제목으로 글 주소를 정하고, 한글은 주소에서 빠집니다.
+    그래서 영문 제목으로 발행해 주소를 정한 뒤 rename_post로 한글 제목을 되돌립니다.
+    """
+    words = re.findall(r'[a-z0-9]+', slug.lower())
+    if len(words) < SLUG_MIN_WORDS or re.search(r'[^\x00-\x7f]', slug):
+        return None
+    return ' '.join(words[:SLUG_MAX_WORDS])
+
+
+def rename_post(service: Any, blog_id: str, post_id: str, title: str) -> dict[str, Any]:
+    """글 제목만 바꿉니다. 이미 정해진 글 주소는 그대로 유지됩니다."""
+    return execute_with_retry(service.posts().patch(blogId=blog_id, postId=post_id, body={'title': title}))
 
 
 def edit_url(blog_id: str, post_id: str) -> str:

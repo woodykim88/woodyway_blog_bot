@@ -87,6 +87,10 @@ class PostDraft(BaseModel):
     model_config = ConfigDict(json_schema_extra=_require_all_fields)
 
     search_keyword: str = Field(description='한국 독자가 검색창에 실제로 입력할 핵심 검색어 (2~4단어)')
+    url_slug: str = Field(
+        default='',
+        description='글 주소용 영문 슬러그. 검색어를 자연스러운 영어로 옮긴 소문자 단어 3~6개를 하이픈으로 연결 (예: disney-plus-price-increase)',
+    )
     title: str = Field(description='40자 이내. 검색어를 앞쪽에 넣고, 원문에서 가장 의외인 사실로 궁금증을 만든다')
     hook: str = Field(description='시선을 사로잡는 도입부 2~4문장. 독자가 겪는 장면이나 가장 의외인 사실로 시작. 짧은 문단은 빈 줄로 구분')
     key_points: list[str] = Field(description='핵심 내용 불릿 3~5개, 각 1~2문장')
@@ -98,6 +102,10 @@ class PostDraft(BaseModel):
     meta_description: str = Field(description='검색 결과용 설명 150자 이내')
     image_prompt: str = Field(description='대표 이미지용 영문 프롬프트. 주제를 상징하는 강렬한 사물 하나. 글자, 실존 인물, 로고 없이')
     image_alt: str = Field(description='대표 이미지 대체 텍스트 (한국어)')
+    tool_idea: str = Field(
+        default='',
+        description='이 소식으로 만들 만한 간단한 계산기·조회기 한 줄 (예: "모두의카드 환급액 계산기"). 제도·요금·기준이 바뀌는 소식일 때만, 아니면 빈 문자열',
+    )
     thumbnail_text: str = Field(
         default='',
         description='대표 이미지에 얹을 2줄 썸네일 문구. 줄바꿈(\\n) 1개, 줄바꿈 빼고 14자 이내. 제목과 다른 말로, 원문 사실 범위 안에서',

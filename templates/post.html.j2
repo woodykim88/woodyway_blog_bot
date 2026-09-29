@@ -13,6 +13,11 @@
   <li>{{ point }}</li>
 {% endfor %}
 </ul>
+{% if tool %}
+
+<p style="padding:14px 16px;background:#e8f0fe;border-radius:8px;">🧮 <strong>내 경우는 얼마일까?</strong> {{ tool.blurb }}<br>
+  <a href="{{ tool.url }}" target="_blank" rel="noopener" style="font-weight:bold;">{{ tool.title }} 바로 가기 →</a></p>
+{% endif %}
 
 {% for heading, paragraphs, tip in sections %}
 <h3>{{ heading }}</h3>

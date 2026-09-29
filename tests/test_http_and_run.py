@@ -113,3 +113,48 @@ def test_publish_failure_keeps_draft_in_history(tmp_path):
     saved = history.load_history(path)
     assert [(e.post_id, e.status) for e in saved] == [('42', 'DRAFT')]
     assert '2026-09-26T20:00' in history.done_slots(saved)  # 다음 실행이 같은 슬롯 초안을 또 만들지 않음
+
+
+def _service_for_slug_test():
+    service = MagicMock()
+    service.posts().insert().execute.return_value = {'id': '42', 'status': 'DRAFT'}
+    service.posts().publish().execute.return_value = {
+        'id': '42', 'status': 'SCHEDULED', 'url': 'https://w/2026/09/meeting-notes-ai-summary.html',
+        'published': '2026-09-26T20:00:00+09:00',
+    }
+    service.posts().patch().execute.return_value = {
+        'id': '42', 'status': 'SCHEDULED', 'url': 'https://w/2026/09/meeting-notes-ai-summary.html',
+        'published': '2026-09-26T20:00:00+09:00', 'title': COMPOSED.draft.title,
+    }
+    return service
+
+
+def test_publish_uses_english_slug_for_url_then_restores_korean_title(tmp_path):
+    composed = pipeline.Composed(make_article(), make_draft(url_slug='meeting-notes-ai-summary'))
+    service = _service_for_slug_test()
+    result = pipeline.publish(service, _config(), composed, TARGET, (), tmp_path / 'h.json')
+
+    inserted = service.posts().insert.call_args.kwargs['body']
+    assert inserted['title'] == 'meeting notes ai summary'
+    service.posts().patch.assert_called_with(blogId='123', postId='42', body={'title': composed.draft.title})
+    assert result['url'].endswith('meeting-notes-ai-summary.html')
+    assert history.load_history(tmp_path / 'h.json')[0].title == composed.draft.title
+
+
+def test_publish_without_valid_slug_keeps_korean_title(tmp_path):
+    composed = pipeline.Composed(make_article(), make_draft(url_slug=''))
+    service = _service_for_slug_test()
+    service.posts().patch.reset_mock()
+    pipeline.publish(service, _config(), composed, TARGET, (), tmp_path / 'h.json')
+
+    assert service.posts().insert.call_args.kwargs['body']['title'] == composed.draft.title
+    service.posts().patch.assert_not_called()
+
+
+def test_draft_target_keeps_korean_title_for_manual_review(tmp_path):
+    composed = pipeline.Composed(make_article(), make_draft(url_slug='meeting-notes-ai-summary'))
+    service = _service_for_slug_test()
+    draft_target = pipeline.Target('manual-draft', None, 'draft')
+    pipeline.publish(service, _config(), composed, draft_target, (), tmp_path / 'h.json')
+
+    assert service.posts().insert.call_args.kwargs['body']['title'] == composed.draft.title

@@ -244,3 +244,24 @@ def test_publish_existing_uses_explicit_time():
     service.posts().publish.assert_called_with(
         blogId="123", postId="42", publishDate="2026-09-25T21:20:00+09:00"
     )
+
+
+# --- 영문 글 주소 (슬러그) ---
+
+@pytest.mark.parametrize("slug, expected", [
+    ("mortgage-refinance-rates", "mortgage refinance rates"),
+    ("  Highway Toll-Refund 2026 ", "highway toll refund 2026"),
+    ("a-b-c-d-e-f-g-h", "a b c d e f"),              # 6단어까지만
+    ("모두의카드-환급", None),                          # 영어가 아니면 쓰지 않음
+    ("refund", None),                                 # 한 단어는 너무 짧음
+    ("", None),
+])
+def test_slug_title(slug, expected):
+    assert ab.slug_title(slug) == expected
+
+
+def test_rename_post_patches_only_title():
+    service = MagicMock()
+    service.posts().patch().execute.return_value = {"id": "42", "title": "한글 제목"}
+    assert ab.rename_post(service, "123", "42", "한글 제목")["title"] == "한글 제목"
+    service.posts().patch.assert_called_with(blogId="123", postId="42", body={"title": "한글 제목"})
