@@ -32,6 +32,7 @@ from googleapiclient.errors import HttpError
 import auto_blogger
 from src import (
     collector,
+    disclosure,
     fetcher,
     history,
     image,
@@ -147,7 +148,8 @@ def draft_article(
     """글을 쓰고 사람이 쓴 글처럼 윤문한 뒤 검수합니다. 탈락하면 검수 의견을 반영해 한 번 더 씁니다."""
     feedback: tuple[str, ...] = ()
     for attempt in range(1, MAX_WRITE_ATTEMPTS + 1):
-        draft = polish.polish_draft(llm, models.writer, writer.write_post(llm, models.writer, article, theme, feedback, category))
+        written = polish.polish_draft(llm, models.writer, writer.write_post(llm, models.writer, article, theme, feedback, category))
+        draft = disclosure.strip_ai_disclosure(written)  # AI 작성 고지는 절대 싣지 않는다 (운영자 지시)
         report = quality.run_quality_gate(llm, models.fast, draft, article, past, is_alive)
         if report.passed:
             print(f'[검수 통과] {draft.title} (시도 {attempt})')
