@@ -138,5 +138,32 @@
     ],
     "status": "SCHEDULED",
     "slot": "2026-09-29T20:00"
+  },
+  {
+    "publish_date": "2026-09-30",
+    "post_id": "4205427809828372863",
+    "title": "지하시설물 조회, 주소만 넣고 확인하는 법",
+    "url": "https://www.woodyway88.com/2026/09/underground-utility-check-korea.html",
+    "source_url": "https://www.korea.kr/news/policyNewsView.do?newsId=148972743",
+    "geeknews_url": "https://www.korea.kr/news/policyNewsView.do?newsId=148972743",
+    "labels": [
+      "부동산"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-09-30T08:00"
+  },
+  {
+    "publish_date": "2026-09-30",
+    "post_id": "2715063384959689926",
+    "title": "클로드 코드 solana-dev 스킬, 지갑 연결부터 오류 진단까지",
+    "url": "https://www.woodyway88.com/2026/09/claude-code-solana-dev-skill.html",
+    "source_url": "https://skills.sh/solana-foundation/solana-dev-skill/solana-dev",
+    "geeknews_url": "https://skills.sh/solana-foundation/solana-dev-skill/solana-dev",
+    "labels": [
+      "AI스킬",
+      "AI활용"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-09-30T12:30"
   }
 ]
