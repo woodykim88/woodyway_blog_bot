@@ -2,8 +2,8 @@ import pytest
 
 from src import collector, topics
 from src import main as pipeline
-from src.models import CandidateScore, FactCheck, SelectionResult
-from tests.helpers import FIXTURES, NOW, fake_llm, make_draft
+from src.models import CandidateScore, ClaimCheck, FactCheck, SelectionResult, Section
+from tests.helpers import FIXTURES, NOW, fake_llm, make_draft, make_entry
 
 FEED = (FIXTURES / 'geeknews_feed.xml').read_text(encoding='utf-8')
 NEWS_FEED_URLS = {s.url for s in collector.NEWS_SOURCES}
@@ -17,6 +17,8 @@ ARTICLE_HTML = '<html><body><article>' + ''.join(
 
 def fake_get(broken_topics: set[str] = frozenset()):
     def get(url: str) -> str:
+        if url.startswith(('https://trends.google.com/', 'https://whereispost.com/')):
+            return ''  # 트렌드 신호는 없어도 발행에 영향이 없다
         if url == 'https://news.hada.io/rss/news':
             return FEED
         if url in NEWS_FEED_URLS or url in MONEY_FEED_URLS:
@@ -91,9 +93,32 @@ def test_compose_post_falls_back_to_next_topic_when_source_missing():
 
 
 def test_compose_post_raises_when_nothing_scores_high_enough():
-    llm, _ = fake_llm({'SelectionResult': [selection((0, 3), (1, 5))]})
+    llm, _ = fake_llm({'SelectionResult': [selection((0, 3), (1, 2))] * 2})
     with pytest.raises(pipeline.PipelineError):
         pipeline.compose_post(llm, MODELS, NOW, (), get=fake_get(), is_alive=lambda u: True)
+
+
+def test_compose_post_relaxes_score_bar_instead_of_skipping_the_slot(capsys):
+    """두 분야 모두 기준 점수 이상이 없으면 그중 가장 나은 글감으로 쓴다 (발행을 건너뛰지 않는다)."""
+    llm, _ = fake_llm({
+        'SelectionResult': [selection((0, 5), (1, 4)), selection((0, 5), (1, 4))],
+        'PostDraft': [make_draft()],
+        'FactCheck': [OK],
+    })
+    composed = pipeline.compose_post(llm, MODELS, NOW, (), get=fake_get(), is_alive=lambda u: True)
+    assert composed.draft.title == make_draft().title
+    assert '기준을 낮춰' in capsys.readouterr().out
+
+
+def test_compose_post_money_prefers_strict_tech_over_relaxing_money():
+    llm, _ = fake_llm({
+        'SelectionResult': [selection((0, 5)), selection((0, 9))],  # 생활경제 5점(기준 미달), AI·IT 9점
+        'PostDraft': [make_draft()],
+        'FactCheck': [OK],
+    })
+    composed = pipeline.compose_post(llm, MODELS, NOW, (), get=money_get(), is_alive=lambda u: True)
+    assert composed.category == topics.TECH  # 생활경제의 기준을 낮추기 전에 AI·IT의 정식 통과 글감을 쓴다
+    assert llm.calls == 5  # 선별 2 + 작성·윤문·검증
 
 
 def test_compose_post_raises_when_all_drafts_fail():
@@ -184,3 +209,80 @@ def test_compose_post_money_falls_back_to_tech_when_no_money_topic():
     composed = pipeline.compose_post(llm, MODELS, NOW, (), get=money_get(), is_alive=lambda u: True)
     assert composed.draft.title == make_draft().title
     assert '생활경제·재테크' in client.requests[0]['instructions'] and '생활경제·재테크' not in client.requests[1]['instructions']
+
+
+COPIED_SENTENCE = '원문 기사의 3번째 문단입니다. 직장인에게 도움이 되는 충분히 긴 내용이 여기에 들어갑니다.'
+
+
+def copying_draft():
+    filler = '회의록 정리는 많은 직장인이 매일 반복하는 일입니다. ' * 10
+    sections = [
+        make_draft().sections[0].model_copy(update={'body': f'{filler}\n\n{COPIED_SENTENCE}'}),
+        make_draft().sections[1],
+    ]
+    return make_draft(sections=sections)
+
+
+def test_duplicate_of_recent_post_skips_topic_without_rewriting():
+    past = (make_entry(title=make_draft().title),)
+    llm, client = fake_llm({
+        'SelectionResult': [selection((0, 9), (1, 8))],
+        'PostDraft': [make_draft(), make_draft()],
+        'FactCheck': [OK],
+    })
+    with pytest.raises(pipeline.PipelineError):
+        pipeline.compose_post(llm, MODELS, NOW, past, get=fake_get(), is_alive=lambda u: True)
+    writes = [r for r in client.requests if r['text_format'].__name__ == 'PostDraft']
+    assert len(writes) == 2  # 주제마다 1번만 쓰고 넘어간다 (다시 쓰지 않는다)
+
+
+def test_rescue_publishes_after_removing_copied_sentence(capsys):
+    llm, _ = fake_llm({
+        'SelectionResult': [selection((0, 9))],
+        'PostDraft': [copying_draft(), copying_draft()],
+        'FactCheck': [OK],
+    })
+    composed = pipeline.compose_post(llm, MODELS, NOW, (), get=fake_get(), is_alive=lambda u: True)
+    assert COPIED_SENTENCE not in composed.html
+    assert '[구제 발행]' in capsys.readouterr().out
+
+
+def four_points():
+    return make_draft(key_points=['첫째 핵심 내용입니다.', '둘째 핵심 내용입니다.', '셋째 핵심 내용입니다.', '넷째 핵심 내용입니다.'])
+
+
+def test_rescue_removes_unsupported_claim_after_fact_check():
+    claim = '회의는 30분 만에 끝났는데, 회의록 정리는 왜 한 시간이 걸릴까요?'
+    bad = FactCheck(claims=[ClaimCheck(sentence='둘째 핵심 내용입니다.', kind='unsupported_fact', reason='근거 없음')])
+    llm, _ = fake_llm({
+        'SelectionResult': [selection((0, 9))],
+        'PostDraft': [four_points(), four_points()],
+        'FactCheck': [bad, bad, OK],
+    })
+    composed = pipeline.compose_post(llm, MODELS, NOW, (), get=fake_get(), is_alive=lambda u: True)
+    assert '둘째 핵심 내용입니다.' not in composed.html
+    assert claim in composed.html
+
+
+def test_duplicate_title_on_second_attempt_still_rescues_first_draft():
+    """1차 원고가 구제 가능했다면, 2차에서 제목이 겹쳐도 1차 원고를 버리지 않는다."""
+    past = (make_entry(title='이전과 비슷한 제목입니다 회의록 AI 요약'),)
+    similar = make_draft(title='이전과 비슷한 제목입니다 회의록 AI 요약', sections=copying_draft().sections)
+    llm, _ = fake_llm({
+        'SelectionResult': [selection((0, 9))],
+        'PostDraft': [copying_draft(), similar],
+        'FactCheck': [OK],
+    })
+    composed = pipeline.compose_post(llm, MODELS, NOW, past, get=fake_get(), is_alive=lambda u: True)
+    assert composed.draft.title == make_draft().title
+    assert COPIED_SENTENCE not in composed.html
+
+
+def test_short_news_only_lists_candidates_above_the_normal_bar():
+    llm, _ = fake_llm({
+        'SelectionResult': [selection((0, 9), (1, 8), (2, 5), (3, 4))],
+        'PostDraft': [make_draft()],
+        'FactCheck': [OK],
+    })
+    composed = pipeline.compose_post(llm, MODELS, NOW, (), get=fake_get(), is_alive=lambda u: True)
+    assert '한 줄 1' in composed.html and '한 줄 2' not in composed.html and '한 줄 3' not in composed.html

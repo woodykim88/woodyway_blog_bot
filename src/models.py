@@ -52,12 +52,26 @@ class ShortNews:
 
 # --- LLM 응답 스키마 ---
 
+def _require_all_fields(schema: dict[str, Any]) -> None:
+    """기본값은 옛 데이터 호환용일 뿐이다. LLM에 보내는 스키마에서는 모든 칸을 필수로 표시한다."""
+    properties = schema.get('properties', {})
+    for prop in properties.values():
+        prop.pop('default', None)
+    schema['required'] = list(properties)
+
+
 class CandidateScore(BaseModel):
+    model_config = ConfigDict(json_schema_extra=_require_all_fields)
+
     index: int = Field(description='후보 목록의 번호')
     score: int = Field(description='직장인 유용도 1~10점')
     reason: str = Field(description='점수 근거 한 문장')
     one_line: str = Field(description='직장인에게 이 소식이 왜 쓸모 있는지 30자 내외 한 줄 (자신의 말로)')
     story: str = Field(description='소식의 주인공인 회사·서비스·제품 이름만 한국어로. 동사·수식어 없이 (예: "마이크로소프트 코파일럿", "엑셀", "메타 뮤즈")')
+    already_covered: bool = Field(
+        default=False,
+        description='"최근 발행한 글 제목"에 같은 소식·같은 제도를 다룬 글이 있으면 true (표현이 달라도). 없거나 목록이 없으면 false',
+    )
 
 
 class SelectionResult(BaseModel):
@@ -73,14 +87,6 @@ class Section(BaseModel):
 class GlossaryItem(BaseModel):
     term: str = Field(description='본문에서 뺀 어려운 용어 (원래 이름 그대로)')
     meaning: str = Field(description='비개발 직장인이 이해할 수 있는 쉬운 설명 1~2문장')
-
-
-def _require_all_fields(schema: dict[str, Any]) -> None:
-    """기본값은 옛 데이터 호환용일 뿐이다. LLM에 보내는 스키마에서는 모든 칸을 필수로 표시한다."""
-    properties = schema.get('properties', {})
-    for prop in properties.values():
-        prop.pop('default', None)
-    schema['required'] = list(properties)
 
 
 class PostDraft(BaseModel):

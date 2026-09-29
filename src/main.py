@@ -40,6 +40,7 @@ from src import (
     providers,
     quality,
     renderer,
+    rescue,
     runlog,
     schedule,
     selector,
@@ -48,6 +49,7 @@ from src import (
     thumbnail,
     tools,
     topics,
+    trends,
     polish,
     writer,
 )
@@ -81,6 +83,7 @@ def _image_errors() -> tuple[type[Exception], ...]:
 IMAGE_ERRORS = _image_errors()
 MODES = ('auto', 'schedule', 'draft', 'now', 'preview')
 MAX_TOPIC_ATTEMPTS = 3
+RECENT_TITLES_FOR_SELECTOR = 12  # 선별 모델에 알려 줄 최근 발행 글 수 (같은 소식 재발행 방지)
 DEFAULT_SKILL_TIME = '12:30'  # 이 시각 칸은 Claude Code 스킬 글 (루이 채널과 원 소스 멀티 유즈)
 MAX_WRITE_ATTEMPTS = 2
 SHORT_NEWS_COUNT = 3
@@ -153,6 +156,7 @@ def draft_article(
 ) -> PostDraft | None:
     """글을 쓰고 사람이 쓴 글처럼 윤문한 뒤 검수합니다. 탈락하면 검수 의견을 반영해 한 번 더 씁니다."""
     feedback: tuple[str, ...] = ()
+    salvage: tuple[PostDraft, quality.QualityReport] | None = None
     for attempt in range(1, MAX_WRITE_ATTEMPTS + 1):
         written = polish.polish_draft(llm, models.writer, writer.write_post(llm, models.writer, article, theme, feedback, category))
         draft = disclosure.strip_ai_disclosure(written)  # AI 작성 고지는 절대 싣지 않는다 (운영자 지시)
@@ -161,8 +165,22 @@ def draft_article(
             print(f'[검수 통과] {draft.title} (시도 {attempt})')
             return draft
         print(f'[검수 탈락] 시도 {attempt}: ' + ' / '.join(report.issues))
+        if report.duplicate_topic:
+            if salvage is None:
+                print('[건너뜀] 최근에 발행한 소식과 같아 다른 주제로 넘어갑니다')
+                return None  # 다시 써도 같은 소식이라 원고 모델 호출만 낭비된다
+            break  # 앞선 원고를 구제할 수 있으니 버리지 않는다
+        if report.rescuable:
+            salvage = (draft, report)
         feedback = report.issues
-    return None
+    if salvage is None:
+        return None
+    # 원고 때문에 발행을 건너뛰지 않는다 (운영자 지시): 걸린 문장만 빼고 발행한다
+    draft, report = salvage
+    rescued = rescue.rescue(llm, models.fast, draft, article, report.unsupported, past, is_alive)
+    if rescued is not None:
+        print(f'[구제 발행] 검수에 걸린 문장만 빼고 발행합니다: {rescued.title}')
+    return rescued
 
 
 def pick_short_news(ranked: Sequence[RankedCandidate], used_url: str) -> list[ShortNews]:
@@ -233,36 +251,51 @@ def compose_post(
     고른 분야에 쓸 만한 후보가 없으면(원고를 써 보기 전이면) 다른 분야로 넘어간다.
     """
     first = topics.choose_category(past)
-    for category in (first, topics.other(first)):
-        spec = topics.SPECS[category]
-        theme = spec.themes[now.astimezone(auto_blogger.KST).weekday()]
-        found = collector.fetch_candidates(get, now, spec.sources)
-        candidates = [c for c in found if not selector.is_duplicate(c, past)]
-        print(f'[분야] {spec.name} / 새 후보 {len(candidates)}건, 오늘의 테마: {theme}')
-        ranked = selector.rank_candidates(llm, models.fast, candidates, theme, spec.selector_prompt)
-        print(f'[선별] 기준 점수 이상 {len(ranked)}건')
-        attempted = False
-        for r in ranked[:MAX_TOPIC_ATTEMPTS]:
-            print(f'[주제 시도] ({r.score}점) {r.candidate.title}')
-            article = fetcher.fetch_article(get, r.candidate)
-            if article is None:
-                continue
-            attempted = True
-            draft = draft_article(llm, models, article, theme, past, is_alive, category)
-            if draft is None:
-                continue
-            return Composed(
-                article=article,
-                draft=draft,
-                short_news=tuple(pick_short_news(ranked, r.candidate.link)),
-                related=history.related_posts(past, tuple(draft.labels)),
-                footer_url=footer_url,
-                tool=tools.match_tool(draft, tools.load_tools()),
-                category=category,
-            )
-        if attempted:
-            break  # 원고까지 써 본 분야에서 실패했으면 AI 호출 상한을 지키려고 다른 분야로 넘어가지 않는다
-        print(f'[분야] {spec.name}에서 쓸 주제가 없어 다른 분야로 넘어갑니다')
+    trending = trends.fetch_trending(get)
+    print(f'[트렌드] 인기 키워드 {len(trending)}개')
+    recent = tuple(e.title for e in past[-RECENT_TITLES_FOR_SELECTOR:])
+    rankings: dict[str, tuple[str, list[RankedCandidate]]] = {}  # 분야 -> (테마, 낮춘 기준으로 매긴 순위)
+    tried: set[str] = set()
+    for relaxed in (False, True):
+        for category in (first, topics.other(first)):
+            spec = topics.SPECS[category]
+            if category not in rankings:
+                theme = spec.themes[now.astimezone(auto_blogger.KST).weekday()]
+                found = collector.fetch_candidates(get, now, spec.sources)
+                candidates = [c for c in found if not selector.is_duplicate(c, past)]
+                print(f'[분야] {spec.name} / 새 후보 {len(candidates)}건, 오늘의 테마: {theme}')
+                every = selector.rank_candidates(
+                    llm, models.fast, candidates, theme, spec.selector_prompt, recent, trending,
+                    min_score=selector.FALLBACK_MIN_SCORE)
+                rankings[category] = (theme, every)
+            theme, every = rankings[category]
+            ranked = [r for r in every if relaxed or r.score >= selector.MIN_SCORE]
+            print(f'[선별] {spec.name} {"낮춘 " if relaxed else ""}기준 점수 이상 {len(ranked)}건')
+            if relaxed and ranked:
+                print('[선별] 기준 점수를 넘는 글감이 없어 기준을 낮춰 가장 나은 글감으로 씁니다')
+            attempted = False
+            for r in [r for r in ranked if r.candidate.link not in tried][:MAX_TOPIC_ATTEMPTS]:
+                tried.add(r.candidate.link)
+                print(f'[주제 시도] ({r.score}점) {r.candidate.title}')
+                article = fetcher.fetch_article(get, r.candidate)
+                if article is None:
+                    continue
+                attempted = True
+                draft = draft_article(llm, models, article, theme, past, is_alive, category)
+                if draft is None:
+                    continue
+                return Composed(
+                    article=article,
+                    draft=draft,
+                    short_news=tuple(pick_short_news([x for x in every if x.score >= selector.MIN_SCORE], r.candidate.link)),
+                    related=history.related_posts(past, tuple(draft.labels)),
+                    footer_url=footer_url,
+                    tool=tools.match_tool(draft, tools.load_tools()),
+                    category=category,
+                )
+            if attempted:
+                raise PipelineError(f'상위 {MAX_TOPIC_ATTEMPTS}개 주제 모두 원문 추출 또는 검수에 실패했습니다.')  # 원고까지 써 본 뒤에는 AI 호출 상한을 지키려고 더 넘어가지 않는다
+            print(f'[분야] {spec.name}에서 쓸 주제가 없어 다른 분야로 넘어갑니다')
     raise PipelineError(f'상위 {MAX_TOPIC_ATTEMPTS}개 주제 모두 원문 추출 또는 검수에 실패했습니다.')
 
 

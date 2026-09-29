@@ -64,6 +64,58 @@ def test_rank_candidates_keeps_one_candidate_per_story():
     assert [r.candidate.title for r in ranked] == ['후보 제목 1', '후보 제목 2']
 
 
+def _one_score():
+    return SelectionResult(scores=[CandidateScore(index=0, score=8, reason='r', one_line='a', story='s0')])
+
+
+def test_rank_candidates_tells_llm_recent_titles():
+    llm, client = fake_llm({'SelectionResult': [_one_score()]})
+    selector.rank_candidates(llm, 'fast', [make_candidate(0)], '자유 주제', recent_titles=('고속도로 재진입 요금, 15분 안이면 900원 면제',))
+    assert '최근 발행한 글 제목' in client.requests[0]['input']
+    assert '고속도로 재진입 요금, 15분 안이면 900원 면제' in client.requests[0]['input']
+
+
+def test_rank_candidates_tells_llm_trending_keywords():
+    llm, client = fake_llm({'SelectionResult': [_one_score()]})
+    selector.rank_candidates(llm, 'fast', [make_candidate(0)], '자유 주제', trending=('장마', '코스피 6870 마감'))
+    assert '많이 검색되는 키워드' in client.requests[0]['input']
+    assert '- 코스피 6870 마감' in client.requests[0]['input']
+
+
+def test_rank_candidates_omits_extra_sections_when_none():
+    llm, client = fake_llm({'SelectionResult': [_one_score()]})
+    selector.rank_candidates(llm, 'fast', [make_candidate(0)], '자유 주제')
+    assert '최근 발행한 글 제목' not in client.requests[0]['input']
+    assert '많이 검색되는' not in client.requests[0]['input']
+
+
+def test_rank_candidates_drops_candidates_already_covered_by_recent_posts():
+    candidates = [make_candidate(i) for i in range(3)]
+    result = SelectionResult(scores=[
+        CandidateScore(index=0, score=10, reason='r', one_line='a', story='고속도로 재진입', already_covered=True),
+        CandidateScore(index=1, score=9, reason='r', one_line='b', story='청약통장'),
+        CandidateScore(index=2, score=8, reason='r', one_line='c', story='전기요금'),
+    ])
+    llm, _ = fake_llm({'SelectionResult': [result]})
+    ranked = selector.rank_candidates(llm, 'fast', candidates, '자유 주제', recent_titles=('고속도로 재진입 요금',))
+    assert [r.candidate.title for r in ranked] == ['후보 제목 1', '후보 제목 2']
+
+
+def test_covered_candidate_also_blocks_same_story_siblings():
+    candidates = [make_candidate(i) for i in range(2)]
+    result = SelectionResult(scores=[
+        CandidateScore(index=0, score=10, reason='r', one_line='a', story='고속도로 재진입 요금', already_covered=True),
+        CandidateScore(index=1, score=9, reason='r', one_line='b', story='고속도로 재진입 요금'),
+    ])
+    llm, _ = fake_llm({'SelectionResult': [result]})
+    assert selector.rank_candidates(llm, 'fast', candidates, '자유 주제', recent_titles=('x',)) == []
+
+
+def test_candidate_score_schema_requires_every_field_for_strict_output():
+    schema = CandidateScore.model_json_schema()
+    assert set(schema['required']) == set(schema['properties'])
+
+
 def test_rank_candidates_empty_does_not_call_llm():
     llm, client = fake_llm({})
     assert selector.rank_candidates(llm, 'fast', [], 'AI활용') == []

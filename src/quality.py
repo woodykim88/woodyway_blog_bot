@@ -7,7 +7,7 @@ from dataclasses import dataclass
 
 from src.history import HistoryEntry
 from src.llm import LLMClient, load_prompt
-from src.models import Article, FactCheck, PostDraft
+from src.models import Article, ClaimCheck, FactCheck, PostDraft
 from src.selector import TITLE_SIMILARITY_THRESHOLD, title_similarity
 
 # 목표 분량이 아니라 생성이 깨졌는지(빈 섹션 등)만 거르는 하한. 상한은 두지 않는다
@@ -38,6 +38,9 @@ CHECK_EFFORT: str | None = None
 @dataclass(frozen=True)
 class QualityReport:
     issues: tuple[str, ...]
+    duplicate_topic: bool = False  # 최근 글과 같은 소식. 다시 써도 소용없으니 주제를 바꾼다
+    rescuable: bool = False  # 문제가 원문 옮겨 쓴 문장·근거 없는 문장뿐이라 그 문장만 빼면 발행할 수 있다
+    unsupported: tuple[str, ...] = ()  # 사실검증이 근거 없다고 한 문장
 
     @property
     def passed(self) -> bool:
@@ -110,18 +113,24 @@ def check_seo(draft: PostDraft) -> list[str]:
     return issues
 
 
-def copied_phrases(text: str, source: str, window: int = COPY_WINDOW) -> list[str]:
-    """text 중 source와 공백 제외 window자 이상 똑같이 이어지는 부분을 찾습니다."""
+def copied_spans(text: str, source: str, window: int = COPY_WINDOW) -> list[tuple[int, int]]:
+    """공백을 뺀 text에서 source와 window자 이상 똑같이 이어지는 구간의 (시작, 끝)을 찾습니다."""
     squashed, src = re.sub(r'\s+', '', text), re.sub(r'\s+', '', source)
     found, i = [], 0
     while i + window <= len(squashed):
         chunk = squashed[i:i + window]
         if chunk in src and len(_HANGUL_RE.findall(chunk)) >= MIN_HANGUL_IN_COPY:
-            found.append(chunk)
+            found.append((i, i + window))
             i += window
         else:
             i += 1
     return found
+
+
+def copied_phrases(text: str, source: str, window: int = COPY_WINDOW) -> list[str]:
+    """text 중 source와 공백 제외 window자 이상 똑같이 이어지는 부분을 찾습니다."""
+    squashed = re.sub(r'\s+', '', text)
+    return [squashed[a:b] for a, b in copied_spans(text, source, window)]
 
 
 def check_copying(draft: PostDraft, article: Article) -> list[str]:
@@ -190,13 +199,16 @@ def check_source(article: Article, is_alive: Callable[[str], bool]) -> list[str]
     return [] if is_alive(article.source_url) else [f'출처 링크가 열리지 않습니다: {article.source_url}']
 
 
-def check_facts(llm: LLMClient, model: str, draft: PostDraft, article: Article) -> list[str]:
+def check_fact_claims(llm: LLMClient, model: str, draft: PostDraft, article: Article) -> list[ClaimCheck]:
     user_input = f'--- 원문 ---\n{article.text}\n\n--- 작성된 글 ---\n{fact_check_text(draft)}'
     result = llm.parse(model, load_prompt('factcheck'), user_input, FactCheck, effort=CHECK_EFFORT)
+    return [c for c in result.claims if c.kind == 'unsupported_fact']
+
+
+def check_facts(llm: LLMClient, model: str, draft: PostDraft, article: Article) -> list[str]:
     return [
         f'원문에 근거 없는 사실: "{c.sentence}" ({c.reason})'
-        for c in result.claims
-        if c.kind == 'unsupported_fact'
+        for c in check_fact_claims(llm, model, draft, article)
     ]
 
 
@@ -209,17 +221,23 @@ def run_quality_gate(
     is_alive: Callable[[str], bool],
 ) -> QualityReport:
     """값싼 규칙 검사를 먼저 하고, 모두 통과했을 때만 LLM 사실 검증을 호출합니다."""
-    issues = [
+    copying = check_copying(draft, article)
+    duplicate = check_duplicate_title(draft, history)
+    other = [
         *check_structure(draft),
         *check_seo(draft),
         *check_hook(draft),
-        *check_copying(draft, article),
         *check_length(draft),
         *check_banned_words(draft),
         *check_thumbnail(draft),
-        *check_duplicate_title(draft, history),
         *check_source(article, is_alive),
     ]
-    if not issues:
-        issues.extend(check_facts(llm, fast_model, draft, article))
-    return QualityReport(tuple(issues))
+    issues = [*other, *copying, *duplicate]
+    if issues:
+        return QualityReport(tuple(issues), duplicate_topic=bool(duplicate), rescuable=bool(copying) and not other and not duplicate)
+    claims = check_fact_claims(llm, fast_model, draft, article)
+    return QualityReport(
+        tuple(f'원문에 근거 없는 사실: "{c.sentence}" ({c.reason})' for c in claims),
+        rescuable=bool(claims),
+        unsupported=tuple(c.sentence for c in claims),
+    )
