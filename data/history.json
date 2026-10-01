@@ -207,5 +207,19 @@
     ],
     "status": "SCHEDULED",
     "slot": "2026-10-01T12:30"
+  },
+  {
+    "publish_date": "2026-10-01",
+    "post_id": "4637960649506917826",
+    "title": "제미나이 4 아르곤, 한 번에 100만 토큰 답한다",
+    "url": "https://www.woodyway88.com/2026/10/gemini-4-argon-output-limit.html",
+    "source_url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/",
+    "geeknews_url": "https://news.hada.io/topic?id=34563",
+    "labels": [
+      "AI활용",
+      "업무생산성"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-10-01T20:00"
   }
 ]
