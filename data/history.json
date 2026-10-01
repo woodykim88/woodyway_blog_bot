@@ -221,5 +221,19 @@
     ],
     "status": "SCHEDULED",
     "slot": "2026-10-01T20:00"
+  },
+  {
+    "publish_date": "2026-10-02",
+    "post_id": "6012462417304641480",
+    "title": "오픈AI FTC 조사, AI 안전 책임이 커지는 이유",
+    "url": "https://www.woodyway88.com/2026/10/openai-ftc-ai-investigation.html",
+    "source_url": "https://www.cnbc.com/2026/09/30/ftc-ai-probe-openai-anthropic.html",
+    "geeknews_url": "https://news.hada.io/topic?id=34615",
+    "labels": [
+      "IT트렌드",
+      "커리어"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-10-02T08:00"
   }
 ]
