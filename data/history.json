@@ -263,5 +263,19 @@
     ],
     "status": "SCHEDULED",
     "slot": "2026-10-02T20:00"
+  },
+  {
+    "publish_date": "2026-10-03",
+    "post_id": "3083983933689064711",
+    "title": "개인정보 유출 조사, 100만 명 넘으면 전담팀 붙는다",
+    "url": "https://www.woodyway88.com/2026/10/personal-data-leak-investigation.html",
+    "source_url": "https://www.hankyung.com/article/2026100208771",
+    "geeknews_url": "https://www.hankyung.com/article/2026100208771",
+    "labels": [
+      "IT트렌드",
+      "업무생산성"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-10-03T08:00"
   }
 ]
