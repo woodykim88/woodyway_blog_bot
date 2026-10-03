@@ -49,6 +49,8 @@ def wired(monkeypatch, tmp_path):
     composed = pipeline.Composed(make_article(), make_draft())
     compose = MagicMock(return_value=composed)
     monkeypatch.setattr(pipeline, 'compose_post', compose)
+    # 20:00 칸은 생활 가이드가 먼저다. 여기서는 못 썼다고 보고 뉴스로 대신하는 길을 쓴다 (네트워크 호출 없음)
+    monkeypatch.setattr(pipeline, 'compose_howto_post', lambda *a, **k: None)
     monkeypatch.setattr(pipeline, 'attach_hero_image', lambda c, *a, **k: c)
     service = MagicMock()
     service.posts().insert().execute.return_value = {'id': '7', 'status': 'DRAFT'}

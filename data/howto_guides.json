@@ -1,0 +1,511 @@
+[
+  {
+    "query": "청년미래적금 가입 조건",
+    "slug": "youth-future-savings-eligibility",
+    "area": "재테크",
+    "months": [
+      6,
+      7,
+      10,
+      11
+    ],
+    "tool": "",
+    "sources": [
+      {
+        "name": "대한민국 정책브리핑 「2차 청년미래적금, 10월 7일부터 가입 신청」",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148972819"
+      },
+      {
+        "name": "금융위원회 보도자료 「청년미래적금 2차 가입신청 안내」",
+        "url": "https://www.fsc.go.kr/no010101/87820"
+      },
+      {
+        "name": "대한민국 정책브리핑 「청년미래적금 궁금증 총정리」",
+        "url": "https://www.korea.kr/multi/visualNewsView.do?newsId=148966732"
+      }
+    ]
+  },
+  {
+    "query": "근로장려금 신청 방법",
+    "slug": "earned-income-tax-credit-how-to-apply",
+    "area": "지원금·혜택",
+    "months": [
+      3,
+      5,
+      8,
+      9
+    ],
+    "tool": "",
+    "sources": [
+      {
+        "name": "국세청 근로·자녀장려금 신청기간 및 방법",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=40397&cntntsId=238977"
+      },
+      {
+        "name": "국세청 근로·자녀장려금 신청자격",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=2452&cntntsId=7784"
+      }
+    ]
+  },
+  {
+    "query": "근로장려금 신청 자격",
+    "slug": "earned-income-tax-credit-eligibility",
+    "area": "지원금·혜택",
+    "months": [
+      3,
+      5,
+      8,
+      9
+    ],
+    "tool": "",
+    "sources": [
+      {
+        "name": "국세청 근로·자녀장려금 신청자격",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=2452&cntntsId=7784"
+      },
+      {
+        "name": "국세청 근로장려금 반기신청 요건 안내",
+        "url": "https://www.nts.go.kr/nts/na/ntt/selectNttInfo.do?nttSn=1349294&mi=7267"
+      }
+    ]
+  },
+  {
+    "query": "자동차세 연납 할인 신청",
+    "slug": "car-tax-annual-prepayment-discount",
+    "area": "절약꿀팁",
+    "months": [
+      1,
+      3,
+      6,
+      9
+    ],
+    "tool": "",
+    "sources": [
+      {
+        "name": "정책주간지 K-공감 「자동차세 연납 신청 아직?」",
+        "url": "https://gonggam.korea.kr/newsContentView.es?mid=a12503000000&section_id=NCCD_POLICY&news_id=5a870140-9fb0-4ce5-ac27-683cd3a17f79"
+      },
+      {
+        "name": "서울시 「자동차세 연세액 신고납부 안내」",
+        "url": "https://news.seoul.go.kr/gov/archives/564402"
+      }
+    ]
+  },
+  {
+    "query": "연말정산 환급금 조회",
+    "slug": "year-end-tax-refund-check",
+    "area": "생활경제",
+    "months": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "tool": "",
+    "sources": [
+      {
+        "name": "국세청 국세 미수령환급금 조회방법 안내",
+        "url": "https://d.nts.go.kr/asan/na/ntt/selectNttInfo.do?nttSn=1296788&mi=4210"
+      },
+      {
+        "name": "국세청 편리한 연말정산 이용방법",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=6646&cntntsId=7706"
+      }
+    ]
+  },
+  {
+    "query": "연말정산 간소화 서비스 이용 방법",
+    "slug": "year-end-tax-simplified-service",
+    "area": "생활경제",
+    "months": [
+      1,
+      2
+    ],
+    "tool": "",
+    "sources": [
+      {
+        "name": "국세청 편리한 연말정산 이용방법",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=6646&cntntsId=7706"
+      },
+      {
+        "name": "대한민국 정책브리핑 「놓치지 말아야 할 연말정산 포인트 ②」",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148957247"
+      }
+    ]
+  },
+  {
+    "query": "월세 세액공제 조건",
+    "slug": "monthly-rent-tax-credit",
+    "area": "절약꿀팁",
+    "months": [
+      1,
+      2,
+      12
+    ],
+    "tool": "",
+    "sources": [
+      {
+        "name": "국세청 월세액 세액공제",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=40613&cntntsId=239025"
+      },
+      {
+        "name": "대한민국 정책브리핑 「놓치지 말아야 할 연말정산 포인트 ②」",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148957247"
+      },
+      {
+        "name": "찾기 쉬운 생활법령정보(법제처) 임대한 경우 세금 신고하기와 세액공제 받기",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?ccfNo=2&cciNo=2&cnpClsNo=5&csmSeq=666&popMenu=ov"
+      }
+    ]
+  },
+  {
+    "query": "종합소득세 신고 방법",
+    "slug": "income-tax-return-how-to-file",
+    "area": "생활경제",
+    "months": [
+      5
+    ],
+    "tool": "",
+    "sources": [
+      {
+        "name": "국세청 종합소득세 신고·납부방법",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=40296&cntntsId=238910"
+      },
+      {
+        "name": "국세청 종합소득세 모두채움 신고 안내",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=40483&cntntsId=238978"
+      }
+    ]
+  },
+  {
+    "query": "종합소득세 모두채움 신고 방법",
+    "slug": "income-tax-prefilled-return",
+    "area": "생활경제",
+    "months": [
+      5
+    ],
+    "tool": "",
+    "sources": [
+      {
+        "name": "국세청 종합소득세 모두채움 신고 안내",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=40483&cntntsId=238978"
+      },
+      {
+        "name": "국세청 종합소득세 신고·납부방법",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=40296&cntntsId=238910"
+      }
+    ]
+  },
+  {
+    "query": "현금영수증 소득공제",
+    "slug": "cash-receipt-income-deduction",
+    "area": "절약꿀팁",
+    "months": [
+      11,
+      12,
+      1
+    ],
+    "tool": "",
+    "sources": [
+      {
+        "name": "국세청 현금거래확인신청 및 주택임차료 신고",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=2473&cntntsId=7798"
+      }
+    ]
+  },
+  {
+    "query": "실업급여 신청 방법",
+    "slug": "unemployment-benefit-how-to-apply",
+    "area": "지원금·혜택",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기 쉬운 생활법령정보(법제처) 실업급여 · 실업의 신고",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=722&ccfNo=2&cciNo=2&cnpClsNo=1"
+      },
+      {
+        "name": "대한민국 정책브리핑 「구직급여 신청 및 지급 절차는 어떻게 되나요?」",
+        "url": "https://www.korea.kr/multi/visualNewsView.do?newsId=148926911"
+      }
+    ]
+  },
+  {
+    "query": "실업급여 수급 자격",
+    "slug": "unemployment-benefit-eligibility",
+    "area": "지원금·혜택",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기 쉬운 생활법령정보(법제처) 실업급여 · 구직급여 수급자격",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=722&ccfNo=2&cciNo=1&cnpClsNo=1"
+      }
+    ]
+  },
+  {
+    "query": "실업급여 계산 방법",
+    "slug": "unemployment-benefit-calculation",
+    "area": "지원금·혜택",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기 쉬운 생활법령정보(법제처) 실업급여 · 구직급여 수급액",
+        "url": "https://www.easylaw.go.kr/CSP/CnpClsMainBtr.laf?popMenu=ov&csmSeq=722&ccfNo=2&cciNo=3&cnpClsNo=2"
+      },
+      {
+        "name": "찾기 쉬운 생활법령정보(법제처) 실업급여 · 구직급여 수급일수",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=722&ccfNo=2&cciNo=3&cnpClsNo=1"
+      }
+    ]
+  },
+  {
+    "query": "퇴직금 계산 방법",
+    "slug": "severance-pay-calculation",
+    "area": "생활경제",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기 쉬운 생활법령정보(법제처) 퇴직급여제도 · 퇴직금 지급",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=999&ccfNo=3&cciNo=2&cnpClsNo=1"
+      },
+      {
+        "name": "고용노동부 노동포털 퇴직금 계산 도움말",
+        "url": "https://1350.moel.go.kr/home/hp/retirementpaycal/retirementpaycal.jsp"
+      }
+    ]
+  },
+  {
+    "query": "연차 발생 기준",
+    "slug": "annual-leave-calculation",
+    "area": "생활경제",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기 쉬운 생활법령정보(법제처) 근로시간 및 휴가권 보장(연차 유급휴가)",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?csmSeq=1380&ccfNo=1&cciNo=1&cnpClsNo=1"
+      }
+    ]
+  },
+  {
+    "query": "주휴수당 계산 방법",
+    "slug": "weekly-holiday-pay-calculation",
+    "area": "생활경제",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "고용노동부 고객상담센터 「주휴수당 관련 문의」 답변",
+        "url": "https://1350.moel.go.kr/rtmview.do?id=1000059852"
+      }
+    ]
+  },
+  {
+    "query": "육아휴직 급여 신청 방법",
+    "slug": "parental-leave-benefit-how-to-apply",
+    "area": "지원금·혜택",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기 쉬운 생활법령정보(법제처) 육아휴직 급여",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=1380&ccfNo=2&cciNo=1&cnpClsNo=2"
+      },
+      {
+        "name": "고용24 육아휴직급여 제도 안내",
+        "url": "https://www.work24.go.kr/cm/c/f/1100/selecSystInfo.do?systId=SI00000402"
+      }
+    ]
+  },
+  {
+    "query": "부모급여 신청 방법",
+    "slug": "parent-benefit-how-to-apply",
+    "area": "지원금·혜택",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "대한민국 정책브리핑 「2026년 부모급여, 이렇게 지원합니다」",
+        "url": "https://www.korea.kr/multi/visualNewsView.do?newsId=148957936"
+      }
+    ]
+  },
+  {
+    "query": "기초연금 수급 자격",
+    "slug": "basic-pension-eligibility",
+    "area": "지원금·혜택",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "보건복지부 보도자료 「2026년 기초연금 선정기준액」",
+        "url": "https://mohw.go.kr/board.es?act=view&bid=0027&list_no=1488478&mid=a10503000000"
+      },
+      {
+        "name": "대한민국 정책브리핑 「노인 단독가구, 소득인정액 247만 원 이하면 기초연금」",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148957428"
+      }
+    ]
+  },
+  {
+    "query": "주택담보대출 갈아타기 조건",
+    "slug": "mortgage-refinance-conditions",
+    "area": "재테크",
+    "months": [],
+    "tool": "mortgage-refinance-calculator",
+    "sources": [
+      {
+        "name": "대한민국 정책브리핑 「주담대·전세대출 갈아타기, 온라인으로도 가능」",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148924532"
+      },
+      {
+        "name": "대한민국 정책브리핑 「대출 갈아타기 서비스 주요 Q&A」",
+        "url": "https://www.korea.kr/multi/visualNewsView.do?newsId=148929824"
+      }
+    ]
+  },
+  {
+    "query": "숨은 금융자산 조회 방법",
+    "slug": "find-dormant-financial-assets",
+    "area": "재테크",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "대한민국 정책브리핑 「숨은 금융자산 클릭 한 번으로 확인」",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148949284"
+      },
+      {
+        "name": "금융위원회 보도자료 「숨은 금융자산 간편 조회」",
+        "url": "https://www.fsc.go.kr/no010101/81065"
+      }
+    ]
+  },
+  {
+    "query": "모두의 카드 신청 방법",
+    "slug": "modu-card-transit-refund-how-to-apply",
+    "area": "절약꿀팁",
+    "months": [],
+    "tool": "transit-refund-calculator",
+    "sources": [
+      {
+        "name": "대한민국 정책브리핑 「모든 국민이 대중교통비 환급…모두의 카드 전국 이용」",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148958997"
+      },
+      {
+        "name": "대한민국 정책브리핑 「모두를 위한 모두의 카드」",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148960648"
+      }
+    ]
+  },
+  {
+    "query": "전입신고 방법",
+    "slug": "move-in-report-how-to",
+    "area": "생활경제",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기 쉬운 생활법령정보(법제처) 이사 · 전입신고하기",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=666&ccfNo=4&cciNo=1&cnpClsNo=1"
+      }
+    ]
+  },
+  {
+    "query": "확정일자 받는 법",
+    "slug": "lease-fixed-date-how-to",
+    "area": "부동산",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기 쉬운 생활법령정보(법제처) 주택임대차 · 대항력 및 우선변제권",
+        "url": "https://www.easylaw.go.kr/CSP/CnpClsMainBtr.laf?popMenu=ov&csmSeq=629&ccfNo=2&cciNo=3&cnpClsNo=1"
+      },
+      {
+        "name": "찾기 쉬운 생활법령정보(법제처) 100문100답 「확정일자 받기」",
+        "url": "https://www.easylaw.go.kr/CSP/OnhunqueansInfoRetrieve.laf?onhunqnaAstSeq=84&onhunqueSeq=3029"
+      }
+    ]
+  },
+  {
+    "query": "전월세 신고 방법",
+    "slug": "rental-contract-report-how-to",
+    "area": "부동산",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기 쉬운 생활법령정보(법제처) 주택 임대차 계약 신고제(전월세신고제)",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=629&ccfNo=2&cciNo=2&cnpClsNo=5"
+      },
+      {
+        "name": "대한민국 정책브리핑 「전·월세 계약하면 신고하세요」",
+        "url": "https://www.korea.kr/multi/visualNewsView.do?newsId=148942903"
+      }
+    ]
+  },
+  {
+    "query": "전세보증금 반환보증 가입 조건",
+    "slug": "jeonse-deposit-return-guarantee",
+    "area": "부동산",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "대한민국 정책브리핑 「전세보증금반환보증 궁금증 8가지」",
+        "url": "https://www.korea.kr/multi/visualNewsView.do?newsId=148908156"
+      }
+    ]
+  },
+  {
+    "query": "운전면허 갱신 방법",
+    "slug": "driver-license-renewal-how-to",
+    "area": "생활경제",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기 쉬운 생활법령정보(법제처) 자동차 운전면허 · 운전면허 갱신",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=668&ccfNo=3&cciNo=2&cnpClsNo=2"
+      },
+      {
+        "name": "찾기 쉬운 생활법령정보(법제처) 자동차 운전면허 · 정기적성검사",
+        "url": "https://www.easylaw.go.kr/CSP/CnpClsMain.laf?csmSeq=668&ccfNo=3&cciNo=2&cnpClsNo=1"
+      }
+    ]
+  },
+  {
+    "query": "상속포기 신청 방법",
+    "slug": "inheritance-renunciation-how-to",
+    "area": "생활경제",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기 쉬운 생활법령정보(법제처) 상속 · 상속 포기의 개념 및 방법",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=255&ccfNo=4&cciNo=4&cnpClsNo=1"
+      },
+      {
+        "name": "찾기 쉬운 생활법령정보(법제처) 상속 · 단순승인·한정승인·포기",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=255&ccfNo=4&cciNo=1&cnpClsNo=1"
+      }
+    ]
+  },
+  {
+    "query": "한정승인 신청 방법",
+    "slug": "limited-inheritance-acceptance-how-to",
+    "area": "생활경제",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기 쉬운 생활법령정보(법제처) 상속 · 한정승인의 개념 및 방법",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=255&ccfNo=4&cciNo=3&cnpClsNo=1"
+      }
+    ]
+  }
+]

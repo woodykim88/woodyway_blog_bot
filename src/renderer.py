@@ -1,7 +1,9 @@
 """PostDraft를 Blogger용 HTML로 렌더링한다. LLM 출력은 모두 자동 이스케이프된다."""
 from __future__ import annotations
 
+import re
 from collections.abc import Sequence
+from dataclasses import dataclass
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
@@ -27,6 +29,43 @@ def split_paragraphs(text: str) -> list[str]:
     return [p.strip() for p in text.split('\n\n') if p.strip()]
 
 
+_STEP = re.compile(r'^\s*\d{1,2}\s*[.)]\s+')
+_QUESTION = re.compile(r'^\s*Q\s*[.:)]\s*')
+_ANSWER = re.compile(r'^\s*A\s*[.:)]\s*')
+
+
+@dataclass(frozen=True)
+class Block:
+    """섹션 본문 한 덩어리: 문단(p), 번호 목록(ol, 줄마다 '1. '), 자주 묻는 질문(q, 'Q. '로 시작 → h3)."""
+
+    kind: str
+    text: str = ''
+    items: tuple[str, ...] = ()
+
+
+def to_blocks(body: str) -> list[Block]:
+    """문단마다 번호 목록·질문·답을 알아본다. 생활 가이드 글의 단계별 방법과 FAQ를 목록·h3로 보여 주려는 것."""
+    blocks: list[Block] = []
+    for paragraph in split_paragraphs(body):
+        lines = [x.strip() for x in paragraph.splitlines() if x.strip()]
+        if len(lines) >= 2 and all(_STEP.match(x) for x in lines):
+            blocks.append(Block('ol', items=tuple(_STEP.sub('', x) for x in lines)))
+        elif _QUESTION.match(lines[0]):
+            blocks.append(Block('q', text=_QUESTION.sub('', lines[0])))
+            if len(lines) > 1:
+                blocks.append(Block('p', text=_ANSWER.sub('', ' '.join(lines[1:]))))
+        else:
+            blocks.append(Block('p', text=_ANSWER.sub('', paragraph) if _ANSWER.match(paragraph) else paragraph))
+    return blocks
+
+
+def as_of_note(as_of: str) -> str:
+    if not as_of:
+        return ''
+    return (f'※ 이 글은 {as_of} 기준 공식 안내를 바탕으로 썼어요. 신청 기간·금액·조건은 해마다 바뀔 수 있으니 '
+            '신청 전에 아래 공식 출처에서 최신 내용을 꼭 확인하세요.')
+
+
 MONEY_NOTE = '※ 일반적인 정보이며, 세금·대출·혜택은 개인 상황에 따라 다를 수 있어요. 자세한 조건은 원문과 해당 기관에서 확인하세요.'
 
 
@@ -39,11 +78,16 @@ def render_post(
     footer_url: str | None = None,
     tool: Tool | None = None,
     skill: Skill | None = None,
+    as_of: str = '',
 ) -> str:
+    """as_of(기준 시점)가 있으면 생활 가이드 글: 기준 시점 안내를 붙이고 출처를 '공식 안내'로 표시한다."""
     return _env.get_template('post.html.j2').render(
         draft=draft,
         hook_paragraphs=split_paragraphs(draft.hook),
-        sections=[(s.heading, split_paragraphs(s.body), s.tip) for s in draft.sections],
+        sections=[(s.heading, to_blocks(s.body), s.tip) for s in draft.sections],
+        as_of_note=as_of_note(as_of),
+        source_prefix='공식 안내' if as_of else '원문',
+        reference_prefix='함께 본 공식 안내' if as_of else '함께 본 기사',
         source_url=article.source_url,
         source_name=article.candidate.source,
         references=article.references,

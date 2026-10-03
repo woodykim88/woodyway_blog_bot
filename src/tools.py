@@ -42,6 +42,17 @@ def load_tools(path: Path = TOOLS_PATH) -> tuple[Tool, ...]:
     )
 
 
+def tool_id(tool: Tool) -> str:
+    """계산기 id = 주소의 마지막 경로 (예: mortgage-refinance-calculator)."""
+    return tool.url.rstrip('/').rsplit('/', 1)[-1]
+
+
+def find_tool(tools: Sequence[Tool], wanted: str) -> Tool | None:
+    """id로 계산기를 찾는다. 없거나 비어 있으면 None."""
+    wanted = wanted.strip()
+    return next((t for t in tools if wanted and tool_id(t) == wanted), None)
+
+
 def _squash(text: str) -> str:
     return text.replace(' ', '').lower()
 

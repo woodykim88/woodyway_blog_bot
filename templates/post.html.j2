@@ -34,10 +34,24 @@
   <a href="{{ tool.url }}" target="_blank" rel="noopener" style="font-weight:bold;">{{ tool.title }} 바로 가기 →</a></p>
 {% endif %}
 
-{% for heading, paragraphs, tip in sections %}
+{% if as_of_note %}
+<p style="font-size:0.9em;color:#555;">{{ as_of_note }}</p>
+{% endif %}
+
+{% for heading, blocks, tip in sections %}
 <h2>{{ heading }}</h2>
-{% for p in paragraphs %}
-<p>{{ p }}</p>
+{% for b in blocks %}
+{% if b.kind == 'ol' %}
+<ol>
+{% for item in b.items %}
+  <li>{{ item }}</li>
+{% endfor %}
+</ol>
+{% elif b.kind == 'q' %}
+<h3>{{ b.text }}</h3>
+{% else %}
+<p>{{ b.text }}</p>
+{% endif %}
 {% endfor %}
 <p style="padding:12px 16px;background:#fff8e6;border-left:4px solid #f5b400;border-radius:4px;">💡 <strong>꿀팁</strong> · {{ tip }}</p>
 {% endfor %}
@@ -67,10 +81,10 @@
   <li>원문: <a href="{{ source_url }}" target="_blank" rel="noopener nofollow">{{ source_url }}</a></li>
   <li>via <a href="{{ via_url }}" target="_blank" rel="noopener">{{ source_name }}</a></li>
 {% else %}
-  <li>원문: {{ source_name }} · <a href="{{ source_url }}" target="_blank" rel="noopener nofollow">{{ source_url }}</a></li>
+  <li>{{ source_prefix }}: {{ source_name }} · <a href="{{ source_url }}" target="_blank" rel="noopener nofollow">{{ source_url }}</a></li>
 {% endif %}
 {% for ref in references %}
-  <li>함께 본 기사: {{ ref.source }} · <a href="{{ ref.url }}" target="_blank" rel="noopener nofollow">{{ ref.title }}</a></li>
+  <li>{{ reference_prefix }}: {% if ref.source != ref.title %}{{ ref.source }} · {% endif %}<a href="{{ ref.url }}" target="_blank" rel="noopener nofollow">{{ ref.title }}</a></li>
 {% endfor %}
 </ul>
 {% if money_note %}

@@ -36,6 +36,7 @@ from src import (
     fetcher,
     guide_topic,
     history,
+    howto_topic,
     image,
     notifier,
     providers,
@@ -88,6 +89,8 @@ RECENT_TITLES_FOR_SELECTOR = 12  # 선별 모델에 알려 줄 최근 발행 글
 DEFAULT_SKILL_TIME = '12:30'  # 이 시각 칸은 Claude Code 스킬 글 (루이 채널과 원 소스 멀티 유즈)
 MAX_WRITE_ATTEMPTS = 2
 MAX_GUIDE_ATTEMPTS = 2  # 12:30 칸 예비 사용법 글감을 이만큼까지 써 본다 (AI 호출 상한)
+DEFAULT_HOWTO_TIME = '20:00'  # 이 시각 칸은 검색형 생활 가이드 글 (2026-10-03 사용자 결정, 검색 유입 목적)
+MAX_HOWTO_ATTEMPTS = 2  # 생활 가이드 글감을 이만큼까지 써 보고, 못 쓰면 뉴스로 발행 (발행 건너뛰기 금지)
 SHORT_NEWS_COUNT = 3
 DEFAULT_FOOTER_URL = 'https://link.inpock.co.kr/shoperwoody'
 PREVIEW_PATH = Path(__file__).resolve().parent.parent / 'output' / 'preview.html'
@@ -115,6 +118,7 @@ class Composed:
     tool: tools.Tool | None = None
     category: str = topics.TECH
     skill: skills.Skill | None = None
+    as_of: str = ''  # 생활 가이드 글의 기준 시점 (예: 2026년 10월 3일)
 
     @property
     def html(self) -> str:
@@ -127,6 +131,7 @@ class Composed:
             footer_url=self.footer_url,
             tool=self.tool,
             skill=self.skill,
+            as_of=self.as_of,
         )
 
 
@@ -155,8 +160,12 @@ def draft_article(
     past: tuple[history.HistoryEntry, ...],
     is_alive: Callable[[str], bool],
     category: str = topics.TECH,
+    target_query: str = '',
 ) -> PostDraft | None:
     """글을 쓰고 사람이 쓴 글처럼 윤문한 뒤 검수합니다. 탈락하면 검수 의견을 반영해 한 번 더 씁니다.
+
+    target_query(생활 가이드 글의 목표 검색어)를 주면 검색어를 그 글자 그대로 고정해, 제목·메타 설명에
+    들어갔는지 검수(check_seo)가 확인하게 한다.
 
     분량·소제목 하한(quality.check_floor)만 못 채운 원고는 버리지 않는다: 다시 써 보고, 그래도 모자라면
     구제 발행이 안 될 때 그 원고로 발행한다 (발행 건너뛰기 금지, 운영자 지시).
@@ -165,8 +174,11 @@ def draft_article(
     salvage: tuple[PostDraft, quality.QualityReport] | None = None
     short: PostDraft | None = None  # 하한만 못 채우고 나머지 검수는 통과한 원고
     for attempt in range(1, MAX_WRITE_ATTEMPTS + 1):
-        written = polish.polish_draft(llm, models.writer, writer.write_post(llm, models.writer, article, theme, feedback, category))
+        written = polish.polish_draft(llm, models.writer, writer.write_post(
+            llm, models.writer, article, theme, feedback, category, target_query))
         draft = disclosure.strip_ai_disclosure(written)  # AI 작성 고지는 절대 싣지 않는다 (운영자 지시)
+        if target_query:
+            draft = draft.model_copy(update={'search_keyword': target_query})
         report = quality.run_quality_gate(llm, models.fast, draft, article, past, is_alive)
         if report.passed:
             print(f'[검수 통과] {draft.title} (시도 {attempt})')
@@ -201,7 +213,7 @@ def pick_short_news(ranked: Sequence[RankedCandidate], used_url: str) -> list[Sh
 
 
 def is_skill_slot(publish_at: datetime | None, skill_time: schedule.Time | None) -> bool:
-    """예약 발행 칸이 스킬 글 시각이면 True. 수동 발행(시각 없음)은 뉴스 글."""
+    """예약 발행 칸이 그 시각(스킬 글 12:30, 생활 가이드 20:00)이면 True. 수동 발행(시각 없음)은 뉴스 글."""
     if publish_at is None or skill_time is None:
         return False
     local = publish_at.astimezone(schedule.KST)
@@ -210,7 +222,7 @@ def is_skill_slot(publish_at: datetime | None, skill_time: schedule.Time | None)
 
 def force_first_label(draft: PostDraft, label: str) -> PostDraft:
     """12:30 칸 글은 첫 라벨을 고정한다 (분야 판별·썸네일 라벨·반반 계산 제외의 기준)."""
-    rest = [x for x in draft.labels if x not in topics.SLOT_LABELS]
+    rest = [x for x in draft.labels if x not in topics.FIXED_LABELS]
     return draft.model_copy(update={'labels': [label, *rest][:2]})
 
 
@@ -307,6 +319,72 @@ def compose_slot_post(
     return compose_post(llm, models, now, past, only=topics.TECH, **kwargs)
 
 
+def as_of_text(now: datetime) -> str:
+    local = now.astimezone(schedule.KST)
+    return f'{local.year}년 {local.month}월 {local.day}일'
+
+
+def howto_tool(guide: howto_topic.HowtoGuide, draft: PostDraft) -> tools.Tool | None:
+    """글감에 정해 둔 계산기, 없으면 글 내용으로 찾은 계산기 (생활경제 글과 같은 규칙)."""
+    available = tools.load_tools()
+    return tools.find_tool(available, guide.tool) or tools.match_tool(draft, available, topics.MONEY)
+
+
+def compose_howto_post(
+    llm: LLMClient,
+    models: Models,
+    now: datetime,
+    past: tuple[history.HistoryEntry, ...],
+    get: HttpGet = http_get,
+    is_alive: Callable[[str], bool] = url_is_alive,
+    footer_url: str | None = DEFAULT_FOOTER_URL,
+    limit: int = MAX_HOWTO_ATTEMPTS,
+) -> Composed | None:
+    """20:00 칸: 공식 안내 페이지로 검색형 생활 가이드 글을 씁니다. limit개 글감까지 써 보고 못 쓰면 None."""
+    theme = topics.SPECS[topics.HOWTO].themes[0]
+    fetch = lambda candidate: fetcher.fetch_article(get, candidate)  # noqa: E731
+    for tried, (guide, article) in enumerate(howto_topic.iter_guides(past, fetch, now), start=1):
+        print(f'[생활 가이드] {guide.query} (공식 안내 {1 + len(article.references)}곳)')
+        draft = draft_article(llm, models, article, theme, past, is_alive, topics.HOWTO, target_query=guide.query)
+        if draft is not None:
+            labels = [topics.HOWTO_LABEL, guide.area] if guide.area != topics.HOWTO_LABEL else [topics.HOWTO_LABEL]
+            draft = draft.model_copy(update={'labels': labels, 'url_slug': guide.slug or draft.url_slug})
+            return Composed(
+                article=article,
+                draft=draft,
+                related=history.related_posts(past, tuple(draft.labels)),
+                footer_url=footer_url,
+                tool=howto_tool(guide, draft),
+                category=topics.HOWTO,
+                as_of=as_of_text(now),
+            )
+        if tried >= limit:
+            break
+    return None
+
+
+def compose_evening_post(
+    llm: LLMClient,
+    models: Models,
+    now: datetime,
+    past: tuple[history.HistoryEntry, ...],
+    get: HttpGet = http_get,
+    is_alive: Callable[[str], bool] = url_is_alive,
+    footer_url: str | None = DEFAULT_FOOTER_URL,
+) -> Composed:
+    """20:00 칸: 생활 가이드 → (못 쓰면) 평소 뉴스 글. 칸은 절대 비우지 않는다."""
+    kwargs = {'get': get, 'is_alive': is_alive, 'footer_url': footer_url}
+    try:
+        composed = compose_howto_post(llm, models, now, past, **kwargs)
+    except LLMError as e:
+        print(f'[생활 가이드] AI 응답 오류: {e}')
+        composed = None
+    if composed is not None:
+        return composed
+    print('[20:00 칸] 생활 가이드 글을 못 써 뉴스 글로 발행합니다 (발행 건너뛰기 금지)')
+    return compose_post(llm, models, now, past, **kwargs)
+
+
 def compose_post(
     llm: LLMClient,
     models: Models,
@@ -357,6 +435,7 @@ def compose_post(
                 draft = draft_article(llm, models, article, theme, past, is_alive, category)
                 if draft is None:
                     continue
+                draft = drop_howto_label(draft, spec.labels[0])
                 return Composed(
                     article=article,
                     draft=draft,
@@ -370,6 +449,14 @@ def compose_post(
                 raise PipelineError(f'상위 {MAX_TOPIC_ATTEMPTS}개 주제 모두 원문 추출 또는 검수에 실패했습니다.')  # 원고까지 써 본 뒤에는 AI 호출 상한을 지키려고 더 넘어가지 않는다
             print(f'[분야] {spec.name}에서 쓸 주제가 없어 다른 분야로 넘어갑니다')
     raise PipelineError(f'상위 {MAX_TOPIC_ATTEMPTS}개 주제 모두 원문 추출 또는 검수에 실패했습니다.')
+
+
+def drop_howto_label(draft: PostDraft, fallback: str) -> PostDraft:
+    """뉴스 글에 생활가이드 라벨이 붙으면 뺀다 (분야 비율 계산에서 빠져 버리므로)."""
+    if topics.HOWTO_LABEL not in draft.labels:
+        return draft
+    labels = [x for x in draft.labels if x != topics.HOWTO_LABEL] or [fallback]
+    return draft.model_copy(update={'labels': labels})
 
 
 def headline_of(draft: PostDraft) -> thumbnail.Headline:
@@ -560,6 +647,7 @@ def run(
     past = history.load_history()
     times = schedule.parse_times(env.get('PUBLISH_TIMES'))
     skill_time = schedule.parse_times(env.get('SKILL_TIME') or DEFAULT_SKILL_TIME)[0]
+    howto_time = schedule.parse_times(env.get('HOWTO_TIME') or DEFAULT_HOWTO_TIME)[0]
     targets = plan_targets(mode, now, times, history.done_slots(past), at)
     if not targets:
         return RunResult('skipped', '지금 준비할 발행 시각이 없습니다.')
@@ -582,6 +670,8 @@ def run(
         try:
             if is_skill_slot(target.publish_at, skill_time):
                 composed = compose_slot_post(llm, models, now, past, footer_url=footer_url)
+            elif is_skill_slot(target.publish_at, howto_time):
+                composed = compose_evening_post(llm, models, now, past, footer_url=footer_url)
             else:
                 composed = compose_post(llm, models, now, past, footer_url=footer_url)
             composed = attach_hero_image(
