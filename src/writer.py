@@ -18,6 +18,12 @@ def build_writer_input(article: Article, theme: str, feedback: Sequence[str] = (
         article.text,
         '--- 원문 본문 끝 ---',
     ]
+    if article.references:
+        parts.append(
+            f'원문 본문 뒤에 같은 소식을 다룬 관련 기사 {len(article.references)}건이 이어 붙어 있습니다. '
+            '한 기사를 고쳐 쓰지 말고, 기사마다 다른 숫자·관점·빠진 정보를 비교·대조해 한 편으로 엮으세요. '
+            '기사끼리 다른 내용은 "한 기사는 ~, 다른 기사는 ~"처럼 밝히고, 주제와 상관없는 기사 내용은 쓰지 마세요.'
+        )
     if feedback:
         parts.append('이전 초안이 검수에서 아래 이유로 탈락했습니다. 반드시 고쳐서 다시 작성하세요:')
         parts.extend(f'- {item}' for item in feedback)

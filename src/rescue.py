@@ -123,7 +123,7 @@ def rescue(
         if cleaned is None:
             return None
         report = quality.run_quality_gate(llm, fast_model, cleaned, article, history, is_alive)
-        if report.passed:
+        if report.passed or report.only_soft:  # 문장을 빼서 분량이 모자라진 것은 발행을 막지 않는다
             return cleaned
         if not report.rescuable:
             return None

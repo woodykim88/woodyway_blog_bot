@@ -34,6 +34,7 @@ from src import (
     collector,
     disclosure,
     fetcher,
+    guide_topic,
     history,
     image,
     notifier,
@@ -86,6 +87,7 @@ MAX_TOPIC_ATTEMPTS = 3
 RECENT_TITLES_FOR_SELECTOR = 12  # 선별 모델에 알려 줄 최근 발행 글 수 (같은 소식 재발행 방지)
 DEFAULT_SKILL_TIME = '12:30'  # 이 시각 칸은 Claude Code 스킬 글 (루이 채널과 원 소스 멀티 유즈)
 MAX_WRITE_ATTEMPTS = 2
+MAX_GUIDE_ATTEMPTS = 2  # 12:30 칸 예비 사용법 글감을 이만큼까지 써 본다 (AI 호출 상한)
 SHORT_NEWS_COUNT = 3
 DEFAULT_FOOTER_URL = 'https://link.inpock.co.kr/shoperwoody'
 PREVIEW_PATH = Path(__file__).resolve().parent.parent / 'output' / 'preview.html'
@@ -154,9 +156,14 @@ def draft_article(
     is_alive: Callable[[str], bool],
     category: str = topics.TECH,
 ) -> PostDraft | None:
-    """글을 쓰고 사람이 쓴 글처럼 윤문한 뒤 검수합니다. 탈락하면 검수 의견을 반영해 한 번 더 씁니다."""
+    """글을 쓰고 사람이 쓴 글처럼 윤문한 뒤 검수합니다. 탈락하면 검수 의견을 반영해 한 번 더 씁니다.
+
+    분량·소제목 하한(quality.check_floor)만 못 채운 원고는 버리지 않는다: 다시 써 보고, 그래도 모자라면
+    구제 발행이 안 될 때 그 원고로 발행한다 (발행 건너뛰기 금지, 운영자 지시).
+    """
     feedback: tuple[str, ...] = ()
     salvage: tuple[PostDraft, quality.QualityReport] | None = None
+    short: PostDraft | None = None  # 하한만 못 채우고 나머지 검수는 통과한 원고
     for attempt in range(1, MAX_WRITE_ATTEMPTS + 1):
         written = polish.polish_draft(llm, models.writer, writer.write_post(llm, models.writer, article, theme, feedback, category))
         draft = disclosure.strip_ai_disclosure(written)  # AI 작성 고지는 절대 싣지 않는다 (운영자 지시)
@@ -166,20 +173,25 @@ def draft_article(
             return draft
         print(f'[검수 탈락] 시도 {attempt}: ' + ' / '.join(report.issues))
         if report.duplicate_topic:
-            if salvage is None:
+            if salvage is None and short is None:
                 print('[건너뜀] 최근에 발행한 소식과 같아 다른 주제로 넘어갑니다')
                 return None  # 다시 써도 같은 소식이라 원고 모델 호출만 낭비된다
             break  # 앞선 원고를 구제할 수 있으니 버리지 않는다
-        if report.rescuable:
+        if report.only_soft:
+            short = draft
+        elif report.rescuable:
             salvage = (draft, report)
         feedback = report.issues
-    if salvage is None:
-        return None
-    # 원고 때문에 발행을 건너뛰지 않는다 (운영자 지시): 걸린 문장만 빼고 발행한다
-    draft, report = salvage
-    rescued = rescue.rescue(llm, models.fast, draft, article, report.unsupported, past, is_alive)
-    if rescued is not None:
-        print(f'[구제 발행] 검수에 걸린 문장만 빼고 발행합니다: {rescued.title}')
+    rescued = None
+    if salvage is not None:
+        # 원고 때문에 발행을 건너뛰지 않는다 (운영자 지시): 걸린 문장만 빼고 발행한다
+        draft, report = salvage
+        rescued = rescue.rescue(llm, models.fast, draft, article, report.unsupported, past, is_alive)
+        if rescued is not None:
+            print(f'[구제 발행] 검수에 걸린 문장만 빼고 발행합니다: {rescued.title}')
+    if rescued is None and short is not None:
+        print(f'[분량 미달 발행] 다시 써도 분량·소제목 하한을 못 채웠지만 나머지 검수는 통과해 발행합니다: {short.title}')
+        return short
     return rescued
 
 
@@ -196,10 +208,15 @@ def is_skill_slot(publish_at: datetime | None, skill_time: schedule.Time | None)
     return (local.hour, local.minute) == skill_time
 
 
+def force_first_label(draft: PostDraft, label: str) -> PostDraft:
+    """12:30 칸 글은 첫 라벨을 고정한다 (분야 판별·썸네일 라벨·반반 계산 제외의 기준)."""
+    rest = [x for x in draft.labels if x not in topics.SLOT_LABELS]
+    return draft.model_copy(update={'labels': [label, *rest][:2]})
+
+
 def force_skill_labels(draft: PostDraft) -> PostDraft:
-    """스킬 글은 첫 라벨을 항상 AI스킬로 (분야 판별·썸네일 라벨·반반 계산 제외의 기준)."""
-    rest = [label for label in draft.labels if label != topics.SKILL_LABEL]
-    return draft.model_copy(update={'labels': [topics.SKILL_LABEL, *rest][:2]})
+    """스킬 글은 첫 라벨을 항상 AI스킬로."""
+    return force_first_label(draft, topics.SKILL_LABEL)
 
 
 def compose_skill_post(
@@ -211,7 +228,7 @@ def compose_skill_post(
     is_alive: Callable[[str], bool] = url_is_alive,
     footer_url: str | None = DEFAULT_FOOTER_URL,
 ) -> Composed | None:
-    """skills.sh에서 스킬 하나를 골라 글을 씁니다. 고를 스킬이 없거나 검수를 못 넘으면 None (뉴스 글로 대신)."""
+    """skills.sh에서 스킬 하나를 골라 글을 씁니다. 고를 스킬이 없거나 검수를 못 넘으면 None (AI 도구 사용법 글로 대신)."""
     try:
         skill = skill_topic.pick_skill(
             lambda: skills.fetch_candidates(get), lambda ref: skills.fetch_detail(get, ref), past,
@@ -222,7 +239,7 @@ def compose_skill_post(
         print(f'[스킬] {e}')
         return None
     if skill is None:
-        print('[스킬] 대중적인 새 스킬이 없어 뉴스 글로 대신합니다.')
+        print('[스킬] 대중적인 새 스킬이 없어 AI 도구 사용법 글로 대신합니다.')
         return None
     print(f'[스킬] {skill.key} (설치 {skill.installs:,}, 별 {skill.stars:,})')
     article = skill_topic.to_article(skill, now)
@@ -241,7 +258,37 @@ def compose_skill_post(
     )
 
 
-def compose_post(
+def compose_guide_post(
+    llm: LLMClient,
+    models: Models,
+    now: datetime,
+    past: tuple[history.HistoryEntry, ...],
+    get: HttpGet = http_get,
+    is_alive: Callable[[str], bool] = url_is_alive,
+    footer_url: str | None = DEFAULT_FOOTER_URL,
+    limit: int = MAX_GUIDE_ATTEMPTS,
+) -> Composed | None:
+    """12:30 칸 예비 글: 대중적인 AI 도구의 공식 도움말로 사용법 글을 씁니다. 못 쓰면 None."""
+    theme = topics.SPECS[topics.GUIDE].themes[0]
+    fetch = lambda candidate: fetcher.fetch_article(get, candidate)  # noqa: E731
+    for tried, (guide, article) in enumerate(guide_topic.iter_guides(past, fetch, now), start=1):
+        print(f'[사용법 글] {guide.tool} · {guide.keyword} ({guide.url})')
+        draft = draft_article(llm, models, article, theme, past, is_alive, topics.GUIDE)
+        if draft is not None:
+            draft = force_first_label(draft, topics.GUIDE_LABEL)
+            return Composed(
+                article=article,
+                draft=draft,
+                related=history.related_posts(past, tuple(draft.labels)),
+                footer_url=footer_url,
+                category=topics.GUIDE,
+            )
+        if tried >= limit:
+            break
+    return None
+
+
+def compose_slot_post(
     llm: LLMClient,
     models: Models,
     now: datetime,
@@ -250,18 +297,39 @@ def compose_post(
     is_alive: Callable[[str], bool] = url_is_alive,
     footer_url: str | None = DEFAULT_FOOTER_URL,
 ) -> Composed:
+    """12:30 칸: 스킬 글 → AI 도구 사용법 글 → (그래도 못 쓰면) AI·IT 뉴스. 칸은 절대 비우지 않는다."""
+    kwargs = {'get': get, 'is_alive': is_alive, 'footer_url': footer_url}
+    composed = compose_skill_post(llm, models, now, past, **kwargs)
+    composed = composed or compose_guide_post(llm, models, now, past, **kwargs)
+    if composed is not None:
+        return composed
+    print('[12:30 칸] 스킬·사용법 글을 모두 못 써 AI·IT 소식으로 발행합니다 (발행 건너뛰기 금지)')
+    return compose_post(llm, models, now, past, only=topics.TECH, **kwargs)
+
+
+def compose_post(
+    llm: LLMClient,
+    models: Models,
+    now: datetime,
+    past: tuple[history.HistoryEntry, ...],
+    get: HttpGet = http_get,
+    is_alive: Callable[[str], bool] = url_is_alive,
+    footer_url: str | None = DEFAULT_FOOTER_URL,
+    only: str | None = None,
+) -> Composed:
     """글 한 편을 완성합니다. 분야(AI·IT / 생활경제·재테크)를 최근 비율로 정하고, 상위 후보부터 차례로 시도합니다.
 
-    고른 분야에 쓸 만한 후보가 없으면(원고를 써 보기 전이면) 다른 분야로 넘어간다.
+    고른 분야에 쓸 만한 후보가 없으면(원고를 써 보기 전이면) 다른 분야로 넘어간다. only를 주면 그 분야만.
     """
-    first = topics.choose_category(past)
+    first = only or topics.choose_category(past)
+    order = (first,) if only else (first, topics.other(first))
     trending = trends.fetch_trending(get)
     print(f'[트렌드] 인기 키워드 {len(trending)}개')
     recent = tuple(e.title for e in past[-RECENT_TITLES_FOR_SELECTOR:])
     rankings: dict[str, tuple[str, list[RankedCandidate]]] = {}  # 분야 -> (테마, 낮춘 기준으로 매긴 순위)
     tried: set[str] = set()
     for relaxed in (False, True):
-        for category in (first, topics.other(first)):
+        for category in order:
             spec = topics.SPECS[category]
             if category not in rankings:
                 theme = spec.themes[now.astimezone(auto_blogger.KST).weekday()]
@@ -284,6 +352,7 @@ def compose_post(
                 article = fetcher.fetch_article(get, r.candidate)
                 if article is None:
                     continue
+                article = fetcher.with_references(get, article, r.related)  # 기사 1건 재작성 대신 2~3개 비교
                 attempted = True
                 draft = draft_article(llm, models, article, theme, past, is_alive, category)
                 if draft is None:
@@ -294,7 +363,7 @@ def compose_post(
                     short_news=tuple(pick_short_news([x for x in every if x.score >= selector.MIN_SCORE], r.candidate.link)),
                     related=history.related_posts(past, tuple(draft.labels)),
                     footer_url=footer_url,
-                    tool=tools.match_tool(draft, tools.load_tools()),
+                    tool=tools.match_tool(draft, tools.load_tools(), category),
                     category=category,
                 )
             if attempted:
@@ -511,10 +580,10 @@ def run(
     for target in targets:
         llm = LLMClient(text_backend)
         try:
-            composed = None
             if is_skill_slot(target.publish_at, skill_time):
-                composed = compose_skill_post(llm, models, now, past, footer_url=footer_url)
-            composed = composed or compose_post(llm, models, now, past, footer_url=footer_url)
+                composed = compose_slot_post(llm, models, now, past, footer_url=footer_url)
+            else:
+                composed = compose_post(llm, models, now, past, footer_url=footer_url)
             composed = attach_hero_image(
                 composed, image_backend, ai.image_model, ai.image_quality, r2, target.publish_date, dry_run
             )

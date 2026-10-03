@@ -58,7 +58,7 @@ def make_article(candidate: Candidate | None = None) -> Article:
 
 
 def make_draft(**overrides: Any) -> PostDraft:
-    paragraph = '회의록 정리는 많은 직장인이 매일 반복하는 일입니다. ' * 10
+    paragraph = '회의록 정리는 많은 직장인이 매일 반복하는 일입니다. ' * 15
     fields: dict[str, Any] = {
         'title': '회의록 AI 요약, 30분 걸리던 정리가 1분이면 끝나는 이유',
         'search_keyword': '회의록 AI 요약',
@@ -67,6 +67,7 @@ def make_draft(**overrides: Any) -> PostDraft:
         'sections': [
             Section(heading='배경', body=f'{paragraph}\n\n{paragraph}', tip='회의 시작 전에 녹음 버튼부터 누르세요.'),
             Section(heading='작동 방식', body=f'{paragraph}\n\n{paragraph}', tip='요약 결과는 담당자별로 나눠 달라고 하세요.'),
+            Section(heading='써 보기 전에 볼 점', body=f'{paragraph}\n\n{paragraph}', tip='민감한 회의는 녹음 전에 동의를 받으세요.'),
         ],
         'why_it_matters': '회의가 많은 조직일수록 정리 시간이 누적됩니다. 이를 줄이면 본업에 집중할 수 있습니다.',
         'action_items': ['다음 회의 녹음 파일을 요약 도구에 넣어 보세요.'],

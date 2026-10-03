@@ -1,6 +1,8 @@
 """후보의 원문 기사 주소를 정하고(GeekNews는 토픽 페이지에서 찾음), 원문 본문을 추출한다."""
 from __future__ import annotations
 
+from collections.abc import Sequence
+from dataclasses import replace
 from html.parser import HTMLParser
 from urllib.parse import urljoin, urlparse
 
@@ -8,10 +10,11 @@ import requests
 import trafilatura
 
 from src.http_client import HttpGet
-from src.models import Article, Candidate
+from src.models import Article, Candidate, Reference
 
 MIN_ARTICLE_CHARS = 500
 MAX_ARTICLE_CHARS = 12000
+MAX_REFERENCE_CHARS = 4000  # 관련 기사는 비교·보충용이라 앞부분만 (원고 모델 입력 비용 억제)
 GEEKNEWS_HOST = 'news.hada.io'
 
 
@@ -69,3 +72,22 @@ def fetch_article(get: HttpGet, candidate: Candidate) -> Article | None:
         print(f'[건너뜀] 원문 본문 추출 실패/너무 짧음: {candidate.title}')
         return None
     return Article(candidate=candidate, source_url=source_url, text=text)
+
+
+def with_references(get: HttpGet, article: Article, related: Sequence[Candidate]) -> Article:
+    """같은 소식을 다룬 다른 기사 본문을 원문 뒤에 붙인 새 Article. 못 읽은 기사는 건너뛴다.
+
+    기사 한 건을 고쳐 쓰는 대신 2~3개 출처를 비교·대조하게 하려는 것 (2026-10-03 사용자 결정).
+    사실검증·옮겨쓰기 검사도 붙인 본문 전체를 기준으로 한다.
+    """
+    parts, refs = [article.text], []
+    for candidate in related:
+        extra = fetch_article(get, candidate)
+        if extra is None or extra.source_url == article.source_url:
+            continue
+        refs.append(Reference(candidate.source, candidate.title, extra.source_url))
+        parts.append(f'--- 관련 기사 {len(refs)}: {candidate.source} 「{candidate.title}」 ---\n{extra.text[:MAX_REFERENCE_CHARS]}')
+    if not refs:
+        return article
+    print(f'[관련 기사] {len(refs)}건을 함께 읽힙니다: ' + ' / '.join(r.title for r in refs))
+    return replace(article, text='\n\n'.join(parts), references=(*article.references, *refs))

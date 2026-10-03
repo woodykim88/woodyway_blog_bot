@@ -14,8 +14,11 @@ from src.history import HistoryEntry
 TECH = 'tech'
 MONEY = 'money'
 SKILL = 'skill'  # Claude Code 스킬 글: 12:30 전용 칸, 뉴스 반반 계산에서 뺀다 (2026-09-30 사용자 결정)
+GUIDE = 'guide'  # 12:30 칸 예비: 고를 스킬이 없을 때 쓰는 AI 도구 사용법 글 (2026-10-03 사용자 결정)
 CATEGORIES = (MONEY, TECH)
 SKILL_LABEL = 'AI스킬'
+GUIDE_LABEL = 'AI사용법'
+SLOT_LABELS = frozenset({SKILL_LABEL, GUIDE_LABEL})  # 12:30 칸 글. 분야 비율 계산에서 뺀다
 BALANCE_WINDOW = 9  # 최근 이만큼의 글에서 분야 비율을 센다 (2:1이 정확히 나눠떨어지는 수)
 WEIGHTS = {TECH: 2, MONEY: 1}  # 분야별 목표 비중
 
@@ -49,13 +52,19 @@ SPECS = {
         labels=(SKILL_LABEL, 'AI활용', '툴추천', '업무생산성'),
         selector_prompt='', persona_prompt='writer_persona_skill',
     ),
+    GUIDE: CategorySpec(
+        name='AI 도구 사용법', sources=(),
+        themes=('AI 도구 사용법',) * 7,
+        labels=(GUIDE_LABEL, 'AI활용', '툴추천', '업무생산성'),
+        selector_prompt='', persona_prompt='writer_persona_guide',
+    ),
 }
 MONEY_LABELS = frozenset(SPECS[MONEY].labels)
 
 
 def category_of(entry: HistoryEntry) -> str:
-    if SKILL_LABEL in entry.labels:
-        return SKILL
+    if SLOT_LABELS & set(entry.labels):
+        return SKILL  # 스킬 글과 사용법 글은 같은 12:30 칸 글로 센다
     return MONEY if any(label in MONEY_LABELS for label in entry.labels) else TECH
 
 

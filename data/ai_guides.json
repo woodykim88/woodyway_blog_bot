@@ -1,0 +1,127 @@
+[
+  {
+    "tool": "Claude Code",
+    "keyword": "클로드 코드 CLAUDE.md 작성법",
+    "url": "https://code.claude.com/docs/ko/memory"
+  },
+  {
+    "tool": "Claude Code",
+    "keyword": "클로드 코드 사용 팁",
+    "url": "https://code.claude.com/docs/ko/best-practices"
+  },
+  {
+    "tool": "Claude Code",
+    "keyword": "클로드 코드 서브에이전트 사용법",
+    "url": "https://code.claude.com/docs/ko/sub-agents"
+  },
+  {
+    "tool": "Gemini",
+    "keyword": "제미나이 딥 리서치 사용법",
+    "url": "https://support.google.com/gemini/answer/15719111?hl=ko"
+  },
+  {
+    "tool": "Claude Code",
+    "keyword": "클로드 코드 스킬 만들기",
+    "url": "https://code.claude.com/docs/ko/skills"
+  },
+  {
+    "tool": "Claude Code",
+    "keyword": "클로드 코드 MCP 연결 방법",
+    "url": "https://code.claude.com/docs/ko/mcp"
+  },
+  {
+    "tool": "NotebookLM",
+    "keyword": "노트북LM 사용법",
+    "url": "https://support.google.com/notebooklm/answer/16164461?hl=ko"
+  },
+  {
+    "tool": "Claude Code",
+    "keyword": "클로드 코드 훅 설정",
+    "url": "https://code.claude.com/docs/ko/hooks-guide"
+  },
+  {
+    "tool": "Claude Code",
+    "keyword": "클로드 코드 되돌리기(체크포인트)",
+    "url": "https://code.claude.com/docs/ko/checkpointing"
+  },
+  {
+    "tool": "Claude Code",
+    "keyword": "클로드 코드 단축키",
+    "url": "https://code.claude.com/docs/ko/interactive-mode"
+  },
+  {
+    "tool": "Gemini",
+    "keyword": "제미나이 젬 만들기",
+    "url": "https://support.google.com/gemini/answer/15235603?hl=ko"
+  },
+  {
+    "tool": "Claude Code",
+    "keyword": "클로드 코드 플러그인 설치",
+    "url": "https://code.claude.com/docs/ko/discover-plugins"
+  },
+  {
+    "tool": "Claude Code",
+    "keyword": "클로드 코드 비용 줄이는 법",
+    "url": "https://code.claude.com/docs/ko/costs"
+  },
+  {
+    "tool": "Claude Code",
+    "keyword": "클로드 코드 자주 쓰는 작업",
+    "url": "https://code.claude.com/docs/ko/common-workflows"
+  },
+  {
+    "tool": "NotebookLM",
+    "keyword": "노트북LM 오디오 오버뷰",
+    "url": "https://support.google.com/notebooklm/answer/16212820?hl=ko"
+  },
+  {
+    "tool": "Claude Code",
+    "keyword": "클로드 코드 데스크톱 앱",
+    "url": "https://code.claude.com/docs/ko/desktop"
+  },
+  {
+    "tool": "Claude Code",
+    "keyword": "클로드 코드 VS Code 사용법",
+    "url": "https://code.claude.com/docs/ko/vs-code"
+  },
+  {
+    "tool": "Claude Code",
+    "keyword": "클로드 코드 크롬 연동",
+    "url": "https://code.claude.com/docs/ko/chrome"
+  },
+  {
+    "tool": "Claude Code",
+    "keyword": "클로드 코드 웹에서 쓰기",
+    "url": "https://code.claude.com/docs/ko/claude-code-on-the-web"
+  },
+  {
+    "tool": "Claude Code",
+    "keyword": "클로드 코드 출력 스타일",
+    "url": "https://code.claude.com/docs/ko/output-styles"
+  },
+  {
+    "tool": "Claude Code",
+    "keyword": "클로드 코드 상태 표시줄",
+    "url": "https://code.claude.com/docs/ko/statusline"
+  },
+  {
+    "tool": "Claude Code",
+    "keyword": "클로드 코드 모델 바꾸기",
+    "url": "https://code.claude.com/docs/ko/model-config"
+  },
+  {
+    "tool": "Claude Code",
+    "keyword": "클로드 코드 슬랙 연동",
+    "url": "https://code.claude.com/docs/ko/slack"
+  },
+  {
+    "tool": "NotebookLM",
+    "keyword": "노트북LM 활용법",
+    "url": "https://support.google.com/notebooklm/answer/16206563?hl=ko"
+  },
+  {
+    "tool": "Claude Code",
+    "keyword": "클로드 코드 설치 방법",
+    "url": "https://code.claude.com/docs/ko/quickstart"
+  }
+]

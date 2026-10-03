@@ -7,7 +7,7 @@
 <p style="font-size:1.2em;line-height:1.8;font-weight:500;">{{ p }}</p>
 {% endfor %}
 
-<h3>핵심 내용</h3>
+<h2>핵심 내용</h2>
 <ul>
 {% for point in draft.key_points %}
   <li>{{ point }}</li>
@@ -35,17 +35,17 @@
 {% endif %}
 
 {% for heading, paragraphs, tip in sections %}
-<h3>{{ heading }}</h3>
+<h2>{{ heading }}</h2>
 {% for p in paragraphs %}
 <p>{{ p }}</p>
 {% endfor %}
 <p style="padding:12px 16px;background:#fff8e6;border-left:4px solid #f5b400;border-radius:4px;">💡 <strong>꿀팁</strong> · {{ tip }}</p>
 {% endfor %}
 
-<h3>그래서 나에게 무엇이 달라질까</h3>
+<h2>그래서 나에게 무엇이 달라질까</h2>
 <p>{{ draft.why_it_matters }}</p>
 
-<h3>내일 바로 써먹기</h3>
+<h2>내일 바로 써먹기</h2>
 <ol>
 {% for item in draft.action_items %}
   <li>{{ item }}</li>
@@ -69,6 +69,9 @@
 {% else %}
   <li>원문: {{ source_name }} · <a href="{{ source_url }}" target="_blank" rel="noopener nofollow">{{ source_url }}</a></li>
 {% endif %}
+{% for ref in references %}
+  <li>함께 본 기사: {{ ref.source }} · <a href="{{ ref.url }}" target="_blank" rel="noopener nofollow">{{ ref.title }}</a></li>
+{% endfor %}
 </ul>
 {% if money_note %}
 <p style="font-size:0.9em;color:#666;">{{ money_note }}</p>

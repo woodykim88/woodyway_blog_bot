@@ -137,7 +137,7 @@ def test_sample_draft_is_within_length():
 
 @pytest.mark.parametrize('overrides, expected', [
     ({'key_points': ['a', 'b']}, '핵심 내용 불릿'),
-    ({'sections': [Section(heading='h', body='b' * 1500, tip='t')]}, '자세히 보기 섹션'),
+    ({'sections': [Section(heading=f'h{i}', body='가' * 600, tip='t') for i in range(6)]}, '5개까지'),
     ({'hook': '회의록 AI 요약 기능이 새로 나왔습니다. 무엇이 달라졌는지 정리했습니다.'}, '도입부'),
     ({'hook': '회의가 끝나면 늘 한숨부터 나옵니다. 오늘은 회의록 요약 도구를 살펴봅니다.'}, '도입부'),
     ({'sections': [Section(heading='a', body='가' * 800, tip=' '), Section(heading='b', body='나' * 800, tip='t')]}, '꿀팁'),
@@ -230,7 +230,9 @@ def test_render_post_contains_sections_and_sources():
                  'https://img.example.com/a.webp'):
         assert text in html
     assert 'AI의 도움' not in html  # AI 작성 고지는 붙이지 않는다 (사용자 결정 2026-09-27)
-    assert html.count('<p>회의록') == 4  # 섹션 2개 x 문단 2개
+    assert html.count('<p>회의록') == 6  # 섹션 3개 x 문단 2개
+    assert '<h2>배경</h2>' in html and '<h2>작동 방식</h2>' in html  # 섹션 소제목은 h2 (검색 노출)
+    assert html.count('<h2>') >= 3
 
 
 def test_render_post_hook_tips_and_glossary():

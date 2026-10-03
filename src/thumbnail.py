@@ -205,7 +205,7 @@ def add_headline(data: bytes, headline: Headline, font: FontSpec | None) -> byte
 # --- 루이 마스코트 (AI·IT·스킬 글에만, 2026-09-30 사용자 결정) ---
 # 루이 채널(@louis.ai.code) 캐릭터 시트에서 오린 투명 PNG. 그림을 새로 만들지 않아 매번 같은 모습이고 비용이 없다.
 MASCOT_DIR = Path(__file__).resolve().parent.parent / 'assets' / 'louis'
-MASCOTS = {'skill': 'louis-laptop.png', 'tech': 'louis-front.png'}
+MASCOTS = {'skill': 'louis-laptop.png', 'guide': 'louis-laptop.png', 'tech': 'louis-front.png'}
 MASCOT_HEIGHT_RATIO = 0.42   # 이미지 높이 대비 루이 키
 MASCOT_RIGHT_MARGIN = 0.02   # 오른쪽 여백 (이미지 너비 대비)
 

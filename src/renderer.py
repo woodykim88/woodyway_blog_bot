@@ -46,6 +46,7 @@ def render_post(
         sections=[(s.heading, split_paragraphs(s.body), s.tip) for s in draft.sections],
         source_url=article.source_url,
         source_name=article.candidate.source,
+        references=article.references,
         # GeekNews처럼 다른 곳에서 원문을 찾아온 경우에만 "via" 링크를 단다
         via_url=None if article.candidate.direct else article.candidate.link,
         short_news=short_news,

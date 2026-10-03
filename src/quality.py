@@ -10,8 +10,11 @@ from src.llm import LLMClient, load_prompt
 from src.models import Article, ClaimCheck, FactCheck, PostDraft
 from src.selector import TITLE_SIMILARITY_THRESHOLD, title_similarity
 
-# 목표 분량이 아니라 생성이 깨졌는지(빈 섹션 등)만 거르는 하한. 상한은 두지 않는다
-MIN_BODY_CHARS = 700
+# 품질 하한 (2026-10-03 사용자 결정): 최근 글이 1,900~3,100자에 소제목(h2)이 없어 검색 유입이 줄었다.
+# 본문 2,500자 이상, h2 섹션 3개 이상. 못 채우면 한 번 다시 쓰고, 그래도 모자라면 발행은 한다 (발행 건너뛰기 금지).
+MIN_BODY_CHARS = 2500
+MIN_SECTIONS = 3  # 섹션 소제목이 h2로 나간다
+MAX_SECTIONS = 5
 MAX_TITLE_CHARS = 40
 MAX_META_CHARS = 150
 BANNED_WORDS = ('충격', '경악', '필수', '모르면 손해', '대박', '역대급', '무조건', '100%',
@@ -41,10 +44,16 @@ class QualityReport:
     duplicate_topic: bool = False  # 최근 글과 같은 소식. 다시 써도 소용없으니 주제를 바꾼다
     rescuable: bool = False  # 문제가 원문 옮겨 쓴 문장·근거 없는 문장뿐이라 그 문장만 빼면 발행할 수 있다
     unsupported: tuple[str, ...] = ()  # 사실검증이 근거 없다고 한 문장
+    soft: tuple[str, ...] = ()  # 분량·소제목 하한 미달. 다시 쓰게 하되, 이것만 남으면 발행은 한다
 
     @property
     def passed(self) -> bool:
         return not self.issues
+
+    @property
+    def only_soft(self) -> bool:
+        """분량·소제목 하한만 못 채웠고 나머지(사실검증 포함)는 통과했다."""
+        return bool(self.issues) and set(self.issues) <= set(self.soft)
 
 
 def body_text(draft: PostDraft) -> str:
@@ -77,8 +86,8 @@ def check_structure(draft: PostDraft) -> list[str]:
     issues = []
     if not 3 <= len(draft.key_points) <= 5:
         issues.append(f'핵심 내용 불릿은 3~5개여야 합니다 (현재 {len(draft.key_points)}개).')
-    if not 2 <= len(draft.sections) <= 3:
-        issues.append(f'자세히 보기 섹션은 2~3개여야 합니다 (현재 {len(draft.sections)}개).')
+    if len(draft.sections) > MAX_SECTIONS:
+        issues.append(f'소제목(h2) 섹션은 {MAX_SECTIONS}개까지만 쓰세요 (현재 {len(draft.sections)}개).')
     if not 1 <= len(draft.action_items) <= 3:
         issues.append(f'내일 바로 써먹기는 1~3개여야 합니다 (현재 {len(draft.action_items)}개).')
     if not 1 <= len(draft.labels) <= 2:
@@ -154,11 +163,30 @@ def check_hook(draft: PostDraft) -> list[str]:
     return issues
 
 
+def body_length(draft: PostDraft) -> int:
+    """본문 글자 수 (공백 포함, 연속 공백·줄바꿈은 한 칸으로)."""
+    return len(re.sub(r'\s+', ' ', body_text(draft)).strip())
+
+
 def check_length(draft: PostDraft) -> list[str]:
-    length = len(body_text(draft))
+    length = body_length(draft)
     if length < MIN_BODY_CHARS:
-        return [f'본문이 너무 짧습니다 (현재 {length}자). 섹션 내용을 채워 주세요.']
+        return [f'본문이 너무 짧습니다 (현재 {length}자, 최소 {MIN_BODY_CHARS}자). '
+                '섹션마다 문단을 3~4개로 늘리고, 원문 사실·비교·구체적인 방법으로 채우세요 (같은 말 반복 금지).']
     return []
+
+
+def check_headings(draft: PostDraft) -> list[str]:
+    """검색 노출용 h2 소제목 섹션 수 하한."""
+    if len(draft.sections) < MIN_SECTIONS:
+        return [f'소제목(h2) 섹션이 {MIN_SECTIONS}개 이상이어야 합니다 (현재 {len(draft.sections)}개). '
+                '독자가 검색할 만한 궁금증으로 섹션을 나눠 주세요.']
+    return []
+
+
+def check_floor(draft: PostDraft) -> list[str]:
+    """분량·소제목 하한. 미달이면 다시 쓰게 하지만 이것 때문에 발행을 건너뛰지는 않는다."""
+    return [*check_headings(draft), *check_length(draft)]
 
 
 def check_banned_words(draft: PostDraft) -> list[str]:
@@ -220,24 +248,29 @@ def run_quality_gate(
     history: tuple[HistoryEntry, ...],
     is_alive: Callable[[str], bool],
 ) -> QualityReport:
-    """값싼 규칙 검사를 먼저 하고, 모두 통과했을 때만 LLM 사실 검증을 호출합니다."""
+    """값싼 규칙 검사를 먼저 하고, 모두 통과했을 때만 LLM 사실 검증을 호출합니다.
+
+    분량·소제목 하한(soft)은 사실 검증을 막지 않는다. 하한만 남은 원고는 발행할 수 있어야 하기 때문이다.
+    """
+    soft = tuple(check_floor(draft))
     copying = check_copying(draft, article)
     duplicate = check_duplicate_title(draft, history)
     other = [
         *check_structure(draft),
         *check_seo(draft),
         *check_hook(draft),
-        *check_length(draft),
         *check_banned_words(draft),
         *check_thumbnail(draft),
         *check_source(article, is_alive),
     ]
-    issues = [*other, *copying, *duplicate]
-    if issues:
-        return QualityReport(tuple(issues), duplicate_topic=bool(duplicate), rescuable=bool(copying) and not other and not duplicate)
+    hard = [*other, *copying, *duplicate]
+    if hard:
+        return QualityReport((*hard, *soft), duplicate_topic=bool(duplicate),
+                             rescuable=bool(copying) and not other and not duplicate, soft=soft)
     claims = check_fact_claims(llm, fast_model, draft, article)
     return QualityReport(
-        tuple(f'원문에 근거 없는 사실: "{c.sentence}" ({c.reason})' for c in claims),
+        (*(f'원문에 근거 없는 사실: "{c.sentence}" ({c.reason})' for c in claims), *soft),
         rescuable=bool(claims),
         unsupported=tuple(c.sentence for c in claims),
+        soft=soft,
     )
