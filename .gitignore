@@ -17,3 +17,4 @@ output/
 
 # macOS
 .DS_Store
+token.json.bak
