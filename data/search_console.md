@@ -8,7 +8,7 @@
 ### 색인 안 된 최근 글
 - https://www.woodyway88.com/2026/09/15-900.html — Crawled - currently not indexed
 - https://www.woodyway88.com/2026/09/ai-marketing-use-cases.html — Discovered - currently not indexed
-- https://www.woodyway88.com/2026/10/us-pce-inflation-rate.html — URL is unknown to Google
+- https://www.woodyway88.com/2026/10/us-pce-inflation-rate.html — Discovered - currently not indexed
 - https://www.woodyway88.com/2026/10/claude-code-product-launch-video-skill.html — Discovered - currently not indexed
 - https://www.woodyway88.com/2026/10/gemini-4-argon-output-limit.html — URL is unknown to Google
 - https://www.woodyway88.com/2026/10/openai-ftc-ai-investigation.html — URL is unknown to Google
