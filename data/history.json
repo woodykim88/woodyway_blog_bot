@@ -319,5 +319,19 @@
     ],
     "status": "SCHEDULED",
     "slot": "2026-10-04T08:00"
+  },
+  {
+    "publish_date": "2026-10-04",
+    "post_id": "6768813998410882868",
+    "title": "클로드 코드 design-taste-frontend 스킬, 왜 덜 뻔할까",
+    "url": "https://www.woodyway88.com/2026/10/claude-code-design-taste-frontend.html",
+    "source_url": "https://skills.sh/leonxlnx/taste-skill/design-taste-frontend",
+    "geeknews_url": "https://skills.sh/leonxlnx/taste-skill/design-taste-frontend",
+    "labels": [
+      "AI스킬",
+      "AI활용"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-10-04T12:30"
   }
 ]
