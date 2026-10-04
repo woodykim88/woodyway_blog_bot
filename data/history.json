@@ -361,5 +361,19 @@
     ],
     "status": "SCHEDULED",
     "slot": "2026-10-05T08:00"
+  },
+  {
+    "publish_date": "2026-10-05",
+    "post_id": "6305694121227689782",
+    "title": "클로드 코드 CLAUDE.md 사용법, 매번 설명 줄이는 파일",
+    "url": "https://www.woodyway88.com/2026/10/claude-code-claude-md-guide.html",
+    "source_url": "https://code.claude.com/docs/ko/memory",
+    "geeknews_url": "https://code.claude.com/docs/ko/memory",
+    "labels": [
+      "AI사용법",
+      "업무생산성"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-10-05T12:30"
   }
 ]
