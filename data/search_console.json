@@ -1,18 +1,11 @@
 {
- "updated": "2026-10-03",
+ "updated": "2026-10-04",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-09-05",
-  "2026-10-02"
+  "2026-09-06",
+  "2026-10-03"
  ],
  "daily": [
-  {
-   "date": "2026-09-05",
-   "clicks": 0,
-   "impressions": 0,
-   "ctr": 0,
-   "position": 0
-  },
   {
    "date": "2026-09-06",
    "clicks": 0,
@@ -338,7 +331,7 @@
   {
    "url": "https://www.woodyway88.com/2026/09/ai-marketing-use-cases.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -350,7 +343,7 @@
   {
    "url": "https://www.woodyway88.com/2026/10/claude-code-product-launch-video-skill.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -391,6 +384,18 @@
   },
   {
    "url": "https://www.woodyway88.com/2026/10/brokerage-system-outage-korea.html",
+   "verdict": "NEUTRAL",
+   "coverage": "URL is unknown to Google",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/financial-sector-data-breach-korea.html",
+   "verdict": "NEUTRAL",
+   "coverage": "URL is unknown to Google",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/claude-code-design-taste-frontend.html",
    "verdict": "NEUTRAL",
    "coverage": "URL is unknown to Google",
    "last_crawl": ""
