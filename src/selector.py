@@ -4,8 +4,10 @@ from __future__ import annotations
 import re
 from collections.abc import Sequence
 from dataclasses import replace
+from datetime import date
 from difflib import SequenceMatcher
 
+from src import kr_calendar
 from src.history import HistoryEntry
 from src.llm import LLMClient, load_prompt
 from src.models import Candidate, RankedCandidate, SelectionResult
@@ -54,14 +56,24 @@ def format_trending(trending: Sequence[str]) -> str:
     return '지금 한국에서 많이 검색되는 키워드:\n' + '\n'.join(f'- {k}' for k in trending) + '\n\n'
 
 
+def format_calendar(day: date | None) -> str:
+    """발행일의 달력 사실. 휴일 직전·연휴 중이면 그 맥락에 맞는 후보에 가점을 주라고 안내한다."""
+    if day is None:
+        return ''
+    text = f'발행일 달력 (한국 공휴일·대체공휴일 반영):\n{kr_calendar.calendar_facts(day)}\n'
+    if kr_calendar.holiday_context(day):
+        text += '휴일·연휴 직전이거나 연휴 중이면, 연휴 준비·휴일 운영·이동·소비 같은 휴일 맥락과 맞는 후보를 조금 높게 채점하세요 (맞는 후보가 없으면 평소대로).\n'
+    return text + '\n'
+
+
 def rank_candidates(
     llm: LLMClient, model: str, candidates: list[Candidate], theme: str, prompt: str = 'selector',
-    recent_titles: Sequence[str] = (), trending: Sequence[str] = (), min_score: int = MIN_SCORE,
+    recent_titles: Sequence[str] = (), trending: Sequence[str] = (), min_score: int = MIN_SCORE, day: date | None = None,
 ) -> list[RankedCandidate]:
     """min_score 이상인 후보를 점수 높은 순으로 반환합니다. 같은 소식은 점수가 가장 높은 하나만 남깁니다."""
     if not candidates:
         return []
-    user_input = f'오늘의 테마: {theme}\n\n{format_recent(recent_titles)}{format_trending(trending)}후보 목록:\n{format_candidates(candidates)}'
+    user_input = f'오늘의 테마: {theme}\n\n{format_calendar(day)}{format_recent(recent_titles)}{format_trending(trending)}후보 목록:\n{format_candidates(candidates)}'
     result = llm.parse(model, load_prompt(prompt), user_input, SelectionResult)
 
     best: dict[int, tuple[RankedCandidate, str, bool]] = {}

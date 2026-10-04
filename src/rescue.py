@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import re
 from collections.abc import Callable, Sequence
+from datetime import date
 
 from src import quality
 from src.history import HistoryEntry
@@ -60,7 +61,8 @@ def _clean_list(items: Sequence[str], source: str, claims: Sequence[str]) -> tup
 def _fact_sentences(draft: PostDraft) -> list[str]:
     """사실검증이 읽는 모든 칸(제목·소제목·용어사전 포함)의 문장. 걸린 문장이 어디 있었는지·남았는지 볼 때 쓴다."""
     fields = [draft.title, draft.thumbnail_text.replace('\n', ' '), draft.hook, *draft.key_points,
-              *(s.heading for s in draft.sections), *(s.body for s in draft.sections), draft.why_it_matters,
+              *(s.heading for s in draft.sections), *(s.body for s in draft.sections), *(s.tip for s in draft.sections),
+              draft.why_it_matters, *draft.action_items,
               *(f'{g.term}: {g.meaning}' for g in draft.glossary)]
     return [s for f in fields for para in _PARAGRAPH_SPLIT.split(f) for s in _SENTENCE_SPLIT.split(para.strip()) if s.strip()]
 
@@ -116,13 +118,14 @@ def rescue(
     unsupported: Sequence[str],
     history: tuple[HistoryEntry, ...],
     is_alive: Callable[[str], bool],
+    day: date | None = None,
 ) -> PostDraft | None:
     """걸린 문장을 빼고 검수를 다시 통과하면 그 초안을 돌려줍니다. 못 살리면 None."""
     for _ in range(MAX_PASSES):
         cleaned = remove_flagged(draft, article, unsupported)
         if cleaned is None:
             return None
-        report = quality.run_quality_gate(llm, fast_model, cleaned, article, history, is_alive)
+        report = quality.run_quality_gate(llm, fast_model, cleaned, article, history, is_alive, day)
         if report.passed or report.only_soft:  # 문장을 빼서 분량이 모자라진 것은 발행을 막지 않는다
             return cleaned
         if not report.rescuable:

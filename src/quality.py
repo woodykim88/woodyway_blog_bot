@@ -4,7 +4,9 @@ from __future__ import annotations
 import re
 from collections.abc import Callable
 from dataclasses import dataclass
+from datetime import date
 
+from src import kr_calendar
 from src.history import HistoryEntry
 from src.llm import LLMClient, load_prompt
 from src.models import Article, ClaimCheck, FactCheck, PostDraft
@@ -227,8 +229,11 @@ def check_source(article: Article, is_alive: Callable[[str], bool]) -> list[str]
     return [] if is_alive(article.source_url) else [f'출처 링크가 열리지 않습니다: {article.source_url}']
 
 
-def check_fact_claims(llm: LLMClient, model: str, draft: PostDraft, article: Article) -> list[ClaimCheck]:
-    user_input = f'--- 원문 ---\n{article.text}\n\n--- 작성된 글 ---\n{fact_check_text(draft)}'
+def check_fact_claims(
+    llm: LLMClient, model: str, draft: PostDraft, article: Article, day: date | None = None,
+) -> list[ClaimCheck]:
+    calendar = f'--- 달력 사실 (근거로 인정) ---\n{kr_calendar.calendar_facts(day)}\n\n' if day is not None else ''
+    user_input = f'{calendar}--- 원문 ---\n{article.text}\n\n--- 작성된 글 ---\n{fact_check_text(draft)}'
     result = llm.parse(model, load_prompt('factcheck'), user_input, FactCheck, effort=CHECK_EFFORT)
     return [c for c in result.claims if c.kind == 'unsupported_fact']
 
@@ -240,6 +245,20 @@ def check_facts(llm: LLMClient, model: str, draft: PostDraft, article: Article) 
     ]
 
 
+def check_calendar(draft: PostDraft, day: date | None) -> list[tuple[str, str]]:
+    """실제 달력과 안 맞는 시점 표현 ("내일 출근"인데 내일이 공휴일 등)이 든 문장과 이유. 제목·썸네일 포함."""
+    if day is None:
+        return []
+    fields = [draft.title, draft.thumbnail_text.replace('\n', ' '), draft.hook, *draft.key_points,
+              *(f'{s.heading}\n{s.body}\n{s.tip}' for s in draft.sections), draft.why_it_matters, *draft.action_items]
+    found: list[tuple[str, str]] = []
+    for field in fields:
+        for item in kr_calendar.timing_problems(field, day):
+            if item not in found:
+                found.append(item)
+    return found
+
+
 def run_quality_gate(
     llm: LLMClient,
     fast_model: str,
@@ -247,6 +266,7 @@ def run_quality_gate(
     article: Article,
     history: tuple[HistoryEntry, ...],
     is_alive: Callable[[str], bool],
+    day: date | None = None,
 ) -> QualityReport:
     """값싼 규칙 검사를 먼저 하고, 모두 통과했을 때만 LLM 사실 검증을 호출합니다.
 
@@ -263,14 +283,18 @@ def run_quality_gate(
         *check_thumbnail(draft),
         *check_source(article, is_alive),
     ]
+    timing = check_calendar(draft, day)  # 달력과 안 맞는 시점 표현: 다시 쓰게 하고, 끝내 못 고치면 그 문장만 뺀다
+    timing_issues = [f'달력과 맞지 않는 표현: "{s}" ({why}) 시점 표현을 고치거나 빼세요.' for s, why in timing]
+    timing_sentences = tuple(s for s, _ in timing)
     hard = [*other, *copying, *duplicate]
     if hard:
-        return QualityReport((*hard, *soft), duplicate_topic=bool(duplicate),
-                             rescuable=bool(copying) and not other and not duplicate, soft=soft)
-    claims = check_fact_claims(llm, fast_model, draft, article)
+        return QualityReport((*hard, *timing_issues, *soft), duplicate_topic=bool(duplicate),
+                             rescuable=(bool(copying) or bool(timing)) and not other and not duplicate,
+                             unsupported=timing_sentences, soft=soft)
+    claims = check_fact_claims(llm, fast_model, draft, article, day)
     return QualityReport(
-        (*(f'원문에 근거 없는 사실: "{c.sentence}" ({c.reason})' for c in claims), *soft),
-        rescuable=bool(claims),
-        unsupported=tuple(c.sentence for c in claims),
+        (*(f'원문에 근거 없는 사실: "{c.sentence}" ({c.reason})' for c in claims), *timing_issues, *soft),
+        rescuable=bool(claims) or bool(timing),
+        unsupported=(*(c.sentence for c in claims), *timing_sentences),
         soft=soft,
     )

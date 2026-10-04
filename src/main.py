@@ -22,7 +22,7 @@ import sys
 import traceback
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass, replace
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
 from typing import Any
 
@@ -161,11 +161,15 @@ def draft_article(
     is_alive: Callable[[str], bool],
     category: str = topics.TECH,
     target_query: str = '',
+    day: date | None = None,
 ) -> PostDraft | None:
     """글을 쓰고 사람이 쓴 글처럼 윤문한 뒤 검수합니다. 탈락하면 검수 의견을 반영해 한 번 더 씁니다.
 
     target_query(생활 가이드 글의 목표 검색어)를 주면 검색어를 그 글자 그대로 고정해, 제목·메타 설명에
     들어갔는지 검수(check_seo)가 확인하게 한다.
+
+    day(발행일)를 주면 공휴일·대체공휴일 달력 사실을 프롬프트에 넣고, 달력과 안 맞는 시점 표현은 검수에서 걸린다
+    (끝내 못 고치면 그 문장만 빼고 발행).
 
     분량·소제목 하한(quality.check_floor)만 못 채운 원고는 버리지 않는다: 다시 써 보고, 그래도 모자라면
     구제 발행이 안 될 때 그 원고로 발행한다 (발행 건너뛰기 금지, 운영자 지시).
@@ -175,11 +179,11 @@ def draft_article(
     short: PostDraft | None = None  # 하한만 못 채우고 나머지 검수는 통과한 원고
     for attempt in range(1, MAX_WRITE_ATTEMPTS + 1):
         written = polish.polish_draft(llm, models.writer, writer.write_post(
-            llm, models.writer, article, theme, feedback, category, target_query))
+            llm, models.writer, article, theme, feedback, category, target_query, day))
         draft = disclosure.strip_ai_disclosure(written)  # AI 작성 고지는 절대 싣지 않는다 (운영자 지시)
         if target_query:
             draft = draft.model_copy(update={'search_keyword': target_query})
-        report = quality.run_quality_gate(llm, models.fast, draft, article, past, is_alive)
+        report = quality.run_quality_gate(llm, models.fast, draft, article, past, is_alive, day)
         if report.passed:
             print(f'[검수 통과] {draft.title} (시도 {attempt})')
             return draft
@@ -198,7 +202,7 @@ def draft_article(
     if salvage is not None:
         # 원고 때문에 발행을 건너뛰지 않는다 (운영자 지시): 걸린 문장만 빼고 발행한다
         draft, report = salvage
-        rescued = rescue.rescue(llm, models.fast, draft, article, report.unsupported, past, is_alive)
+        rescued = rescue.rescue(llm, models.fast, draft, article, report.unsupported, past, is_alive, day)
         if rescued is not None:
             print(f'[구제 발행] 검수에 걸린 문장만 빼고 발행합니다: {rescued.title}')
     if rescued is None and short is not None:
@@ -239,6 +243,7 @@ def compose_skill_post(
     get: HttpGet = http_get,
     is_alive: Callable[[str], bool] = url_is_alive,
     footer_url: str | None = DEFAULT_FOOTER_URL,
+    day: date | None = None,
 ) -> Composed | None:
     """skills.sh에서 스킬 하나를 골라 글을 씁니다. 고를 스킬이 없거나 검수를 못 넘으면 None (AI 도구 사용법 글로 대신)."""
     try:
@@ -256,7 +261,7 @@ def compose_skill_post(
     print(f'[스킬] {skill.key} (설치 {skill.installs:,}, 별 {skill.stars:,})')
     article = skill_topic.to_article(skill, now)
     theme = topics.SPECS[topics.SKILL].themes[0]
-    draft = draft_article(llm, models, article, theme, past, is_alive, topics.SKILL)
+    draft = draft_article(llm, models, article, theme, past, is_alive, topics.SKILL, day=day)
     if draft is None:
         return None
     draft = force_skill_labels(draft)
@@ -278,6 +283,7 @@ def compose_guide_post(
     get: HttpGet = http_get,
     is_alive: Callable[[str], bool] = url_is_alive,
     footer_url: str | None = DEFAULT_FOOTER_URL,
+    day: date | None = None,
     limit: int = MAX_GUIDE_ATTEMPTS,
 ) -> Composed | None:
     """12:30 칸 예비 글: 대중적인 AI 도구의 공식 도움말로 사용법 글을 씁니다. 못 쓰면 None."""
@@ -285,7 +291,7 @@ def compose_guide_post(
     fetch = lambda candidate: fetcher.fetch_article(get, candidate)  # noqa: E731
     for tried, (guide, article) in enumerate(guide_topic.iter_guides(past, fetch, now), start=1):
         print(f'[사용법 글] {guide.tool} · {guide.keyword} ({guide.url})')
-        draft = draft_article(llm, models, article, theme, past, is_alive, topics.GUIDE)
+        draft = draft_article(llm, models, article, theme, past, is_alive, topics.GUIDE, day=day)
         if draft is not None:
             draft = force_first_label(draft, topics.GUIDE_LABEL)
             return Composed(
@@ -308,9 +314,10 @@ def compose_slot_post(
     get: HttpGet = http_get,
     is_alive: Callable[[str], bool] = url_is_alive,
     footer_url: str | None = DEFAULT_FOOTER_URL,
+    day: date | None = None,
 ) -> Composed:
     """12:30 칸: 스킬 글 → AI 도구 사용법 글 → (그래도 못 쓰면) AI·IT 뉴스. 칸은 절대 비우지 않는다."""
-    kwargs = {'get': get, 'is_alive': is_alive, 'footer_url': footer_url}
+    kwargs = {'get': get, 'is_alive': is_alive, 'footer_url': footer_url, 'day': day}
     composed = compose_skill_post(llm, models, now, past, **kwargs)
     composed = composed or compose_guide_post(llm, models, now, past, **kwargs)
     if composed is not None:
@@ -338,6 +345,7 @@ def compose_howto_post(
     get: HttpGet = http_get,
     is_alive: Callable[[str], bool] = url_is_alive,
     footer_url: str | None = DEFAULT_FOOTER_URL,
+    day: date | None = None,
     limit: int = MAX_HOWTO_ATTEMPTS,
 ) -> Composed | None:
     """20:00 칸: 공식 안내 페이지로 검색형 생활 가이드 글을 씁니다. limit개 글감까지 써 보고 못 쓰면 None."""
@@ -345,7 +353,7 @@ def compose_howto_post(
     fetch = lambda candidate: fetcher.fetch_article(get, candidate)  # noqa: E731
     for tried, (guide, article) in enumerate(howto_topic.iter_guides(past, fetch, now), start=1):
         print(f'[생활 가이드] {guide.query} (공식 안내 {1 + len(article.references)}곳)')
-        draft = draft_article(llm, models, article, theme, past, is_alive, topics.HOWTO, target_query=guide.query)
+        draft = draft_article(llm, models, article, theme, past, is_alive, topics.HOWTO, target_query=guide.query, day=day)
         if draft is not None:
             labels = [topics.HOWTO_LABEL, guide.area] if guide.area != topics.HOWTO_LABEL else [topics.HOWTO_LABEL]
             draft = draft.model_copy(update={'labels': labels, 'url_slug': guide.slug or draft.url_slug})
@@ -371,9 +379,10 @@ def compose_evening_post(
     get: HttpGet = http_get,
     is_alive: Callable[[str], bool] = url_is_alive,
     footer_url: str | None = DEFAULT_FOOTER_URL,
+    day: date | None = None,
 ) -> Composed:
     """20:00 칸: 생활 가이드 → (못 쓰면) 평소 뉴스 글. 칸은 절대 비우지 않는다."""
-    kwargs = {'get': get, 'is_alive': is_alive, 'footer_url': footer_url}
+    kwargs = {'get': get, 'is_alive': is_alive, 'footer_url': footer_url, 'day': day}
     try:
         composed = compose_howto_post(llm, models, now, past, **kwargs)
     except LLMError as e:
@@ -393,6 +402,7 @@ def compose_post(
     get: HttpGet = http_get,
     is_alive: Callable[[str], bool] = url_is_alive,
     footer_url: str | None = DEFAULT_FOOTER_URL,
+    day: date | None = None,
     only: str | None = None,
 ) -> Composed:
     """글 한 편을 완성합니다. 분야(AI·IT / 생활경제·재테크)를 최근 비율로 정하고, 상위 후보부터 차례로 시도합니다.
@@ -416,7 +426,7 @@ def compose_post(
                 print(f'[분야] {spec.name} / 새 후보 {len(candidates)}건, 오늘의 테마: {theme}')
                 every = selector.rank_candidates(
                     llm, models.fast, candidates, theme, spec.selector_prompt, recent, trending,
-                    min_score=selector.FALLBACK_MIN_SCORE)
+                    min_score=selector.FALLBACK_MIN_SCORE, day=day)
                 rankings[category] = (theme, every)
             theme, every = rankings[category]
             ranked = [r for r in every if relaxed or r.score >= selector.MIN_SCORE]
@@ -432,7 +442,7 @@ def compose_post(
                     continue
                 article = fetcher.with_references(get, article, r.related)  # 기사 1건 재작성 대신 2~3개 비교
                 attempted = True
-                draft = draft_article(llm, models, article, theme, past, is_alive, category)
+                draft = draft_article(llm, models, article, theme, past, is_alive, category, day=day)
                 if draft is None:
                     continue
                 draft = drop_howto_label(draft, spec.labels[0])
@@ -667,13 +677,14 @@ def run(
     calls = 0
     for target in targets:
         llm = LLMClient(text_backend)
+        day = date.fromisoformat(target.publish_date)  # 글이 읽히는 날 (예약이면 발행일)
         try:
             if is_skill_slot(target.publish_at, skill_time):
-                composed = compose_slot_post(llm, models, now, past, footer_url=footer_url)
+                composed = compose_slot_post(llm, models, now, past, footer_url=footer_url, day=day)
             elif is_skill_slot(target.publish_at, howto_time):
-                composed = compose_evening_post(llm, models, now, past, footer_url=footer_url)
+                composed = compose_evening_post(llm, models, now, past, footer_url=footer_url, day=day)
             else:
-                composed = compose_post(llm, models, now, past, footer_url=footer_url)
+                composed = compose_post(llm, models, now, past, footer_url=footer_url, day=day)
             composed = attach_hero_image(
                 composed, image_backend, ai.image_model, ai.image_quality, r2, target.publish_date, dry_run
             )

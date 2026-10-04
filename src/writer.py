@@ -2,14 +2,19 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
+from datetime import date
 
-from src import topics
+from src import kr_calendar, topics
 from src.llm import LLMClient, load_prompt
 from src.models import Article, PostDraft
 
 
-def build_writer_input(article: Article, theme: str, feedback: Sequence[str] = (), target_query: str = '') -> str:
+def build_writer_input(
+    article: Article, theme: str, feedback: Sequence[str] = (), target_query: str = '', day: date | None = None,
+) -> str:
     parts = [f'오늘의 테마: {theme}']
+    if day is not None:
+        parts += ['--- 달력 사실 (한국 공휴일·대체공휴일 반영) ---', kr_calendar.calendar_facts(day), '--- 달력 사실 끝 ---']
     if target_query:
         sources = [article.source_url, *(r.url for r in article.references)]
         parts += [
@@ -47,7 +52,7 @@ def instructions(category: str = topics.TECH) -> str:
 
 def write_post(
     llm: LLMClient, model: str, article: Article, theme: str, feedback: Sequence[str] = (),
-    category: str = topics.TECH, target_query: str = '',
+    category: str = topics.TECH, target_query: str = '', day: date | None = None,
 ) -> PostDraft:
-    user_input = build_writer_input(article, theme, feedback, target_query)
+    user_input = build_writer_input(article, theme, feedback, target_query, day)
     return llm.parse(model, instructions(category), user_input, PostDraft)
