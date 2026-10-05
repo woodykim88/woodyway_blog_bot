@@ -1,18 +1,11 @@
 {
- "updated": "2026-10-04",
+ "updated": "2026-10-05",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-09-06",
-  "2026-10-03"
+  "2026-09-07",
+  "2026-10-04"
  ],
  "daily": [
-  {
-   "date": "2026-09-06",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0,
-   "position": 1
-  },
   {
    "date": "2026-09-07",
    "clicks": 0,
@@ -173,9 +166,38 @@
    "impressions": 0,
    "ctr": 0,
    "position": 0
+  },
+  {
+   "date": "2026-09-30",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 5
+  },
+  {
+   "date": "2026-10-01",
+   "clicks": 0,
+   "impressions": 4,
+   "ctr": 0,
+   "position": 8.5
+  },
+  {
+   "date": "2026-10-02",
+   "clicks": 0,
+   "impressions": 5,
+   "ctr": 0,
+   "position": 21
   }
  ],
- "top_queries": [],
+ "top_queries": [
+  {
+   "query": "api 플랫폼 선택 기준",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 49
+  }
+ ],
  "top_pages": [
   {
    "page": "https://www.woodyway88.com/2025/03/3_0371942643.html",
@@ -185,11 +207,32 @@
    "position": 4
   },
   {
-   "page": "https://www.woodyway88.com/",
+   "page": "https://tools.woodyway88.com/highway-toll-reentry/",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 7
+  },
+  {
+   "page": "https://tools.woodyway88.com/mortgage-refinance-calculator/",
+   "clicks": 0,
+   "impressions": 3,
+   "ctr": 0,
+   "position": 8.7
+  },
+  {
+   "page": "https://tools.woodyway88.com/transit-refund-calculator/",
    "clicks": 0,
    "impressions": 2,
    "ctr": 0,
-   "position": 1.5
+   "position": 6
+  },
+  {
+   "page": "https://www.woodyway88.com/",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 1
   },
   {
    "page": "https://www.woodyway88.com/2025/02/54.html",
@@ -222,16 +265,16 @@
   {
    "page": "https://www.woodyway88.com/2026/01/solana-spot-etf-record-inflows-institutional-investment-signal.html",
    "clicks": 0,
-   "impressions": 2,
+   "impressions": 1,
    "ctr": 0,
-   "position": 5.5
+   "position": 7
   },
   {
    "page": "https://www.woodyway88.com/2026/02/bank-voluntary-retirement-reality-check.html",
    "clicks": 0,
-   "impressions": 2,
+   "impressions": 1,
    "ctr": 0,
-   "position": 3
+   "position": 5
   },
   {
    "page": "https://www.woodyway88.com/2026/09/3.html",
@@ -243,16 +286,23 @@
   {
    "page": "https://www.woodyway88.com/2026/09/a16z-3.html",
    "clicks": 0,
+   "impressions": 4,
+   "ctr": 0,
+   "position": 15
+  },
+  {
+   "page": "https://www.woodyway88.com/2026/09/llm-api-3.html",
+   "clicks": 0,
    "impressions": 1,
    "ctr": 0,
-   "position": 10
+   "position": 49
   },
   {
    "page": "https://www.woodyway88.com/search/label/%EB%B6%80%EB%8F%99%EC%82%B0",
    "clicks": 0,
-   "impressions": 2,
+   "impressions": 1,
    "ctr": 0,
-   "position": 2.5
+   "position": 2
   }
  ],
  "index": [
@@ -312,8 +362,8 @@
   },
   {
    "url": "https://www.woodyway88.com/2026/09/15-900.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Crawled - currently not indexed",
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
    "last_crawl": "2026-10-01T17:57:25Z"
   },
   {
@@ -331,7 +381,7 @@
   {
    "url": "https://www.woodyway88.com/2026/09/ai-marketing-use-cases.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -343,50 +393,50 @@
   {
    "url": "https://www.woodyway88.com/2026/10/claude-code-product-launch-video-skill.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/10/gemini-4-argon-output-limit.html",
-   "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
-   "last_crawl": ""
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-04T19:32:09Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/openai-ftc-ai-investigation.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/10/galaxy-watch-recording-app.html",
-   "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
-   "last_crawl": ""
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-04T19:29:41Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/ai-skills-salary-premium.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/10/personal-data-leak-investigation.html",
-   "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
-   "last_crawl": ""
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-04T21:04:27Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/chatgpt-plugin-login-expansion.html",
-   "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
-   "last_crawl": ""
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-04T18:42:54Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/brokerage-system-outage-korea.html",
-   "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
-   "last_crawl": ""
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-04T19:09:51Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/financial-sector-data-breach-korea.html",
@@ -396,6 +446,24 @@
   },
   {
    "url": "https://www.woodyway88.com/2026/10/claude-code-design-taste-frontend.html",
+   "verdict": "NEUTRAL",
+   "coverage": "URL is unknown to Google",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/youth-future-savings-eligibility.html",
+   "verdict": "NEUTRAL",
+   "coverage": "URL is unknown to Google",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/financial-hacking-ai-attacks.html",
+   "verdict": "NEUTRAL",
+   "coverage": "URL is unknown to Google",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/claude-code-claude-md-guide.html",
    "verdict": "NEUTRAL",
    "coverage": "URL is unknown to Google",
    "last_crawl": ""
