@@ -259,7 +259,7 @@ def test_rescue_removes_unsupported_claim_after_fact_check():
     llm, _ = fake_llm({
         'SelectionResult': [selection((0, 9))],
         'PostDraft': [four_points(), four_points()],
-        'FactCheck': [bad, bad, OK],
+        'FactCheck': [bad, OK],  # 한 번 쓰고 걸린 문장만 빼서 다시 검수하면 통과
     })
     composed = pipeline.compose_post(llm, MODELS, NOW, (), get=fake_get(), is_alive=lambda u: True)
     assert '둘째 핵심 내용입니다.' not in composed.html

@@ -34,7 +34,7 @@ def _same_shape(draft: PostDraft, polished: PolishedProse) -> bool:
 def polish_draft(llm: LLMClient, model: str, draft: PostDraft) -> PostDraft:
     """다듬은 문장으로 바꾼 새 초안. 실패하면 원래 초안."""
     try:
-        polished = llm.parse(model, load_prompt('polish'), build_polish_input(draft), PolishedProse)
+        polished = llm.parse(model, load_prompt('polish'), build_polish_input(draft), PolishedProse, stage='polish')
     except (LLMError, ValueError) as e:
         print(f'[윤문 건너뜀] {e.__class__.__name__}: {str(e)[:100]}')
         return draft

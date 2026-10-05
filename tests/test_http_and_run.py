@@ -7,6 +7,7 @@ from googleapiclient.errors import HttpError
 
 from src import history, http_client, schedule
 from src import main as pipeline
+from src import rescue
 from src.llm import DEFAULT_MAX_CALLS
 from tests.helpers import make_article, make_draft
 
@@ -69,7 +70,9 @@ def test_url_is_alive_false_for_private_address():
 # --- LLM 호출 상한 ---
 
 def test_llm_budget_covers_worst_case():
-    worst = 1 + pipeline.MAX_TOPIC_ATTEMPTS * pipeline.MAX_WRITE_ATTEMPTS * 2
+    # 작성·윤문·칸 수정·검증 + 첫 시도 뒤 구제 검수(최대 MAX_PASSES회) + 마지막 구제 검수(최대 MAX_PASSES회)
+    per_topic = pipeline.MAX_WRITE_ATTEMPTS * 4 + 2 * rescue.MAX_PASSES
+    worst = 1 + pipeline.MAX_TOPIC_ATTEMPTS * per_topic
     assert DEFAULT_MAX_CALLS >= worst
 
 

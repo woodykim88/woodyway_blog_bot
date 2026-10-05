@@ -55,4 +55,4 @@ def write_post(
     category: str = topics.TECH, target_query: str = '', day: date | None = None,
 ) -> PostDraft:
     user_input = build_writer_input(article, theme, feedback, target_query, day)
-    return llm.parse(model, instructions(category), user_input, PostDraft)
+    return llm.parse(model, instructions(category), user_input, PostDraft, stage='write')

@@ -178,7 +178,7 @@ class OpenAIImageBackend:
         response = self._client.images.generate(
             model=model, prompt=prompt, size=IMAGE_SIZE, quality=quality, output_format='webp', n=1
         )
-        usage.record(model, response)
+        usage.record(model, response, 'image')
         return base64.b64decode(response.data[0].b64_json)
 
 

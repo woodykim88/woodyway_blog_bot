@@ -34,6 +34,7 @@ from src import (
     collector,
     disclosure,
     fetcher,
+    fieldfix,
     guide_topic,
     history,
     howto_topic,
@@ -88,6 +89,7 @@ MAX_TOPIC_ATTEMPTS = 3
 RECENT_TITLES_FOR_SELECTOR = 12  # 선별 모델에 알려 줄 최근 발행 글 수 (같은 소식 재발행 방지)
 DEFAULT_SKILL_TIME = '12:30'  # 이 시각 칸은 Claude Code 스킬 글 (루이 채널과 원 소스 멀티 유즈)
 MAX_WRITE_ATTEMPTS = 2
+MAX_EARLY_RESCUE_LOSS_CHARS = 400  # 구제로 이만큼(공백 포함 글자)보다 많이 잘려 나가면 살리지 않고 다시 쓴다
 MAX_GUIDE_ATTEMPTS = 2  # 12:30 칸 예비 사용법 글감을 이만큼까지 써 본다 (AI 호출 상한)
 DEFAULT_HOWTO_TIME = '20:00'  # 이 시각 칸은 검색형 생활 가이드 글 (2026-10-03 사용자 결정, 검색 유입 목적)
 MAX_HOWTO_ATTEMPTS = 2  # 생활 가이드 글감을 이만큼까지 써 보고, 못 쓰면 뉴스로 발행 (발행 건너뛰기 금지)
@@ -152,6 +154,26 @@ class Target:
 
 # --- 글 만들기 ---
 
+def _rescue_before_rewrite(
+    llm: LLMClient, models: 'Models', draft: PostDraft, article: Article, report: quality.QualityReport,
+    past: tuple[history.HistoryEntry, ...], is_alive: Callable[[str], bool], day: date | None,
+) -> PostDraft | None:
+    """걸린 문장이 몇 개뿐이면 원고를 다시 쓰지 않고(원고 모델 2회 호출) 그 문장만 빼서 살린다 (값싼 모델 검수 1회).
+
+    분량·소제목 하한도 못 채운 원고, 빼고 나서 하한 밑으로 내려가는 원고, 글이 눈에 띄게 줄어드는 원고
+    (후킹·비유 문장까지 잘려 나가는 경우)는 문장만 빼서는 안 되니 None (다시 쓴다).
+    """
+    if report.soft or report.duplicate_topic:
+        return None
+    rescued = rescue.rescue(llm, models.fast, draft, article, report.unsupported, past, is_alive, day)
+    if rescued is None or quality.check_floor(rescued):
+        return None
+    if quality.body_length(draft) - quality.body_length(rescued) > MAX_EARLY_RESCUE_LOSS_CHARS:
+        return None
+    print(f'[구제 발행] 원고를 다시 쓰지 않고 검수에 걸린 문장만 빼고 발행합니다: {rescued.title}')
+    return rescued
+
+
 def draft_article(
     llm: LLMClient,
     models: Models,
@@ -183,6 +205,7 @@ def draft_article(
         draft = disclosure.strip_ai_disclosure(written)  # AI 작성 고지는 절대 싣지 않는다 (운영자 지시)
         if target_query:
             draft = draft.model_copy(update={'search_keyword': target_query})
+        draft = fieldfix.fit_fields(llm, models.fast, draft)  # 제목·썸네일 글자 수만 넘쳤으면 그 칸만 고친다 (원고 재작성 방지)
         report = quality.run_quality_gate(llm, models.fast, draft, article, past, is_alive, day)
         if report.passed:
             print(f'[검수 통과] {draft.title} (시도 {attempt})')
@@ -196,6 +219,11 @@ def draft_article(
         if report.only_soft:
             short = draft
         elif report.rescuable:
+            # 마지막 시도는 루프 뒤의 구제 발행이 같은 일을 하므로 여기서 또 하지 않는다 (호출 낭비)
+            early = None if attempt == MAX_WRITE_ATTEMPTS else _rescue_before_rewrite(
+                llm, models, draft, article, report, past, is_alive, day)
+            if early is not None:
+                return early
             salvage = (draft, report)
         feedback = report.issues
     rescued = None
@@ -755,6 +783,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     if env.get('GITHUB_ACTIONS') == 'true':
         runlog.append_run(runlog.RunRecord(
             usage=usage.snapshot(),
+            stages=usage.stage_snapshot(),
             started_at=started.isoformat(timespec='seconds'),
             finished_at=datetime.now(schedule.KST).isoformat(timespec='seconds'),
             mode=mode,

@@ -74,7 +74,7 @@ def rank_candidates(
     if not candidates:
         return []
     user_input = f'오늘의 테마: {theme}\n\n{format_calendar(day)}{format_recent(recent_titles)}{format_trending(trending)}후보 목록:\n{format_candidates(candidates)}'
-    result = llm.parse(model, load_prompt(prompt), user_input, SelectionResult)
+    result = llm.parse(model, load_prompt(prompt), user_input, SelectionResult, stage='select')
 
     best: dict[int, tuple[RankedCandidate, str, bool]] = {}
     by_story: dict[str, list[Candidate]] = {}  # 점수와 상관없이 같은 소식을 다룬 후보들

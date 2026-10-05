@@ -234,7 +234,7 @@ def check_fact_claims(
 ) -> list[ClaimCheck]:
     calendar = f'--- 달력 사실 (근거로 인정) ---\n{kr_calendar.calendar_facts(day)}\n\n' if day is not None else ''
     user_input = f'{calendar}--- 원문 ---\n{article.text}\n\n--- 작성된 글 ---\n{fact_check_text(draft)}'
-    result = llm.parse(model, load_prompt('factcheck'), user_input, FactCheck, effort=CHECK_EFFORT)
+    result = llm.parse(model, load_prompt('factcheck'), user_input, FactCheck, effort=CHECK_EFFORT, stage='factcheck')
     return [c for c in result.claims if c.kind == 'unsupported_fact']
 
 

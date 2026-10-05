@@ -31,4 +31,4 @@ def test_reasoning_effort_only_for_models_that_accept_it():
 
 def test_fact_check_uses_default_effort():
     assert quality.CHECK_EFFORT is None
-    assert "load_prompt('factcheck'), user_input, FactCheck, effort=CHECK_EFFORT)" in inspect.getsource(quality)
+    assert "load_prompt('factcheck'), user_input, FactCheck, effort=CHECK_EFFORT, stage='factcheck')" in inspect.getsource(quality)

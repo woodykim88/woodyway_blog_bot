@@ -88,7 +88,7 @@ def rank_by_name(llm: LLMClient, model: str, refs: Sequence[skills.SkillRef], mi
     if not pool:
         return []
     lines = '\n'.join(f'[{i}] {r.name} ({r.owner_repo})' for i, r in enumerate(pool))
-    result = llm.parse(model, load_prompt('skill_name_fit'), lines, SkillFitResult)
+    result = llm.parse(model, load_prompt('skill_name_fit'), lines, SkillFitResult, stage='skill_pick')
     best: dict[int, int] = {}
     for s in result.scores:
         if 0 <= s.index < len(pool) and s.index not in best:
@@ -109,7 +109,7 @@ def choose_popular(llm: LLMClient, model: str, candidates: Sequence[skills.Skill
     """비개발 직장인에게 대중적인 스킬을 고른다 (점수 최고, 같으면 앞선 것). min_fit 미만뿐이면 None."""
     if not candidates:
         return None
-    result = llm.parse(model, load_prompt('skill_fit'), format_skills(candidates), SkillFitResult)
+    result = llm.parse(model, load_prompt('skill_fit'), format_skills(candidates), SkillFitResult, stage='skill_pick')
     valid = [s for s in result.scores if 0 <= s.index < len(candidates)]
     if not valid:
         return None

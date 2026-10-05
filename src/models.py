@@ -144,6 +144,15 @@ class PostDraft(BaseModel):
     )
 
 
+class FittedFields(BaseModel):
+    """글자 수만 넘친 칸을 고친 결과. 고치라고 하지 않은 칸은 현재 값을 그대로 돌려준다."""
+
+    title: str = Field(description='제목. 40자 이내, 검색 키워드 그대로 포함')
+    meta_description: str = Field(description='메타 설명. 150자 이내, 검색 키워드 포함')
+    thumbnail_text: str = Field(description='썸네일 문구. 줄바꿈 1개, 줄바꿈 빼고 14자 이내')
+    thumbnail_highlight: str = Field(description='thumbnail_text 안에 그대로 있는 강조 단어 (6자 이내)')
+
+
 class PolishedProse(BaseModel):
     """윤문 결과: 초안의 문장 부분만. 제목·검색어·소제목·썸네일은 받지 않는다 (바꾸면 안 되는 값)."""
 
