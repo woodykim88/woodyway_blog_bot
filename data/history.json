@@ -403,5 +403,19 @@
     ],
     "status": "SCHEDULED",
     "slot": "2026-10-06T08:00"
+  },
+  {
+    "publish_date": "2026-10-06",
+    "post_id": "925935997777261333",
+    "title": "클로드 코드 figma 스킬, 연결 없이 장면 구성도 옮길까",
+    "url": "https://www.woodyway88.com/2026/10/claude-code-figma-skill.html",
+    "source_url": "https://skills.sh/heygen-com/hyperframes/figma",
+    "geeknews_url": "https://skills.sh/heygen-com/hyperframes/figma",
+    "labels": [
+      "AI스킬",
+      "AI활용"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-10-06T12:30"
   }
 ]
