@@ -59,8 +59,10 @@ def done_slots(history: tuple[HistoryEntry, ...]) -> set[str]:
 
 
 def related_posts(
-    history: tuple[HistoryEntry, ...], labels: tuple[str, ...], limit: int = 2
+    history: tuple[HistoryEntry, ...], labels: tuple[str, ...], limit: int = 3
 ) -> tuple[HistoryEntry, ...]:
-    """같은 라벨을 가진 최근 글을 최신순으로 limit개 반환합니다."""
-    matches = [e for e in reversed(history) if e.url and set(e.labels) & set(labels)]
-    return tuple(matches[:limit])
+    """라벨을 많이 공유하는 글 순(같으면 최신순)으로 limit개 반환합니다. 내부 링크로 색인·체류를 돕는다."""
+    wanted = set(labels)
+    matches = [(len(set(e.labels) & wanted), e) for e in reversed(history) if e.url]
+    ranked = sorted((m for m in matches if m[0]), key=lambda m: -m[0])  # 안정 정렬: 동점은 최신순 유지
+    return tuple(e for _, e in ranked[:limit])

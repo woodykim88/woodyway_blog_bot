@@ -342,3 +342,12 @@ def test_quality_gate_runs_thumbnail_check_before_fact_check():
 def test_fact_check_text_includes_thumbnail_text():
     draft = make_draft(thumbnail_text='회의록 정리\n1분이면 끝')
     assert '회의록 정리 1분이면 끝' in quality.fact_check_text(draft)
+
+
+def test_related_posts_prefers_more_shared_labels_and_returns_three():
+    past = ()
+    for title, labels in [('약한', ('AI활용',)), ('강한', ('AI활용', '업무생산성')), ('무관', ('경제',)),
+                          ('최신약한', ('업무생산성',)), ('다른약한', ('AI활용',))]:
+        past = history.append_entry(past, make_entry(title=title, labels=labels))
+    got = [e.title for e in history.related_posts(past, ('AI활용', '업무생산성'))]
+    assert got == ['강한', '다른약한', '최신약한']  # 공유 라벨 많은 순, 같으면 최신순, 기본 3개
