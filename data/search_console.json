@@ -1,18 +1,11 @@
 {
- "updated": "2026-10-05",
+ "updated": "2026-10-06",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-09-07",
-  "2026-10-04"
+  "2026-09-08",
+  "2026-10-05"
  ],
  "daily": [
-  {
-   "date": "2026-09-07",
-   "clicks": 0,
-   "impressions": 0,
-   "ctr": 0,
-   "position": 0
-  },
   {
    "date": "2026-09-08",
    "clicks": 0,
@@ -187,6 +180,13 @@
    "impressions": 5,
    "ctr": 0,
    "position": 21
+  },
+  {
+   "date": "2026-10-03",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 13
   }
  ],
  "top_queries": [
@@ -223,9 +223,9 @@
   {
    "page": "https://tools.woodyway88.com/transit-refund-calculator/",
    "clicks": 0,
-   "impressions": 2,
+   "impressions": 3,
    "ctr": 0,
-   "position": 6
+   "position": 8.3
   },
   {
    "page": "https://www.woodyway88.com/",
@@ -380,9 +380,9 @@
   },
   {
    "url": "https://www.woodyway88.com/2026/09/ai-marketing-use-cases.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-05T16:42:43Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/us-pce-inflation-rate.html",
@@ -440,20 +440,20 @@
   },
   {
    "url": "https://www.woodyway88.com/2026/10/financial-sector-data-breach-korea.html",
-   "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
-   "last_crawl": ""
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-05T22:52:20Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/claude-code-design-taste-frontend.html",
-   "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
-   "last_crawl": ""
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-05T23:07:31Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/youth-future-savings-eligibility.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -464,6 +464,24 @@
   },
   {
    "url": "https://www.woodyway88.com/2026/10/claude-code-claude-md-guide.html",
+   "verdict": "NEUTRAL",
+   "coverage": "URL is unknown to Google",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/unemployment-benefit-how-to-apply.html",
+   "verdict": "NEUTRAL",
+   "coverage": "URL is unknown to Google",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/senior-flu-vaccination-schedule.html",
+   "verdict": "NEUTRAL",
+   "coverage": "URL is unknown to Google",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/claude-code-figma-skill.html",
    "verdict": "NEUTRAL",
    "coverage": "URL is unknown to Google",
    "last_crawl": ""
