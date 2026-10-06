@@ -445,5 +445,19 @@
     ],
     "status": "SCHEDULED",
     "slot": "2026-10-07T08:00"
+  },
+  {
+    "publish_date": "2026-10-07",
+    "post_id": "4063635415235034177",
+    "title": "클로드 코드 slideshow 스킬, 영상 대신 발표 덱을 만듭니다",
+    "url": "https://www.woodyway88.com/2026/10/claude-code-slideshow-skill.html",
+    "source_url": "https://skills.sh/heygen-com/hyperframes/slideshow",
+    "geeknews_url": "https://skills.sh/heygen-com/hyperframes/slideshow",
+    "labels": [
+      "AI스킬",
+      "AI활용"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-10-07T12:30"
   }
 ]
