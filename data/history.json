@@ -473,5 +473,19 @@
     ],
     "status": "SCHEDULED",
     "slot": "2026-10-07T20:00"
+  },
+  {
+    "publish_date": "2026-10-08",
+    "post_id": "8970632384756997977",
+    "title": "클로드 구글 문서 연동, 탭 안 옮기고 고친다",
+    "url": "https://www.woodyway88.com/2026/10/claude-google-docs-integration.html",
+    "source_url": "https://www.aitimes.com/news/articleView.html?idxno=216040",
+    "geeknews_url": "https://www.aitimes.com/news/articleView.html?idxno=216040",
+    "labels": [
+      "AI활용",
+      "업무생산성"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-10-08T08:00"
   }
 ]
