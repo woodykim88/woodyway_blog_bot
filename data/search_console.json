@@ -1,18 +1,11 @@
 {
- "updated": "2026-10-07",
+ "updated": "2026-10-08",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-09-09",
-  "2026-10-06"
+  "2026-09-10",
+  "2026-10-07"
  ],
  "daily": [
-  {
-   "date": "2026-09-09",
-   "clicks": 0,
-   "impressions": 0,
-   "ctr": 0,
-   "position": 0
-  },
   {
    "date": "2026-09-10",
    "clicks": 0,
@@ -404,9 +397,9 @@
   },
   {
    "url": "https://www.woodyway88.com/2026/10/openai-ftc-ai-investigation.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-07T12:37:11Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/galaxy-watch-recording-app.html",
@@ -482,9 +475,9 @@
   },
   {
    "url": "https://www.woodyway88.com/2026/10/claude-code-figma-skill.html",
-   "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
-   "last_crawl": ""
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-07T07:59:48Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/unemployment-benefit-eligibility.html",
@@ -500,6 +493,24 @@
   },
   {
    "url": "https://www.woodyway88.com/2026/10/claude-code-slideshow-skill.html",
+   "verdict": "NEUTRAL",
+   "coverage": "URL is unknown to Google",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/severance-pay-calculation.html",
+   "verdict": "NEUTRAL",
+   "coverage": "URL is unknown to Google",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/claude-google-docs-integration.html",
+   "verdict": "NEUTRAL",
+   "coverage": "URL is unknown to Google",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/claude-code-ai-seo-skill.html",
    "verdict": "NEUTRAL",
    "coverage": "URL is unknown to Google",
    "last_crawl": ""
