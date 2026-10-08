@@ -529,5 +529,19 @@
     ],
     "status": "SCHEDULED",
     "slot": "2026-10-09T08:00"
+  },
+  {
+    "publish_date": "2026-10-09",
+    "post_id": "9090674753093425046",
+    "title": "클로드 코드 계획 모드 사용법, 코드 전에 물어볼 것",
+    "url": "https://www.woodyway88.com/2026/10/claude-code-plan-mode-guide.html",
+    "source_url": "https://code.claude.com/docs/ko/best-practices",
+    "geeknews_url": "https://code.claude.com/docs/ko/best-practices",
+    "labels": [
+      "AI사용법",
+      "업무생산성"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-10-09T12:30"
   }
 ]
