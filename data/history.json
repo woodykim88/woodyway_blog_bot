@@ -571,5 +571,19 @@
     ],
     "status": "SCHEDULED",
     "slot": "2026-10-10T08:00"
+  },
+  {
+    "publish_date": "2026-10-10",
+    "post_id": "4724994355284395505",
+    "title": "클로드 코드 서브에이전트 사용법, 긴 검색은 요약만 받기",
+    "url": "https://www.woodyway88.com/2026/10/claude-code-subagent-guide.html",
+    "source_url": "https://code.claude.com/docs/ko/sub-agents",
+    "geeknews_url": "https://code.claude.com/docs/ko/sub-agents",
+    "labels": [
+      "AI사용법",
+      "업무생산성"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-10-10T12:30"
   }
 ]
