@@ -1,18 +1,11 @@
 {
- "updated": "2026-10-08",
+ "updated": "2026-10-09",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-09-10",
-  "2026-10-07"
+  "2026-09-11",
+  "2026-10-08"
  ],
  "daily": [
-  {
-   "date": "2026-09-10",
-   "clicks": 0,
-   "impressions": 0,
-   "ctr": 0,
-   "position": 0
-  },
   {
    "date": "2026-09-11",
    "clicks": 0,
@@ -180,15 +173,43 @@
    "impressions": 0,
    "ctr": 0,
    "position": 0
+  },
+  {
+   "date": "2026-10-05",
+   "clicks": 0,
+   "impressions": 4,
+   "ctr": 0,
+   "position": 42.5
+  },
+  {
+   "date": "2026-10-06",
+   "clicks": 0,
+   "impressions": 3,
+   "ctr": 0,
+   "position": 28.7
   }
  ],
  "top_queries": [
   {
-   "query": "api 플랫폼 선택 기준",
+   "query": "api 플랫폼 선택 가이드 및 추천",
    "clicks": 0,
    "impressions": 1,
    "ctr": 0,
-   "position": 49
+   "position": 46
+  },
+  {
+   "query": "api 플랫폼 선택 기준",
+   "clicks": 0,
+   "impressions": 4,
+   "ctr": 0,
+   "position": 54.5
+  },
+  {
+   "query": "llm api",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 29
   }
  ],
  "top_pages": [
@@ -270,6 +291,13 @@
    "position": 5
   },
   {
+   "page": "https://www.woodyway88.com/2026/09/15-900.html",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 9
+  },
+  {
    "page": "https://www.woodyway88.com/2026/09/3.html",
    "clicks": 0,
    "impressions": 2,
@@ -286,9 +314,16 @@
   {
    "page": "https://www.woodyway88.com/2026/09/llm-api-3.html",
    "clicks": 0,
+   "impressions": 6,
+   "ctr": 0,
+   "position": 48.8
+  },
+  {
+   "page": "https://www.woodyway88.com/2026/10/galaxy-watch-recording-app.html",
+   "clicks": 0,
    "impressions": 1,
    "ctr": 0,
-   "position": 49
+   "position": 3
   },
   {
    "page": "https://www.woodyway88.com/search/label/%EB%B6%80%EB%8F%99%EC%82%B0",
@@ -445,9 +480,9 @@
   },
   {
    "url": "https://www.woodyway88.com/2026/10/youth-future-savings-eligibility.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-08T17:11:45Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/financial-hacking-ai-attacks.html",
@@ -469,9 +504,9 @@
   },
   {
    "url": "https://www.woodyway88.com/2026/10/senior-flu-vaccination-schedule.html",
-   "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
-   "last_crawl": ""
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-08T10:47:26Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/claude-code-figma-skill.html",
@@ -481,36 +516,54 @@
   },
   {
    "url": "https://www.woodyway88.com/2026/10/unemployment-benefit-eligibility.html",
-   "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
-   "last_crawl": ""
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-08T06:13:11Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/blux-semi-automatic-mode.html",
-   "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
-   "last_crawl": ""
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-08T10:24:34Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/claude-code-slideshow-skill.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/10/severance-pay-calculation.html",
-   "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
-   "last_crawl": ""
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-08T10:27:58Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/claude-google-docs-integration.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/10/claude-code-ai-seo-skill.html",
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-08T13:43:37Z"
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/unemployment-benefit-calculation.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/ai-hacking-career-skills.html",
+   "verdict": "NEUTRAL",
+   "coverage": "URL is unknown to Google",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/claude-code-plan-mode-guide.html",
    "verdict": "NEUTRAL",
    "coverage": "URL is unknown to Google",
    "last_crawl": ""
