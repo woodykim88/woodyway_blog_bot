@@ -180,7 +180,7 @@ def test_calculator_strong_keyword_in_meta_and_never_on_slot_posts():
 
 def test_tools_json_lists_every_calculator_page():
     urls = {t.url for t in tools.load_tools()}
-    pages = Path.home() / 'Projects' / '정보마스터 계산기' / 'pages'
+    pages = Path.home() / 'Projects' / '도구' / '정보마스터-계산기' / 'pages'
     expected = {f'https://tools.woodyway88.com/{p.name}/' for p in pages.iterdir()} if pages.exists() else set()
     assert expected <= urls
     assert len(urls) >= 3
