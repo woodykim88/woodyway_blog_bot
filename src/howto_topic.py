@@ -4,12 +4,16 @@
 그래서 20:00 칸은 사람들이 실제로 검색창에 치는 말("○○ 하는 법/조회 방법/계산/신청 방법·자격·기간")을
 정부·공공기관 공식 안내 페이지만 근거로 풀어 쓴다 (2026-10-03 사용자 결정).
 - 글감 목록: data/howto_guides.json (공식 안내 1~3곳, 제철 달, 맞는 계산기)
+- 2026-10-10: "실업급여 신청 방법" 같은 큰 검색어는 정부·대형 사이트에 밀려 28일 노출이 0이었다. 목록 앞쪽에
+  구글 자동완성에 실제로 뜨는 롱테일 검색어("퇴직금 1년 미만", "묵시적 갱신 해지 3개월")를 두고 먼저 쓴다.
+  새 글감은 자동완성에 뜨는지, 공식 안내 본문에 답이 있는지 확인하고 넣는다.
 - 고르는 순서: 제철(또는 사계절) 글감 중 안 쓴 것 → 제철 글감 중 가장 오래전에 쓴 것 → 제철 아닌 글감 (발행 건너뛰기 금지)
 - 공식 페이지를 하나도 못 읽으면 그 글감은 건너뛴다. 첫 번째로 읽힌 페이지가 원문, 나머지는 함께 본 공식 안내.
 """
 from __future__ import annotations
 
 import json
+from collections import Counter
 from collections.abc import Callable, Iterator, Sequence
 from dataclasses import dataclass, replace
 from datetime import datetime
@@ -80,11 +84,18 @@ def order_guides(guides: Sequence[HowtoGuide], past: Sequence[HistoryEntry], now
     """제철(또는 사계절) 글감을 먼저: 안 쓴 것 → 오래전에 쓴 것. 제철 아닌 글감은 맨 뒤 (같은 규칙)."""
     month = now.astimezone(KST).month
     last_used: dict[str, int] = {}
+    last_slug: dict[str, int] = {}
     for i, entry in enumerate(past):
         last_used[entry.source_url] = i
+        last_slug[entry.url.rsplit('/', 1)[-1].removesuffix('.html')] = i
+    shared = {u for u, n in Counter(u for g in guides for u in g.urls).items() if n > 1}
 
     def used_at(guide: HowtoGuide) -> int | None:
-        hits = [last_used[u] for u in guide.urls if u in last_used]
+        """글 주소의 슬러그로 먼저 찾는다. 공식 안내 주소는 그 주소를 이 글감만 쓸 때에만 본다
+        (2026-10-10: 롱테일 글감은 같은 공식 페이지를 여러 검색어가 나눠 쓴다)."""
+        if guide.slug and guide.slug in last_slug:
+            return last_slug[guide.slug]
+        hits = [last_used[u] for u in guide.urls if u in last_used and u not in shared]
         return max(hits) if hits else None
 
     seasonal = [g for g in guides if g.in_season(month)]

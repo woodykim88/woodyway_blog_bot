@@ -254,3 +254,18 @@ def test_render_news_post_unchanged_by_howto_features():
     assert '기준 공식 안내를 바탕으로' not in html
     assert '원문: ' in html and '<ol>' not in html.split('내일 바로 써먹기')[0]
     assert html.count('<h3>') == 2  # 용어사전·출처만
+
+
+def test_guides_sharing_an_official_page_are_tracked_by_post_slug():
+    """2026-10-10 롱테일 글감: 같은 공식 페이지를 쓰는 두 글감 중 하나를 써도 다른 하나는 안 쓴 글감으로 남는다."""
+    shared = howto_topic.Source('찾기쉬운 생활법령정보 「임대차계약의 갱신」', 'https://easylaw.go.kr/x')
+    first = howto_topic.HowtoGuide('묵시적 갱신 해지 3개월', '부동산', 'implicit-renewal-termination', (shared,))
+    second = howto_topic.HowtoGuide('계약갱신청구권 행사 방법', '부동산', 'renewal-right-how-to-use', (shared,))
+    past = (make_entry(source_url=shared.url, url='https://www.woodyway88.com/2026/10/implicit-renewal-termination.html'),)
+    assert howto_topic.order_guides([first, second], past, OCT) == [second, first]
+
+
+def test_long_tail_guides_come_first():
+    guides = howto_topic.load_guides()
+    assert guides[0].query == '실업급여 자진퇴사 조건' and len(guides) >= 50
+    assert howto_topic.order_guides(guides, (), OCT)[0] == guides[0]

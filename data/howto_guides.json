@@ -1,5 +1,365 @@
 [
   {
+    "query": "실업급여 자진퇴사 조건",
+    "slug": "unemployment-benefit-voluntary-resignation",
+    "area": "생활경제",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「구직급여」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=722&ccfNo=2&cciNo=1&cnpClsNo=1"
+      }
+    ]
+  },
+  {
+    "query": "퇴직금 1년 미만",
+    "slug": "severance-pay-under-one-year",
+    "area": "생활경제",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「계속근로기간 확인」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=999&ccfNo=3&cciNo=1&cnpClsNo=2"
+      }
+    ]
+  },
+  {
+    "query": "배우자 출산휴가 급여 신청",
+    "slug": "spouse-maternity-leave-pay-apply",
+    "area": "지원금·혜택",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「배우자 출산전후휴가 급여」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=1380&ccfNo=1&cciNo=2&cnpClsNo=2"
+      },
+      {
+        "name": "찾기쉬운 생활법령정보 「배우자 출산전후휴가 신청」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=1380&ccfNo=1&cciNo=2&cnpClsNo=1"
+      }
+    ]
+  },
+  {
+    "query": "묵시적 갱신 해지 3개월",
+    "slug": "implicit-lease-renewal-termination",
+    "area": "부동산",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「임대차계약의 갱신」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=629&ccfNo=4&cciNo=4&cnpClsNo=1"
+      }
+    ]
+  },
+  {
+    "query": "상속포기 기간 지나면",
+    "slug": "inheritance-renunciation-deadline-passed",
+    "area": "생활경제",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「상속 포기의 개념 및 방법」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=255&ccfNo=4&cciNo=4&cnpClsNo=1"
+      },
+      {
+        "name": "찾기쉬운 생활법령정보 「상속의 승인ㆍ포기」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=255&ccfNo=4&cciNo=1&cnpClsNo=1"
+      }
+    ]
+  },
+  {
+    "query": "운전면허 벌점 기준",
+    "slug": "drivers-license-penalty-points",
+    "area": "생활경제",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「운전면허가 정지됐습니다.」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=668&ccfNo=4&cciNo=1&cnpClsNo=2"
+      },
+      {
+        "name": "찾기쉬운 생활법령정보 「교통법규 위반에 따른 면허 취소·정지」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=668&ccfNo=4&cciNo=1&cnpClsNo=1"
+      }
+    ]
+  },
+  {
+    "query": "이삿짐센터 파손 보상",
+    "slug": "moving-company-damage-compensation",
+    "area": "생활경제",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「이사업체 관련 분쟁해결하기」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=666&ccfNo=3&cciNo=2&cnpClsNo=2"
+      },
+      {
+        "name": "찾기쉬운 생활법령정보 「이사업체 정하기」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=666&ccfNo=3&cciNo=2&cnpClsNo=1"
+      }
+    ]
+  },
+  {
+    "query": "실업급여 구직활동 인정 범위",
+    "slug": "unemployment-benefit-job-search-activities",
+    "area": "생활경제",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「실업의 인정」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=722&ccfNo=2&cciNo=2&cnpClsNo=2"
+      },
+      {
+        "name": "찾기쉬운 생활법령정보 「실업인정의 특례」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=722&ccfNo=2&cciNo=2&cnpClsNo=3"
+      }
+    ]
+  },
+  {
+    "query": "퇴직금 지급기한",
+    "slug": "severance-pay-payment-deadline",
+    "area": "생활경제",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「퇴직금 지급」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=999&ccfNo=3&cciNo=2&cnpClsNo=1"
+      },
+      {
+        "name": "찾기쉬운 생활법령정보 「지연이자의 지급」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=999&ccfNo=4&cciNo=1&cnpClsNo=2"
+      }
+    ]
+  },
+  {
+    "query": "육아기 근로시간 단축 급여",
+    "slug": "reduced-working-hours-childcare-pay",
+    "area": "지원금·혜택",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「육아기 근로시간 단축 급여」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=1380&ccfNo=2&cciNo=2&cnpClsNo=2"
+      },
+      {
+        "name": "찾기쉬운 생활법령정보 「육아기 근로시간 단축 신청」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=1380&ccfNo=2&cciNo=2&cnpClsNo=1"
+      }
+    ]
+  },
+  {
+    "query": "계약갱신청구권 행사 방법",
+    "slug": "lease-renewal-right-how-to-use",
+    "area": "부동산",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「임대차계약의 갱신」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=629&ccfNo=4&cciNo=4&cnpClsNo=1"
+      }
+    ]
+  },
+  {
+    "query": "상속 순위 배우자",
+    "slug": "inheritance-order-spouse",
+    "area": "생활경제",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「상속 자격과 순위」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=255&ccfNo=2&cciNo=1&cnpClsNo=1"
+      },
+      {
+        "name": "찾기쉬운 생활법령정보 「배우자상속인 및 대습상속인」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=255&ccfNo=2&cciNo=1&cnpClsNo=2"
+      }
+    ]
+  },
+  {
+    "query": "실업급여 수급기간 연기",
+    "slug": "unemployment-benefit-period-postponement",
+    "area": "생활경제",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「구직급여 수급·수급유예·수급정지」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=722&ccfNo=2&cciNo=3&cnpClsNo=3"
+      },
+      {
+        "name": "찾기쉬운 생활법령정보 「구직급여 수급일수」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=722&ccfNo=2&cciNo=3&cnpClsNo=1"
+      }
+    ]
+  },
+  {
+    "query": "퇴직금 중간정산 사유",
+    "slug": "severance-pay-interim-settlement-reasons",
+    "area": "생활경제",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「퇴직급여 중간정산」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=999&ccfNo=2&cciNo=1&cnpClsNo=1"
+      }
+    ]
+  },
+  {
+    "query": "임차권등기명령 신청 방법",
+    "slug": "lease-registration-order-how-to-apply",
+    "area": "부동산",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「임차권등기명령 신청」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=629&ccfNo=5&cciNo=2&cnpClsNo=1"
+      }
+    ]
+  },
+  {
+    "query": "유류분 청구 소멸시효",
+    "slug": "forced-heirship-claim-time-limit",
+    "area": "생활경제",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「유류분반환청구」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=255&ccfNo=6&cciNo=1&cnpClsNo=1"
+      }
+    ]
+  },
+  {
+    "query": "조기재취업수당 조건",
+    "slug": "early-reemployment-allowance-eligibility",
+    "area": "생활경제",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「취업촉진 수당」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=722&ccfNo=3&cciNo=1&cnpClsNo=1"
+      }
+    ]
+  },
+  {
+    "query": "퇴직금 미지급 신고 방법",
+    "slug": "unpaid-severance-pay-report",
+    "area": "생활경제",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「퇴직급여 미지급 시 구제방법」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=999&ccfNo=4&cciNo=1&cnpClsNo=1"
+      },
+      {
+        "name": "찾기쉬운 생활법령정보 「지연이자의 지급」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=999&ccfNo=4&cciNo=1&cnpClsNo=2"
+      }
+    ]
+  },
+  {
+    "query": "장기수선충당금 반환",
+    "slug": "long-term-repair-reserve-refund",
+    "area": "부동산",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「장기수선충당금의 반환 청구」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=629&ccfNo=5&cciNo=3&cnpClsNo=3"
+      },
+      {
+        "name": "찾기쉬운 생활법령정보 「관리비예치금 및 장기수선충당금 정산하기」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=666&ccfNo=3&cciNo=3&cnpClsNo=2"
+      }
+    ]
+  },
+  {
+    "query": "실업급여 부정수급 걸리는 이유",
+    "slug": "unemployment-benefit-fraud-cases",
+    "area": "생활경제",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「실업급여 부정수급」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=722&ccfNo=5&cciNo=2&cnpClsNo=1"
+      },
+      {
+        "name": "찾기쉬운 생활법령정보 「부정수급에 따른 수급액 반환 및 징수」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=722&ccfNo=5&cciNo=2&cnpClsNo=2"
+      }
+    ]
+  },
+  {
+    "query": "소액임차인 최우선변제금",
+    "slug": "small-tenant-priority-repayment",
+    "area": "부동산",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「소액보증금 우선변제」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=629&ccfNo=5&cciNo=2&cnpClsNo=2"
+      }
+    ]
+  },
+  {
+    "query": "실업급여 상병급여",
+    "slug": "unemployment-sickness-benefit",
+    "area": "생활경제",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「상병급여」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=722&ccfNo=2&cciNo=5&cnpClsNo=1"
+      }
+    ]
+  },
+  {
+    "query": "전세 보증금 인상 한도",
+    "slug": "jeonse-deposit-increase-limit",
+    "area": "부동산",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「차임 또는 보증금의 증감청구」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=629&ccfNo=4&cciNo=1&cnpClsNo=2"
+      }
+    ]
+  },
+  {
+    "query": "부동산 중개수수료 요율",
+    "slug": "real-estate-brokerage-fee-rates",
+    "area": "부동산",
+    "months": [],
+    "tool": "",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「부동산 개업공인중개사의 책임 및 중개보수」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=629&ccfNo=2&cciNo=2&cnpClsNo=3"
+      }
+    ]
+  },
+  {
     "query": "청년미래적금 가입 조건",
     "slug": "youth-future-savings-eligibility",
     "area": "재테크",
