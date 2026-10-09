@@ -32,6 +32,7 @@ jobs:
     env:
       PUBLISH_TIMES: ${{ vars.PUBLISH_TIMES || '20:00' }}
       PAUSED: ${{ vars.PAUSED || 'false' }}
+      HOWTO_TIME: ${{ vars.HOWTO_TIME }}   # 비우면 08:00,20:00 (생활 가이드 칸). 08:00을 뉴스로 되돌리려면 20:00
     steps:
       - uses: actions/checkout@v4
 

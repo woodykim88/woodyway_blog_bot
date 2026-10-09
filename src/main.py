@@ -91,7 +91,9 @@ DEFAULT_SKILL_TIME = '12:30'  # 이 시각 칸은 Claude Code 스킬 글 (루이
 MAX_WRITE_ATTEMPTS = 2
 MAX_EARLY_RESCUE_LOSS_CHARS = 400  # 구제로 이만큼(공백 포함 글자)보다 많이 잘려 나가면 살리지 않고 다시 쓴다
 MAX_GUIDE_ATTEMPTS = 2  # 12:30 칸 예비 사용법 글감을 이만큼까지 써 본다 (AI 호출 상한)
-DEFAULT_HOWTO_TIME = '20:00'  # 이 시각 칸은 검색형 생활 가이드 글 (2026-10-03 사용자 결정, 검색 유입 목적)
+# 이 시각 칸은 검색형 생활 가이드 글 (2026-10-03 사용자 결정, 검색 유입 목적).
+# 2026-10-10: 08:00 뉴스 글은 28일 동안 검색 노출이 거의 없어 08:00도 생활 가이드로. 되돌리려면 HOWTO_TIME=20:00
+DEFAULT_HOWTO_TIME = '08:00,20:00'
 MAX_HOWTO_ATTEMPTS = 2  # 생활 가이드 글감을 이만큼까지 써 보고, 못 쓰면 뉴스로 발행 (발행 건너뛰기 금지)
 SHORT_NEWS_COUNT = 3
 DEFAULT_FOOTER_URL = 'https://link.inpock.co.kr/shoperwoody'
@@ -409,7 +411,7 @@ def compose_evening_post(
     footer_url: str | None = DEFAULT_FOOTER_URL,
     day: date | None = None,
 ) -> Composed:
-    """20:00 칸: 생활 가이드 → (못 쓰면) 평소 뉴스 글. 칸은 절대 비우지 않는다."""
+    """생활 가이드 칸(08:00·20:00): 생활 가이드 → (못 쓰면) 평소 뉴스 글. 칸은 절대 비우지 않는다."""
     kwargs = {'get': get, 'is_alive': is_alive, 'footer_url': footer_url, 'day': day}
     try:
         composed = compose_howto_post(llm, models, now, past, **kwargs)
@@ -418,7 +420,7 @@ def compose_evening_post(
         composed = None
     if composed is not None:
         return composed
-    print('[20:00 칸] 생활 가이드 글을 못 써 뉴스 글로 발행합니다 (발행 건너뛰기 금지)')
+    print('[생활 가이드 칸] 생활 가이드 글을 못 써 뉴스 글로 발행합니다 (발행 건너뛰기 금지)')
     return compose_post(llm, models, now, past, **kwargs)
 
 
@@ -685,7 +687,7 @@ def run(
     past = history.load_history()
     times = schedule.parse_times(env.get('PUBLISH_TIMES'))
     skill_time = schedule.parse_times(env.get('SKILL_TIME') or DEFAULT_SKILL_TIME)[0]
-    howto_time = schedule.parse_times(env.get('HOWTO_TIME') or DEFAULT_HOWTO_TIME)[0]
+    howto_times = schedule.parse_times(env.get('HOWTO_TIME') or DEFAULT_HOWTO_TIME)
     targets = plan_targets(mode, now, times, history.done_slots(past), at)
     if not targets:
         return RunResult('skipped', '지금 준비할 발행 시각이 없습니다.')
@@ -709,7 +711,7 @@ def run(
         try:
             if is_skill_slot(target.publish_at, skill_time):
                 composed = compose_slot_post(llm, models, now, past, footer_url=footer_url, day=day)
-            elif is_skill_slot(target.publish_at, howto_time):
+            elif any(is_skill_slot(target.publish_at, t) for t in howto_times):
                 composed = compose_evening_post(llm, models, now, past, footer_url=footer_url, day=day)
             else:
                 composed = compose_post(llm, models, now, past, footer_url=footer_url, day=day)

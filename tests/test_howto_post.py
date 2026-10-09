@@ -203,11 +203,14 @@ def routed(monkeypatch, tmp_path):
     return calls
 
 
-@pytest.mark.parametrize('at, expected', [((20, 0), 'howto'), ((8, 0), 'news'), ((12, 30), 'skill')])
-def test_run_routes_slot_by_time(routed, monkeypatch, at, expected):
+@pytest.mark.parametrize('at, howto_time, expected', [
+    ((20, 0), '', 'howto'), ((8, 0), '', 'howto'), ((12, 30), '', 'skill'),  # 2026-10-10: 08:00도 생활 가이드
+    ((8, 0), '20:00', 'news'), ((20, 0), '20:00', 'howto'),                  # HOWTO_TIME=20:00이면 08:00은 다시 뉴스
+])
+def test_run_routes_slot_by_time(routed, monkeypatch, at, howto_time, expected):
     target = pipeline.Target('slot', datetime(2026, 10, 4, *at, tzinfo=KST), 'preview')
     monkeypatch.setattr(pipeline, 'plan_targets', lambda *a, **k: [target])
-    env = {'PUBLISH_TIMES': '08:00,12:30,20:00'}
+    env = {'PUBLISH_TIMES': '08:00,12:30,20:00', 'HOWTO_TIME': howto_time}
     result = pipeline.run('preview', None, env, providers.load_ai_settings({}), None, now=NOW)
     assert result.outcome == 'success' and routed == [expected]
 
