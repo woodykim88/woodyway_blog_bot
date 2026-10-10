@@ -585,5 +585,19 @@
     ],
     "status": "SCHEDULED",
     "slot": "2026-10-10T12:30"
+  },
+  {
+    "publish_date": "2026-10-10",
+    "post_id": "1001816833249174488",
+    "title": "온리오피스 AI 기능, 문서 안에서 요약·번역까지",
+    "url": "https://www.woodyway88.com/2026/10/onlyoffice-ai-features-update.html",
+    "source_url": "https://zdnet.co.kr/view/?no=20261010111002",
+    "geeknews_url": "https://zdnet.co.kr/view/?no=20261010111002",
+    "labels": [
+      "AI활용",
+      "업무생산성"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-10-10T20:00"
   }
 ]
