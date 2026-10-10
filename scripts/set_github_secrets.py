@@ -14,7 +14,7 @@ from dotenv import dotenv_values
 
 ROOT = Path(__file__).resolve().parent.parent
 ENV_KEYS = (
-    'BLOG_ID', 'OPENAI_API_KEY',
+    'BLOG_ID', 'OPENAI_API_KEY', 'GPTPROTO_API_KEY',
     'R2_ACCOUNT_ID', 'R2_ACCESS_KEY_ID', 'R2_SECRET_ACCESS_KEY', 'R2_BUCKET', 'R2_PUBLIC_BASE_URL',
     'TELEGRAM_BOT_TOKEN', 'TELEGRAM_CHAT_ID',
 )

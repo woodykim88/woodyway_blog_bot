@@ -11,6 +11,7 @@ from typing import Any, Protocol, TypeVar
 
 from pydantic import BaseModel
 from src import usage
+from src.openai_fallback import to_image_format
 
 T = TypeVar('T', bound=BaseModel)
 
@@ -153,8 +154,8 @@ class GeminiTextBackend:
 def build_text_backend(provider: str, env: Mapping[str, str]) -> TextBackend:
     key = api_key(env, provider)
     if provider == 'openai':
-        from openai import OpenAI
-        return OpenAITextBackend(OpenAI(api_key=key))
+        from src.openai_fallback import make_openai
+        return OpenAITextBackend(make_openai(env))
     if provider == 'anthropic':
         from anthropic import Anthropic
         return AnthropicTextBackend(Anthropic(api_key=key))
@@ -179,7 +180,7 @@ class OpenAIImageBackend:
             model=model, prompt=prompt, size=IMAGE_SIZE, quality=quality, output_format='webp', n=1
         )
         usage.record(model, response, 'image')
-        return base64.b64decode(response.data[0].b64_json)
+        return to_image_format(base64.b64decode(response.data[0].b64_json), 'webp')
 
 
 class GeminiImageBackend:
@@ -216,7 +217,7 @@ class GeminiImageBackend:
 def build_image_backend(provider: str, env: Mapping[str, str]) -> ImageBackend:
     key = api_key(env, provider)
     if provider == 'openai':
-        from openai import OpenAI
-        return OpenAIImageBackend(OpenAI(api_key=key))
+        from src.openai_fallback import make_openai
+        return OpenAIImageBackend(make_openai(env))
     from google import genai
     return GeminiImageBackend(genai.Client(api_key=key))
