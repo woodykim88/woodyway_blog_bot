@@ -1,18 +1,11 @@
 {
- "updated": "2026-10-10",
+ "updated": "2026-10-11",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-09-12",
-  "2026-10-09"
+  "2026-09-13",
+  "2026-10-10"
  ],
  "daily": [
-  {
-   "date": "2026-09-12",
-   "clicks": 0,
-   "impressions": 0,
-   "ctr": 0,
-   "position": 0
-  },
   {
    "date": "2026-09-13",
    "clicks": 0,
@@ -328,18 +321,6 @@
  ],
  "index": [
   {
-   "url": "https://www.woodyway88.com/2026/09/ai-3.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-09-28T03:55:30Z"
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/09/3.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-09-26T10:44:59Z"
-  },
-  {
    "url": "https://www.woodyway88.com/2026/09/24.html",
    "verdict": "PASS",
    "coverage": "Submitted and indexed",
@@ -546,23 +527,41 @@
   {
    "url": "https://www.woodyway88.com/2026/10/claude-code-plan-mode-guide.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/10/annual-leave-calculation.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/10/unemployment-benefit-voluntary.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/10/claude-code-subagent-guide.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/onlyoffice-ai-features-update.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/severance-pay-under-one-year.html",
+   "verdict": "NEUTRAL",
+   "coverage": "URL is unknown to Google",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/gemini-deep-research-guide.html",
    "verdict": "NEUTRAL",
    "coverage": "URL is unknown to Google",
    "last_crawl": ""
