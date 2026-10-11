@@ -272,3 +272,13 @@ def test_long_tail_guides_come_first():
     guides = howto_topic.load_guides()
     assert guides[0].query == '실업급여 자진퇴사 조건' and len(guides) >= 50
     assert howto_topic.order_guides(guides, (), OCT)[0] == guides[0]
+
+
+def test_guide_is_used_when_blogger_truncated_the_post_slug():
+    """2026-10-11: Blogger가 긴 글 주소를 잘라 슬러그가 글감 슬러그의 앞부분만 남아도 쓴 글감으로 센다."""
+    shared = howto_topic.Source('찾기쉬운 생활법령정보 「구직급여」', 'https://easylaw.go.kr/y')
+    other = howto_topic.Source('다른 기관', 'https://easylaw.go.kr/z')
+    first = howto_topic.HowtoGuide('실업급여 자진퇴사 조건', '생활경제', 'unemployment-benefit-voluntary-resignation', (shared,))
+    second = howto_topic.HowtoGuide('배우자 출산휴가 급여 신청', '생활경제', 'spouse-maternity-leave-pay-apply', (shared, other))
+    past = (make_entry(source_url=shared.url, url='https://www.woodyway88.com/2026/10/unemployment-benefit-voluntary.html'),)
+    assert howto_topic.order_guides([first, second], past, OCT) == [second, first]

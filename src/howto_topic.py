@@ -80,6 +80,14 @@ def _rank(group: Sequence[HowtoGuide], used_at: Callable[[HowtoGuide], int | Non
     return [*fresh, *used]
 
 
+MIN_TRUNCATED_SLUG = 25  # 이보다 짧은 앞부분은 우연히 겹칠 수 있어 잘린 주소로 보지 않는다
+
+
+def _is_truncation(posted: str, slug: str) -> bool:
+    """발행된 글 주소 슬러그가 글감 슬러그를 단어 경계에서 자른 앞부분인가."""
+    return len(posted) >= MIN_TRUNCATED_SLUG and slug.startswith(posted + '-')
+
+
 def order_guides(guides: Sequence[HowtoGuide], past: Sequence[HistoryEntry], now: datetime) -> list[HowtoGuide]:
     """제철(또는 사계절) 글감을 먼저: 안 쓴 것 → 오래전에 쓴 것. 제철 아닌 글감은 맨 뒤 (같은 규칙)."""
     month = now.astimezone(KST).month
@@ -88,6 +96,7 @@ def order_guides(guides: Sequence[HowtoGuide], past: Sequence[HistoryEntry], now
     for i, entry in enumerate(past):
         last_used[entry.source_url] = i
         last_slug[entry.url.rsplit('/', 1)[-1].removesuffix('.html')] = i
+    known_slugs = {g.slug for g in guides}
     shared = {u for u, n in Counter(u for g in guides for u in g.urls).items() if n > 1}
 
     def used_at(guide: HowtoGuide) -> int | None:
@@ -95,6 +104,9 @@ def order_guides(guides: Sequence[HowtoGuide], past: Sequence[HistoryEntry], now
         (2026-10-10: 롱테일 글감은 같은 공식 페이지를 여러 검색어가 나눠 쓴다)."""
         if guide.slug and guide.slug in last_slug:
             return last_slug[guide.slug]
+        truncated = [i for posted, i in last_slug.items() if posted not in known_slugs and _is_truncation(posted, guide.slug)]
+        if truncated:
+            return max(truncated)  # Blogger가 긴 주소를 잘라 슬러그가 앞부분만 남은 글 (2026-10-11)
         hits = [last_used[u] for u in guide.urls if u in last_used and u not in shared]
         return max(hits) if hits else None
 
