@@ -4,7 +4,7 @@
     "slug": "unemployment-benefit-voluntary-resignation",
     "area": "생활경제",
     "months": [],
-    "tool": "",
+    "tool": "unemployment-benefit-calculator",
     "sources": [
       {
         "name": "찾기쉬운 생활법령정보 「구직급여」",
@@ -17,7 +17,7 @@
     "slug": "severance-pay-under-one-year",
     "area": "생활경제",
     "months": [],
-    "tool": "",
+    "tool": "severance-pay-calculator",
     "sources": [
       {
         "name": "찾기쉬운 생활법령정보 「계속근로기간 확인」",
@@ -111,7 +111,7 @@
     "slug": "unemployment-benefit-job-search-activities",
     "area": "생활경제",
     "months": [],
-    "tool": "",
+    "tool": "unemployment-benefit-calculator",
     "sources": [
       {
         "name": "찾기쉬운 생활법령정보 「실업의 인정」",
@@ -128,7 +128,7 @@
     "slug": "severance-pay-payment-deadline",
     "area": "생활경제",
     "months": [],
-    "tool": "",
+    "tool": "severance-pay-calculator",
     "sources": [
       {
         "name": "찾기쉬운 생활법령정보 「퇴직금 지급」",
@@ -192,7 +192,7 @@
     "slug": "unemployment-benefit-period-postponement",
     "area": "생활경제",
     "months": [],
-    "tool": "",
+    "tool": "unemployment-benefit-calculator",
     "sources": [
       {
         "name": "찾기쉬운 생활법령정보 「구직급여 수급·수급유예·수급정지」",
@@ -209,7 +209,7 @@
     "slug": "severance-pay-interim-settlement-reasons",
     "area": "생활경제",
     "months": [],
-    "tool": "",
+    "tool": "severance-pay-calculator",
     "sources": [
       {
         "name": "찾기쉬운 생활법령정보 「퇴직급여 중간정산」",
@@ -295,7 +295,7 @@
     "slug": "unemployment-benefit-fraud-cases",
     "area": "생활경제",
     "months": [],
-    "tool": "",
+    "tool": "unemployment-benefit-calculator",
     "sources": [
       {
         "name": "찾기쉬운 생활법령정보 「실업급여 부정수급」",
@@ -578,7 +578,7 @@
     "slug": "unemployment-benefit-how-to-apply",
     "area": "지원금·혜택",
     "months": [],
-    "tool": "",
+    "tool": "unemployment-benefit-calculator",
     "sources": [
       {
         "name": "찾기 쉬운 생활법령정보(법제처) 실업급여 · 실업의 신고",
@@ -595,7 +595,7 @@
     "slug": "unemployment-benefit-eligibility",
     "area": "지원금·혜택",
     "months": [],
-    "tool": "",
+    "tool": "unemployment-benefit-calculator",
     "sources": [
       {
         "name": "찾기 쉬운 생활법령정보(법제처) 실업급여 · 구직급여 수급자격",
@@ -608,7 +608,7 @@
     "slug": "unemployment-benefit-calculation",
     "area": "지원금·혜택",
     "months": [],
-    "tool": "",
+    "tool": "unemployment-benefit-calculator",
     "sources": [
       {
         "name": "찾기 쉬운 생활법령정보(법제처) 실업급여 · 구직급여 수급액",
@@ -625,7 +625,7 @@
     "slug": "severance-pay-calculation",
     "area": "생활경제",
     "months": [],
-    "tool": "",
+    "tool": "severance-pay-calculator",
     "sources": [
       {
         "name": "찾기 쉬운 생활법령정보(법제처) 퇴직급여제도 · 퇴직금 지급",
@@ -642,7 +642,7 @@
     "slug": "annual-leave-calculation",
     "area": "생활경제",
     "months": [],
-    "tool": "",
+    "tool": "annual-leave-calculator",
     "sources": [
       {
         "name": "찾기 쉬운 생활법령정보(법제처) 근로시간 및 휴가권 보장(연차 유급휴가)",
