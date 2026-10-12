@@ -7,7 +7,7 @@ from dataclasses import replace
 from datetime import date
 from difflib import SequenceMatcher
 
-from src import kr_calendar
+from src import kr_calendar, trends
 from src.history import HistoryEntry
 from src.llm import LLMClient, load_prompt
 from src.models import Candidate, RankedCandidate, SelectionResult
@@ -38,8 +38,14 @@ def story_key(story: str) -> str:
     return story.replace(' ', '').replace('의', '').lower()
 
 
-def format_candidates(candidates: list[Candidate]) -> str:
-    return '\n'.join(f'[{i}] ({c.source}) {c.title}\n    {c.summary[:300]}' for i, c in enumerate(candidates))
+def format_candidates(candidates: list[Candidate], trending: Sequence[str] = ()) -> str:
+    """후보 목록. 제목에 인기 검색 키워드가 그대로 든 후보는 [지금 검색됨: 키워드]를 붙여 모델이 놓치지 않게 한다."""
+    lines = []
+    for i, c in enumerate(candidates):
+        hit = trends.match_trending(c.title, trending)
+        tag = f' [지금 검색됨: {", ".join(hit)}]' if hit else ''
+        lines.append(f'[{i}] ({c.source}){tag} {c.title}\n    {c.summary[:300]}')
+    return '\n'.join(lines)
 
 
 def format_recent(recent_titles: Sequence[str]) -> str:
@@ -73,7 +79,7 @@ def rank_candidates(
     """min_score 이상인 후보를 점수 높은 순으로 반환합니다. 같은 소식은 점수가 가장 높은 하나만 남깁니다."""
     if not candidates:
         return []
-    user_input = f'오늘의 테마: {theme}\n\n{format_calendar(day)}{format_recent(recent_titles)}{format_trending(trending)}후보 목록:\n{format_candidates(candidates)}'
+    user_input = f'오늘의 테마: {theme}\n\n{format_calendar(day)}{format_recent(recent_titles)}{format_trending(trending)}후보 목록:\n{format_candidates(candidates, trending)}'
     result = llm.parse(model, load_prompt(prompt), user_input, SelectionResult, stage='select')
 
     best: dict[int, tuple[RankedCandidate, str, bool]] = {}
@@ -89,7 +95,10 @@ def rank_candidates(
 
     seen: set[str] = set()
     unique = []
-    for ranked, key, covered in sorted(best.values(), key=lambda item: item[0].score, reverse=True):
+    with_trend = {i: replace(r, trend=trends.match_trending(r.candidate.title, trending)) for i, (r, _, _) in best.items()}
+    best = {i: (with_trend[i], key, covered) for i, (_, key, covered) in best.items()}
+    # 점수가 같으면 지금 검색되는 키워드가 제목에 든 후보를 먼저 쓴다
+    for ranked, key, covered in sorted(best.values(), key=lambda item: (item[0].score, bool(item[0].trend)), reverse=True):
         if key and key in seen:
             continue
         seen.add(key)  # 이미 쓴 소식이면 같은 소식의 다른 출처 후보도 함께 막힌다

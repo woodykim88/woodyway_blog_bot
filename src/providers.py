@@ -82,6 +82,8 @@ def load_ai_settings(env: Mapping[str, str]) -> AISettings:
 
 def api_key(env: Mapping[str, str], provider: str) -> str:
     key = (env.get(KEY_ENV[provider]) or '').strip()
+    if not key and provider == 'openai':
+        key = (env.get('GPTPROTO_API_KEY') or '').strip()  # OpenAI 호환 중계 키로도 쓸 수 있다
     if not key:
         raise ProviderConfigError(f'{PROVIDER_LABELS[provider]}를 쓰려면 {KEY_ENV[provider]}가 필요합니다.')
     return key

@@ -1,3 +1,4 @@
+from dataclasses import replace
 import io
 
 import pytest
@@ -86,7 +87,7 @@ def test_add_headline_renders_cover_size_and_darkens_left():
     im = opened(out)
     assert im.size == thumbnail.CANVAS
     left, right = im.getpixel((20, 790)), im.getpixel((1180, 790))
-    assert sum(left) < sum(right) / 3  # 왼쪽은 글자가 잘 보이도록 어둡게
+    assert left == pytest.approx(thumbnail.DEFAULT_TINT, abs=12)  # 왼쪽은 분야 색 오버레이가 덮인다
     assert right == pytest.approx((40, 90, 200), abs=6)  # 오른쪽 주제 영역은 그대로
 
 
@@ -97,16 +98,15 @@ def test_add_headline_crops_wide_image_to_3_2():
 
 
 @needs_font
-def test_add_headline_paints_half_transparent_highlight_box():
+def test_add_headline_paints_solid_yellow_highlight_box():
     def count(headline, test):
-        im = opened(thumbnail.add_headline(solid(color=(0, 0, 0)), headline, FONT))
+        black = replace(headline, tint=(0, 0, 0))  # 오버레이 색이 노랑 판별을 흐리지 않게 검정으로
+        im = opened(thumbnail.add_headline(solid(color=(0, 0, 0)), black, FONT))
         return sum(1 for p in pixels(im) if test(*p))
 
-    half_yellow = lambda r, g, b: 105 < r < 150 and 85 < g < 130 and b < 40  # 검정 위 노랑 50% ≈ (128, 107, 5)
-    solid_yellow = lambda r, g, b: r > 200 and g > 180 and b < 80
-    assert count(HEADLINE, half_yellow) > 5000
-    assert count(HEADLINE, solid_yellow) == 0  # 불투명 노랑은 없어야 한다 (뒤 글자가 비쳐 보이게)
-    assert count(thumbnail.Headline('코파일럿\n24시간 일한다?', '없는말'), half_yellow) == 0
+    solid_yellow = lambda r, g, b: r > 230 and g > 190 and b < 60
+    assert count(HEADLINE, solid_yellow) > 5000  # 강조 단어 뒤에 선명한 노랑 상자 (2026-10-13 불투명으로 변경)
+    assert count(thumbnail.Headline('코파일럿\n24시간 일한다?', '없는말'), solid_yellow) == 0
 
 
 @needs_font

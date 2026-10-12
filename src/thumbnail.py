@@ -21,15 +21,16 @@ MIN_SIZE = 56
 LINE_HEIGHT = 1.18
 STROKE_RATIO = 0.022     # 같은 색 테두리로 글자를 한 단계 더 굵게 (Noto Bold → Black 느낌)
 SIZE_STEP = 4
-GRADIENT_ALPHA = 0.9       # 맨 왼쪽 검정 농도
-GRADIENT_END = 0.65        # 이 비율 지점에서 그라데이션이 0이 된다
+GRADIENT_ALPHA = 0.92      # 맨 왼쪽 색 농도
+GRADIENT_HOLD = 0.46       # 이 비율 지점까지는 색을 그대로 유지 (글자 뒤가 탁해지지 않게)
+GRADIENT_END = 0.62        # 이 비율 지점에서 그라데이션이 0이 된다
 TEXT_COLOR = (255, 255, 255)
-HIGHLIGHT_COLOR = (255, 214, 10, 128)  # 노랑 50%: 위 줄 글자와 겹쳐도 비쳐 보이게 (인스타 표지와 같은 스타일)
-HIGHLIGHT_TEXT_COLOR = TEXT_COLOR
+HIGHLIGHT_COLOR = (255, 214, 10, 255)  # 선명한 노랑 형광펜 (2026-10-13: 반투명은 파랑·초록 위에서 탁해져 불투명으로)
+HIGHLIGHT_TEXT_COLOR = (20, 24, 64)    # 노랑 위 진한 남색 글자
 SHADOW_OFFSET = 5
 SHADOW_BLUR = 6
 SHADOW_ALPHA = 200
-LABEL_COLOR = '#E63946'
+LABEL_COLOR = '#FF3B5C'
 LABEL_SIZE = 32
 LABEL_TOP = 64
 REFERENCE_GLYPHS = '가힣Ag2'  # 강조 상자 높이를 단어와 상관없이 일정하게 맞추는 기준 글자
@@ -41,11 +42,27 @@ class FontSpec:
     index: int = 0  # .ttc 안의 글꼴 번호 (Noto CJK: 1=KR)
 
 
+# 분야별 왼쪽 오버레이 색: 검정 대신 선명한 색으로 밝고 눈에 띄게 (2026-10-13). 흰 글씨가 읽히는 중간 명도.
+TINTS: dict[str, tuple[int, int, int]] = {
+    'tech': (36, 76, 235),    # 선명한 파랑
+    'money': (0, 150, 110),   # 선명한 초록
+    'skill': (112, 64, 224),  # 보라
+    'guide': (112, 64, 224),
+    'howto': (235, 100, 40),  # 주황
+}
+DEFAULT_TINT = TINTS['tech']
+
+
+def tint_for(category: str) -> tuple[int, int, int]:
+    return TINTS.get(category, DEFAULT_TINT)
+
+
 @dataclass(frozen=True)
 class Headline:
     text: str             # 2줄 문구, 줄바꿈 1개
     highlight: str = ''   # 노란 형광펜으로 칠할 단어
     label: str = ''       # 왼쪽 위 빨간 알약 (블로그 라벨)
+    tint: tuple[int, int, int] = DEFAULT_TINT  # 왼쪽 색 오버레이
 
 
 FONT_CANDIDATES: tuple[FontSpec, ...] = (
@@ -93,15 +110,15 @@ def cover(image: Image.Image, size: tuple[int, int] = CANVAS) -> Image.Image:
     return ImageOps.fit(image.convert('RGB'), size, Image.LANCZOS)
 
 
-def darken_left(image: Image.Image) -> Image.Image:
-    """왼쪽은 검정 90%, GRADIENT_END 지점에서 0이 되는 그라데이션을 덮습니다."""
+def darken_left(image: Image.Image, tint: tuple[int, int, int] = (0, 0, 0)) -> Image.Image:
+    """왼쪽은 tint 색 92%, GRADIENT_END 지점에서 0이 되는 그라데이션을 덮습니다."""
     width, height = image.size
-    end = max(1, round(width * GRADIENT_END))
-    ramp = [round(255 * GRADIENT_ALPHA * max(0.0, 1 - x / end) ** 1.3) for x in range(width)]
+    hold, end = width * GRADIENT_HOLD, width * GRADIENT_END
+    ramp = [round(255 * GRADIENT_ALPHA * max(0.0, 1 - max(0.0, x - hold) / (end - hold)) ** 1.5) for x in range(width)]
     mask = Image.new('L', (width, 1))
     mask.putdata(ramp)
-    black = Image.new('RGB', image.size, (0, 0, 0))
-    return Image.composite(black, image, mask.resize(image.size))
+    color = Image.new('RGB', image.size, tint)
+    return Image.composite(color, image, mask.resize(image.size))
 
 
 def _glyph_box(font: ImageFont.FreeTypeFont) -> tuple[int, int]:
@@ -175,7 +192,7 @@ def render(image: Image.Image, headline: Headline, font_spec: FontSpec) -> Image
     lines = [line.strip() for line in headline.text.strip().split('\n') if line.strip()]
     font = fit_font(font_spec, lines)
     baselines = _baselines(font, len(lines), CANVAS[1])
-    canvas = _draw_shadow(darken_left(cover(image)).convert('RGBA'), lines, font, baselines)
+    canvas = _draw_shadow(darken_left(cover(image), headline.tint).convert('RGBA'), lines, font, baselines)
     for line, y in zip(lines, baselines):
         _draw_line(canvas, line, headline.highlight.strip(), font, y)
     if headline.label.strip():

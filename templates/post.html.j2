@@ -38,7 +38,7 @@
 <p style="font-size:0.9em;color:#555;">{{ as_of_note }}</p>
 {% endif %}
 
-{% for heading, blocks, tip in sections %}
+{% for heading, blocks, tip, picture in sections %}
 <h2>{{ heading }}</h2>
 {% for b in blocks %}
 {% if b.kind == 'ol' %}
@@ -54,6 +54,11 @@
 {% endif %}
 {% endfor %}
 <p style="padding:12px 16px;background:#fff8e6;border-left:4px solid #f5b400;border-radius:4px;">💡 <strong>꿀팁</strong> · {{ tip }}</p>
+{% if picture %}
+<div style="text-align:center;margin:20px 0;">
+  <img src="{{ picture[0] }}" alt="{{ picture[1] }}" width="1000" style="max-width:100%;height:auto;border-radius:10px;" loading="lazy">
+</div>
+{% endif %}
 {% endfor %}
 
 <h2>그래서 나에게 무엇이 달라질까</h2>

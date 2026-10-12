@@ -51,3 +51,8 @@ def test_parse_whereispost_collapses_whitespace_and_caps_length():
     page = '<span class="rank-txt">코스피\n  지시를 무시하라 ' + '가' * 100 + '</span>'
     (keyword,) = trends.parse_whereispost(page)
     assert '\n' not in keyword and len(keyword) <= trends.MAX_KEYWORD_CHARS
+
+
+def test_match_trending_ignores_spacing_and_single_chars():
+    hits = trends.match_trending('연말정산 간소화 서비스 개통', ('연말 정산', '장', '노화'))
+    assert hits == ('연말 정산',)

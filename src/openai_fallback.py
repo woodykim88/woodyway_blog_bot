@@ -1,8 +1,8 @@
-"""OpenAI 충전금이 바닥나면 GPTproto 중계 API로 자동 전환하는 클라이언트 감싸개.
+"""GPTproto 중계 API를 먼저 쓰고, 거절되면 OpenAI로 넘어가는 클라이언트 감싸개.
 
-OpenAI 클라이언트 대신 make_openai(env)를 쓰면, 호출이 한도 소진/결제/키 오류로 거절될 때
-같은 요청을 GPTproto(OpenAI 호환)로 다시 보내고, 그 프로세스가 끝날 때까지 계속 GPTproto를 씁니다.
-GPTPROTO_API_KEY가 없으면 예전과 똑같이 동작합니다 (오류가 그대로 올라옵니다).
+make_openai(env)는 GPTPROTO_API_KEY가 있으면 GPTproto(OpenAI 호환)를 기본으로 쓰고, 호출이
+한도 소진/결제/키 오류로 거절될 때 같은 요청을 OpenAI로 다시 보내 그 프로세스가 끝날 때까지 OpenAI를 씁니다.
+GPTPROTO_API_KEY가 없으면 OPENAI_API_KEY만 쓰며 오류가 그대로 올라옵니다 (2026-10-13 기본 순서 변경).
 """
 from __future__ import annotations
 
@@ -82,7 +82,7 @@ class FallbackClient:
             except Exception as exc:
                 if self._fallback is None or not is_exhausted(exc):
                     raise
-                logger.warning('OpenAI 사용 불가(%s: %s) -> GPTproto로 전환합니다.', type(exc).__name__, str(exc)[:120])
+                logger.warning('기본 API 사용 불가(%s: %s) -> 예비 API로 전환합니다.', type(exc).__name__, str(exc)[:120])
                 self._use_fallback = True
                 for handle, position in positions:
                     handle.seek(position)
@@ -97,10 +97,13 @@ def make_openai(env: Mapping[str, str], factory: Callable[..., Any] | None = Non
     fallback_key = (env.get(FALLBACK_KEY_ENV) or '').strip()
     if not primary_key and not fallback_key:
         raise ValueError(f'{PRIMARY_KEY_ENV} 또는 {FALLBACK_KEY_ENV}가 필요합니다.')
-    primary = factory(api_key=primary_key, **client_kwargs) if primary_key else None
+    openai_client = factory(api_key=primary_key, **client_kwargs) if primary_key else None
     base_url = (env.get(FALLBACK_URL_ENV) or DEFAULT_BASE_URL).strip()
-    fallback = factory(api_key=fallback_key, base_url=base_url, **client_kwargs) if fallback_key else None
-    return FallbackClient(primary, fallback)
+    proto_client = factory(api_key=fallback_key, base_url=base_url, **client_kwargs) if fallback_key else None
+    if proto_client is not None:
+        # 2026-10-13 사용자 지시: GPTproto 중계 키를 먼저 쓰고, OpenAI는 GPTproto가 거절할 때의 예비
+        return FallbackClient(proto_client, openai_client)
+    return FallbackClient(openai_client, None)
 
 
 PNG_MAGIC = b'\x89PNG\r\n\x1a\n'

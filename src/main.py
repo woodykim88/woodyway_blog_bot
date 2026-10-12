@@ -119,6 +119,7 @@ class Composed:
     related: tuple[history.HistoryEntry, ...] = ()
     footer_url: str | None = None
     hero_image_url: str | None = None
+    body_images: tuple[tuple[str, str], ...] = ()  # (이미지 주소, 대체 텍스트) 본문 중간 그림
     tool: tools.Tool | None = None
     category: str = topics.TECH
     skill: skills.Skill | None = None
@@ -132,6 +133,7 @@ class Composed:
             short_news=self.short_news,
             related=self.related,
             hero_image_url=self.hero_image_url,
+            body_images=self.body_images,
             footer_url=self.footer_url,
             tool=self.tool,
             skill=self.skill,
@@ -499,10 +501,10 @@ def drop_howto_label(draft: PostDraft, fallback: str) -> PostDraft:
     return draft.model_copy(update={'labels': labels})
 
 
-def headline_of(draft: PostDraft) -> thumbnail.Headline:
-    """대표 이미지에 얹을 썸네일 문구. 왼쪽 위 라벨은 글의 첫 번째 라벨."""
+def headline_of(draft: PostDraft, category: str = topics.TECH) -> thumbnail.Headline:
+    """대표 이미지에 얹을 썸네일 문구. 왼쪽 위 라벨은 글의 첫 번째 라벨, 왼쪽 색은 분야별."""
     label = draft.labels[0] if draft.labels else ''
-    return thumbnail.Headline(draft.thumbnail_text, draft.thumbnail_highlight, label)
+    return thumbnail.Headline(draft.thumbnail_text, draft.thumbnail_highlight, label, thumbnail.tint_for(category))
 
 
 def attach_hero_image(
@@ -523,7 +525,7 @@ def attach_hero_image(
         return composed
     try:
         raw = image.generate_image(backend, model, image_quality, composed.draft.image_prompt)
-        titled = thumbnail.add_headline(raw, headline_of(composed.draft), find_font())
+        titled = thumbnail.add_headline(raw, headline_of(composed.draft, composed.category), find_font())
         data = image.optimize_image(thumbnail.add_mascot(titled, thumbnail.mascot_for(composed.category)))
         if dry_run:
             preview_dir.mkdir(parents=True, exist_ok=True)
@@ -536,6 +538,45 @@ def attach_hero_image(
         return composed
     print(f'[이미지] {len(data) // 1024}KB → {url}')
     return replace(composed, hero_image_url=url)
+
+
+BODY_IMAGE_COUNT = 2  # 본문 중간에 넣는 그림 수 (2026-10-13 사용자 지시: 1~2장)
+
+
+def attach_body_images(
+    composed: Composed,
+    backend: providers.ImageBackend,
+    model: str,
+    image_quality: str,
+    r2: image.R2Config | None,
+    key_date: str,
+    dry_run: bool,
+    make_s3: Callable[[image.R2Config], Any] = image.make_s3_client,
+    preview_dir: Path = PREVIEW_PATH.parent,
+) -> Composed:
+    """본문 중간 그림 1~2장을 만들어 붙입니다. 한 장이 실패해도 나머지와 글 발행은 계속합니다."""
+    if not dry_run and r2 is None:
+        return composed
+    sections = composed.draft.sections
+    prompts = [p.strip() for p in composed.draft.body_image_prompts if p.strip()][:BODY_IMAGE_COUNT]
+    made: list[tuple[str, str]] = []
+    for n, prompt in enumerate(prompts, start=1):
+        alt = sections[min(renderer.body_image_slots(len(sections), len(prompts))[n - 1], len(sections) - 1)].heading
+        try:
+            raw = image.generate_body_image(backend, model, image_quality, prompt)
+            data = image.optimize_image(raw, image.BODY_WIDTH, image.BODY_MAX_BYTES)
+            if dry_run:
+                preview_dir.mkdir(parents=True, exist_ok=True)
+                url = f'body{n}.webp'
+                (preview_dir / url).write_bytes(data)
+            else:
+                url = image.upload_to_r2(make_s3(r2), r2, image.object_key(key_date, composed.draft.title, f'-b{n}'), data)
+        except IMAGE_ERRORS as e:
+            print(f'[본문 이미지 {n} 실패] {e.__class__.__name__}: {e} → 이 그림은 건너뜁니다.')
+            continue
+        print(f'[본문 이미지 {n}] {len(data) // 1024}KB → {url}')
+        made.append((url, alt))
+    return replace(composed, body_images=tuple(made)) if made else composed
 
 
 # --- 발행 ---
@@ -716,6 +757,9 @@ def run(
             else:
                 composed = compose_post(llm, models, now, past, footer_url=footer_url, day=day)
             composed = attach_hero_image(
+                composed, image_backend, ai.image_model, ai.image_quality, r2, target.publish_date, dry_run
+            )
+            composed = attach_body_images(
                 composed, image_backend, ai.image_model, ai.image_quality, r2, target.publish_date, dry_run
             )
             if dry_run:

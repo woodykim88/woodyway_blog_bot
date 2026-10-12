@@ -121,19 +121,21 @@ class Recorder:
 def test_make_openai_builds_both_clients(monkeypatch):
     env = {'OPENAI_API_KEY': 'sk-open', 'GPTPROTO_API_KEY': 'sk-proto'}
     client = fb.make_openai(env, factory=Recorder, timeout=5)
-    assert client._primary.kwargs == {'api_key': 'sk-open', 'timeout': 5}
-    assert client._fallback.kwargs == {'api_key': 'sk-proto', 'base_url': fb.DEFAULT_BASE_URL, 'timeout': 5}
+    # GPTproto가 기본, OpenAI가 예비 (2026-10-13)
+    assert client._primary.kwargs == {'api_key': 'sk-proto', 'base_url': fb.DEFAULT_BASE_URL, 'timeout': 5}
+    assert client._fallback.kwargs == {'api_key': 'sk-open', 'timeout': 5}
 
 
 def test_make_openai_custom_base_url_and_no_fallback():
     env = {'OPENAI_API_KEY': 'sk-open', 'GPTPROTO_API_KEY': 'sk-proto', 'GPTPROTO_BASE_URL': 'https://x.test/v1'}
-    assert fb.make_openai(env, factory=Recorder)._fallback.kwargs['base_url'] == 'https://x.test/v1'
+    assert fb.make_openai(env, factory=Recorder)._primary.kwargs['base_url'] == 'https://x.test/v1'
     assert fb.make_openai({'OPENAI_API_KEY': 'sk-open'}, factory=Recorder)._fallback is None
 
 
 def test_make_openai_without_openai_key_uses_gptproto_only():
     client = fb.make_openai({'GPTPROTO_API_KEY': 'sk-proto'}, factory=Recorder)
-    assert client.using_fallback
+    assert not client.using_fallback
+    assert client._fallback is None
 
 
 def _png_bytes() -> bytes:

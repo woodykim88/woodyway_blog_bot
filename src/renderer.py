@@ -69,22 +69,32 @@ def as_of_note(as_of: str) -> str:
 MONEY_NOTE = '※ 일반적인 정보이며, 세금·대출·혜택은 개인 상황에 따라 다를 수 있어요. 자세한 조건은 원문과 해당 기관에서 확인하세요.'
 
 
+def body_image_slots(section_count: int, image_count: int) -> list[int]:
+    """본문 그림을 붙일 섹션 번호(그 섹션 뒤에 놓는다). 한 장이면 가운데쯤, 두 장이면 처음과 세 번째 섹션 뒤."""
+    last = max(section_count - 1, 0)
+    wanted = [1] if image_count == 1 else [0, 2, 3][:image_count]
+    return [min(i, last) for i in wanted]
+
+
 def render_post(
     draft: PostDraft,
     article: Article,
     short_news: Sequence[ShortNews] = (),
     related: Sequence[HistoryEntry] = (),
     hero_image_url: str | None = None,
+    body_images: Sequence[tuple[str, str]] = (),
     footer_url: str | None = None,
     tool: Tool | None = None,
     skill: Skill | None = None,
     as_of: str = '',
 ) -> str:
     """as_of(기준 시점)가 있으면 생활 가이드 글: 기준 시점 안내를 붙이고 출처를 '공식 안내'로 표시한다."""
+    slots = body_image_slots(len(draft.sections), len(body_images))
+    body_image_at = dict(zip(slots, body_images))
     return _env.get_template('post.html.j2').render(
         draft=draft,
         hook_paragraphs=split_paragraphs(draft.hook),
-        sections=[(s.heading, to_blocks(s.body), s.tip) for s in draft.sections],
+        sections=[(s.heading, to_blocks(s.body), s.tip, body_image_at.get(i)) for i, s in enumerate(draft.sections)],
         as_of_note=as_of_note(as_of),
         source_prefix='공식 안내' if as_of else '원문',
         reference_prefix='함께 본 공식 안내' if as_of else '함께 본 기사',

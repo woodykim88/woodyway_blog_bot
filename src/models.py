@@ -52,6 +52,7 @@ class RankedCandidate:
     score: int
     one_line: str
     related: tuple[Candidate, ...] = ()  # 같은 소식을 다룬 다른 기사 (비교·보충용)
+    trend: tuple[str, ...] = ()  # 제목에 들어 있는 인기 검색 키워드 (같은 점수일 때 우선)
 
 
 @dataclass(frozen=True)
@@ -131,6 +132,10 @@ class PostDraft(BaseModel):
     meta_description: str = Field(description='검색 결과용 설명 150자 이내')
     image_prompt: str = Field(description='대표 이미지용 영문 프롬프트. 주제를 상징하는 강렬한 사물 하나. 글자, 실존 인물, 로고 없이')
     image_alt: str = Field(description='대표 이미지 대체 텍스트 (한국어)')
+    body_image_prompts: list[str] = Field(
+        default_factory=list,
+        description='본문 중간에 넣을 그림용 영문 프롬프트 정확히 2개. 대표 이미지와 다른 사물·장면으로, 각각 서로 다른 섹션 내용을 상징. 글자, 실존 인물, 로고, 사람 얼굴 없이',
+    )
     tool_idea: str = Field(
         default='',
         description='이 소식으로 만들 만한 간단한 계산기·조회기 한 줄 (예: "모두의카드 환급액 계산기"). 제도·요금·기준이 바뀌는 소식일 때만, 아니면 빈 문자열',

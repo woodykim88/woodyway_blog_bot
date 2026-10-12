@@ -14,15 +14,23 @@ from src.providers import ImageBackend
 TARGET_WIDTH = 1200
 MAX_BYTES = 200 * 1024
 WEBP_QUALITIES = (82, 72, 62, 52)
-# 유튜브 썸네일처럼 한눈에 꽂히는 톤. 왼쪽 45%는 비워 두고 그 자리에 썸네일 문구를 얹는다 (src/thumbnail.py)
-STYLE_SUFFIX = (
-    'warm hand-drawn editorial illustration, gouache and colored pencil on textured paper, visible brush '
-    'strokes and pencil grain, soft imperfect organic lines, cozy emotional storybook mood, soft diffused '
-    'natural light, rich but gentle colors, one striking symbolic object as the hero, subject on the '
-    'right side of a landscape frame, dark uncluttered painted negative space on the left 45% of the '
-    'frame, not 3D, not glossy, not photorealistic, no CGI render look, no neon glow, no text, no '
+# 2026-10-13 사용자 지시: 이전 그림(어두운 녹슨 유화 톤)이 칙칙하다 → 밝고 선명한 에디토리얼 일러스트.
+# 사람 손으로 그린 질감(과슈·종이결)은 유지하되 색은 채도 높게, 배경은 밝게. 왼쪽 45%는 비워 두고 그 자리에 썸네일 문구를 얹는다 (src/thumbnail.py)
+_BRIGHT_LOOK = (
+    'bright cheerful modern editorial illustration, flat shapes with subtle gouache texture and soft paper grain, '
+    'hand-drawn feel, vibrant saturated colors (sunny yellow, coral orange, sky blue, mint green, hot pink accents), '
+    'clean high-contrast composition, bright daylight, optimistic playful mood, not dark, not moody, not gloomy, '
+    'not dirty, not rusty, not 3D, not glossy, not photorealistic, no CGI render look, no neon glow, no text, no '
     'letters, no numbers, no logos, no real people, no human faces'
 )
+STYLE_SUFFIX = (
+    f'{_BRIGHT_LOOK}, one bold symbolic object as the hero, subject on the right side of a landscape frame, '
+    'plain flat soft-colored uncluttered negative space on the left 45% of the frame'
+)
+# 본문 중간 그림: 같은 색감, 제목을 얹지 않으므로 가운데 구도
+BODY_STYLE_SUFFIX = f'{_BRIGHT_LOOK}, one clear symbolic scene or object centered in a landscape frame, simple uncluttered background'
+BODY_WIDTH = 1000
+BODY_MAX_BYTES = 120 * 1024
 CACHE_CONTROL = 'public, max-age=31536000, immutable'
 R2_ENV_KEYS = ('R2_ACCOUNT_ID', 'R2_ACCESS_KEY_ID', 'R2_SECRET_ACCESS_KEY', 'R2_BUCKET', 'R2_PUBLIC_BASE_URL')
 
@@ -68,6 +76,15 @@ def with_style(prompt: str) -> str:
     return prompt if STYLE_SUFFIX in prompt else f'{prompt.rstrip(" .,")}, {STYLE_SUFFIX}'
 
 
+def with_body_style(prompt: str) -> str:
+    return prompt if BODY_STYLE_SUFFIX in prompt else f'{prompt.rstrip(" .,")}, {BODY_STYLE_SUFFIX}'
+
+
+def generate_body_image(backend: ImageBackend, model: str, quality: str, prompt: str) -> bytes:
+    """본문 중간에 넣는 보조 그림. 대표 이미지와 같은 색감이지만 제목 자리를 비우지 않는다."""
+    return backend.generate(model, with_body_style(prompt), quality)
+
+
 def generate_image(backend: ImageBackend, model: str, quality: str, prompt: str) -> bytes:
     """선택한 AI 회사의 이미지 모델로 대표 이미지를 만듭니다. 스타일/금지 조건은 항상 붙입니다."""
     return backend.generate(model, with_style(prompt), quality)
@@ -89,11 +106,11 @@ def optimize_image(data: bytes, width: int = TARGET_WIDTH, max_bytes: int = MAX_
     return encoded
 
 
-def object_key(publish_date: str, title: str) -> str:
-    """posts/2026/09/2026-09-26-1a2b3c4d.webp 형식. 한글 제목 대신 해시로 고유성을 확보합니다."""
+def object_key(publish_date: str, title: str, suffix: str = '') -> str:
+    """posts/2026/09/2026-09-26-1a2b3c4d.webp 형식 (본문 그림은 -b1 같은 접미사). 한글 제목 대신 해시로 고유성을 확보합니다."""
     digest = hashlib.sha256(f'{publish_date}:{title}'.encode()).hexdigest()[:8]
     year, month, _ = publish_date.split('-')
-    return f'posts/{year}/{month}/{publish_date}-{digest}.webp'
+    return f'posts/{year}/{month}/{publish_date}-{digest}{suffix}.webp'
 
 
 def make_s3_client(config: R2Config) -> Any:

@@ -37,6 +37,19 @@ def parse_whereispost(page: str) -> tuple[str, ...]:
     return tuple(k for k in keywords if k)[:MAX_PER_SOURCE]
 
 
+MIN_MATCH_CHARS = 2  # 한 글자 키워드는 아무 제목에나 들어가 일치로 치지 않는다
+
+
+def _squash(text: str) -> str:
+    return re.sub(r'\s+', '', text).lower()
+
+
+def match_trending(title: str, trending: tuple[str, ...] | list[str]) -> tuple[str, ...]:
+    """제목에 그대로 들어 있는 인기 키워드. 모델의 재량이 아니라 코드로 먼저 가려 둔다 (띄어쓰기 차이는 무시)."""
+    squashed = _squash(title)
+    return tuple(k for k in trending if len(_squash(k)) >= MIN_MATCH_CHARS and _squash(k) in squashed)
+
+
 def fetch_trending(get: HttpGet) -> tuple[str, ...]:
     """두 출처의 인기 키워드를 순서대로 합칩니다 (중복 제거). 실패한 출처는 건너뜁니다."""
     keywords: list[str] = []

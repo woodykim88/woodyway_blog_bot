@@ -351,3 +351,10 @@ def test_related_posts_prefers_more_shared_labels_and_returns_three():
         past = history.append_entry(past, make_entry(title=title, labels=labels))
     got = [e.title for e in history.related_posts(past, ('AI활용', '업무생산성'))]
     assert got == ['강한', '다른약한', '최신약한']  # 공유 라벨 많은 순, 같으면 최신순, 기본 3개
+
+
+def test_format_candidates_tags_trending_keyword():
+    news = make_candidate(title='연말정산 간소화 개통')
+    text = selector.format_candidates([news], ('연말정산',))
+    assert '[지금 검색됨: 연말정산]' in text
+    assert '[지금 검색됨' not in selector.format_candidates([news], ('장마',))

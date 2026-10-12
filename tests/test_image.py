@@ -191,3 +191,58 @@ def test_attach_hero_image_without_font_still_attaches_image(tmp_path):
         preview_dir=tmp_path, find_font=lambda: None,
     )
     assert result.hero_image_url == 'hero.webp'
+
+
+# --- 본문 중간 그림 (2026-10-13) ---
+
+BODY_DRAFT = make_draft(body_image_prompts=['a calendar with a check mark', 'a piggy bank with coins'])
+BODY_COMPOSED = pipeline.Composed(make_article(), BODY_DRAFT)
+
+
+def test_body_style_is_bright_and_keeps_prompt():
+    styled = image.with_body_style('a calendar')
+    assert styled.startswith('a calendar') and 'not dark' in styled
+    assert image.with_body_style(styled) == styled
+
+
+def test_object_key_suffix_for_body_images():
+    assert image.object_key('2026-09-26', '제목', '-b1').endswith('-b1.webp')
+    assert image.object_key('2026-09-26', '제목') != image.object_key('2026-09-26', '제목', '-b1')
+
+
+def test_attach_body_images_dry_run_places_after_sections(tmp_path):
+    result = pipeline.attach_body_images(
+        BODY_COMPOSED, backend(noisy_webp(300, 200))[0], 'gpt-image-2', 'medium', None, '2026-09-26', True,
+        preview_dir=tmp_path,
+    )
+    assert [u for u, _ in result.body_images] == ['body1.webp', 'body2.webp']
+    assert (tmp_path / 'body1.webp').exists() and (tmp_path / 'body2.webp').exists()
+    html = result.html
+    assert html.count('<img src="body') == 2
+    assert html.index('src="body1.webp"') < html.index('src="body2.webp"')
+    assert BODY_COMPOSED.body_images == ()  # 원본은 그대로
+
+
+def test_attach_body_images_without_prompts_or_r2_does_nothing():
+    plain = pipeline.Composed(make_article(), make_draft())
+    assert pipeline.attach_body_images(plain, backend(b'x')[0], 'm', 'low', None, '2026-09-26', True) is plain
+    assert pipeline.attach_body_images(BODY_COMPOSED, backend(b'x')[0], 'm', 'low', None, '2026-09-26', False) is BODY_COMPOSED
+
+
+def test_attach_body_images_failure_keeps_other_images(tmp_path):
+    good = noisy_webp(300, 200)
+    client = MagicMock()
+    ok = SimpleNamespace(data=[SimpleNamespace(b64_json=base64.b64encode(good).decode())])
+    client.images.generate.side_effect = [OpenAIError('boom'), ok]
+    result = pipeline.attach_body_images(
+        BODY_COMPOSED, providers.OpenAIImageBackend(client), 'gpt-image-2', 'medium', None, '2026-09-26', True,
+        preview_dir=tmp_path,
+    )
+    assert [u for u, _ in result.body_images] == ['body2.webp']
+
+
+def test_body_image_slots():
+    from src import renderer
+    assert renderer.body_image_slots(4, 2) == [0, 2]
+    assert renderer.body_image_slots(3, 1) == [1]
+    assert renderer.body_image_slots(1, 2) == [0, 0]
