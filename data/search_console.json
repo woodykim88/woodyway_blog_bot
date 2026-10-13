@@ -1,25 +1,11 @@
 {
- "updated": "2026-10-11",
+ "updated": "2026-10-13",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-09-13",
-  "2026-10-10"
+  "2026-09-15",
+  "2026-10-12"
  ],
  "daily": [
-  {
-   "date": "2026-09-13",
-   "clicks": 0,
-   "impressions": 0,
-   "ctr": 0,
-   "position": 0
-  },
-  {
-   "date": "2026-09-14",
-   "clicks": 0,
-   "impressions": 0,
-   "ctr": 0,
-   "position": 0
-  },
   {
    "date": "2026-09-15",
    "clicks": 0,
@@ -173,29 +159,57 @@
    "impressions": 3,
    "ctr": 0,
    "position": 28.7
+  },
+  {
+   "date": "2026-10-07",
+   "clicks": 0,
+   "impressions": 3,
+   "ctr": 0,
+   "position": 9.3
+  },
+  {
+   "date": "2026-10-08",
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0,
+   "position": 7
+  },
+  {
+   "date": "2026-10-09",
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0,
+   "position": 28
+  },
+  {
+   "date": "2026-10-10",
+   "clicks": 0,
+   "impressions": 5,
+   "ctr": 0,
+   "position": 19.8
   }
  ],
  "top_queries": [
   {
    "query": "api 플랫폼 선택 가이드 및 추천",
    "clicks": 0,
-   "impressions": 1,
+   "impressions": 2,
    "ctr": 0,
-   "position": 46
+   "position": 47.5
   },
   {
    "query": "api 플랫폼 선택 기준",
    "clicks": 0,
-   "impressions": 4,
+   "impressions": 5,
    "ctr": 0,
-   "position": 54.5
+   "position": 47.4
   },
   {
    "query": "llm api",
    "clicks": 0,
-   "impressions": 1,
+   "impressions": 3,
    "ctr": 0,
-   "position": 29
+   "position": 29.7
   }
  ],
  "top_pages": [
@@ -216,16 +230,16 @@
   {
    "page": "https://tools.woodyway88.com/mortgage-refinance-calculator/",
    "clicks": 0,
-   "impressions": 3,
+   "impressions": 4,
    "ctr": 0,
-   "position": 8.7
+   "position": 7.8
   },
   {
    "page": "https://tools.woodyway88.com/transit-refund-calculator/",
    "clicks": 0,
-   "impressions": 3,
+   "impressions": 7,
    "ctr": 0,
-   "position": 8.3
+   "position": 8.9
   },
   {
    "page": "https://www.woodyway88.com/",
@@ -300,16 +314,23 @@
   {
    "page": "https://www.woodyway88.com/2026/09/llm-api-3.html",
    "clicks": 0,
-   "impressions": 6,
+   "impressions": 10,
    "ctr": 0,
-   "position": 48.8
+   "position": 42.1
+  },
+  {
+   "page": "https://www.woodyway88.com/2026/10/financial-sector-data-breach-korea.html",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 10
   },
   {
    "page": "https://www.woodyway88.com/2026/10/galaxy-watch-recording-app.html",
    "clicks": 0,
-   "impressions": 1,
+   "impressions": 3,
    "ctr": 0,
-   "position": 3
+   "position": 6.7
   },
   {
    "page": "https://www.woodyway88.com/search/label/%EB%B6%80%EB%8F%99%EC%82%B0",
@@ -320,30 +341,6 @@
   }
  ],
  "index": [
-  {
-   "url": "https://www.woodyway88.com/2026/09/24.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-09-27T10:26:26Z"
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/09/16-11.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-09-28T16:02:53Z"
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/09/kt.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-09-28T22:43:49Z"
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/09/9-833.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-09-29T17:08:08Z"
-  },
   {
    "url": "https://www.woodyway88.com/2026/09/blog-post.html",
    "verdict": "PASS",
@@ -491,8 +488,8 @@
   {
    "url": "https://www.woodyway88.com/2026/10/claude-code-slideshow-skill.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
+   "coverage": "Redirect error",
+   "last_crawl": "2026-10-11T02:38:18Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/severance-pay-calculation.html",
@@ -527,26 +524,26 @@
   {
    "url": "https://www.woodyway88.com/2026/10/claude-code-plan-mode-guide.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
+   "coverage": "Redirect error",
+   "last_crawl": "2026-10-11T02:33:46Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/annual-leave-calculation.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
+   "coverage": "Redirect error",
+   "last_crawl": "2026-10-11T02:37:43Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/unemployment-benefit-voluntary.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
+   "coverage": "Redirect error",
+   "last_crawl": "2026-10-11T02:38:18Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/claude-code-subagent-guide.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
+   "coverage": "Redirect error",
+   "last_crawl": "2026-10-11T02:38:18Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/onlyoffice-ai-features-update.html",
@@ -556,15 +553,27 @@
   },
   {
    "url": "https://www.woodyway88.com/2026/10/severance-pay-under-one-year.html",
-   "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
-   "last_crawl": ""
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-12T01:53:32Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/gemini-deep-research-guide.html",
-   "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
-   "last_crawl": ""
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-12T06:02:35Z"
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/spouse-maternity-leave-pay-apply.html",
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-12T01:35:53Z"
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/implicit-lease-renewal-termination.html",
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-12T18:27:15Z"
   }
  ]
 }
