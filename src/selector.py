@@ -7,7 +7,7 @@ from dataclasses import replace
 from datetime import date
 from difflib import SequenceMatcher
 
-from src import kr_calendar, trends
+from src import kr_calendar, topic_hints, trends
 from src.history import HistoryEntry
 from src.llm import LLMClient, load_prompt
 from src.models import Candidate, RankedCandidate, SelectionResult
@@ -38,12 +38,15 @@ def story_key(story: str) -> str:
     return story.replace(' ', '').replace('의', '').lower()
 
 
-def format_candidates(candidates: list[Candidate], trending: Sequence[str] = ()) -> str:
-    """후보 목록. 제목에 인기 검색 키워드가 그대로 든 후보는 [지금 검색됨: 키워드]를 붙여 모델이 놓치지 않게 한다."""
+def format_candidates(candidates: list[Candidate], trending: Sequence[str] = (), hints: Sequence[dict] = ()) -> str:
+    """후보 목록. 제목에 인기 검색 키워드가 그대로 든 후보는 [지금 검색됨: 키워드]를,
+    지식창고 키워드 조사 소재와 맞는 후보는 [조사 추천: 소재]를 붙여 모델이 놓치지 않게 한다."""
     lines = []
     for i, c in enumerate(candidates):
         hit = trends.match_trending(c.title, trending)
         tag = f' [지금 검색됨: {", ".join(hit)}]' if hit else ''
+        picked = topic_hints.matches(f'{c.title} {c.summary}', list(hints))
+        tag += f' [조사 추천: {", ".join(picked)}]' if picked else ''
         lines.append(f'[{i}] ({c.source}){tag} {c.title}\n    {c.summary[:300]}')
     return '\n'.join(lines)
 
@@ -72,6 +75,13 @@ def format_calendar(day: date | None) -> str:
     return text + '\n'
 
 
+def hint_bonus(score: int, candidate: Candidate, hints: Sequence[dict]) -> int:
+    """지식창고 조사 소재면 +1. 이미 기준(MIN_SCORE)을 넘은 후보 사이에서만 순서를 바꾼다 (재료일 뿐, 의무 아님)."""
+    if score < MIN_SCORE or not topic_hints.matches(f'{candidate.title} {candidate.summary}', list(hints)):
+        return score
+    return min(10, score + 1)
+
+
 def rank_candidates(
     llm: LLMClient, model: str, candidates: list[Candidate], theme: str, prompt: str = 'selector',
     recent_titles: Sequence[str] = (), trending: Sequence[str] = (), min_score: int = MIN_SCORE, day: date | None = None,
@@ -79,7 +89,8 @@ def rank_candidates(
     """min_score 이상인 후보를 점수 높은 순으로 반환합니다. 같은 소식은 점수가 가장 높은 하나만 남깁니다."""
     if not candidates:
         return []
-    user_input = f'오늘의 테마: {theme}\n\n{format_calendar(day)}{format_recent(recent_titles)}{format_trending(trending)}후보 목록:\n{format_candidates(candidates, trending)}'
+    hints = topic_hints.load(day) if day else []
+    user_input = f'오늘의 테마: {theme}\n\n{format_calendar(day)}{format_recent(recent_titles)}{format_trending(trending)}후보 목록:\n{format_candidates(candidates, trending, hints)}'
     result = llm.parse(model, load_prompt(prompt), user_input, SelectionResult, stage='select')
 
     best: dict[int, tuple[RankedCandidate, str, bool]] = {}
@@ -91,7 +102,8 @@ def rank_candidates(
         if key and candidates[s.index] not in by_story.setdefault(key, []):
             by_story[key].append(candidates[s.index])
         if s.score >= min_score and s.index not in best:
-            best[s.index] = (RankedCandidate(candidates[s.index], s.score, s.one_line.strip()), key, s.already_covered)
+            score = hint_bonus(s.score, candidates[s.index], hints)
+            best[s.index] = (RankedCandidate(candidates[s.index], score, s.one_line.strip()), key, s.already_covered)
 
     seen: set[str] = set()
     unique = []
