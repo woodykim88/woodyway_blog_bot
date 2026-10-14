@@ -54,8 +54,6 @@ def test_exhaustion_errors_switch_to_gptproto(exc):
 
 
 @pytest.mark.parametrize('exc', [
-    ApiError(429, 'rate_limit_exceeded', 'Rate limit reached, slow down'),
-    ApiError(500),
     ApiError(400, 'invalid_request_error'),
     ValueError('boom'),
 ])
@@ -157,3 +155,67 @@ def test_to_image_format_keeps_matching_bytes():
 
 def test_to_image_format_leaves_non_png_untouched():
     assert fb.to_image_format(b'not-an-image', 'jpeg') == b'not-an-image'
+
+
+@pytest.fixture(autouse=True)
+def _no_sleep(monkeypatch):
+    monkeypatch.setattr(fb, 'RETRY_DELAY', 0)
+
+
+class FlakyLeaf(Leaf):
+    """앞의 failures번은 오류, 그 뒤로는 성공."""
+
+    def __init__(self, name, calls, error, failures):
+        super().__init__(name, calls, error)
+        self._left = failures
+
+    def parse(self, **kwargs):
+        self._calls.append((self._name, kwargs))
+        if self._left > 0:
+            self._left -= 1
+            raise self._error
+        return f'{self._name}-ok'
+
+
+OVERLOAD = ApiError(429, None, 'The model is overloaded. Please try again later.')
+
+
+def test_transient_error_is_retried_on_same_api():
+    calls: list = []
+    primary = FakeClient('primary', calls)
+    primary.responses = FlakyLeaf('primary', calls, OVERLOAD, failures=1)
+    client = fb.FallbackClient(primary, FakeClient('gptproto', calls))
+    assert client.responses.parse(model='m') == 'primary-ok'
+    assert [c[0] for c in calls] == ['primary', 'primary']
+    assert not client.using_fallback
+
+
+@pytest.mark.parametrize('exc', [OVERLOAD, ApiError(500), ApiError(503), ApiError(529)])
+def test_transient_error_twice_falls_back_for_this_call_only(exc):
+    client, calls = make(primary_error=exc)
+    assert client.responses.parse(model='m') == 'gptproto-ok'
+    assert [c[0] for c in calls] == ['primary', 'primary', 'gptproto']
+    assert not client.using_fallback  # 다음 호출은 다시 기본 API부터
+
+
+def test_connection_errors_count_as_transient():
+    class APIConnectionError(Exception):
+        pass
+
+    client, calls = make(primary_error=APIConnectionError('Connection error.'))
+    assert client.responses.parse(model='m') == 'gptproto-ok'
+    assert [c[0] for c in calls] == ['primary', 'primary', 'gptproto']
+
+
+def test_transient_without_fallback_key_raises_original():
+    client, _ = make(primary_error=OVERLOAD, fallback=False)
+    with pytest.raises(ApiError):
+        client.responses.parse(model='m')
+
+
+def test_transient_and_fallback_also_failing_raises_fallback_error():
+    client, calls = make(primary_error=OVERLOAD, fallback_error=ApiError(500))
+    with pytest.raises(ApiError) as info:
+        client.responses.parse(model='m')
+    assert info.value.status_code == 500
+    assert [c[0] for c in calls] == ['primary', 'primary', 'gptproto']

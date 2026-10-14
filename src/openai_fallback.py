@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import io
 import logging
+import time
 from collections.abc import Callable, Mapping
 from typing import Any
 
@@ -32,11 +33,26 @@ def is_exhausted(exc: Exception) -> bool:
     return status == 429 and ('quota' in text or 'billing' in text)
 
 
+TRANSIENT_STATUSES = frozenset({429, 500, 502, 503, 504, 529})
+TRANSIENT_NAMES = frozenset({'APIConnectionError', 'APITimeoutError', 'ReadTimeout', 'ConnectTimeout', 'ConnectError'})
+RETRY_DELAY = 3.0  # 일시적 오류 때 같은 API를 한 번 더 부르기 전 기다리는 초 (중계 과부하는 보통 금방 풀린다)
+
+
+def is_transient(exc: Exception) -> bool:
+    """과부하(429)·서버 오류(5xx)·연결/시간 초과처럼 잠깐 뒤 다시 하면 풀릴 수 있는 오류인지 판단합니다."""
+    return getattr(exc, 'status_code', None) in TRANSIENT_STATUSES or type(exc).__name__ in TRANSIENT_NAMES
+
+
 def _resolve(client: Any, path: tuple[str, ...]) -> Callable[..., Any]:
     target = client
     for name in path:
         target = getattr(target, name)
     return target
+
+
+def _rewind(positions: list[tuple[Any, int]]) -> None:
+    for handle, position in positions:
+        handle.seek(position)
 
 
 def _file_positions(args: tuple, kwargs: dict) -> list[tuple[Any, int]]:
@@ -80,12 +96,26 @@ class FallbackClient:
             try:
                 return _resolve(self._primary, path)(*args, **kwargs)
             except Exception as exc:
-                if self._fallback is None or not is_exhausted(exc):
+                if self._fallback is None:
                     raise
-                logger.warning('기본 API 사용 불가(%s: %s) -> 예비 API로 전환합니다.', type(exc).__name__, str(exc)[:120])
-                self._use_fallback = True
-                for handle, position in positions:
-                    handle.seek(position)
+                if is_exhausted(exc):
+                    logger.warning('기본 API 사용 불가(%s: %s) -> 예비 API로 전환합니다.', type(exc).__name__, str(exc)[:120])
+                    self._use_fallback = True
+                    _rewind(positions)
+                elif is_transient(exc):
+                    # 2026-10-14: GPTproto 과부하(429)로 채널 두 곳이 멈춘 뒤 추가. 한 번 더 시도하고, 그래도 안 되면 이번 호출만 예비로 보낸다.
+                    logger.warning('기본 API 일시 오류(%s: %s) -> 잠시 뒤 재시도합니다.', type(exc).__name__, str(exc)[:120])
+                    _rewind(positions)
+                    time.sleep(RETRY_DELAY)
+                    try:
+                        return _resolve(self._primary, path)(*args, **kwargs)
+                    except Exception as retry_exc:
+                        if not (is_transient(retry_exc) or is_exhausted(retry_exc)):
+                            raise
+                        logger.warning('재시도도 실패(%s) -> 이번 호출만 예비 API로 보냅니다.', type(retry_exc).__name__)
+                        _rewind(positions)
+                else:
+                    raise
         return _resolve(self._fallback, path)(*args, **kwargs)
 
 
