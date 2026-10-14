@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
@@ -58,11 +59,31 @@ def done_slots(history: tuple[HistoryEntry, ...]) -> set[str]:
     return {e.slot for e in history if e.slot}
 
 
+# 제목 비교에서 뺄 흔한 말 (주제가 아니라 형식을 나타내는 말)
+_GENERIC_WORDS = frozenset({
+    '방법', '사용법', '정리', '총정리', '한번에', '이유', '조건', '기준', '확인', '신청', '계산', '무엇', '어떻게',
+    '지금', '오늘', '이번', '올해', '내년', '바뀌는', '달라지는', '것', '때', '수', '있나', '없나', '까지', '부터',
+})
+
+
+def topic_words(text: str) -> set[str]:
+    """제목·검색어의 주제 낱말 (두 글자 이상, 흔한 형식 말 제외)."""
+    return {w.lower() for w in re.findall(r'[0-9A-Za-z가-힣]+', text) if len(w) >= 2 and w not in _GENERIC_WORDS}
+
+
 def related_posts(
-    history: tuple[HistoryEntry, ...], labels: tuple[str, ...], limit: int = 3
+    history: tuple[HistoryEntry, ...], labels: tuple[str, ...], limit: int = 3, topic: str = ''
 ) -> tuple[HistoryEntry, ...]:
-    """라벨을 많이 공유하는 글 순(같으면 최신순)으로 limit개 반환합니다. 내부 링크로 색인·체류를 돕는다."""
-    wanted = set(labels)
-    matches = [(len(set(e.labels) & wanted), e) for e in reversed(history) if e.url]
-    ranked = sorted((m for m in matches if m[0]), key=lambda m: -m[0])  # 안정 정렬: 동점은 최신순 유지
+    """같은 주제 글(제목 낱말이 겹치는 글)을 먼저, 그다음 라벨을 많이 공유하는 글 순(같으면 최신순)으로 limit개.
+    내부 링크로 색인·체류를 돕는다. 2026-10-15: 라벨만 보면 주제와 무관한 최근 글이 붙어 주제 낱말을 우선한다."""
+    wanted, words = set(labels), topic_words(topic)
+    scored = []
+    for e in reversed(history):
+        if not e.url:
+            continue
+        shared = len(topic_words(e.title) & words)
+        score = shared * 2 + len(set(e.labels) & wanted)
+        if score:
+            scored.append((score, e))
+    ranked = sorted(scored, key=lambda m: -m[0])  # 안정 정렬: 동점은 최신순 유지
     return tuple(e for _, e in ranked[:limit])

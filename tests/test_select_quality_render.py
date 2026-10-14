@@ -358,3 +358,22 @@ def test_format_candidates_tags_trending_keyword():
     text = selector.format_candidates([news], ('연말정산',))
     assert '[지금 검색됨: 연말정산]' in text
     assert '[지금 검색됨' not in selector.format_candidates([news], ('장마',))
+
+
+def test_related_posts_prefers_same_topic_over_labels():
+    past = (
+        make_entry(title='실업급여 신청 방법, 자격 한 번에', labels=('지원금·혜택',), url='https://www.woodyway88.com/p0.html'),
+        make_entry(title='청년미래적금 가입 조건', labels=('재테크', '지원금·혜택'), url='https://www.woodyway88.com/p1.html'),
+        make_entry(title='퇴직금 계산 방법', labels=('재테크',), url='https://www.woodyway88.com/p2.html'),
+    )
+    got = [e.title for e in history.related_posts(past, ('재테크', '지원금·혜택'), topic='실업급여 계산 실업급여 하루 상한')]
+    assert got[0] == '실업급여 신청 방법, 자격 한 번에'  # 라벨 1개뿐이어도 같은 주제가 먼저
+
+
+def test_featured_link_only_for_same_topic():
+    draft = make_draft(search_keyword='회의록 AI 요약')
+    same = make_entry(title='회의록 자동 정리 도구 비교', labels=('AI활용',), url='https://www.woodyway88.com/p0.html')
+    other = make_entry(title='연차 발생 기준', labels=('AI활용',), url='https://www.woodyway88.com/p1.html')
+    html = renderer.render_post(draft, make_article(), related=(same, other))
+    assert '함께 보면 좋은 글: <a href="' + same.url in html
+    assert '함께 보면 좋은 글' not in renderer.render_post(draft, make_article(), related=(other,))

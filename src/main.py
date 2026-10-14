@@ -303,7 +303,7 @@ def compose_skill_post(
     return Composed(
         article=article,
         draft=draft,
-        related=history.related_posts(past, tuple(draft.labels)),
+        related=history.related_posts(past, tuple(draft.labels), topic=f'{draft.search_keyword} {draft.title}'),
         footer_url=footer_url,
         category=topics.SKILL,
         skill=skill,
@@ -332,7 +332,7 @@ def compose_guide_post(
             return Composed(
                 article=article,
                 draft=draft,
-                related=history.related_posts(past, tuple(draft.labels)),
+                related=history.related_posts(past, tuple(draft.labels), topic=f'{draft.search_keyword} {draft.title}'),
                 footer_url=footer_url,
                 category=topics.GUIDE,
             )
@@ -395,7 +395,7 @@ def compose_howto_post(
             return Composed(
                 article=article,
                 draft=draft,
-                related=history.related_posts(past, tuple(draft.labels)),
+                related=history.related_posts(past, tuple(draft.labels), topic=f'{draft.search_keyword} {draft.title}'),
                 footer_url=footer_url,
                 tool=howto_tool(guide, draft),
                 category=topics.HOWTO,
@@ -485,7 +485,7 @@ def compose_post(
                     article=article,
                     draft=draft,
                     short_news=tuple(pick_short_news([x for x in every if x.score >= selector.MIN_SCORE], r.candidate.link)),
-                    related=history.related_posts(past, tuple(draft.labels)),
+                    related=history.related_posts(past, tuple(draft.labels), topic=f'{draft.search_keyword} {draft.title}'),
                     footer_url=footer_url,
                     tool=tools.match_tool(draft, tools.load_tools(), category),
                     category=category,

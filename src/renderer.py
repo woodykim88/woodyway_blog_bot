@@ -76,6 +76,12 @@ def body_image_slots(section_count: int, image_count: int) -> list[int]:
     return [min(i, last) for i in wanted]
 
 
+def history_topic_overlap(draft: PostDraft, entry: HistoryEntry) -> bool:
+    """관련 글이 이 글과 같은 주제인가 (제목 주제 낱말이 겹치면). 본문 중간 링크는 이런 글만 건다."""
+    from src.history import topic_words
+    return bool(topic_words(entry.title) & topic_words(f'{draft.search_keyword} {draft.title}'))
+
+
 def render_post(
     draft: PostDraft,
     article: Article,
@@ -106,6 +112,7 @@ def render_post(
         via_url=None if article.candidate.direct else article.candidate.link,
         short_news=short_news,
         related=related,
+        featured=next((e for e in related if history_topic_overlap(draft, e)), None),
         hero_image_url=hero_image_url,
         infographic={kind: (url, alt) for kind, url, alt in infographics},
         footer_url=footer_url,
