@@ -543,7 +543,7 @@ def attach_hero_image(
     return replace(composed, hero_image_url=url)
 
 
-BODY_IMAGE_COUNT = 2  # 본문 중간에 넣는 그림 수 (2026-10-13 사용자 지시: 1~2장)
+BODY_IMAGE_COUNT = 1  # 본문 중간 일러스트 수 (10/13 2장 → 10/15 사용자: 그림이 많아 1장, 인포그래픽 1장과 함께)
 
 
 def attach_body_images(

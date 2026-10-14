@@ -28,6 +28,7 @@ MARKER = 48               # 번호 원·체크박스 크기
 TEXT_X = PAD + MARKER + 26
 TEXT_COLOR = (31, 36, 48)
 MAX_ITEMS = 5
+ENABLED_CARDS = ('summary',)  # 10/15 사용자: 그림은 대표1·일러스트1·인포그래픽1. checklist는 꺼 둠
 MAX_ITEM_CHARS = 110      # 너무 긴 문장은 잘라서 카드가 끝없이 길어지지 않게
 FOOTER = 'woodyway88.com'
 
@@ -80,7 +81,7 @@ def cards_for(draft: PostDraft) -> list[Card]:
         cards.append(Card('summary', '한눈에 보는 핵심', summary))
     if checklist:
         cards.append(Card('checklist', '바로 써먹는 체크리스트', checklist))
-    return cards
+    return [c for c in cards if c.kind in ENABLED_CARDS]
 
 
 def _draw_marker(draw: ImageDraw.ImageDraw, kind: str, index: int, x: int, y: int,

@@ -11,7 +11,8 @@ FONT = thumbnail.find_font()
 needs_font = pytest.mark.skipif(FONT is None, reason='굵은 한글 글꼴 없음')
 
 
-def test_cards_for_builds_summary_and_checklist_with_limits():
+def test_cards_for_builds_summary_and_checklist_with_limits(monkeypatch):
+    monkeypatch.setattr(infographic, 'ENABLED_CARDS', ('summary', 'checklist'))
     draft = make_draft(key_points=['가', '나', '다', '라', '마', '바'], action_items=['오늘 할 일'])
     cards = {c.kind: c for c in infographic.cards_for(draft)}
     assert len(cards['summary'].items) == infographic.MAX_ITEMS
@@ -41,10 +42,10 @@ def test_render_grows_with_items():
 def test_attach_infographics_dry_run_places_both_cards(tmp_path):
     composed = pipeline.Composed(make_article(), make_draft())
     result = pipeline.attach_infographics(composed, None, '2026-10-15', True, preview_dir=tmp_path)
-    assert [k for k, _, _ in result.infographics] == ['summary', 'checklist']
+    assert [k for k, _, _ in result.infographics] == ['summary']  # 10/15: 인포그래픽은 1장
     html = result.html
     assert html.index('info-summary.webp') < html.index('<h2>핵심 내용</h2>')
-    assert html.index('<h2>내일 바로 써먹기</h2>') < html.index('info-checklist.webp')
+    assert 'info-checklist' not in html
     assert (tmp_path / 'info-summary.webp').exists()
 
 

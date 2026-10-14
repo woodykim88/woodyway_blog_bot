@@ -134,7 +134,7 @@ class PostDraft(BaseModel):
     image_alt: str = Field(description='대표 이미지 대체 텍스트 (한국어)')
     body_image_prompts: list[str] = Field(
         default_factory=list,
-        description='본문 중간에 넣을 그림용 영문 프롬프트 정확히 2개. 대표 이미지와 다른 사물·장면으로, 각각 서로 다른 섹션 내용을 상징. 글자, 실존 인물, 로고, 사람 얼굴 없이',
+        description='본문 중간에 넣을 그림용 영문 프롬프트 정확히 1개. 대표 이미지와 다른 사물·장면으로, 본문 가운데 섹션 내용을 상징. 글자, 실존 인물, 로고, 사람 얼굴 없이',
     )
     tool_idea: str = Field(
         default='',

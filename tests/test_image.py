@@ -210,7 +210,8 @@ def test_object_key_suffix_for_body_images():
     assert image.object_key('2026-09-26', '제목') != image.object_key('2026-09-26', '제목', '-b1')
 
 
-def test_attach_body_images_dry_run_places_after_sections(tmp_path):
+def test_attach_body_images_dry_run_places_after_sections(tmp_path, monkeypatch):
+    monkeypatch.setattr(pipeline, 'BODY_IMAGE_COUNT', 2)  # 여러 장 처리 자체를 시험
     result = pipeline.attach_body_images(
         BODY_COMPOSED, backend(noisy_webp(300, 200))[0], 'gpt-image-2', 'medium', None, '2026-09-26', True,
         preview_dir=tmp_path,
@@ -229,7 +230,8 @@ def test_attach_body_images_without_prompts_or_r2_does_nothing():
     assert pipeline.attach_body_images(BODY_COMPOSED, backend(b'x')[0], 'm', 'low', None, '2026-09-26', False) is BODY_COMPOSED
 
 
-def test_attach_body_images_failure_keeps_other_images(tmp_path):
+def test_attach_body_images_failure_keeps_other_images(tmp_path, monkeypatch):
+    monkeypatch.setattr(pipeline, 'BODY_IMAGE_COUNT', 2)  # 여러 장 처리 자체를 시험
     good = noisy_webp(300, 200)
     client = MagicMock()
     ok = SimpleNamespace(data=[SimpleNamespace(b64_json=base64.b64encode(good).decode())])
@@ -246,3 +248,11 @@ def test_body_image_slots():
     assert renderer.body_image_slots(4, 2) == [0, 2]
     assert renderer.body_image_slots(3, 1) == [1]
     assert renderer.body_image_slots(1, 2) == [0, 0]
+
+
+def test_attach_body_images_uses_one_image_by_default(tmp_path):
+    result = pipeline.attach_body_images(
+        BODY_COMPOSED, backend(noisy_webp(300, 200))[0], 'gpt-image-2', 'medium', None, '2026-09-26', True,
+        preview_dir=tmp_path,
+    )
+    assert [u for u, _ in result.body_images] == ['body1.webp']  # 10/15: 일러스트 1장
