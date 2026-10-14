@@ -39,6 +39,7 @@ from src import (
     history,
     howto_topic,
     image,
+    infographic,
     notifier,
     providers,
     quality,
@@ -120,6 +121,7 @@ class Composed:
     footer_url: str | None = None
     hero_image_url: str | None = None
     body_images: tuple[tuple[str, str], ...] = ()  # (이미지 주소, 대체 텍스트) 본문 중간 그림
+    infographics: tuple[tuple[str, str, str], ...] = ()  # (종류 summary|checklist, 이미지 주소, 대체 텍스트)
     tool: tools.Tool | None = None
     category: str = topics.TECH
     skill: skills.Skill | None = None
@@ -134,6 +136,7 @@ class Composed:
             related=self.related,
             hero_image_url=self.hero_image_url,
             body_images=self.body_images,
+            infographics=self.infographics,
             footer_url=self.footer_url,
             tool=self.tool,
             skill=self.skill,
@@ -579,6 +582,43 @@ def attach_body_images(
     return replace(composed, body_images=tuple(made)) if made else composed
 
 
+def attach_infographics(
+    composed: Composed,
+    r2: image.R2Config | None,
+    key_date: str,
+    dry_run: bool,
+    make_s3: Callable[[image.R2Config], Any] = image.make_s3_client,
+    preview_dir: Path = PREVIEW_PATH.parent,
+    find_font: Callable[[], thumbnail.FontSpec | None] = thumbnail.find_font,
+) -> Composed:
+    """글 내용으로 요약·체크리스트 인포그래픽을 그려 붙입니다 (2026-10-15). 실패해도 글은 그대로 발행합니다."""
+    if not dry_run and r2 is None:
+        return composed
+    font = find_font()
+    if font is None:
+        print('[인포그래픽 생략] 굵은 한글 글꼴이 없습니다.')
+        return composed
+    tint = thumbnail.tint_for(composed.category)
+    made: list[tuple[str, str, str]] = []
+    for card in infographic.cards_for(composed.draft):
+        try:
+            data = image.optimize_image(infographic.render(card, composed.draft.search_keyword, tint, font),
+                                        image.BODY_WIDTH, image.BODY_MAX_BYTES)
+            name = f'info-{card.kind}.webp'
+            if dry_run:
+                preview_dir.mkdir(parents=True, exist_ok=True)
+                (preview_dir / name).write_bytes(data)
+                url = name
+            else:
+                url = image.upload_to_r2(make_s3(r2), r2, image.object_key(key_date, composed.draft.title, f'-{card.kind}'), data)
+        except IMAGE_ERRORS as e:
+            print(f'[인포그래픽 {card.kind} 실패] {e.__class__.__name__}: {e} → 건너뜁니다.')
+            continue
+        print(f'[인포그래픽 {card.kind}] {len(data) // 1024}KB → {url}')
+        made.append((card.kind, url, f'{composed.draft.search_keyword} {card.title}'))
+    return replace(composed, infographics=tuple(made)) if made else composed
+
+
 # --- 발행 ---
 
 def make_entry(composed: Composed, result: dict, publish_date: str, slot: str = '') -> history.HistoryEntry:
@@ -762,6 +802,7 @@ def run(
             composed = attach_body_images(
                 composed, image_backend, ai.image_model, ai.image_quality, r2, target.publish_date, dry_run
             )
+            composed = attach_infographics(composed, r2, target.publish_date, dry_run)
             if dry_run:
                 print(f'[미리보기] {write_preview(composed)}')
                 posts.append(runlog.PostRecord(composed.draft.title, 'PREVIEW', target.slot, '', '',

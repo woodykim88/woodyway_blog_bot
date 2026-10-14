@@ -6,6 +6,12 @@
 {% for p in hook_paragraphs %}
 <p style="font-size:1.2em;line-height:1.8;font-weight:500;">{{ p }}</p>
 {% endfor %}
+{% set summary_card = infographic.get('summary') %}
+{% if summary_card %}
+<div style="text-align:center;margin:20px 0;">
+  <img src="{{ summary_card[0] }}" alt="{{ summary_card[1] }}" width="1000" style="max-width:100%;height:auto;border-radius:10px;" loading="lazy">
+</div>
+{% endif %}
 
 <h2>핵심 내용</h2>
 <ul>
@@ -70,6 +76,12 @@
   <li>{{ item }}</li>
 {% endfor %}
 </ol>
+{% set checklist_card = infographic.get('checklist') %}
+{% if checklist_card %}
+<div style="text-align:center;margin:20px 0;">
+  <img src="{{ checklist_card[0] }}" alt="{{ checklist_card[1] }}" width="1000" style="max-width:100%;height:auto;border-radius:10px;" loading="lazy">
+</div>
+{% endif %}
 
 {% if draft.glossary %}
 <h3>용어사전</h3>
