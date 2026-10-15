@@ -1,18 +1,11 @@
 {
- "updated": "2026-10-14",
+ "updated": "2026-10-15",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-09-16",
-  "2026-10-13"
+  "2026-09-17",
+  "2026-10-14"
  ],
  "daily": [
-  {
-   "date": "2026-09-16",
-   "clicks": 0,
-   "impressions": 0,
-   "ctr": 0,
-   "position": 0
-  },
   {
    "date": "2026-09-17",
    "clicks": 0,
@@ -187,15 +180,22 @@
    "impressions": 40,
    "ctr": 0.075,
    "position": 11.3
+  },
+  {
+   "date": "2026-10-12",
+   "clicks": 1,
+   "impressions": 43,
+   "ctr": 0.0233,
+   "position": 6.0
   }
  ],
  "top_queries": [
   {
    "query": "11월 마케팅 캘린더",
    "clicks": 1,
-   "impressions": 8,
-   "ctr": 0.125,
-   "position": 3.4
+   "impressions": 21,
+   "ctr": 0.0476,
+   "position": 3.7
   },
   {
    "query": "11월 일정",
@@ -203,6 +203,13 @@
    "impressions": 1,
    "ctr": 0,
    "position": 10
+  },
+  {
+   "query": "11월일정",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 11
   },
   {
    "query": "2027 마케팅 캘린더",
@@ -214,9 +221,9 @@
   {
    "query": "2027년 마케팅 캘린더",
    "clicks": 0,
-   "impressions": 4,
+   "impressions": 6,
    "ctr": 0,
-   "position": 5.2
+   "position": 5.5
   },
   {
    "query": "api 플랫폼 선택 가이드 및 추천",
@@ -265,16 +272,16 @@
   {
    "page": "https://tools.woodyway88.com/calendar/2026-11/",
    "clicks": 2,
-   "impressions": 15,
-   "ctr": 0.1333,
+   "impressions": 39,
+   "ctr": 0.0513,
    "position": 5.2
   },
   {
    "page": "https://tools.woodyway88.com/calendar/2027-04/",
-   "clicks": 1,
-   "impressions": 7,
-   "ctr": 0.1429,
-   "position": 5.7
+   "clicks": 2,
+   "impressions": 15,
+   "ctr": 0.1333,
+   "position": 5.9
   },
   {
    "page": "https://www.woodyway88.com/2025/03/3_0371942643.html",
@@ -286,9 +293,16 @@
   {
    "page": "https://tools.woodyway88.com/calendar/",
    "clicks": 0,
-   "impressions": 6,
+   "impressions": 7,
    "ctr": 0,
-   "position": 5
+   "position": 5.7
+  },
+  {
+   "page": "https://tools.woodyway88.com/calendar/2027-03/",
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0,
+   "position": 6
   },
   {
    "page": "https://tools.woodyway88.com/highway-toll-reentry/",
@@ -307,16 +321,16 @@
   {
    "page": "https://tools.woodyway88.com/transit-refund-calculator/",
    "clicks": 0,
-   "impressions": 7,
+   "impressions": 9,
    "ctr": 0,
-   "position": 8.9
+   "position": 8
   },
   {
    "page": "https://tools.woodyway88.com/unemployment-benefit-calculator/",
    "clicks": 0,
-   "impressions": 2,
+   "impressions": 4,
    "ctr": 0,
-   "position": 3
+   "position": 5
   },
   {
    "page": "https://www.woodyway88.com/",
@@ -394,34 +408,9 @@
    "impressions": 11,
    "ctr": 0,
    "position": 42.5
-  },
-  {
-   "page": "https://www.woodyway88.com/2026/10/ai-skills-salary-premium.html",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0,
-   "position": 11
   }
  ],
  "index": [
-  {
-   "url": "https://www.woodyway88.com/2026/09/underground-utility-check-korea.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-01T15:27:17Z"
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/09/claude-code-solana-dev-skill.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-01T15:16:02Z"
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/09/ai-marketing-use-cases.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-05T16:42:43Z"
-  },
   {
    "url": "https://www.woodyway88.com/2026/10/us-pce-inflation-rate.html",
    "verdict": "PASS",
@@ -586,9 +575,9 @@
   },
   {
    "url": "https://www.woodyway88.com/2026/10/unemployment-benefit-voluntary.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Redirect error",
-   "last_crawl": "2026-10-11T02:38:18Z"
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-14T03:43:47Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/claude-code-subagent-guide.html",
@@ -599,8 +588,8 @@
   {
    "url": "https://www.woodyway88.com/2026/10/onlyoffice-ai-features-update.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
+   "coverage": "Redirect error",
+   "last_crawl": "2026-10-15T00:15:13Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/severance-pay-under-one-year.html",
@@ -629,8 +618,14 @@
   {
    "url": "https://www.woodyway88.com/2026/10/weekly-holiday-pay-calculation.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
+   "coverage": "Redirect error",
+   "last_crawl": "2026-10-15T00:13:33Z"
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/inheritance-renunciation-deadline-passed.html",
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-14T18:34:27Z"
   }
  ]
 }
