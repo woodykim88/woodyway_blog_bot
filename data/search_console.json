@@ -1,18 +1,11 @@
 {
- "updated": "2026-10-15",
+ "updated": "2026-10-16",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-09-17",
-  "2026-10-14"
+  "2026-09-18",
+  "2026-10-15"
  ],
  "daily": [
-  {
-   "date": "2026-09-17",
-   "clicks": 0,
-   "impressions": 0,
-   "ctr": 0,
-   "position": 0
-  },
   {
    "date": "2026-09-18",
    "clicks": 1,
@@ -187,15 +180,22 @@
    "impressions": 43,
    "ctr": 0.0233,
    "position": 6.0
+  },
+  {
+   "date": "2026-10-13",
+   "clicks": 0,
+   "impressions": 19,
+   "ctr": 0,
+   "position": 6.9
   }
  ],
  "top_queries": [
   {
    "query": "11월 마케팅 캘린더",
    "clicks": 1,
-   "impressions": 21,
-   "ctr": 0.0476,
-   "position": 3.7
+   "impressions": 24,
+   "ctr": 0.0417,
+   "position": 3.9
   },
   {
    "query": "11월 일정",
@@ -212,6 +212,13 @@
    "position": 11
   },
   {
+   "query": "2026 11월",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 10
+  },
+  {
    "query": "2027 마케팅 캘린더",
    "clicks": 0,
    "impressions": 2,
@@ -221,9 +228,9 @@
   {
    "query": "2027년 마케팅 캘린더",
    "clicks": 0,
-   "impressions": 6,
+   "impressions": 7,
    "ctr": 0,
-   "position": 5.5
+   "position": 5.3
   },
   {
    "query": "api 플랫폼 선택 가이드 및 추천",
@@ -235,9 +242,9 @@
   {
    "query": "api 플랫폼 선택 기준",
    "clicks": 0,
-   "impressions": 5,
+   "impressions": 6,
    "ctr": 0,
-   "position": 47.4
+   "position": 42.3
   },
   {
    "query": "llm api",
@@ -272,15 +279,15 @@
   {
    "page": "https://tools.woodyway88.com/calendar/2026-11/",
    "clicks": 2,
-   "impressions": 39,
-   "ctr": 0.0513,
-   "position": 5.2
+   "impressions": 46,
+   "ctr": 0.0435,
+   "position": 5.3
   },
   {
    "page": "https://tools.woodyway88.com/calendar/2027-04/",
    "clicks": 2,
-   "impressions": 15,
-   "ctr": 0.1333,
+   "impressions": 19,
+   "ctr": 0.1053,
    "position": 5.9
   },
   {
@@ -293,9 +300,9 @@
   {
    "page": "https://tools.woodyway88.com/calendar/",
    "clicks": 0,
-   "impressions": 7,
+   "impressions": 8,
    "ctr": 0,
-   "position": 5.7
+   "position": 5.5
   },
   {
    "page": "https://tools.woodyway88.com/calendar/2027-03/",
@@ -328,9 +335,9 @@
   {
    "page": "https://tools.woodyway88.com/unemployment-benefit-calculator/",
    "clicks": 0,
-   "impressions": 4,
+   "impressions": 5,
    "ctr": 0,
-   "position": 5
+   "position": 5.6
   },
   {
    "page": "https://www.woodyway88.com/",
@@ -405,30 +412,12 @@
   {
    "page": "https://www.woodyway88.com/2026/09/llm-api-3.html",
    "clicks": 0,
-   "impressions": 11,
+   "impressions": 12,
    "ctr": 0,
-   "position": 42.5
+   "position": 40.3
   }
  ],
  "index": [
-  {
-   "url": "https://www.woodyway88.com/2026/10/us-pce-inflation-rate.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-06T20:59:36Z"
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/10/claude-code-product-launch-video-skill.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/10/gemini-4-argon-output-limit.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-04T19:32:09Z"
-  },
   {
    "url": "https://www.woodyway88.com/2026/10/openai-ftc-ai-investigation.html",
    "verdict": "PASS",
@@ -626,6 +615,12 @@
    "verdict": "PASS",
    "coverage": "Submitted and indexed",
    "last_crawl": "2026-10-14T18:34:27Z"
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/drivers-license-penalty-points.html",
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-15T20:55:35Z"
   }
  ]
 }
