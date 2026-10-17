@@ -1,6 +1,6 @@
-## Search Console (2026-09-18 ~ 2026-10-15, 갱신 2026-10-16)
-- 검색 클릭 5회 · 노출 138회 (최근 28일)
-- 최근 14일 글 색인: 29/34편
+## Search Console (2026-09-19 ~ 2026-10-16, 갱신 2026-10-17)
+- 검색 클릭 4회 · 노출 140회 (최근 28일)
+- 최근 14일 글 색인: 28/32편
 
 ### 상위 검색어
 - 11월 마케팅 캘린더: 클릭 1 · 노출 24 · 평균 3.9위
@@ -19,4 +19,3 @@
 - https://www.woodyway88.com/2026/10/claude-code-plan-mode-guide.html — Redirect error
 - https://www.woodyway88.com/2026/10/claude-code-subagent-guide.html — Redirect error
 - https://www.woodyway88.com/2026/10/onlyoffice-ai-features-update.html — Redirect error
-- https://www.woodyway88.com/2026/10/weekly-holiday-pay-calculation.html — Redirect error

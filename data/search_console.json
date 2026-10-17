@@ -1,18 +1,11 @@
 {
- "updated": "2026-10-16",
+ "updated": "2026-10-17",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-09-18",
-  "2026-10-15"
+  "2026-09-19",
+  "2026-10-16"
  ],
  "daily": [
-  {
-   "date": "2026-09-18",
-   "clicks": 1,
-   "impressions": 1,
-   "ctr": 1,
-   "position": 4
-  },
   {
    "date": "2026-09-19",
    "clicks": 0,
@@ -187,6 +180,13 @@
    "impressions": 19,
    "ctr": 0,
    "position": 6.9
+  },
+  {
+   "date": "2026-10-14",
+   "clicks": 0,
+   "impressions": 3,
+   "ctr": 0,
+   "position": 9.3
   }
  ],
  "top_queries": [
@@ -289,13 +289,6 @@
    "impressions": 19,
    "ctr": 0.1053,
    "position": 5.9
-  },
-  {
-   "page": "https://www.woodyway88.com/2025/03/3_0371942643.html",
-   "clicks": 1,
-   "impressions": 1,
-   "ctr": 1,
-   "position": 4
   },
   {
    "page": "https://tools.woodyway88.com/calendar/",
@@ -405,9 +398,9 @@
   {
    "page": "https://www.woodyway88.com/2026/09/a16z-3.html",
    "clicks": 0,
-   "impressions": 4,
+   "impressions": 5,
    "ctr": 0,
-   "position": 15
+   "position": 13.8
   },
   {
    "page": "https://www.woodyway88.com/2026/09/llm-api-3.html",
@@ -415,27 +408,16 @@
    "impressions": 12,
    "ctr": 0,
    "position": 40.3
+  },
+  {
+   "page": "https://www.woodyway88.com/2026/10/ai-skills-salary-premium.html",
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0,
+   "position": 9
   }
  ],
  "index": [
-  {
-   "url": "https://www.woodyway88.com/2026/10/openai-ftc-ai-investigation.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-07T12:37:11Z"
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/10/galaxy-watch-recording-app.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-04T19:29:41Z"
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/10/ai-skills-salary-premium.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-06T11:34:22Z"
-  },
   {
    "url": "https://www.woodyway88.com/2026/10/personal-data-leak-investigation.html",
    "verdict": "PASS",
@@ -518,7 +500,7 @@
    "url": "https://www.woodyway88.com/2026/10/claude-code-slideshow-skill.html",
    "verdict": "NEUTRAL",
    "coverage": "Redirect error",
-   "last_crawl": "2026-10-11T02:38:18Z"
+   "last_crawl": "2026-10-17T00:18:24Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/severance-pay-calculation.html",
@@ -554,7 +536,7 @@
    "url": "https://www.woodyway88.com/2026/10/claude-code-plan-mode-guide.html",
    "verdict": "NEUTRAL",
    "coverage": "Redirect error",
-   "last_crawl": "2026-10-11T02:33:46Z"
+   "last_crawl": "2026-10-17T00:18:24Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/annual-leave-calculation.html",
@@ -572,7 +554,7 @@
    "url": "https://www.woodyway88.com/2026/10/claude-code-subagent-guide.html",
    "verdict": "NEUTRAL",
    "coverage": "Redirect error",
-   "last_crawl": "2026-10-11T02:38:18Z"
+   "last_crawl": "2026-10-17T00:12:24Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/onlyoffice-ai-features-update.html",
@@ -606,9 +588,9 @@
   },
   {
    "url": "https://www.woodyway88.com/2026/10/weekly-holiday-pay-calculation.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Redirect error",
-   "last_crawl": "2026-10-15T00:13:33Z"
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-16T13:55:23Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/inheritance-renunciation-deadline-passed.html",
@@ -621,6 +603,12 @@
    "verdict": "PASS",
    "coverage": "Submitted and indexed",
    "last_crawl": "2026-10-15T20:55:35Z"
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/moving-company-damage-compensation.html",
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-16T16:57:37Z"
   }
  ]
 }
