@@ -398,6 +398,8 @@ def compose_howto_post(
                               kind_rules=howto_kind_rules(guide.kind))
         if draft is not None:
             labels = [topics.HOWTO_LABEL, guide.area] if guide.area != topics.HOWTO_LABEL else [topics.HOWTO_LABEL]
+            if guide.kind in howto_topic.KIND_LABELS:
+                labels = [*labels, howto_topic.KIND_LABELS[guide.kind]]
             draft = draft.model_copy(update={'labels': labels, 'url_slug': guide.slug or draft.url_slug})
             return Composed(
                 article=article,

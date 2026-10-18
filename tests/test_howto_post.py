@@ -373,3 +373,11 @@ def test_history_entry_records_calculator_id_for_tools_site():
     assert pipeline.make_entry(pipeline.Composed(make_article(), make_draft()), {'id': '2', 'status': 'LIVE'}, '2026-10-19').tool == ''
     real = Path(__file__).resolve().parent.parent / 'data' / 'history.json'
     assert all('tool' in row for row in json.loads(real.read_text(encoding='utf-8')))
+
+
+def test_new_kind_posts_get_kind_label_for_blog_menu(monkeypatch):
+    monkeypatch.setattr(howto_topic, 'load_guides', lambda: (guide('2027 최저임금 월급', 1, kind=howto_topic.CHANGE, area='생활경제'),))
+    llm, _ = fake_llm({'PostDraft': [howto_draft(title='2027 최저임금 월급, 주 40시간이면 223만원', meta_description='2027 최저임금 월급은 223만원')],
+                       'FactCheck': [OK]})
+    composed = pipeline.compose_howto_post(llm, MODELS, THU, (), get=lambda url: PAGE, is_alive=ALIVE)
+    assert composed.draft.labels == [topics.HOWTO_LABEL, '생활경제', '바뀌는제도']

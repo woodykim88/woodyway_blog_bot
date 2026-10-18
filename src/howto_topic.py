@@ -38,6 +38,8 @@ SCHEDULE = 'schedule'  # 일정: 신청·마감·연휴 날짜
 CHANGE = 'change'      # 숫자 변경: 확정된 금액·요율·기준 변경과 내 돈에 미치는 영향
 GUIDE = 'guide'        # 기존 안내형 ("○○ 신청 방법")
 KINDS = (CASE, SCHEDULE, CHANGE, GUIDE)
+# 블로그 상단 메뉴가 이 라벨 목록 페이지로 연결된다 (2026-10-18). 기존 안내형은 종류 라벨이 없다
+KIND_LABELS = {CASE: '계산사례', SCHEDULE: '일정', CHANGE: '바뀌는제도'}
 # 월~일. 계산 사례 3 · 일정 2 · 숫자 변경 2 (2026-10-18 사용자 승인)
 KIND_BY_WEEKDAY = (CASE, SCHEDULE, CASE, CHANGE, CASE, SCHEDULE, CHANGE)
 
