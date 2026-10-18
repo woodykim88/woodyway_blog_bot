@@ -641,6 +641,7 @@ def make_entry(composed: Composed, result: dict, publish_date: str, slot: str = 
         labels=tuple(composed.draft.labels),
         status=result.get('status', ''),
         slot=slot,
+        tool=tools.tool_id(composed.tool) if composed.tool else '',
     )
 
 

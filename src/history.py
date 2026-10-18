@@ -21,6 +21,7 @@ class HistoryEntry:
     labels: tuple[str, ...]
     status: str
     slot: str = ''  # 예약 슬롯 "YYYY-MM-DDTHH:MM" 또는 수동 실행 키 "manual-..."
+    tool: str = ''  # 본문에 붙인 계산기 id (계산기 사이트가 이 기록을 읽어 관련 글을 자동으로 단다, 2026-10-18)
 
 
 def load_history(path: Path | None = None) -> tuple[HistoryEntry, ...]:

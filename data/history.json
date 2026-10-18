@@ -11,7 +11,8 @@
       "커리어"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-09-26T20:00"
+    "slot": "2026-09-26T20:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-09-25",
@@ -25,7 +26,8 @@
       "AI활용"
     ],
     "status": "LIVE",
-    "slot": "manual-now-20260925-230320"
+    "slot": "manual-now-20260925-230320",
+    "tool": ""
   },
   {
     "publish_date": "2026-09-25",
@@ -39,7 +41,8 @@
       "커리어"
     ],
     "status": "LIVE",
-    "slot": "manual-draft-20260925-230919"
+    "slot": "manual-draft-20260925-230919",
+    "tool": ""
   },
   {
     "publish_date": "2026-09-26",
@@ -53,7 +56,8 @@
       "IT트렌드"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-09-26T08:00"
+    "slot": "2026-09-26T08:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-09-27",
@@ -67,7 +71,8 @@
       "업무생산성"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-09-27T08:00"
+    "slot": "2026-09-27T08:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-09-27",
@@ -81,7 +86,8 @@
       "생활경제"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-09-27T20:00"
+    "slot": "2026-09-27T20:00",
+    "tool": "mortgage-refinance-calculator"
   },
   {
     "publish_date": "2026-09-28",
@@ -95,7 +101,8 @@
       "업무생산성"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-09-28T08:00"
+    "slot": "2026-09-28T08:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-09-28",
@@ -109,7 +116,8 @@
       "절약꿀팁"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-09-28T20:00"
+    "slot": "2026-09-28T20:00",
+    "tool": "transit-refund-calculator"
   },
   {
     "publish_date": "2026-09-29",
@@ -123,7 +131,8 @@
       "생활경제"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-09-29T08:00"
+    "slot": "2026-09-29T08:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-09-29",
@@ -137,7 +146,8 @@
       "절약꿀팁"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-09-29T20:00"
+    "slot": "2026-09-29T20:00",
+    "tool": "highway-toll-reentry"
   },
   {
     "publish_date": "2026-09-30",
@@ -150,7 +160,8 @@
       "부동산"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-09-30T08:00"
+    "slot": "2026-09-30T08:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-09-30",
@@ -164,7 +175,8 @@
       "AI활용"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-09-30T12:30"
+    "slot": "2026-09-30T12:30",
+    "tool": ""
   },
   {
     "publish_date": "2026-09-30",
@@ -178,7 +190,8 @@
       "업무생산성"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-09-30T20:00"
+    "slot": "2026-09-30T20:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-01",
@@ -192,7 +205,8 @@
       "생활경제"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-01T08:00"
+    "slot": "2026-10-01T08:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-01",
@@ -206,7 +220,8 @@
       "AI활용"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-01T12:30"
+    "slot": "2026-10-01T12:30",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-01",
@@ -220,7 +235,8 @@
       "업무생산성"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-01T20:00"
+    "slot": "2026-10-01T20:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-02",
@@ -234,7 +250,8 @@
       "커리어"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-02T08:00"
+    "slot": "2026-10-02T08:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-02",
@@ -248,7 +265,8 @@
       "커리어"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-02T12:30"
+    "slot": "2026-10-02T12:30",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-02",
@@ -262,7 +280,8 @@
       "AI활용"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-02T20:00"
+    "slot": "2026-10-02T20:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-03",
@@ -276,7 +295,8 @@
       "업무생산성"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-03T08:00"
+    "slot": "2026-10-03T08:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-03",
@@ -290,7 +310,8 @@
       "IT트렌드"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-03T12:30"
+    "slot": "2026-10-03T12:30",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-03",
@@ -304,7 +325,8 @@
       "생활경제"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-03T20:00"
+    "slot": "2026-10-03T20:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-04",
@@ -318,7 +340,8 @@
       "절약꿀팁"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-04T08:00"
+    "slot": "2026-10-04T08:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-04",
@@ -332,7 +355,8 @@
       "AI활용"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-04T12:30"
+    "slot": "2026-10-04T12:30",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-04",
@@ -346,7 +370,8 @@
       "재테크"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-04T20:00"
+    "slot": "2026-10-04T20:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-05",
@@ -360,7 +385,8 @@
       "IT트렌드"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-05T08:00"
+    "slot": "2026-10-05T08:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-05",
@@ -374,7 +400,8 @@
       "업무생산성"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-05T12:30"
+    "slot": "2026-10-05T12:30",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-05",
@@ -388,7 +415,8 @@
       "지원금·혜택"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-05T20:00"
+    "slot": "2026-10-05T20:00",
+    "tool": "unemployment-benefit-calculator"
   },
   {
     "publish_date": "2026-10-06",
@@ -402,7 +430,8 @@
       "생활경제"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-06T08:00"
+    "slot": "2026-10-06T08:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-06",
@@ -416,7 +445,8 @@
       "AI활용"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-06T12:30"
+    "slot": "2026-10-06T12:30",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-06",
@@ -430,7 +460,8 @@
       "지원금·혜택"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-06T20:00"
+    "slot": "2026-10-06T20:00",
+    "tool": "unemployment-benefit-calculator"
   },
   {
     "publish_date": "2026-10-07",
@@ -444,7 +475,8 @@
       "업무생산성"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-07T08:00"
+    "slot": "2026-10-07T08:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-07",
@@ -458,7 +490,8 @@
       "AI활용"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-07T12:30"
+    "slot": "2026-10-07T12:30",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-07",
@@ -472,7 +505,8 @@
       "생활경제"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-07T20:00"
+    "slot": "2026-10-07T20:00",
+    "tool": "severance-pay-calculator"
   },
   {
     "publish_date": "2026-10-08",
@@ -486,7 +520,8 @@
       "업무생산성"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-08T08:00"
+    "slot": "2026-10-08T08:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-08",
@@ -500,7 +535,8 @@
       "AI활용"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-08T12:30"
+    "slot": "2026-10-08T12:30",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-08",
@@ -514,7 +550,8 @@
       "지원금·혜택"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-08T20:00"
+    "slot": "2026-10-08T20:00",
+    "tool": "unemployment-benefit-calculator"
   },
   {
     "publish_date": "2026-10-09",
@@ -528,7 +565,8 @@
       "AI활용"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-09T08:00"
+    "slot": "2026-10-09T08:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-09",
@@ -542,7 +580,8 @@
       "업무생산성"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-09T12:30"
+    "slot": "2026-10-09T12:30",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-09",
@@ -556,7 +595,8 @@
       "생활경제"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-09T20:00"
+    "slot": "2026-10-09T20:00",
+    "tool": "annual-leave-calculator"
   },
   {
     "publish_date": "2026-10-10",
@@ -570,7 +610,8 @@
       "생활경제"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-10T08:00"
+    "slot": "2026-10-10T08:00",
+    "tool": "unemployment-benefit-calculator"
   },
   {
     "publish_date": "2026-10-10",
@@ -584,7 +625,8 @@
       "업무생산성"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-10T12:30"
+    "slot": "2026-10-10T12:30",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-10",
@@ -598,7 +640,8 @@
       "업무생산성"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-10T20:00"
+    "slot": "2026-10-10T20:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-11",
@@ -612,7 +655,8 @@
       "생활경제"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-11T08:00"
+    "slot": "2026-10-11T08:00",
+    "tool": "severance-pay-calculator"
   },
   {
     "publish_date": "2026-10-11",
@@ -626,7 +670,8 @@
       "업무생산성"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-11T12:30"
+    "slot": "2026-10-11T12:30",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-11",
@@ -640,7 +685,8 @@
       "지원금·혜택"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-11T20:00"
+    "slot": "2026-10-11T20:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-12",
@@ -654,7 +700,8 @@
       "부동산"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-12T20:00"
+    "slot": "2026-10-12T20:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-13",
@@ -668,7 +715,8 @@
       "생활경제"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-13T20:00"
+    "slot": "2026-10-13T20:00",
+    "tool": "minimum-wage-calculator"
   },
   {
     "publish_date": "2026-10-14",
@@ -682,7 +730,8 @@
       "생활경제"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-14T20:00"
+    "slot": "2026-10-14T20:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-15",
@@ -696,7 +745,8 @@
       "생활경제"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-15T20:00"
+    "slot": "2026-10-15T20:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-16",
@@ -710,7 +760,8 @@
       "생활경제"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-16T20:00"
+    "slot": "2026-10-16T20:00",
+    "tool": ""
   },
   {
     "publish_date": "2026-10-17",
@@ -724,6 +775,7 @@
       "생활경제"
     ],
     "status": "SCHEDULED",
-    "slot": "2026-10-17T20:00"
+    "slot": "2026-10-17T20:00",
+    "tool": "unemployment-benefit-calculator"
   }
 ]

@@ -1,5 +1,6 @@
 """2026-10-03: 20:00 칸 검색형 생활 가이드 글 (글감 고르기, 칸 배정, 원고 입력, 계산기, 렌더링)."""
 import json
+from pathlib import Path
 import re
 from datetime import datetime
 
@@ -361,3 +362,14 @@ def test_guide_is_used_when_blogger_truncated_the_post_slug():
     second = howto_topic.HowtoGuide('배우자 출산휴가 급여 신청', '생활경제', 'spouse-maternity-leave-pay-apply', (shared, other))
     past = (make_entry(source_url=shared.url, url='https://www.woodyway88.com/2026/10/unemployment-benefit-voluntary.html'),)
     assert howto_topic.order_guides([first, second], past, OCT) == [second, first]
+
+
+def test_history_entry_records_calculator_id_for_tools_site():
+    """2026-10-18: 계산기 사이트가 발행 기록의 tool로 관련 글을 자동으로 단다."""
+    tool = tools.find_tool(tools.load_tools(), 'severance-pay-calculator')
+    composed = pipeline.Composed(make_article(), make_draft(), tool=tool)
+    entry = pipeline.make_entry(composed, {'id': '1', 'url': 'https://www.woodyway88.com/a.html', 'status': 'LIVE'}, '2026-10-19')
+    assert entry.tool == 'severance-pay-calculator'
+    assert pipeline.make_entry(pipeline.Composed(make_article(), make_draft()), {'id': '2', 'status': 'LIVE'}, '2026-10-19').tool == ''
+    real = Path(__file__).resolve().parent.parent / 'data' / 'history.json'
+    assert all('tool' in row for row in json.loads(real.read_text(encoding='utf-8')))
