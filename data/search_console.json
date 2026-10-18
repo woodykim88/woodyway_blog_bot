@@ -1,18 +1,11 @@
 {
- "updated": "2026-10-17",
+ "updated": "2026-10-18",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-09-19",
-  "2026-10-16"
+  "2026-09-20",
+  "2026-10-17"
  ],
  "daily": [
-  {
-   "date": "2026-09-19",
-   "clicks": 0,
-   "impressions": 0,
-   "ctr": 0,
-   "position": 0
-  },
   {
    "date": "2026-09-20",
    "clicks": 0,
@@ -187,6 +180,13 @@
    "impressions": 3,
    "ctr": 0,
    "position": 9.3
+  },
+  {
+   "date": "2026-10-15",
+   "clicks": 0,
+   "impressions": 3,
+   "ctr": 0,
+   "position": 5.3
   }
  ],
  "top_queries": [
@@ -410,32 +410,14 @@
    "position": 40.3
   },
   {
-   "page": "https://www.woodyway88.com/2026/10/ai-skills-salary-premium.html",
+   "page": "https://www.woodyway88.com/2026/10/ai-hacking-career-skills.html",
    "clicks": 0,
-   "impressions": 2,
+   "impressions": 1,
    "ctr": 0,
-   "position": 9
+   "position": 3
   }
  ],
  "index": [
-  {
-   "url": "https://www.woodyway88.com/2026/10/personal-data-leak-investigation.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-04T21:04:27Z"
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/10/chatgpt-plugin-login-expansion.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-04T18:42:54Z"
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/10/brokerage-system-outage-korea.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-04T19:09:51Z"
-  },
   {
    "url": "https://www.woodyway88.com/2026/10/financial-sector-data-breach-korea.html",
    "verdict": "PASS",
@@ -609,6 +591,12 @@
    "verdict": "PASS",
    "coverage": "Submitted and indexed",
    "last_crawl": "2026-10-16T16:57:37Z"
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/unemployment-benefit-job-search.html",
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-17T18:52:07Z"
   }
  ]
 }
