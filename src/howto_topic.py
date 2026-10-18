@@ -9,6 +9,12 @@
   새 글감은 자동완성에 뜨는지, 공식 안내 본문에 답이 있는지 확인하고 넣는다.
 - 고르는 순서: 제철(또는 사계절) 글감 중 안 쓴 것 → 제철 글감 중 가장 오래전에 쓴 것 → 제철 아닌 글감 (발행 건너뛰기 금지)
 - 공식 페이지를 하나도 못 읽으면 그 글감은 건너뛴다. 첫 번째로 읽힌 페이지가 원문, 나머지는 함께 본 공식 안내.
+- 2026-10-18 방향 전환(애드센스 실측: 실제 방문 하루 ~2회, 검색 클릭은 계산기 사이트 캘린더뿐): 글감에 종류(kind)를 둔다.
+  계산 사례(case: 실제 숫자로 끝까지 계산) · 일정(schedule: 마감·신청·연휴) · 숫자 변경(change: 2027 최저임금처럼
+  내 돈 계산이 바뀌는 확정 소식) · 기존 안내(guide). 요일마다 정해 둔 종류의 안 쓴 글감을 먼저 쓴다 (KIND_BY_WEEKDAY).
+- 계산 예시(examples): 원고 모델이 직접 계산하면 검수가 "원문에 없는 금액"으로 걸러 숫자 없는 글이 나왔다 (2026-10-18 미리보기).
+  그래서 예시 금액은 계산기와 같은 공식(정보마스터-계산기 lib)으로 미리 계산해 글감에 넣고, 원문 뒤에 붙여
+  원고·검수 모두 근거로 쓴다.
 """
 from __future__ import annotations
 
@@ -27,6 +33,14 @@ GUIDES_PATH = Path(__file__).resolve().parent.parent / 'data' / 'howto_guides.js
 MAX_SOURCES = 3
 MAX_EXTRA_SOURCE_CHARS = 4000  # 함께 본 공식 안내는 앞부분만 (원고 모델 입력 비용 억제)
 
+CASE = 'case'          # 계산 사례: "월급 300만 원 3년 근무 퇴직금"처럼 숫자를 넣어 끝까지 계산
+SCHEDULE = 'schedule'  # 일정: 신청·마감·연휴 날짜
+CHANGE = 'change'      # 숫자 변경: 확정된 금액·요율·기준 변경과 내 돈에 미치는 영향
+GUIDE = 'guide'        # 기존 안내형 ("○○ 신청 방법")
+KINDS = (CASE, SCHEDULE, CHANGE, GUIDE)
+# 월~일. 계산 사례 3 · 일정 2 · 숫자 변경 2 (2026-10-18 사용자 승인)
+KIND_BY_WEEKDAY = (CASE, SCHEDULE, CASE, CHANGE, CASE, SCHEDULE, CHANGE)
+
 
 @dataclass(frozen=True)
 class Source:
@@ -42,6 +56,8 @@ class HowtoGuide:
     sources: tuple[Source, ...]   # 공식 안내 1~3곳
     months: tuple[int, ...] = ()  # 검색이 몰리는 달. 비어 있으면 사계절 글감
     tool: str = ''                # 맞는 계산기 id (tools.woodyway88.com/<id>/)
+    kind: str = GUIDE             # 글 종류 (KINDS). 종류별 글쓰기 규칙은 prompts/writer_howto_<kind>.md
+    examples: tuple[str, ...] = ()  # 계산기 공식으로 미리 계산한 예시 문장 (원문 뒤에 붙는다)
 
     @property
     def urls(self) -> tuple[str, ...]:
@@ -61,8 +77,11 @@ def _parse(row: dict) -> HowtoGuide | None:
     if not query or not sources:
         return None
     months = tuple(int(m) for m in row.get('months', ()) if 1 <= int(m) <= 12)
+    kind = str(row.get('kind') or GUIDE).strip()
     return HowtoGuide(query=query, area=str(row.get('area') or '생활경제'), slug=str(row.get('slug', '')).strip(),
-                      sources=sources, months=months, tool=str(row.get('tool', '')).strip())
+                      sources=sources, months=months, tool=str(row.get('tool', '')).strip(),
+                      kind=kind if kind in KINDS else GUIDE,
+                      examples=tuple(str(x).strip() for x in row.get('examples', ()) if str(x).strip()))
 
 
 def load_guides(path: Path = GUIDES_PATH) -> tuple[HowtoGuide, ...]:
@@ -73,9 +92,22 @@ def load_guides(path: Path = GUIDES_PATH) -> tuple[HowtoGuide, ...]:
     return tuple(g for g in (_parse(r) for r in rows) if g is not None)
 
 
-def _rank(group: Sequence[HowtoGuide], used_at: Callable[[HowtoGuide], int | None]) -> list[HowtoGuide]:
-    """안 쓴 글감(목록 순서) 다음에 쓴 글감(가장 오래전에 쓴 순)."""
+def kind_of_day(now: datetime) -> str:
+    return KIND_BY_WEEKDAY[now.astimezone(KST).weekday()]
+
+
+def _kind_priority(want: str) -> Callable[[HowtoGuide], int]:
+    """오늘의 종류 → 다른 새 종류(계산 사례·일정·숫자 변경) → 기존 안내형."""
+    return lambda g: 0 if g.kind == want else (2 if g.kind == GUIDE else 1)
+
+
+def _rank(
+    group: Sequence[HowtoGuide], used_at: Callable[[HowtoGuide], int | None], want: str = '',
+) -> list[HowtoGuide]:
+    """안 쓴 글감(오늘의 종류 먼저, 같으면 목록 순서) 다음에 쓴 글감(가장 오래전에 쓴 순)."""
     fresh = [g for g in group if used_at(g) is None]
+    if want:
+        fresh = sorted(fresh, key=_kind_priority(want))  # 안정 정렬이라 같은 종류 안에서는 목록 순서 유지
     used = sorted((g for g in group if used_at(g) is not None), key=lambda g: used_at(g) or 0)
     return [*fresh, *used]
 
@@ -89,8 +121,9 @@ def _is_truncation(posted: str, slug: str) -> bool:
 
 
 def order_guides(guides: Sequence[HowtoGuide], past: Sequence[HistoryEntry], now: datetime) -> list[HowtoGuide]:
-    """제철(또는 사계절) 글감을 먼저: 안 쓴 것 → 오래전에 쓴 것. 제철 아닌 글감은 맨 뒤 (같은 규칙)."""
+    """제철(또는 사계절) 글감을 먼저: 안 쓴 것(오늘의 종류 먼저) → 오래전에 쓴 것. 제철 아닌 글감은 맨 뒤 (같은 규칙)."""
     month = now.astimezone(KST).month
+    want = kind_of_day(now)
     last_used: dict[str, int] = {}
     last_slug: dict[str, int] = {}
     for i, entry in enumerate(past):
@@ -112,7 +145,7 @@ def order_guides(guides: Sequence[HowtoGuide], past: Sequence[HistoryEntry], now
 
     seasonal = [g for g in guides if g.in_season(month)]
     off = [g for g in guides if not g.in_season(month)]
-    return [*_rank(seasonal, used_at), *_rank(off, used_at)]
+    return [*_rank(seasonal, used_at, want), *_rank(off, used_at, want)]
 
 
 def to_candidate(guide: HowtoGuide, source: Source, now: datetime) -> Candidate:
@@ -139,6 +172,8 @@ def build_article(
         parts.append(f'--- 공식 안내 {len(refs) + 1}: {source.name} ---\n{article.text[:MAX_EXTRA_SOURCE_CHARS]}')
     if main is None:
         return None
+    if guide.examples:
+        parts.append('--- 계산 예시 (공식 계산식을 그대로 적용해 계산한 값) ---\n' + '\n'.join(f'- {x}' for x in guide.examples))
     return replace(main, text='\n\n'.join(parts), references=tuple(refs))
 
 

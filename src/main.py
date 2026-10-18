@@ -58,7 +58,7 @@ from src import (
     writer,
 )
 from src.http_client import HttpGet, http_get, url_is_alive
-from src.llm import LLMClient, LLMError
+from src.llm import LLMClient, LLMError, load_prompt
 from src.models import Article, PostDraft, RankedCandidate, ShortNews
 from src import usage
 
@@ -191,6 +191,7 @@ def draft_article(
     category: str = topics.TECH,
     target_query: str = '',
     day: date | None = None,
+    kind_rules: str = '',
 ) -> PostDraft | None:
     """글을 쓰고 사람이 쓴 글처럼 윤문한 뒤 검수합니다. 탈락하면 검수 의견을 반영해 한 번 더 씁니다.
 
@@ -208,7 +209,7 @@ def draft_article(
     short: PostDraft | None = None  # 하한만 못 채우고 나머지 검수는 통과한 원고
     for attempt in range(1, MAX_WRITE_ATTEMPTS + 1):
         written = polish.polish_draft(llm, models.writer, writer.write_post(
-            llm, models.writer, article, theme, feedback, category, target_query, day))
+            llm, models.writer, article, theme, feedback, category, target_query, day, kind_rules))
         draft = disclosure.strip_ai_disclosure(written)  # AI 작성 고지는 절대 싣지 않는다 (운영자 지시)
         if target_query:
             draft = draft.model_copy(update={'search_keyword': target_query})
@@ -372,6 +373,11 @@ def howto_tool(guide: howto_topic.HowtoGuide, draft: PostDraft) -> tools.Tool | 
     return tools.find_tool(available, guide.tool) or tools.match_tool(draft, available, topics.MONEY)
 
 
+def howto_kind_rules(kind: str) -> str:
+    """글 종류별 추가 규칙 (prompts/writer_howto_<kind>.md). 기존 안내형은 생활 가이드 규칙만."""
+    return '' if kind == howto_topic.GUIDE else load_prompt(f'writer_howto_{kind}')
+
+
 def compose_howto_post(
     llm: LLMClient,
     models: Models,
@@ -387,8 +393,9 @@ def compose_howto_post(
     theme = topics.SPECS[topics.HOWTO].themes[0]
     fetch = lambda candidate: fetcher.fetch_article(get, candidate)  # noqa: E731
     for tried, (guide, article) in enumerate(howto_topic.iter_guides(past, fetch, now), start=1):
-        print(f'[생활 가이드] {guide.query} (공식 안내 {1 + len(article.references)}곳)')
-        draft = draft_article(llm, models, article, theme, past, is_alive, topics.HOWTO, target_query=guide.query, day=day)
+        print(f'[생활 가이드] {guide.kind} · {guide.query} (공식 안내 {1 + len(article.references)}곳)')
+        draft = draft_article(llm, models, article, theme, past, is_alive, topics.HOWTO, target_query=guide.query, day=day,
+                              kind_rules=howto_kind_rules(guide.kind))
         if draft is not None:
             labels = [topics.HOWTO_LABEL, guide.area] if guide.area != topics.HOWTO_LABEL else [topics.HOWTO_LABEL]
             draft = draft.model_copy(update={'labels': labels, 'url_slug': guide.slug or draft.url_slug})
@@ -425,8 +432,9 @@ def compose_evening_post(
         composed = None
     if composed is not None:
         return composed
-    print('[생활 가이드 칸] 생활 가이드 글을 못 써 뉴스 글로 발행합니다 (발행 건너뛰기 금지)')
-    return compose_post(llm, models, now, past, **kwargs)
+    # 2026-10-18: 구글 블로그는 내 돈·날짜 글만 쓴다. 예비 발행도 생활경제 소식으로 (AI·IT 뉴스는 검색 클릭 0)
+    print('[생활 가이드 칸] 생활 가이드 글을 못 써 생활경제 소식으로 발행합니다 (발행 건너뛰기 금지)')
+    return compose_post(llm, models, now, past, only=topics.MONEY, **kwargs)
 
 
 def compose_post(

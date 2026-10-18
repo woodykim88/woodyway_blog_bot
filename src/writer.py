@@ -11,6 +11,7 @@ from src.models import Article, PostDraft
 
 def build_writer_input(
     article: Article, theme: str, feedback: Sequence[str] = (), target_query: str = '', day: date | None = None,
+    kind_rules: str = '',
 ) -> str:
     parts = [f'오늘의 테마: {theme}']
     if day is not None:
@@ -23,6 +24,8 @@ def build_writer_input(
             '공식 출처 (이 페이지들에 있는 사실만 쓰세요):',
             *(f'- {url}' for url in sources),
         ]
+    if kind_rules:
+        parts += ['--- 이 글의 종류별 규칙 (생활 가이드 규칙보다 우선) ---', kind_rules.strip(), '--- 종류별 규칙 끝 ---']
     parts += [
         f'원문 출처: {article.candidate.source}',
         f'원문 URL: {article.source_url}',
@@ -52,7 +55,7 @@ def instructions(category: str = topics.TECH) -> str:
 
 def write_post(
     llm: LLMClient, model: str, article: Article, theme: str, feedback: Sequence[str] = (),
-    category: str = topics.TECH, target_query: str = '', day: date | None = None,
+    category: str = topics.TECH, target_query: str = '', day: date | None = None, kind_rules: str = '',
 ) -> PostDraft:
-    user_input = build_writer_input(article, theme, feedback, target_query, day)
+    user_input = build_writer_input(article, theme, feedback, target_query, day, kind_rules)
     return llm.parse(model, instructions(category), user_input, PostDraft, stage='write')

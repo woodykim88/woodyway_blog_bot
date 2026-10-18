@@ -24,6 +24,7 @@ SCOPES = ['https://www.googleapis.com/auth/webmasters.readonly']
 SITE = 'sc-domain:woodyway88.com'
 DAYS = 28
 TOP_N = 20
+ALL_PAGES = 1000    # 사이트별 합계용 (블로그·계산기 사이트를 나눠 본다, 2026-10-18)
 INSPECT_DAYS = 14   # 최근 이 기간에 발행한 글의 색인 상태를 본다 (URL 검사 하루 한도 2,000건 안쪽)
 ROOT = Path(__file__).resolve().parent.parent
 JSON_PATH = ROOT / 'data' / 'search_console.json'
@@ -49,6 +50,17 @@ def _rows(service: Any, start: date, end: date, dimension: str, limit: int) -> l
              'ctr': round(r['ctr'], 4), 'position': round(r['position'], 1)} for r in rows]
 
 
+def by_site(pages: Sequence[Mapping[str, Any]]) -> dict[str, dict[str, int]]:
+    """페이지별 줄을 호스트(www.woodyway88.com / tools.woodyway88.com)별 클릭·노출 합계로."""
+    totals: dict[str, dict[str, int]] = {}
+    for row in pages:
+        host = row['page'].split('/')[2] if '://' in row['page'] else row['page']
+        prev = totals.get(host, {'clicks': 0, 'impressions': 0})
+        totals = {**totals, host: {'clicks': prev['clicks'] + row['clicks'],
+                                   'impressions': prev['impressions'] + row['impressions']}}
+    return totals
+
+
 def recent_post_urls(history: Sequence[Mapping[str, Any]], today: date, days: int = INSPECT_DAYS) -> list[str]:
     since = (today - timedelta(days=days)).isoformat()
     return [e['url'] for e in history
@@ -72,6 +84,7 @@ def collect(service: Any, history: Sequence[Mapping[str, Any]], today: date,
         'daily': _rows(service, start, end, 'date', DAYS + 1),
         'top_queries': _rows(service, start, end, 'query', TOP_N),
         'top_pages': _rows(service, start, end, 'page', TOP_N),
+        'by_site': by_site(_rows(service, start, end, 'page', ALL_PAGES)),
         'index': [inspector(service, url) for url in recent_post_urls(history, today)],
     }
 
@@ -82,7 +95,10 @@ def summary(data: Mapping[str, Any]) -> str:
     indexed = [i for i in data['index'] if i['verdict'] == 'PASS']
     lines = [f"## Search Console ({data['range'][0]} ~ {data['range'][1]}, 갱신 {data['updated']})",
              f'- 검색 클릭 {clicks}회 · 노출 {imps}회 (최근 {DAYS}일)',
-             f"- 최근 {INSPECT_DAYS}일 글 색인: {len(indexed)}/{len(data['index'])}편", '', '### 상위 검색어']
+             f"- 최근 {INSPECT_DAYS}일 글 색인: {len(indexed)}/{len(data['index'])}편"]
+    sites = sorted(data.get('by_site', {}).items(), key=lambda kv: -kv[1]['clicks'])
+    lines += [f"- {host}: 클릭 {t['clicks']} · 노출 {t['impressions']}" for host, t in sites]
+    lines += ['', '### 상위 검색어']
     lines += [f"- {q['query']}: 클릭 {q['clicks']} · 노출 {q['impressions']} · 평균 {q['position']}위"
               for q in data['top_queries'][:10]] or ['- (아직 없음)']
     lines += ['', '### 색인 안 된 최근 글']

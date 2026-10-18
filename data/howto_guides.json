@@ -1,5 +1,1017 @@
 [
   {
+    "query": "2027 공휴일",
+    "slug": "korea-public-holidays-2027",
+    "area": "생활경제",
+    "kind": "schedule",
+    "months": [
+      1,
+      10,
+      11,
+      12
+    ],
+    "tool": "2027",
+    "sources": [
+      {
+        "name": "우주항공청 「2027년 월력요항」 발표(보도자료)",
+        "url": "https://www.kasa.go.kr/prog/plcyBrf/brief/kor/sub01_01_04/view.do?plcyBrfNo=431"
+      }
+    ]
+  },
+  {
+    "query": "2027 대체공휴일",
+    "slug": "substitute-holidays-2027",
+    "area": "생활경제",
+    "kind": "schedule",
+    "months": [
+      1,
+      10,
+      11,
+      12
+    ],
+    "tool": "2027",
+    "sources": [
+      {
+        "name": "우주항공청 「2027년 월력요항」 발표(보도자료)",
+        "url": "https://www.kasa.go.kr/prog/plcyBrf/brief/kor/sub01_01_04/view.do?plcyBrfNo=431"
+      }
+    ]
+  },
+  {
+    "query": "2027 황금연휴",
+    "slug": "long-weekends-2027-korea",
+    "area": "생활경제",
+    "kind": "schedule",
+    "months": [
+      1,
+      10,
+      11,
+      12
+    ],
+    "tool": "2027",
+    "sources": [
+      {
+        "name": "우주항공청 「2027년 월력요항」 발표(보도자료)",
+        "url": "https://www.kasa.go.kr/prog/plcyBrf/brief/kor/sub01_01_04/view.do?plcyBrfNo=431"
+      }
+    ]
+  },
+  {
+    "query": "2027 설날 연휴",
+    "slug": "lunar-new-year-holiday-2027",
+    "area": "생활경제",
+    "kind": "schedule",
+    "months": [
+      1,
+      2,
+      10,
+      11,
+      12
+    ],
+    "tool": "2027",
+    "sources": [
+      {
+        "name": "우주항공청 「2027년 월력요항」 발표(보도자료)",
+        "url": "https://www.kasa.go.kr/prog/plcyBrf/brief/kor/sub01_01_04/view.do?plcyBrfNo=431"
+      }
+    ]
+  },
+  {
+    "query": "근로장려금 반기 지급일",
+    "slug": "earned-income-tax-credit-half-year-payday",
+    "area": "지원금·혜택",
+    "kind": "schedule",
+    "months": [
+      11,
+      12
+    ],
+    "tool": "calendar",
+    "sources": [
+      {
+        "name": "국세청 「근로장려금 신청자격(반기신청 지급시기)」",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=2453&cntntsId=7784"
+      }
+    ]
+  },
+  {
+    "query": "종합부동산세 납부기한",
+    "slug": "comprehensive-real-estate-tax-due-date",
+    "area": "생활경제",
+    "kind": "schedule",
+    "months": [
+      11,
+      12
+    ],
+    "tool": "calendar",
+    "sources": [
+      {
+        "name": "국세청 「종합부동산세 납부기한」",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=2352&cntntsId=7734"
+      }
+    ]
+  },
+  {
+    "query": "에너지바우처 신청 기간",
+    "slug": "energy-voucher-application-deadline",
+    "area": "지원금·혜택",
+    "kind": "schedule",
+    "months": [
+      11,
+      12
+    ],
+    "tool": "calendar",
+    "sources": [
+      {
+        "name": "정책브리핑 「6월 15일부터 에너지바우처 신청하세요!」",
+        "url": "https://www.korea.kr/multi/visualNewsView.do?newsId=148966678"
+      },
+      {
+        "name": "정책브리핑 「에너지바우처 신청으로 더운 여름을 시원하게」",
+        "url": "https://www.korea.kr/news/reporterView.do?newsId=148967198"
+      }
+    ]
+  },
+  {
+    "query": "연말정산 일정 2026",
+    "slug": "year-end-tax-settlement-schedule",
+    "area": "생활경제",
+    "kind": "schedule",
+    "months": [
+      1,
+      11,
+      12
+    ],
+    "tool": "calendar",
+    "sources": [
+      {
+        "name": "정책브리핑(국세청) 「연말정산 간소화서비스 15일 개통…총 45개 항목 공제자료 제공」(2026.01.15)",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148958025"
+      },
+      {
+        "name": "정책브리핑(국세청) 「5일부터 '13월의 월급' 연말정산 미리 보기 서비스 시작」(2025.11.05)",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148954010"
+      }
+    ]
+  },
+  {
+    "query": "2027 1학기 국가장학금 신청기간",
+    "slug": "national-scholarship-2027-spring-application",
+    "area": "지원금·혜택",
+    "kind": "schedule",
+    "months": [
+      1,
+      11,
+      12
+    ],
+    "tool": "calendar",
+    "sources": [
+      {
+        "name": "정책브리핑(교육부) 「대학 국가장학금 신청 개시…8구간 이하 '셋째 이상'엔 전액 지원」(2025.11.20)",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148955036"
+      },
+      {
+        "name": "한국장학재단 「국가장학금 I유형(학생직접지원형)」",
+        "url": "https://www.kosaf.go.kr/ko/scholar.do?pg=scholarship05_12_01_01&naviParam=JH,02,02,05"
+      }
+    ]
+  },
+  {
+    "query": "부가세 확정신고 기간",
+    "slug": "vat-final-return-january-deadline",
+    "area": "생활경제",
+    "kind": "schedule",
+    "months": [
+      1
+    ],
+    "tool": "calendar",
+    "sources": [
+      {
+        "name": "국세청 「부가가치세 신고납부기한」",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=2273&cntntsId=7694"
+      }
+    ]
+  },
+  {
+    "query": "지급명세서 제출기한",
+    "slug": "payment-statement-filing-deadline",
+    "area": "생활경제",
+    "kind": "schedule",
+    "months": [
+      1,
+      2,
+      3
+    ],
+    "tool": "calendar",
+    "sources": [
+      {
+        "name": "국세청 「지급명세서 제출」",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=12242&cntntsId=8631"
+      }
+    ]
+  },
+  {
+    "query": "근로장려금 하반기 신청기간",
+    "slug": "eitc-second-half-application-period",
+    "area": "지원금·혜택",
+    "kind": "schedule",
+    "months": [
+      2,
+      3
+    ],
+    "tool": "calendar",
+    "sources": [
+      {
+        "name": "국세청 「근로장려금 신청기간 및 방법」",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=40397&cntntsId=238977"
+      },
+      {
+        "name": "국세청 「근로장려금 신청자격(반기신청 지급시기)」",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=2453&cntntsId=7784"
+      }
+    ]
+  },
+  {
+    "query": "2027 추석 연휴 기간",
+    "slug": "chuseok-holiday-2027-dates",
+    "area": "생활경제",
+    "kind": "schedule",
+    "months": [
+      1,
+      12
+    ],
+    "tool": "2027",
+    "sources": [
+      {
+        "name": "우주항공청 「2027년 월력요항」 발표(보도자료)",
+        "url": "https://www.kasa.go.kr/prog/plcyBrf/brief/kor/sub01_01_04/view.do?plcyBrfNo=431"
+      }
+    ]
+  },
+  {
+    "query": "3년 근무 퇴직금",
+    "slug": "three-years-work-severance-pay",
+    "area": "생활경제",
+    "kind": "case",
+    "months": [],
+    "tool": "severance-pay-calculator",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「퇴직금 지급」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=999&ccfNo=3&cciNo=2&cnpClsNo=1"
+      },
+      {
+        "name": "찾기쉬운 생활법령정보 「평균임금」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=1694&ccfNo=1&cciNo=2&cnpClsNo=1"
+      }
+    ],
+    "examples": [
+      "월급 300만 원(상여금·연차수당 없음), 2023-11-01~2026-10-31 3년 근무(재직 1,096일): 1일 평균임금 = 9,000,000원 ÷ 92일 = 97,826원, 퇴직금 = 97,826원 × 30일 × (1,096일 ÷ 365) = 약 8,812,388원",
+      "월급 250만 원(상여금·연차수당 없음), 2023-11-01~2026-10-31 3년 근무(재직 1,096일): 1일 평균임금 = 7,500,000원 ÷ 92일 = 81,522원, 퇴직금 = 81,522원 × 30일 × (1,096일 ÷ 365) = 약 7,343,657원",
+      "월급 400만 원(상여금·연차수당 없음), 2023-11-01~2026-10-31 3년 근무(재직 1,096일): 1일 평균임금 = 12,000,000원 ÷ 92일 = 130,435원, 퇴직금 = 130,435원 × 30일 × (1,096일 ÷ 365) = 약 11,749,851원"
+    ]
+  },
+  {
+    "query": "월급 300 실업급여",
+    "slug": "monthly-salary-3m-unemployment-benefit",
+    "area": "생활경제",
+    "kind": "case",
+    "months": [],
+    "tool": "unemployment-benefit-calculator",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「구직급여 수급액」",
+        "url": "https://www.easylaw.go.kr/CSP/CnpClsMainBtr.laf?popMenu=ov&csmSeq=722&ccfNo=2&cciNo=3&cnpClsNo=2"
+      },
+      {
+        "name": "찾기쉬운 생활법령정보 「구직급여 수급일수」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=722&ccfNo=2&cciNo=3&cnpClsNo=1"
+      }
+    ],
+    "examples": [
+      "월급 300만 원(퇴사 전 3개월 9,000,000원, 92일), 고용보험 1년, 50세 미만, 2026년 퇴사 기준: 1일 평균임금 97,826원 × 60% = 58,696원 → 하한액 66,048원 적용, 하루 66,048원 × 150일 = 총 약 9,907,200원",
+      "월급 300만 원(퇴사 전 3개월 9,000,000원, 92일), 고용보험 3년, 50세 미만, 2026년 퇴사 기준: 1일 평균임금 97,826원 × 60% = 58,696원 → 하한액 66,048원 적용, 하루 66,048원 × 180일 = 총 약 11,888,640원",
+      "월급 300만 원(퇴사 전 3개월 9,000,000원, 92일), 고용보험 5년, 50세 미만, 2026년 퇴사 기준: 1일 평균임금 97,826원 × 60% = 58,696원 → 하한액 66,048원 적용, 하루 66,048원 × 210일 = 총 약 13,870,080원",
+      "월급 300만 원(퇴사 전 3개월 9,000,000원, 92일), 고용보험 5년, 50세 이상, 2026년 퇴사 기준: 1일 평균임금 97,826원 × 60% = 58,696원 → 하한액 66,048원 적용, 하루 66,048원 × 240일 = 총 약 15,851,520원"
+    ]
+  },
+  {
+    "query": "연봉 4000 퇴직금",
+    "slug": "annual-salary-40m-severance-pay",
+    "area": "생활경제",
+    "kind": "case",
+    "months": [],
+    "tool": "severance-pay-calculator",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「퇴직금 지급」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=999&ccfNo=3&cciNo=2&cnpClsNo=1"
+      },
+      {
+        "name": "찾기쉬운 생활법령정보 「평균임금」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=1694&ccfNo=1&cciNo=2&cnpClsNo=1"
+      }
+    ],
+    "examples": [
+      "연봉 4,000만 원(월 3,333,333원)(상여금·연차수당 없음), 2025-11-01~2026-10-31 1년 근무(재직 365일): 1일 평균임금 = 9,999,999원 ÷ 92일 = 108,696원, 퇴직금 = 108,696원 × 30일 × (365일 ÷ 365) = 약 3,260,869원",
+      "연봉 4,000만 원(월 3,333,333원)(상여금·연차수당 없음), 2023-11-01~2026-10-31 3년 근무(재직 1,096일): 1일 평균임금 = 9,999,999원 ÷ 92일 = 108,696원, 퇴직금 = 108,696원 × 30일 × (1,096일 ÷ 365) = 약 9,791,542원",
+      "연봉 4,000만 원(월 3,333,333원)(상여금·연차수당 없음), 2021-11-01~2026-10-31 5년 근무(재직 1,826일): 1일 평균임금 = 9,999,999원 ÷ 92일 = 108,696원, 퇴직금 = 108,696원 × 30일 × (1,826일 ÷ 365) = 약 16,313,280원",
+      "연봉 4,000만 원(월 3,333,333원)(상여금·연차수당 없음), 2016-11-01~2026-10-31 10년 근무(재직 3,652일): 1일 평균임금 = 9,999,999원 ÷ 92일 = 108,696원, 퇴직금 = 108,696원 × 30일 × (3,652일 ÷ 365) = 약 32,626,560원"
+    ]
+  },
+  {
+    "query": "주 15시간 근무 주휴수당",
+    "slug": "15-hours-per-week-weekly-holiday-pay",
+    "area": "생활경제",
+    "kind": "case",
+    "months": [],
+    "tool": "minimum-wage-calculator",
+    "sources": [
+      {
+        "name": "고용노동부 고객상담센터 「주휴수당 관련 문의」 답변",
+        "url": "https://1350.moel.go.kr/rtmview.do?id=1000059852"
+      },
+      {
+        "name": "찾기쉬운 생활법령정보 「단시간근로자 근로기준법 적용의 특례」",
+        "url": "https://www.easylaw.go.kr/CSP/CnpClsMain.laf?csmSeq=1347&ccfNo=3&cciNo=2&cnpClsNo=1"
+      }
+    ],
+    "examples": [
+      "2026년 최저임금 시급 10,320원, 주 15시간: 주휴시간 = (15 ÷ 40) × 8 = 3시간, 주휴수당 주 30,960원, 한 달 78시간 → 월급(세전) 804,960원",
+      "2027년 최저임금 시급 10,700원, 주 15시간: 주휴시간 = (15 ÷ 40) × 8 = 3시간, 주휴수당 주 32,100원, 한 달 78시간 → 월급(세전) 834,600원",
+      "2026년 최저임금 시급 10,320원, 주 14시간: 주휴시간 = (14 ÷ 40) × 8 = 0시간, 주휴수당 주 0원, 한 달 61시간 → 월급(세전) 629,520원"
+    ]
+  },
+  {
+    "query": "하루 4시간 근무 주휴수당",
+    "slug": "four-hours-a-day-weekly-holiday-pay",
+    "area": "생활경제",
+    "kind": "case",
+    "months": [],
+    "tool": "minimum-wage-calculator",
+    "sources": [
+      {
+        "name": "대한민국 정책브리핑 「저도 주휴수당을 받을 수 있나요?」",
+        "url": "https://www.korea.kr/news/visualNewsView.do?newsId=148866895"
+      },
+      {
+        "name": "대한민국 정책브리핑 「단기간 근로자도 주휴수당을 받을 수 있나요?」",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148939357"
+      },
+      {
+        "name": "찾기쉬운 생활법령정보 「단시간근로자 근로기준법 적용의 특례」",
+        "url": "https://www.easylaw.go.kr/CSP/CnpClsMain.laf?csmSeq=1347&ccfNo=3&cciNo=2&cnpClsNo=1"
+      }
+    ],
+    "examples": [
+      "2026년 최저임금 시급 10,320원, 주 20시간: 주휴시간 = (20 ÷ 40) × 8 = 4시간, 주휴수당 주 41,280원, 한 달 104시간 → 월급(세전) 1,073,280원",
+      "2027년 최저임금 시급 10,700원, 주 20시간: 주휴시간 = (20 ÷ 40) × 8 = 4시간, 주휴수당 주 42,800원, 한 달 104시간 → 월급(세전) 1,112,800원",
+      "2026년 최저임금 시급 10,320원, 주 12시간: 주휴시간 = (12 ÷ 40) × 8 = 0시간, 주휴수당 주 0원, 한 달 52시간 → 월급(세전) 536,640원"
+    ]
+  },
+  {
+    "query": "2026 최저임금 월급 세전",
+    "slug": "minimum-wage-2026-monthly-salary",
+    "area": "생활경제",
+    "kind": "case",
+    "months": [],
+    "tool": "minimum-wage-calculator",
+    "sources": [
+      {
+        "name": "고용노동부 보도자료 「2026년 적용 최저임금 시간급 10320원」",
+        "url": "https://www.moel.go.kr/news/enews/report/enewsView.do?news_seq=18144"
+      }
+    ],
+    "examples": [
+      "2026년 최저임금 시급 10,320원, 주 40시간: 주휴시간 = (40 ÷ 40) × 8 = 8시간, 주휴수당 주 82,560원, 한 달 209시간 → 월급(세전) 2,156,880원",
+      "2026년 최저임금 시급 10,320원, 주 30시간: 주휴시간 = (30 ÷ 40) × 8 = 6시간, 주휴수당 주 61,920원, 한 달 156시간 → 월급(세전) 1,609,920원",
+      "2026년 최저임금 시급 10,320원, 주 20시간: 주휴시간 = (20 ÷ 40) × 8 = 4시간, 주휴수당 주 41,280원, 한 달 104시간 → 월급(세전) 1,073,280원"
+    ]
+  },
+  {
+    "query": "월급 200 만원 실업급여",
+    "slug": "monthly-salary-2m-unemployment-benefit",
+    "area": "생활경제",
+    "kind": "case",
+    "months": [],
+    "tool": "unemployment-benefit-calculator",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「구직급여 수급액」",
+        "url": "https://www.easylaw.go.kr/CSP/CnpClsMainBtr.laf?popMenu=ov&csmSeq=722&ccfNo=2&cciNo=3&cnpClsNo=2"
+      },
+      {
+        "name": "찾기쉬운 생활법령정보 「구직급여 수급일수」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=722&ccfNo=2&cciNo=3&cnpClsNo=1"
+      }
+    ],
+    "examples": [
+      "월급 200만 원(퇴사 전 3개월 6,000,000원, 92일), 고용보험 1년, 50세 미만, 2026년 퇴사 기준: 1일 평균임금 65,217원 × 60% = 39,130원 → 하한액 66,048원 적용, 하루 66,048원 × 150일 = 총 약 9,907,200원",
+      "월급 200만 원(퇴사 전 3개월 6,000,000원, 92일), 고용보험 3년, 50세 미만, 2026년 퇴사 기준: 1일 평균임금 65,217원 × 60% = 39,130원 → 하한액 66,048원 적용, 하루 66,048원 × 180일 = 총 약 11,888,640원",
+      "월급 250만 원(퇴사 전 3개월 7,500,000원, 92일), 고용보험 3년, 50세 미만, 2026년 퇴사 기준: 1일 평균임금 81,522원 × 60% = 48,913원 → 하한액 66,048원 적용, 하루 66,048원 × 180일 = 총 약 11,888,640원"
+    ]
+  },
+  {
+    "query": "10년 퇴직금 얼마",
+    "slug": "ten-years-severance-pay-amount",
+    "area": "생활경제",
+    "kind": "case",
+    "months": [],
+    "tool": "severance-pay-calculator",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「퇴직금 지급」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=999&ccfNo=3&cciNo=2&cnpClsNo=1"
+      },
+      {
+        "name": "찾기쉬운 생활법령정보 「평균임금」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=1694&ccfNo=1&cciNo=2&cnpClsNo=1"
+      }
+    ],
+    "examples": [
+      "월급 300만 원(상여금·연차수당 없음), 2016-11-01~2026-10-31 10년 근무(재직 3,652일): 1일 평균임금 = 9,000,000원 ÷ 92일 = 97,826원, 퇴직금 = 97,826원 × 30일 × (3,652일 ÷ 365) = 약 29,363,907원",
+      "월급 400만 원(상여금·연차수당 없음), 2016-11-01~2026-10-31 10년 근무(재직 3,652일): 1일 평균임금 = 12,000,000원 ÷ 92일 = 130,435원, 퇴직금 = 130,435원 × 30일 × (3,652일 ÷ 365) = 약 39,151,876원",
+      "월급 500만 원(상여금·연차수당 없음), 2016-11-01~2026-10-31 10년 근무(재직 3,652일): 1일 평균임금 = 15,000,000원 ÷ 92일 = 163,043원, 퇴직금 = 163,043원 × 30일 × (3,652일 ÷ 365) = 약 48,939,845원"
+    ]
+  },
+  {
+    "query": "1년 미만 연차 11개",
+    "slug": "under-one-year-annual-leave-11-days",
+    "area": "생활경제",
+    "kind": "case",
+    "months": [],
+    "tool": "annual-leave-calculator",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「근로시간 및 휴가권 보장(연차 유급휴가)」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?csmSeq=1380&ccfNo=1&cciNo=1&cnpClsNo=1"
+      },
+      {
+        "name": "대한민국 정책브리핑 「1년 근무 후 퇴직 연차휴가 15일 발생, 일관되게 적용해온 행정해석」",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148866034"
+      }
+    ],
+    "examples": [
+      "입사 첫해에는 1개월 개근할 때마다 1일씩, 최대 11일이 생깁니다. 예: 2026-01-02 입사 → 2026-12-02까지 11개월 개근하면 11일.",
+      "월 통상임금 2,156,880원이면 연차 1일 수당 = 2,156,880원 ÷ 209시간 × 8시간 = 82,560원, 미사용 11일이면 82,560원 × 11 = 약 908,160원"
+    ]
+  },
+  {
+    "query": "알바 퇴직금 얼마",
+    "slug": "part-time-job-severance-pay-amount",
+    "area": "생활경제",
+    "kind": "case",
+    "months": [],
+    "tool": "severance-pay-calculator",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「계속근로기간 확인」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=999&ccfNo=3&cciNo=1&cnpClsNo=2"
+      },
+      {
+        "name": "찾기쉬운 생활법령정보 「퇴직금 지급」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=999&ccfNo=3&cciNo=2&cnpClsNo=1"
+      }
+    ],
+    "examples": [
+      "2026년 최저임금 시급 10,320원, 주 20시간 알바의 월급은 주휴 포함 104시간 × 10,320원 = 1,073,280원입니다.",
+      "월급 1,073,280원(상여금·연차수당 없음), 2025-11-01~2026-10-31 1년 근무(재직 365일): 1일 평균임금 = 3,219,840원 ÷ 92일 = 34,998원, 퇴직금 = 34,998원 × 30일 × (365일 ÷ 365) = 약 1,049,948원",
+      "월급 1,073,280원(상여금·연차수당 없음), 2024-11-01~2026-10-31 2년 근무(재직 730일): 1일 평균임금 = 3,219,840원 ÷ 92일 = 34,998원, 퇴직금 = 34,998원 × 30일 × (730일 ÷ 365) = 약 2,099,896원"
+    ]
+  },
+  {
+    "query": "2년근무 실업급여 몇개월",
+    "slug": "two-years-work-unemployment-benefit-duration",
+    "area": "생활경제",
+    "kind": "case",
+    "months": [],
+    "tool": "unemployment-benefit-calculator",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「구직급여 수급일수」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=722&ccfNo=2&cciNo=3&cnpClsNo=1"
+      },
+      {
+        "name": "찾기쉬운 생활법령정보 「구직급여 수급액」",
+        "url": "https://www.easylaw.go.kr/CSP/CnpClsMainBtr.laf?popMenu=ov&csmSeq=722&ccfNo=2&cciNo=3&cnpClsNo=2"
+      }
+    ],
+    "examples": [
+      "월급 300만 원(퇴사 전 3개월 9,000,000원, 92일), 고용보험 2년, 50세 미만, 2026년 퇴사 기준: 1일 평균임금 97,826원 × 60% = 58,696원 → 하한액 66,048원 적용, 하루 66,048원 × 150일 = 총 약 9,907,200원",
+      "월급 300만 원(퇴사 전 3개월 9,000,000원, 92일), 고용보험 2년, 50세 이상, 2026년 퇴사 기준: 1일 평균임금 97,826원 × 60% = 58,696원 → 하한액 66,048원 적용, 하루 66,048원 × 180일 = 총 약 11,888,640원",
+      "월급 250만 원(퇴사 전 3개월 7,500,000원, 92일), 고용보험 2년, 50세 미만, 2026년 퇴사 기준: 1일 평균임금 81,522원 × 60% = 48,913원 → 하한액 66,048원 적용, 하루 66,048원 × 150일 = 총 약 9,907,200원"
+    ]
+  },
+  {
+    "query": "퇴직금 포함 연봉 4000",
+    "slug": "salary-including-severance-40m",
+    "area": "생활경제",
+    "kind": "case",
+    "months": [],
+    "tool": "severance-pay-calculator",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「퇴직금 지급」 판례",
+        "url": "https://www.easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=999&ccfNo=3&cciNo=2&cnpClsNo=1&menuType=prec"
+      },
+      {
+        "name": "찾기쉬운 생활법령정보 「퇴직금 지급」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=999&ccfNo=3&cciNo=2&cnpClsNo=1"
+      }
+    ],
+    "examples": [
+      "퇴직금 포함 연봉 4,000만 원은 보통 4,000만 원을 13으로 나눠 12개월은 월급(매달 3,076,923원), 1개월분은 퇴직금으로 보는 계약입니다. 실제 월급은 연봉 4,000만 원(퇴직금 별도)일 때의 3,333,333원보다 매달 256,410원 적습니다.",
+      "월급 3,076,923원(상여금·연차수당 없음), 2025-11-01~2026-10-31 1년 근무(재직 365일): 1일 평균임금 = 9,230,769원 ÷ 92일 = 100,334원, 퇴직금 = 100,334원 × 30일 × (365일 ÷ 365) = 약 3,010,033원"
+    ]
+  },
+  {
+    "query": "연차 15개 수당",
+    "slug": "annual-leave-15-days-allowance",
+    "area": "생활경제",
+    "kind": "case",
+    "months": [],
+    "tool": "annual-leave-calculator",
+    "sources": [
+      {
+        "name": "고용노동부 고객상담센터 「중도 자발적 퇴사시 연차수당 계산」 답변",
+        "url": "https://1350.moel.go.kr/rtmview.do?id=1000244622"
+      },
+      {
+        "name": "찾기쉬운 생활법령정보 「근로시간 및 휴가권 보장(연차 유급휴가)」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?csmSeq=1380&ccfNo=1&cciNo=1&cnpClsNo=1"
+      }
+    ],
+    "examples": [
+      "월 통상임금 3,000,000원이면 연차 1일 수당 = 3,000,000원 ÷ 209시간 × 8시간 = 114,833원, 미사용 15일이면 114,833원 × 15 = 약 1,722,488원",
+      "월 통상임금 2,500,000원이면 연차 1일 수당 = 2,500,000원 ÷ 209시간 × 8시간 = 95,694원, 미사용 15일이면 95,694원 × 15 = 약 1,435,407원",
+      "월 통상임금 4,000,000원이면 연차 1일 수당 = 4,000,000원 ÷ 209시간 × 8시간 = 153,110원, 미사용 15일이면 153,110원 × 15 = 약 2,296,651원"
+    ]
+  },
+  {
+    "query": "알바 실업급여 얼마",
+    "slug": "part-time-job-unemployment-benefit-amount",
+    "area": "생활경제",
+    "kind": "case",
+    "months": [],
+    "tool": "unemployment-benefit-calculator",
+    "sources": [
+      {
+        "name": "찾기쉬운 생활법령정보 「구직급여 수급액」",
+        "url": "https://www.easylaw.go.kr/CSP/CnpClsMainBtr.laf?popMenu=ov&csmSeq=722&ccfNo=2&cciNo=3&cnpClsNo=2"
+      },
+      {
+        "name": "찾기쉬운 생활법령정보 「구직급여 수급일수」",
+        "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=722&ccfNo=2&cciNo=3&cnpClsNo=1"
+      }
+    ]
+  },
+  {
+    "query": "퇴직금 3000만원 세금",
+    "slug": "severance-pay-30m-tax",
+    "area": "생활경제",
+    "kind": "case",
+    "months": [],
+    "tool": "severance-pay-calculator",
+    "sources": [
+      {
+        "name": "국세청 「퇴직소득세 계산방법」",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=6444&cntntsId=7880"
+      }
+    ]
+  },
+  {
+    "query": "k패스 청년 환급",
+    "slug": "k-pass-youth-refund",
+    "area": "생활경제",
+    "kind": "case",
+    "months": [],
+    "tool": "transit-refund-calculator",
+    "sources": [
+      {
+        "name": "대한민국 정책브리핑 「5월 1일부터 'K-패스'로 교통비 걱정 패스…20~53% 환급」",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148928697"
+      },
+      {
+        "name": "대한민국 정책브리핑 「모두를 위한 '모두의 카드'…전국 어디서나 교통자유 누린다」",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148960648"
+      }
+    ]
+  },
+  {
+    "query": "모두의카드 환급액",
+    "slug": "modu-card-refund-amount",
+    "area": "생활경제",
+    "kind": "case",
+    "months": [],
+    "tool": "transit-refund-calculator",
+    "sources": [
+      {
+        "name": "대한민국 정책브리핑 「모두를 위한 '모두의 카드'…전국 어디서나 교통자유 누린다」",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148960648"
+      }
+    ]
+  },
+  {
+    "query": "주담대 갈아타기 중도상환수수료",
+    "slug": "mortgage-refinance-prepayment-fee",
+    "area": "생활경제",
+    "kind": "case",
+    "months": [],
+    "tool": "mortgage-refinance-calculator",
+    "sources": [
+      {
+        "name": "대한민국 정책브리핑 「주담대 중도상환수수료율 13일부터 인하…지금보다 절반 수준」",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148938404"
+      },
+      {
+        "name": "대한민국 정책브리핑 「대출 갈아타기 서비스 주요 Q&A」",
+        "url": "https://www.korea.kr/multi/visualNewsView.do?newsId=148929824"
+      }
+    ]
+  },
+  {
+    "query": "연봉 3000 연말정산",
+    "slug": "annual-salary-30m-year-end-tax",
+    "area": "생활경제",
+    "kind": "case",
+    "months": [
+      12,
+      1,
+      2
+    ],
+    "tool": "year-end-tax-calculator",
+    "sources": [
+      {
+        "name": "국세청 「근로소득금액」(근로소득공제)",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=6435&cntntsId=7871"
+      },
+      {
+        "name": "국세청 「과세표준과 산출세액」",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=6594&cntntsId=7873"
+      },
+      {
+        "name": "국세청 「근로소득 세액공제」",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?cntntsId=7875&mi=6596"
+      }
+    ],
+    "examples": [
+      "총급여 3,000만 원, 1인 가구, 4대보험 본인부담 추정 2,915,214원: 근로소득공제 9,750,000원, 과세표준 15,834,786원, 산출세액 1,115,217원, 근로소득세액공제 613,369원, 표준세액공제 130,000원 → 결정세액 약 371,848원 (지방소득세 37,184원 별도). 1년 동안 낸 소득세가 이보다 많으면 그 차이만큼 돌려받습니다.",
+      "총급여 3,000만 원, 1인 가구, 4대보험 본인부담 추정 2,915,214원, 신용카드 1,200만 원: 근로소득공제 9,750,000원, 과세표준 15,159,786원, 산출세액 1,013,967원, 근로소득세액공제 557,681원, 표준세액공제 130,000원 → 결정세액 약 326,286원 (지방소득세 32,628원 별도). 1년 동안 낸 소득세가 이보다 많으면 그 차이만큼 돌려받습니다."
+    ]
+  },
+  {
+    "query": "연봉 5000 연말정산 환급금",
+    "slug": "annual-salary-50m-year-end-tax-refund",
+    "area": "생활경제",
+    "kind": "case",
+    "months": [
+      12,
+      1,
+      2
+    ],
+    "tool": "year-end-tax-calculator",
+    "sources": [
+      {
+        "name": "국세청 「근로소득금액」(근로소득공제)",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=6435&cntntsId=7871"
+      },
+      {
+        "name": "국세청 「과세표준과 산출세액」",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=6594&cntntsId=7873"
+      },
+      {
+        "name": "국세청 「근로소득 세액공제」",
+        "url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?cntntsId=7875&mi=6596"
+      }
+    ],
+    "examples": [
+      "총급여 5,000만 원, 1인 가구, 4대보험 본인부담 추정 4,858,690원: 근로소득공제 12,250,000원, 과세표준 31,391,310원, 산출세액 3,448,696원, 근로소득세액공제 660,000원, 표준세액공제 130,000원 → 결정세액 약 2,658,696원 (지방소득세 265,869원 별도). 1년 동안 낸 소득세가 이보다 많으면 그 차이만큼 돌려받습니다.",
+      "총급여 5,000만 원, 1인 가구, 4대보험 본인부담 추정 4,858,690원, 신용카드 2,000만 원: 근로소득공제 12,250,000원, 과세표준 30,266,310원, 산출세액 3,279,946원, 근로소득세액공제 660,000원, 표준세액공제 130,000원 → 결정세액 약 2,489,946원 (지방소득세 248,994원 별도). 1년 동안 낸 소득세가 이보다 많으면 그 차이만큼 돌려받습니다."
+    ]
+  },
+  {
+    "query": "2027 최저임금 월급",
+    "slug": "minimum-wage-2027-monthly-pay",
+    "area": "생활경제",
+    "kind": "change",
+    "months": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      1
+    ],
+    "tool": "minimum-wage-calculator",
+    "sources": [
+      {
+        "name": "고용노동부 「2027년도 적용 최저임금 시간급 10,700원」 보도자료",
+        "url": "https://www.moel.go.kr/news/enews/report/enewsView.do?news_seq=19744"
+      },
+      {
+        "name": "정책브리핑 「2027년 최저임금 시급 10,700원」 카드뉴스",
+        "url": "https://www.korea.kr/multi/visualNewsView.do?newsId=148969553"
+      }
+    ],
+    "examples": [
+      "2027년 최저임금 시급 10,700원, 주 40시간: 주휴시간 = (40 ÷ 40) × 8 = 8시간, 주휴수당 주 85,600원, 한 달 209시간 → 월급(세전) 2,236,300원",
+      "2027년 최저임금 시급 10,700원, 주 20시간: 주휴시간 = (20 ÷ 40) × 8 = 4시간, 주휴수당 주 42,800원, 한 달 104시간 → 월급(세전) 1,112,800원",
+      "2026년 주 40시간 월급 2,156,880원 → 2027년 2,236,300원, 한 달 79,420원·1년 953,040원 오릅니다."
+    ]
+  },
+  {
+    "query": "2027년 국민연금 요율",
+    "slug": "national-pension-rate-2027",
+    "area": "생활경제",
+    "kind": "change",
+    "months": [
+      11,
+      12,
+      1,
+      2
+    ],
+    "tool": "",
+    "sources": [
+      {
+        "name": "보건복지부 「연금개혁 Q&A」",
+        "url": "https://www.mohw.go.kr/menu.es?mid=a10714060000"
+      },
+      {
+        "name": "정책브리핑 「'국가가 연금 지급 보장' 법제화…내년부터 달라지는 국민연금」",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148957270"
+      }
+    ],
+    "examples": [
+      "월 소득 300만 원 직장가입자 본인 부담: 2026년 4.75% = 142,500원 → 2027년 5.0% = 150,000원 (월 7,500원, 1년 90,000원 증가). 회사도 같은 금액을 냅니다.",
+      "월 소득 500만 원: 2026년 237,500원 → 2027년 250,000원 (월 12,500원 증가)."
+    ]
+  },
+  {
+    "query": "2027 건강보험료율",
+    "slug": "health-insurance-rate-2027",
+    "area": "생활경제",
+    "kind": "change",
+    "months": [
+      9,
+      10,
+      11,
+      12,
+      1
+    ],
+    "tool": "",
+    "sources": [
+      {
+        "name": "보건복지부 「건강보험 보장 수준 높아진다…2027년도 건강보험료율 7.19%」 보도자료",
+        "url": "https://www.mohw.go.kr/board.es?mid=a10503010100&bid=0027&act=view&list_no=1491824"
+      },
+      {
+        "name": "정책브리핑 「제15차 건강보험정책심의위원회 결과 브리핑」",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=156780681"
+      }
+    ]
+  },
+  {
+    "query": "2027 기준중위소득",
+    "slug": "median-income-standard-2027",
+    "area": "지원금·혜택",
+    "kind": "change",
+    "months": [
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      1
+    ],
+    "tool": "",
+    "sources": [
+      {
+        "name": "보건복지부 「내년 기준 중위소득 6.70% 역대 최대 인상」 보도자료",
+        "url": "https://www.mohw.go.kr/board.es?mid=a10503010100&bid=0027&act=view&list_no=1491453"
+      },
+      {
+        "name": "정책브리핑 「내년 기준 중위소득 역대 최대 6.7% 인상」",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148968956"
+      }
+    ]
+  },
+  {
+    "query": "2027 생계급여 인상",
+    "slug": "livelihood-benefit-2027-increase",
+    "area": "지원금·혜택",
+    "kind": "change",
+    "months": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      1
+    ],
+    "tool": "",
+    "sources": [
+      {
+        "name": "정책브리핑 「내년 기준 중위소득 역대 최대 6.7% 인상」",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148968956"
+      },
+      {
+        "name": "보건복지부 「내년 기준 중위소득 6.70% 역대 최대 인상」 보도자료",
+        "url": "https://www.mohw.go.kr/board.es?mid=a10503010100&bid=0027&act=view&list_no=1491453"
+      }
+    ]
+  },
+  {
+    "query": "2027 4대보험 요율",
+    "slug": "four-social-insurance-rates-2027",
+    "area": "생활경제",
+    "kind": "change",
+    "months": [
+      11,
+      12,
+      1,
+      2
+    ],
+    "tool": "",
+    "sources": [
+      {
+        "name": "보건복지부 「연금개혁 Q&A」",
+        "url": "https://www.mohw.go.kr/menu.es?mid=a10714060000"
+      },
+      {
+        "name": "보건복지부 「건강보험 보장 수준 높아진다…2027년도 건강보험료율 7.19%」 보도자료",
+        "url": "https://www.mohw.go.kr/board.es?mid=a10503010100&bid=0027&act=view&list_no=1491824"
+      },
+      {
+        "name": "고용노동부 「고용보험 제도개선 TF 논의결과」 보도자료(2026-09-01)",
+        "url": "https://www.moel.go.kr/news/enews/report/enewsView.do?news_seq=19866"
+      }
+    ]
+  },
+  {
+    "query": "2027 최저임금 월급 세후",
+    "slug": "minimum-wage-2027-take-home-pay",
+    "area": "생활경제",
+    "kind": "change",
+    "months": [
+      10,
+      11,
+      12,
+      1,
+      2
+    ],
+    "tool": "minimum-wage-calculator",
+    "sources": [
+      {
+        "name": "고용노동부 「2027년도 적용 최저임금 시간급 10,700원」 보도자료",
+        "url": "https://www.moel.go.kr/news/enews/report/enewsView.do?news_seq=19744"
+      },
+      {
+        "name": "정책브리핑 「내년도 최저임금 '1만 700원'…올해보다 3.7%↑」",
+        "url": "https://www.korea.kr/news/reporterView.do?newsId=148969730"
+      }
+    ]
+  },
+  {
+    "query": "2027 실업급여 하한액",
+    "slug": "unemployment-benefit-2027-daily-limits",
+    "area": "생활경제",
+    "kind": "change",
+    "months": [
+      10,
+      11,
+      12,
+      1,
+      2
+    ],
+    "tool": "unemployment-benefit-calculator",
+    "sources": [
+      {
+        "name": "고용노동부 「고용보험 제도개선 TF 논의결과」 보도자료(2026-09-01)",
+        "url": "https://www.moel.go.kr/news/enews/report/enewsView.do?news_seq=19866"
+      },
+      {
+        "name": "정책브리핑 「육아휴직 대체인력 지원 1개월 연장…내년 구직급여 상한액 ↑」",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148956574"
+      }
+    ]
+  },
+  {
+    "query": "2027 주거급여 금액",
+    "slug": "housing-benefit-2027-amount",
+    "area": "지원금·혜택",
+    "kind": "change",
+    "months": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      1
+    ],
+    "tool": "",
+    "sources": [
+      {
+        "name": "보건복지부 「내년 기준 중위소득 6.70% 역대 최대 인상」 보도자료",
+        "url": "https://www.mohw.go.kr/board.es?mid=a10503010100&bid=0027&act=view&list_no=1491453"
+      },
+      {
+        "name": "정책브리핑 「내년 기준 중위소득 역대 최대 6.7% 인상」",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148968956"
+      }
+    ]
+  },
+  {
+    "query": "2027 연말정산 미리보기",
+    "slug": "year-end-tax-2027-changes-preview",
+    "area": "생활경제",
+    "kind": "change",
+    "months": [
+      10,
+      11,
+      12,
+      1
+    ],
+    "tool": "year-end-tax-calculator",
+    "sources": [
+      {
+        "name": "정책브리핑 「청년·서민 세 부담 낮추고 지방 지원 늘린다…세제개편안 살펴보니」",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148969870"
+      }
+    ]
+  },
+  {
+    "query": "2027 근로장려금 기준",
+    "slug": "earned-income-tax-credit-2027-criteria",
+    "area": "지원금·혜택",
+    "kind": "change",
+    "months": [
+      3,
+      4,
+      5,
+      8,
+      9
+    ],
+    "tool": "",
+    "sources": [
+      {
+        "name": "정책브리핑 「2027년 9월 신청분부터 달라지는 '근로장려금'」",
+        "url": "https://www.korea.kr/multi/visualNewsView.do?newsId=148969661"
+      },
+      {
+        "name": "정책브리핑 「청년·서민 세 부담 낮추고 지방 지원 늘린다…세제개편안 살펴보니」",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148969870"
+      }
+    ]
+  },
+  {
+    "query": "2027 아동기본수당",
+    "slug": "child-basic-allowance-2027",
+    "area": "지원금·혜택",
+    "kind": "change",
+    "months": [
+      9,
+      10,
+      11,
+      12,
+      1,
+      6,
+      7
+    ],
+    "tool": "",
+    "sources": [
+      {
+        "name": "보건복지부 「2027년 핵심 청년 예산 발표(아이맞이지원금·아동기본수당)」 보도자료",
+        "url": "https://www.mohw.go.kr/board.es?mid=a10503010100&bid=0027&act=view&list_no=1491722"
+      },
+      {
+        "name": "정책브리핑 「아동수당, 13세 미만까지 단계적으로 확대!」",
+        "url": "https://www.korea.kr/news/policyNewsView.do?newsId=148961693"
+      }
+    ]
+  },
+  {
+    "query": "2027 부모급여",
+    "slug": "parental-benefit-2027-changes",
+    "area": "지원금·혜택",
+    "kind": "change",
+    "months": [
+      9,
+      10,
+      11,
+      12,
+      1,
+      6,
+      7
+    ],
+    "tool": "",
+    "sources": [
+      {
+        "name": "보건복지부 「2027년 핵심 청년 예산 발표(아이맞이지원금·아동기본수당)」 보도자료",
+        "url": "https://www.mohw.go.kr/board.es?mid=a10503010100&bid=0027&act=view&list_no=1491722"
+      }
+    ]
+  },
+  {
     "query": "실업급여 자진퇴사 조건",
     "slug": "unemployment-benefit-voluntary-resignation",
     "area": "생활경제",

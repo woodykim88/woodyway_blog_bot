@@ -18,3 +18,7 @@ output/
 # macOS
 .DS_Store
 token.json.bak
+
+# 애드센스 보고서 (공개 저장소라 커밋 금지, src/adsense.py)
+data/adsense.json
+data/adsense.md

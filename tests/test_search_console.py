@@ -57,3 +57,17 @@ def test_collect_and_summary():
     assert '색인: 0/1편' in text
     assert '교통비 환급: 클릭 1' in text
     assert 'a.html — Discovered - currently not indexed' in text
+
+
+def test_by_site_splits_blog_and_tools_clicks():
+    pages = [
+        {'page': 'https://tools.woodyway88.com/calendar/2026-11/', 'clicks': 2, 'impressions': 46},
+        {'page': 'https://tools.woodyway88.com/calendar/', 'clicks': 0, 'impressions': 8},
+        {'page': 'https://www.woodyway88.com/2026/10/a.html', 'clicks': 1, 'impressions': 3},
+    ]
+    totals = sc.by_site(pages)
+    assert totals == {'tools.woodyway88.com': {'clicks': 2, 'impressions': 54},
+                      'www.woodyway88.com': {'clicks': 1, 'impressions': 3}}
+    data = {'updated': '2026-10-18', 'range': ['a', 'b'], 'daily': [], 'top_queries': [], 'index': [], 'by_site': totals}
+    text = sc.summary(data)
+    assert text.index('- tools.woodyway88.com: 클릭 2 · 노출 54') < text.index('- www.woodyway88.com: 클릭 1')

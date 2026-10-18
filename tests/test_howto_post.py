@@ -22,10 +22,10 @@ PAGE = '<html><body><article>' + ''.join(
 ) + '</article></body></html>'
 
 
-def guide(query, n, months=(), tool='', area='지원금·혜택'):
+def guide(query, n, months=(), tool='', area='지원금·혜택', kind=howto_topic.GUIDE):
     sources = tuple(howto_topic.Source(f'기관 {n}-{i}', f'https://www.example.go.kr/{n}/{i}') for i in range(2))
     return howto_topic.HowtoGuide(query=query, area=area, slug=f'slug-{n}', sources=sources,
-                                  months=tuple(months), tool=tool)
+                                  months=tuple(months), tool=tool, kind=kind)
 
 
 def howto_draft(**overrides):
@@ -58,6 +58,82 @@ def test_off_season_topic_is_picked_in_its_month():
     may = datetime(2026, 5, 10, tzinfo=KST)
     assert howto_topic.order_guides([evergreen, may_only], (), may)[0] == evergreen  # 둘 다 제철이면 목록 순서
     assert howto_topic.order_guides([may_only, evergreen], (), OCT) == [evergreen, may_only]
+
+
+# --- 2026-10-18 글 종류 요일 순환 (계산 사례 3 · 일정 2 · 숫자 변경 2) ---
+
+MON = datetime(2026, 10, 19, 20, 0, tzinfo=KST)  # 계산 사례
+THU = datetime(2026, 10, 22, 20, 0, tzinfo=KST)  # 숫자 변경
+
+
+def test_kind_of_day_rotates_case_schedule_change():
+    days = [howto_topic.kind_of_day(datetime(2026, 10, 19 + i, 20, 0, tzinfo=KST)) for i in range(7)]
+    assert days.count(howto_topic.CASE) == 3 and days.count(howto_topic.SCHEDULE) == 2
+    assert days.count(howto_topic.CHANGE) == 2
+    assert days[0] == howto_topic.CASE and days[3] == howto_topic.CHANGE
+
+
+def test_order_puts_todays_kind_first_then_new_kinds_then_old_guides():
+    old = guide('실업급여 신청 방법', 1)
+    change = guide('2027 최저임금', 2, kind=howto_topic.CHANGE)
+    schedule_ = guide('2027 설 연휴', 3, kind=howto_topic.SCHEDULE)
+    case = guide('퇴직금 3년 월급 300', 4, kind=howto_topic.CASE)
+    assert howto_topic.order_guides([old, change, schedule_, case], (), MON) == [case, change, schedule_, old]
+    assert howto_topic.order_guides([old, change, schedule_, case], (), THU)[0] == change
+
+
+def test_unused_other_kind_beats_reusing_todays_kind():
+    case = guide('퇴직금 3년 월급 300', 4, kind=howto_topic.CASE)
+    change = guide('2027 최저임금', 2, kind=howto_topic.CHANGE)
+    past = (make_entry(url='https://www.woodyway88.com/2026/10/slug-4.html'),)
+    assert howto_topic.order_guides([case, change], past, MON) == [change, case]
+
+
+def test_kind_is_parsed_and_unknown_kind_falls_back_to_guide(tmp_path):
+    rows = [{'query': q, 'slug': s, 'kind': k, 'sources': [{'name': '기관', 'url': 'https://www.nts.go.kr/x'}]}
+            for q, s, k in (('가', 'a', 'case'), ('나', 'b', 'weird'), ('다', 'c', None))]
+    path = tmp_path / 'g.json'
+    path.write_text(json.dumps(rows, ensure_ascii=False), encoding='utf-8')
+    assert [g.kind for g in howto_topic.load_guides(path)] == ['case', 'guide', 'guide']
+
+
+@pytest.mark.parametrize('kind', [howto_topic.CASE, howto_topic.SCHEDULE, howto_topic.CHANGE])
+def test_each_new_kind_has_writer_rules_that_reach_the_writer_input(kind):
+    rules = pipeline.howto_kind_rules(kind)
+    assert len(rules) > 200
+    text = writer.build_writer_input(make_article(), '생활 가이드', target_query='검색어', kind_rules=rules)
+    assert rules.strip() in text
+    assert pipeline.howto_kind_rules(howto_topic.GUIDE) == ''
+
+
+def test_compose_howto_post_sends_kind_rules_to_writer(monkeypatch):
+    monkeypatch.setattr(howto_topic, 'load_guides', lambda: (guide('퇴직금 3년 월급 300', 1, kind=howto_topic.CASE),))
+    seen = {}
+
+    def fake_draft(*a, kind_rules='', **k):
+        seen['rules'] = kind_rules
+        return None
+
+    monkeypatch.setattr(pipeline, 'draft_article', fake_draft)
+    pipeline.compose_howto_post(*fake_llm({})[:1], MODELS, MON, (), get=lambda url: PAGE, limit=1)
+    assert seen['rules'] == pipeline.howto_kind_rules(howto_topic.CASE)
+
+
+def test_examples_are_appended_after_official_text_and_parsed(tmp_path):
+    g = howto_topic.HowtoGuide('3년 근무 퇴직금', '생활경제', 'x', (howto_topic.Source('기관', 'https://www.example.go.kr/1'),),
+                               kind=howto_topic.CASE, examples=('월급 300만 원 → 약 8,812,388원',))
+    article = howto_topic.build_article(g, lambda c: make_article(), OCT)
+    assert article.text.index('원문 본문입니다') < article.text.index('--- 계산 예시')
+    assert '- 월급 300만 원 → 약 8,812,388원' in article.text
+    path = tmp_path / 'g.json'
+    path.write_text(json.dumps([{'query': 'q', 'slug': 's', 'examples': ['a', ' ', 'b'],
+                                 'sources': [{'name': 'n', 'url': 'https://www.nts.go.kr/x'}]}]), encoding='utf-8')
+    assert howto_topic.load_guides(path)[0].examples == ('a', 'b')
+
+
+def test_case_guides_carry_precomputed_examples():
+    cases = [g for g in howto_topic.load_guides() if g.kind == howto_topic.CASE]
+    assert sum(1 for g in cases if g.examples) >= 12
 
 
 def test_guide_list_is_curated_official_sources():
@@ -181,7 +257,7 @@ def test_evening_slot_falls_back_to_news_when_howto_fails(monkeypatch, howto):
 
     monkeypatch.setattr(pipeline, 'compose_post', news)
     assert pipeline.compose_evening_post(*fake_llm({})[:1], MODELS, NOW, ()) == 'news'
-    assert seen['only'] is None  # 평소 뉴스 비율대로
+    assert seen['only'] == topics.MONEY  # 2026-10-18: AI·IT 뉴스는 쓰지 않는다
 
 
 @pytest.fixture
@@ -268,10 +344,13 @@ def test_guides_sharing_an_official_page_are_tracked_by_post_slug():
     assert howto_topic.order_guides([first, second], past, OCT) == [second, first]
 
 
-def test_long_tail_guides_come_first():
+def test_new_kind_guides_come_before_old_long_tail_guides():
+    """2026-10-18: 계산 사례·숫자 변경 글감을 목록 앞에, 기존 롱테일 안내형은 그 뒤에 남는다."""
     guides = howto_topic.load_guides()
-    assert guides[0].query == '실업급여 자진퇴사 조건' and len(guides) >= 50
-    assert howto_topic.order_guides(guides, (), OCT)[0] == guides[0]
+    assert guides[0].kind != howto_topic.GUIDE and len(guides) >= 90
+    assert any(g.query == '실업급여 자진퇴사 조건' and g.kind == howto_topic.GUIDE for g in guides)
+    assert howto_topic.order_guides(guides, (), MON)[0].kind == howto_topic.CASE
+    assert howto_topic.order_guides(guides, (), THU)[0].kind == howto_topic.CHANGE
 
 
 def test_guide_is_used_when_blogger_truncated_the_post_slug():
