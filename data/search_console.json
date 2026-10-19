@@ -1,18 +1,11 @@
 {
- "updated": "2026-10-18",
+ "updated": "2026-10-19",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-09-20",
-  "2026-10-17"
+  "2026-09-21",
+  "2026-10-18"
  ],
  "daily": [
-  {
-   "date": "2026-09-20",
-   "clicks": 0,
-   "impressions": 0,
-   "ctr": 0,
-   "position": 0
-  },
   {
    "date": "2026-09-21",
    "clicks": 0,
@@ -187,6 +180,13 @@
    "impressions": 3,
    "ctr": 0,
    "position": 5.3
+  },
+  {
+   "date": "2026-10-16",
+   "clicks": 0,
+   "impressions": 6,
+   "ctr": 0,
+   "position": 19.7
   }
  ],
  "top_queries": [
@@ -242,9 +242,9 @@
   {
    "query": "api 플랫폼 선택 기준",
    "clicks": 0,
-   "impressions": 6,
+   "impressions": 7,
    "ctr": 0,
-   "position": 42.3
+   "position": 39
   },
   {
    "query": "llm api",
@@ -259,6 +259,13 @@
    "impressions": 1,
    "ctr": 0,
    "position": 1
+  },
+  {
+   "query": "제미나이 아르곤 한도",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 25
   },
   {
    "query": "퇴직금 계산 방법",
@@ -300,9 +307,9 @@
   {
    "page": "https://tools.woodyway88.com/calendar/2027-03/",
    "clicks": 0,
-   "impressions": 2,
+   "impressions": 3,
    "ctr": 0,
-   "position": 6
+   "position": 11.3
   },
   {
    "page": "https://tools.woodyway88.com/highway-toll-reentry/",
@@ -405,9 +412,9 @@
   {
    "page": "https://www.woodyway88.com/2026/09/llm-api-3.html",
    "clicks": 0,
-   "impressions": 12,
+   "impressions": 13,
    "ctr": 0,
-   "position": 40.3
+   "position": 38.7
   },
   {
    "page": "https://www.woodyway88.com/2026/10/ai-hacking-career-skills.html",
@@ -420,32 +427,14 @@
  "by_site": {
   "tools.woodyway88.com": {
    "clicks": 4,
-   "impressions": 95
+   "impressions": 96
   },
   "www.woodyway88.com": {
    "clicks": 0,
-   "impressions": 57
+   "impressions": 62
   }
  },
  "index": [
-  {
-   "url": "https://www.woodyway88.com/2026/10/financial-sector-data-breach-korea.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-05T22:52:20Z"
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/10/claude-code-design-taste-frontend.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-05T23:07:31Z"
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/10/youth-future-savings-eligibility.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-09T15:20:19Z"
-  },
   {
    "url": "https://www.woodyway88.com/2026/10/financial-hacking-ai-attacks.html",
    "verdict": "PASS",
@@ -607,6 +596,12 @@
    "verdict": "PASS",
    "coverage": "Submitted and indexed",
    "last_crawl": "2026-10-17T18:52:07Z"
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/minimum-wage-2027-monthly-pay.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Redirect error",
+   "last_crawl": "2026-10-19T00:13:24Z"
   }
  ]
 }

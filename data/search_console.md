@@ -1,8 +1,8 @@
-## Search Console (2026-09-20 ~ 2026-10-17, 갱신 2026-10-18)
-- 검색 클릭 4회 · 노출 143회 (최근 28일)
-- 최근 14일 글 색인: 26/30편
-- tools.woodyway88.com: 클릭 4 · 노출 95
-- www.woodyway88.com: 클릭 0 · 노출 57
+## Search Console (2026-09-21 ~ 2026-10-18, 갱신 2026-10-19)
+- 검색 클릭 4회 · 노출 149회 (최근 28일)
+- 최근 14일 글 색인: 23/28편
+- tools.woodyway88.com: 클릭 4 · 노출 96
+- www.woodyway88.com: 클릭 0 · 노출 62
 
 ### 상위 검색어
 - 11월 마케팅 캘린더: 클릭 1 · 노출 24 · 평균 3.9위
@@ -12,7 +12,7 @@
 - 2027 마케팅 캘린더: 클릭 0 · 노출 2 · 평균 6위
 - 2027년 마케팅 캘린더: 클릭 0 · 노출 7 · 평균 5.3위
 - api 플랫폼 선택 가이드 및 추천: 클릭 0 · 노출 3 · 평균 47위
-- api 플랫폼 선택 기준: 클릭 0 · 노출 6 · 평균 42.3위
+- api 플랫폼 선택 기준: 클릭 0 · 노출 7 · 평균 39위
 - llm api: 클릭 0 · 노출 3 · 평균 29.7위
 - 실업급여 계산기 2026: 클릭 0 · 노출 1 · 평균 1위
 
@@ -21,3 +21,4 @@
 - https://www.woodyway88.com/2026/10/claude-code-plan-mode-guide.html — Redirect error
 - https://www.woodyway88.com/2026/10/claude-code-subagent-guide.html — Redirect error
 - https://www.woodyway88.com/2026/10/onlyoffice-ai-features-update.html — Redirect error
+- https://www.woodyway88.com/2026/10/minimum-wage-2027-monthly-pay.html — Redirect error
