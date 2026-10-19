@@ -3,6 +3,7 @@ import json
 from src import tools
 from src import main as pipeline
 from src.renderer import render_post
+from src.models import Section
 from tests.helpers import make_article, make_draft
 
 TRANSIT = tools.Tool(
@@ -59,3 +60,22 @@ def test_success_message_includes_tool_idea():
     assert '🧮 계산기 아이디어: 회의록 요약 시간 절약 계산기' in msg
     plain = pipeline.success_message(pipeline.Composed(make_article(), make_draft()), {}, 'now', 'e')
     assert '계산기 아이디어' not in plain
+
+
+def test_savings_post_with_rate_words_gets_no_mortgage_calculator():
+    # 10/19 청년미래적금 글에 '고정금리'·'금리 인상'만으로 주담대 갈아타기 계산기가 붙었다
+    body = '청년미래적금은 3년 고정금리로 운영됩니다. 시중 금리 인상기에도 약정 금리가 유지됩니다. ' * 5
+    draft = make_draft(
+        title='청년미래적금 가입 조건, 소득·나이·일정 한 번에', search_keyword='청년미래적금 가입 조건',
+        sections=[Section(heading='금리', body=body, tip='가입 전에 소득 기준을 확인하세요.')] * 3,
+    )
+    mortgage = tools.find_tool(tools.load_tools(), 'mortgage-refinance-calculator')
+    assert tools.match_tool(draft, (mortgage,), tools.MONEY) is None
+
+
+def test_refinance_post_still_gets_mortgage_calculator_from_context():
+    body = '변동금리 대출을 고정금리로 갈아타면 이자 부담이 줄어듭니다. 대출 금리 비교가 먼저입니다. ' * 5
+    draft = make_draft(title='대출 이자 줄이는 법', search_keyword='대출 이자 줄이기',
+                       sections=[Section(heading='방법', body=body, tip='금리부터 비교하세요.')] * 3)
+    mortgage = tools.find_tool(tools.load_tools(), 'mortgage-refinance-calculator')
+    assert tools.match_tool(draft, (mortgage,), tools.MONEY) == mortgage
