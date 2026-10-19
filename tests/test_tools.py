@@ -44,6 +44,15 @@ def test_post_shows_calculator_box_when_tool_matches():
     assert TRANSIT.url not in render_post(make_draft(), make_article())
 
 
+def test_calculator_button_sits_above_key_points_and_repeats_at_end():
+    html = render_post(make_draft(), make_article(), tool=TRANSIT)
+    first, last = html.find(TRANSIT.url), html.rfind(TRANSIT.url)
+    assert first < html.find('<h2>핵심 내용</h2>')  # 첫 화면에서 바로 보이게
+    assert last > html.find('<h2>내일 바로 써먹기</h2>')  # 다 읽은 사람에게 한 번 더
+    assert html.count(TRANSIT.url) == 2
+    assert 'display:block' in html[first - 300:first + 300]  # 글자 링크가 아니라 큰 버튼
+
+
 def test_success_message_includes_tool_idea():
     composed = pipeline.Composed(make_article(), make_draft(tool_idea='회의록 요약 시간 절약 계산기'))
     msg = pipeline.success_message(composed, {'url': 'https://w/x.html'}, 'now', 'https://edit')

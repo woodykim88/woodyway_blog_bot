@@ -6,6 +6,12 @@
 {% for p in hook_paragraphs %}
 <p style="font-size:1.2em;line-height:1.8;font-weight:500;">{{ p }}</p>
 {% endfor %}
+{% if tool %}
+<div style="padding:16px;background:#e8f0fe;border-radius:10px;margin:16px 0;text-align:center;">
+  <p style="margin:0 0 10px;">🧮 <strong>내 경우는 얼마일까?</strong> {{ tool.blurb }}</p>
+  <a href="{{ tool.url }}" target="_blank" rel="noopener" style="display:block;padding:14px 18px;background:#1a73e8;color:#fff;border-radius:999px;text-decoration:none;font-weight:bold;font-size:1.1em;">{{ tool.title }} 바로 가기 →</a>
+</div>
+{% endif %}
 {% set summary_card = infographic.get('summary') %}
 {% if summary_card %}
 <div style="text-align:center;margin:20px 0;">
@@ -33,11 +39,6 @@
   <p style="margin:0 0 4px;font-size:0.9em;color:#555;">터미널에 붙여 넣으면 설치됩니다.</p>
   <pre style="margin:0;padding:10px 12px;background:#1e1e1e;color:#f5f5f5;border-radius:6px;overflow-x:auto;white-space:pre;"><code>{{ skill.install_cmd }}</code></pre>
 </div>
-{% endif %}
-{% if tool %}
-
-<p style="padding:14px 16px;background:#e8f0fe;border-radius:8px;">🧮 <strong>내 경우는 얼마일까?</strong> {{ tool.blurb }}<br>
-  <a href="{{ tool.url }}" target="_blank" rel="noopener" style="font-weight:bold;">{{ tool.title }} 바로 가기 →</a></p>
 {% endif %}
 
 {% if as_of_note %}
@@ -79,6 +80,9 @@
   <li>{{ item }}</li>
 {% endfor %}
 </ol>
+{% if tool %}
+<p style="padding:14px 16px;background:#e8f0fe;border-radius:8px;">🧮 다 읽으셨다면 내 숫자로 확인해 보세요. <a href="{{ tool.url }}" target="_blank" rel="noopener" style="font-weight:bold;">{{ tool.title }} 바로 가기 →</a></p>
+{% endif %}
 {% set checklist_card = infographic.get('checklist') %}
 {% if checklist_card %}
 <div style="text-align:center;margin:20px 0;">
