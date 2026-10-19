@@ -140,6 +140,26 @@
     "blurb": "주 근무시간만 넣으면 주휴수당을 포함한 월급이 바로 나와요."
   },
   {
+    "title": "연말정산 신용카드 공제 계산기",
+    "url": "https://tools.woodyway88.com/card-deduction-calculator/",
+    "keywords": [
+      "카드 공제",
+      "카드공제",
+      "신용카드 소득공제",
+      "체크카드 공제",
+      "최저사용금액"
+    ],
+    "context_keywords": [
+      "최저사용금액",
+      "총급여 25%",
+      "체크카드",
+      "공제율",
+      "전통시장",
+      "대중교통 사용분"
+    ],
+    "blurb": "총급여 25% 문턱을 넘었는지, 남은 기간 어떤 카드가 유리한지 바로 계산해 보세요."
+  },
+  {
     "title": "연말정산 환급액 계산기",
     "url": "https://tools.woodyway88.com/year-end-tax-calculator/",
     "keywords": [
@@ -200,5 +220,21 @@
       "세일"
     ],
     "blurb": "공휴일·기념일·세일·세금 마감일을 달력 한 장으로 확인해 보세요."
+  },
+  {
+    "title": "2027 수능 날짜·시간표",
+    "url": "https://tools.woodyway88.com/suneung-2027/",
+    "keywords": [
+      "수능",
+      "수학능력시험"
+    ],
+    "context_keywords": [
+      "수험생",
+      "수험표",
+      "입실",
+      "가채점",
+      "성적 통지"
+    ],
+    "blurb": "수능 D-day와 교시별 시간표, 성적 발표일을 한 번에 확인해 보세요."
   }
 ]
