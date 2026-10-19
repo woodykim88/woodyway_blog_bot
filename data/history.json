@@ -793,5 +793,21 @@
     "status": "SCHEDULED",
     "slot": "2026-10-18T20:00",
     "tool": "minimum-wage-calculator"
+  },
+  {
+    "publish_date": "2026-10-19",
+    "post_id": "7812893693624420107",
+    "title": "3년 근무 퇴직금, 월급 300만원이면 약 881만원",
+    "url": "https://www.woodyway88.com/2026/10/three-years-work-severance-pay.html",
+    "source_url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=999&ccfNo=3&cciNo=2&cnpClsNo=1",
+    "geeknews_url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=999&ccfNo=3&cciNo=2&cnpClsNo=1",
+    "labels": [
+      "생활가이드",
+      "생활경제",
+      "계산사례"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-10-19T20:00",
+    "tool": "severance-pay-calculator"
   }
 ]
