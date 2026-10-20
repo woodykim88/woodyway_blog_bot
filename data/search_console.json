@@ -1,18 +1,11 @@
 {
- "updated": "2026-10-19",
+ "updated": "2026-10-20",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-09-21",
-  "2026-10-18"
+  "2026-09-22",
+  "2026-10-19"
  ],
  "daily": [
-  {
-   "date": "2026-09-21",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0,
-   "position": 1
-  },
   {
    "date": "2026-09-22",
    "clicks": 0,
@@ -187,6 +180,13 @@
    "impressions": 6,
    "ctr": 0,
    "position": 19.7
+  },
+  {
+   "date": "2026-10-17",
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0,
+   "position": 18
   }
  ],
  "top_queries": [
@@ -242,9 +242,9 @@
   {
    "query": "api 플랫폼 선택 기준",
    "clicks": 0,
-   "impressions": 7,
+   "impressions": 8,
    "ctr": 0,
-   "position": 39
+   "position": 36.8
   },
   {
    "query": "llm api",
@@ -340,53 +340,11 @@
    "position": 5.6
   },
   {
-   "page": "https://www.woodyway88.com/",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0,
-   "position": 1
-  },
-  {
-   "page": "https://www.woodyway88.com/2025/02/54.html",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0,
-   "position": 3
-  },
-  {
    "page": "https://www.woodyway88.com/2025/03/blog-post_969.html",
    "clicks": 0,
    "impressions": 1,
    "ctr": 0,
    "position": 43
-  },
-  {
-   "page": "https://www.woodyway88.com/2026/01/blog-post_24.html",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0,
-   "position": 4
-  },
-  {
-   "page": "https://www.woodyway88.com/2026/01/dads-paternity-leave-benefits-guide-korea.html",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0,
-   "position": 6
-  },
-  {
-   "page": "https://www.woodyway88.com/2026/01/solana-spot-etf-record-inflows-institutional-investment-signal.html",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0,
-   "position": 7
-  },
-  {
-   "page": "https://www.woodyway88.com/2026/02/bank-voluntary-retirement-reality-check.html",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0,
-   "position": 5
   },
   {
    "page": "https://www.woodyway88.com/2026/09/15-900.html",
@@ -405,16 +363,16 @@
   {
    "page": "https://www.woodyway88.com/2026/09/a16z-3.html",
    "clicks": 0,
-   "impressions": 5,
+   "impressions": 6,
    "ctr": 0,
-   "position": 13.8
+   "position": 14
   },
   {
    "page": "https://www.woodyway88.com/2026/09/llm-api-3.html",
    "clicks": 0,
-   "impressions": 13,
+   "impressions": 14,
    "ctr": 0,
-   "position": 38.7
+   "position": 37.4
   },
   {
    "page": "https://www.woodyway88.com/2026/10/ai-hacking-career-skills.html",
@@ -422,6 +380,48 @@
    "impressions": 1,
    "ctr": 0,
    "position": 3
+  },
+  {
+   "page": "https://www.woodyway88.com/2026/10/ai-skills-salary-premium.html",
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0,
+   "position": 9
+  },
+  {
+   "page": "https://www.woodyway88.com/2026/10/claude-code-claude-md-guide.html",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 9
+  },
+  {
+   "page": "https://www.woodyway88.com/2026/10/claude-code-design-taste-frontend.html",
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0,
+   "position": 5
+  },
+  {
+   "page": "https://www.woodyway88.com/2026/10/claude-google-docs-integration.html",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 3
+  },
+  {
+   "page": "https://www.woodyway88.com/2026/10/financial-hacking-ai-attacks.html",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 2
+  },
+  {
+   "page": "https://www.woodyway88.com/2026/10/financial-sector-data-breach-korea.html",
+   "clicks": 0,
+   "impressions": 3,
+   "ctr": 0,
+   "position": 9.7
   }
  ],
  "by_site": {
@@ -431,28 +431,10 @@
   },
   "www.woodyway88.com": {
    "clicks": 0,
-   "impressions": 62
+   "impressions": 57
   }
  },
  "index": [
-  {
-   "url": "https://www.woodyway88.com/2026/10/financial-hacking-ai-attacks.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-07T00:29:57Z"
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/10/claude-code-claude-md-guide.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-06T23:01:11Z"
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/10/unemployment-benefit-how-to-apply.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-06T21:30:28Z"
-  },
   {
    "url": "https://www.woodyway88.com/2026/10/senior-flu-vaccination-schedule.html",
    "verdict": "PASS",
@@ -481,7 +463,7 @@
    "url": "https://www.woodyway88.com/2026/10/claude-code-slideshow-skill.html",
    "verdict": "NEUTRAL",
    "coverage": "Redirect error",
-   "last_crawl": "2026-10-17T00:18:24Z"
+   "last_crawl": "2026-10-19T12:52:44Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/severance-pay-calculation.html",
@@ -517,7 +499,7 @@
    "url": "https://www.woodyway88.com/2026/10/claude-code-plan-mode-guide.html",
    "verdict": "NEUTRAL",
    "coverage": "Redirect error",
-   "last_crawl": "2026-10-17T00:18:24Z"
+   "last_crawl": "2026-10-19T12:52:44Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/annual-leave-calculation.html",
@@ -535,13 +517,13 @@
    "url": "https://www.woodyway88.com/2026/10/claude-code-subagent-guide.html",
    "verdict": "NEUTRAL",
    "coverage": "Redirect error",
-   "last_crawl": "2026-10-17T00:12:24Z"
+   "last_crawl": "2026-10-19T12:52:44Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/onlyoffice-ai-features-update.html",
    "verdict": "NEUTRAL",
    "coverage": "Redirect error",
-   "last_crawl": "2026-10-15T00:15:13Z"
+   "last_crawl": "2026-10-19T12:52:44Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/severance-pay-under-one-year.html",
@@ -601,7 +583,13 @@
    "url": "https://www.woodyway88.com/2026/10/minimum-wage-2027-monthly-pay.html",
    "verdict": "NEUTRAL",
    "coverage": "Redirect error",
-   "last_crawl": "2026-10-19T00:13:24Z"
+   "last_crawl": "2026-10-19T12:42:17Z"
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/three-years-work-severance-pay.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Redirect error",
+   "last_crawl": "2026-10-20T00:15:07Z"
   }
  ]
 }
