@@ -809,5 +809,21 @@
     "status": "SCHEDULED",
     "slot": "2026-10-19T20:00",
     "tool": "severance-pay-calculator"
+  },
+  {
+    "publish_date": "2026-10-20",
+    "post_id": "834508116729282748",
+    "title": "2027 공휴일, 설 연휴부터 10번의 3일 연휴 일정",
+    "url": "https://www.woodyway88.com/2026/10/korea-public-holidays-2027.html",
+    "source_url": "https://www.kasa.go.kr/prog/plcyBrf/brief/kor/sub01_01_04/view.do?plcyBrfNo=431",
+    "geeknews_url": "https://www.kasa.go.kr/prog/plcyBrf/brief/kor/sub01_01_04/view.do?plcyBrfNo=431",
+    "labels": [
+      "생활가이드",
+      "생활경제",
+      "일정"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-10-20T20:00",
+    "tool": "2027"
   }
 ]
