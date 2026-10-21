@@ -175,6 +175,8 @@ img{max-width:100%;height:auto}
 .rail-calc h2{font-family:'Noto Serif KR',serif;font-weight:900;font-size:21px}
 .rail-calc a{display:block;color:#fff;text-decoration:none;padding:9px 0;border-top:1px solid rgba(255,255,255,.35);font-weight:600}
 .rail-calc a:hover{text-decoration:underline}
+.rail-calc .rail-pick{display:block;margin:4px 0 10px;padding:12px 14px;background:var(--lemon);color:var(--ink);border:2px solid var(--ink);font-weight:800;text-decoration:none}
+.rail-calc .rail-pick small{display:block;font-size:12px;font-weight:700;margin-bottom:2px}
 .rail-calc .all{margin-top:8px;text-align:center;background:var(--lemon);color:var(--ink);border:2px solid var(--ink);font-weight:800}
 .empty{padding:40px 0;text-align:center}
 /* post body blocks from templates/post.html.j2 (im-*) */
@@ -373,6 +375,30 @@ img{max-width:100%;height:auto}
         </b:if>
       </b:includable>
 
+      <b:includable id='calcPick' var='post'>
+        <b:if cond='data:post.title contains &quot;주휴수당&quot;'>
+        <a class='rail-pick' href='https://tools.woodyway88.com/weekly-holiday-pay-calculator/'><small>이 글의 계산기</small>주휴수당 계산기 →</a>
+        <b:elseif cond='data:post.title contains &quot;실업급여&quot;'/>
+        <a class='rail-pick' href='https://tools.woodyway88.com/unemployment-benefit-calculator/'><small>이 글의 계산기</small>실업급여 계산기 →</a>
+        <b:elseif cond='data:post.title contains &quot;퇴직금&quot;'/>
+        <a class='rail-pick' href='https://tools.woodyway88.com/severance-pay-calculator/'><small>이 글의 계산기</small>퇴직금 계산기 →</a>
+        <b:elseif cond='data:post.title contains &quot;연차&quot;'/>
+        <a class='rail-pick' href='https://tools.woodyway88.com/annual-leave-calculator/'><small>이 글의 계산기</small>연차 계산기 →</a>
+        <b:elseif cond='data:post.title contains &quot;최저임금&quot;'/>
+        <a class='rail-pick' href='https://tools.woodyway88.com/minimum-wage-calculator/'><small>이 글의 계산기</small>최저임금 월급 계산기 →</a>
+        <b:elseif cond='data:post.title contains &quot;연말정산&quot;'/>
+        <a class='rail-pick' href='https://tools.woodyway88.com/year-end-tax-calculator/'><small>이 글의 계산기</small>연말정산 환급액 계산기 →</a>
+        <b:elseif cond='data:post.title contains &quot;공휴일&quot;'/>
+        <a class='rail-pick' href='https://tools.woodyway88.com/holidays/2027/'><small>이 글의 계산기</small>2027 공휴일·연차 꿀조합 →</a>
+        <b:elseif cond='data:post.title contains &quot;고속도로&quot;'/>
+        <a class='rail-pick' href='https://tools.woodyway88.com/highway-toll-reentry/'><small>이 글의 계산기</small>고속도로 재진입 요금 계산기 →</a>
+        <b:elseif cond='data:post.title contains &quot;주담대&quot;'/>
+        <a class='rail-pick' href='https://tools.woodyway88.com/mortgage-refinance-calculator/'><small>이 글의 계산기</small>주담대 갈아타기 계산기 →</a>
+        <b:elseif cond='data:post.title contains &quot;모두의카드&quot;'/>
+        <a class='rail-pick' href='https://tools.woodyway88.com/transit-refund-calculator/'><small>이 글의 계산기</small>모두의카드 환급 계산기 →</a>
+        </b:if>
+      </b:includable>
+
       <b:includable id='itemView' var='post'>
         <div class='post-wrap'>
           <article class='post-main'>
@@ -405,6 +431,7 @@ img{max-width:100%;height:auto}
           <aside aria-label='관련 정보' class='rail'>
             <div class='rail-box rail-calc'>
               <h2>내 금액 계산하기</h2>
+              <b:include data='post' name='calcPick'/>
               <a href='https://tools.woodyway88.com/unemployment-benefit-calculator/'>실업급여 계산기</a>
               <a href='https://tools.woodyway88.com/severance-pay-calculator/'>퇴직금 계산기</a>
               <a href='https://tools.woodyway88.com/weekly-holiday-pay-calculator/'>주휴수당 계산기</a>
