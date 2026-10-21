@@ -381,3 +381,43 @@ def test_new_kind_posts_get_kind_label_for_blog_menu(monkeypatch):
                        'FactCheck': [OK]})
     composed = pipeline.compose_howto_post(llm, MODELS, THU, (), get=lambda url: PAGE, is_alive=ALIVE)
     assert composed.draft.labels == [topics.HOWTO_LABEL, '생활경제', '바뀌는제도']
+
+
+# --- 지식창고 조사 연결 (2026-10-21) ---
+
+TUE = datetime(2026, 10, 20, 12, 0, tzinfo=KST)  # 화요일 = 일정 칸
+SUNEUNG_HINT = {'topic': '수능 일정', 'keywords': ['수능'], 'angle': '일정형',
+                'howto': {'query': '2027 수능 시간표', 'kind': 'schedule', 'slug': 'suneung-2027-timetable', 'area': '생활경제',
+                          'sources': [{'name': '한국교육과정평가원 수능 시행 안내', 'url': 'https://www.suneung.re.kr/'}]}}
+
+
+def test_research_howto_goes_first_when_kind_matches_today():
+    listed = guide('2027 설 연휴', 3, kind=howto_topic.SCHEDULE)
+    order = howto_topic.order_guides([listed], (), TUE, [SUNEUNG_HINT])
+    assert order[0].query == '2027 수능 시간표'
+    assert order[1] == listed
+
+
+def test_research_howto_waits_on_other_kind_days():
+    case = guide('퇴직금 3년 월급 300', 4, kind=howto_topic.CASE)
+    order = howto_topic.order_guides([case], (), MON, [SUNEUNG_HINT])
+    assert order[0] == case  # 월요일은 계산 사례 칸 — 요일 순환이 우선
+
+
+def test_listed_guide_matching_research_keyword_goes_first_within_kind():
+    holiday = guide('2027 설 연휴', 3, kind=howto_topic.SCHEDULE)
+    tax = guide('종합부동산세 납부기한', 5, kind=howto_topic.SCHEDULE)
+    hint = {'topic': '종부세 고지', 'keywords': ['종합부동산세', '종부세']}
+    assert howto_topic.order_guides([holiday, tax], (), TUE, [hint])[0] == tax
+    assert howto_topic.order_guides([holiday, tax], (), TUE)[0] == holiday  # 조사 없으면 목록 순서
+
+
+def test_research_howto_already_written_is_not_repeated():
+    past = (make_entry(url='https://www.woodyway88.com/2026/10/suneung-2027-timetable.html'),)
+    listed = guide('2027 설 연휴', 3, kind=howto_topic.SCHEDULE)
+    assert howto_topic.order_guides([listed], past, TUE, [SUNEUNG_HINT])[0] == listed
+
+
+def test_research_howto_without_https_source_is_ignored():
+    bad = {'topic': 'x', 'keywords': ['x'], 'howto': {'query': '무출처 글감', 'kind': 'schedule', 'sources': []}}
+    assert howto_topic.hint_guides([bad]) == ()

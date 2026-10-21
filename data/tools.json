@@ -272,5 +272,19 @@
       "성적 통지"
     ],
     "blurb": "수능 D-day와 교시별 시간표, 성적 발표일을 한 번에 확인해 보세요."
+  },
+  {
+    "title": "회의 비용 계산기",
+    "url": "https://tools.woodyway88.com/meeting-cost-calculator/",
+    "keywords": [
+      "회의 비용",
+      "회의비용"
+    ],
+    "context_keywords": [
+      "회의 비용",
+      "회의록",
+      "회의 시간"
+    ],
+    "blurb": "참석자 수와 연봉, 회의 시간만 넣으면 회의 한 번에 드는 인건비를 바로 계산해 보세요."
   }
 ]

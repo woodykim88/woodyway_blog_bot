@@ -15,6 +15,10 @@
 - 계산 예시(examples): 원고 모델이 직접 계산하면 검수가 "원문에 없는 금액"으로 걸러 숫자 없는 글이 나왔다 (2026-10-18 미리보기).
   그래서 예시 금액은 계산기와 같은 공식(정보마스터-계산기 lib)으로 미리 계산해 글감에 넣고, 원문 뒤에 붙여
   원고·검수 모두 근거로 쓴다.
+- 2026-10-21 지식창고 조사 연결: 키워드 데이터로 고른 그날의 소재(data/topic_hints.json, 3일 유효)를 쓴다.
+  ① 조사가 공식 출처까지 확인해 보낸 글감(hints 항목의 howto)은 오늘의 종류와 같으면 맨 먼저,
+  ② 목록 글감 중 조사 키워드가 검색어에 들어간 것은 같은 종류 안에서 먼저. 요일별 종류 순환은 그대로 지킨다
+  (조사는 재료일 뿐, 채널 구성이 우선 — 2026-10-15 사용자 원칙).
 """
 from __future__ import annotations
 
@@ -25,6 +29,7 @@ from dataclasses import dataclass, replace
 from datetime import datetime
 from pathlib import Path
 
+from src import topic_hints
 from src.history import HistoryEntry
 from src.models import Article, Candidate, Reference
 from src.schedule import KST
@@ -103,13 +108,20 @@ def _kind_priority(want: str) -> Callable[[HowtoGuide], int]:
     return lambda g: 0 if g.kind == want else (2 if g.kind == GUIDE else 1)
 
 
+def hint_guides(hints: Sequence[dict]) -> tuple[HowtoGuide, ...]:
+    """조사 소재 중 공식 출처까지 확인된 글감(howto). 검색어·https 출처가 없으면 버린다."""
+    return tuple(g for g in (_parse(h['howto']) for h in hints if isinstance(h.get('howto'), dict)) if g is not None)
+
+
 def _rank(
     group: Sequence[HowtoGuide], used_at: Callable[[HowtoGuide], int | None], want: str = '',
+    boosted: Callable[[HowtoGuide], int] = lambda g: 0,
 ) -> list[HowtoGuide]:
-    """안 쓴 글감(오늘의 종류 먼저, 같으면 목록 순서) 다음에 쓴 글감(가장 오래전에 쓴 순)."""
+    """안 쓴 글감(오늘의 종류 먼저, 같은 종류 안에서는 조사 소재 먼저, 같으면 목록 순서) 다음에 쓴 글감(가장 오래전에 쓴 순)."""
     fresh = [g for g in group if used_at(g) is None]
     if want:
-        fresh = sorted(fresh, key=_kind_priority(want))  # 안정 정렬이라 같은 종류 안에서는 목록 순서 유지
+        priority = _kind_priority(want)
+        fresh = sorted(fresh, key=lambda g: (priority(g), boosted(g)))  # 안정 정렬이라 같은 칸 안에서는 목록 순서 유지
     used = sorted((g for g in group if used_at(g) is not None), key=lambda g: used_at(g) or 0)
     return [*fresh, *used]
 
@@ -122,10 +134,22 @@ def _is_truncation(posted: str, slug: str) -> bool:
     return len(posted) >= MIN_TRUNCATED_SLUG and slug.startswith(posted + '-')
 
 
-def order_guides(guides: Sequence[HowtoGuide], past: Sequence[HistoryEntry], now: datetime) -> list[HowtoGuide]:
-    """제철(또는 사계절) 글감을 먼저: 안 쓴 것(오늘의 종류 먼저) → 오래전에 쓴 것. 제철 아닌 글감은 맨 뒤 (같은 규칙)."""
+def order_guides(
+    guides: Sequence[HowtoGuide], past: Sequence[HistoryEntry], now: datetime, hints: Sequence[dict] = (),
+) -> list[HowtoGuide]:
+    """제철(또는 사계절) 글감을 먼저: 안 쓴 것(오늘의 종류 먼저) → 오래전에 쓴 것. 제철 아닌 글감은 맨 뒤 (같은 규칙).
+    hints(지식창고 조사)가 있으면 조사가 보낸 글감 → 조사 키워드가 든 목록 글감 순으로 같은 종류 안에서 앞세운다."""
     month = now.astimezone(KST).month
     want = kind_of_day(now)
+    listed = {g.slug for g in guides if g.slug}
+    research = [g for g in hint_guides(hints) if not g.slug or g.slug not in listed]
+    guides = [*research, *guides]
+
+    def boosted(g: HowtoGuide) -> int:
+        if g in research:
+            return 0
+        return 1 if topic_hints.matches(g.query, list(hints)) else 2
+
     last_used: dict[str, int] = {}
     last_slug: dict[str, int] = {}
     for i, entry in enumerate(past):
@@ -147,7 +171,7 @@ def order_guides(guides: Sequence[HowtoGuide], past: Sequence[HistoryEntry], now
 
     seasonal = [g for g in guides if g.in_season(month)]
     off = [g for g in guides if not g.in_season(month)]
-    return [*_rank(seasonal, used_at, want), *_rank(off, used_at, want)]
+    return [*_rank(seasonal, used_at, want, boosted), *_rank(off, used_at, want, boosted)]
 
 
 def to_candidate(guide: HowtoGuide, source: Source, now: datetime) -> Candidate:
@@ -186,7 +210,8 @@ def iter_guides(
     guides: Sequence[HowtoGuide] | None = None,
 ) -> Iterator[tuple[HowtoGuide, Article]]:
     """공식 페이지를 읽어 낸 글감을 차례로. 필요한 만큼만 페이지를 연다."""
-    for guide in order_guides(load_guides() if guides is None else guides, past, now):
+    hints = topic_hints.load(now.astimezone(KST).date()) if guides is None else ()
+    for guide in order_guides(load_guides() if guides is None else guides, past, now, hints):
         article = build_article(guide, fetch, now)
         if article is not None:
             yield guide, article
