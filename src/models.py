@@ -130,11 +130,11 @@ class PostDraft(BaseModel):
     glossary: list[GlossaryItem] = Field(description='글 하단 용어사전. 본문에서 뺀 어려운 용어 0~6개')
     labels: list[Label] = Field(description='라벨 1~2개')
     meta_description: str = Field(description='검색 결과용 설명 150자 이내')
-    image_prompt: str = Field(description='대표 이미지용 영문 프롬프트. 주제를 상징하는 강렬한 사물 하나. 글자, 실존 인물, 로고 없이')
+    image_prompt: str = Field(description='대표 이미지용 영문 프롬프트. 주제를 담은 한 문장짜리 아이러니 한 컷(치환·주객 전도·장소 이동 등, 작은 무표정 가상 인물 가능). 글자, 실존 인물, 로고 없이')
     image_alt: str = Field(description='대표 이미지 대체 텍스트 (한국어)')
     body_image_prompts: list[str] = Field(
         default_factory=list,
-        description='본문 중간에 넣을 그림용 영문 프롬프트 정확히 1개. 대표 이미지와 다른 사물·장면으로, 본문 가운데 섹션 내용을 상징. 글자, 실존 인물, 로고, 사람 얼굴 없이',
+        description='본문 중간에 넣을 그림용 영문 프롬프트 정확히 1개. 대표 이미지와 다른 아이러니 한 컷으로, 본문 가운데 섹션 내용을 담음. 글자, 실존 인물, 로고 없이',
     )
     tool_idea: str = Field(
         default='',

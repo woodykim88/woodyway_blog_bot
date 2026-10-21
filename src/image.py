@@ -14,21 +14,26 @@ from src.providers import ImageBackend
 TARGET_WIDTH = 1200
 MAX_BYTES = 200 * 1024
 WEBP_QUALITIES = (82, 72, 62, 52)
-# 2026-10-13 사용자 지시: 이전 그림(어두운 녹슨 유화 톤)이 칙칙하다 → 밝고 선명한 에디토리얼 일러스트.
+# 2026-10-13 사용자 지시: 이전 그림(어두운 녹슨 유화 톤)이 칙칙하다 → 밝고 선명한 에디토리얼 일러스트(10-21 아래 스타일로 다시 교체).
 # 사람 손으로 그린 질감(과슈·종이결)은 유지하되 색은 채도 높게, 배경은 밝게. 왼쪽 45%는 비워 두고 그 자리에 썸네일 문구를 얹는다 (src/thumbnail.py)
+# 2026-10-21 사용자 지시: 풍자 개념 일러스트 스타일(~/Projects/인상적인 이미지/스타일분석.md)로 교체.
+# 균일한 검은 윤곽선 + 플랫 색 4~6개 + 배경 단색 하나가 화면 대부분 + 종이 그레인, 작은 무표정 인물 허용.
 _BRIGHT_LOOK = (
-    'bright cheerful modern editorial illustration, flat shapes with subtle gouache texture and soft paper grain, '
-    'hand-drawn feel, vibrant saturated colors (sunny yellow, coral orange, sky blue, mint green, hot pink accents), '
-    'clean high-contrast composition, bright daylight, optimistic playful mood, not dark, not moody, not gloomy, '
-    'not dirty, not rusty, not 3D, not glossy, not photorealistic, no CGI render look, no neon glow, no text, no '
-    'letters, no numbers, no logos, no real people, no human faces'
+    'conceptual satirical editorial illustration in ligne claire style, uniform-weight clean black ink outlines, '
+    'completely flat color fills, no gradients, no shading except one flat cast shadow, limited palette of 4 to 6 '
+    'bright slightly muted print colors (lemon yellow, cobalt blue, clay orange, grass green, tomato red), one dominant '
+    'flat background color covering most of the canvas, visible risograph paper grain over the whole image, '
+    'generous empty space, only 3 to 6 elements, minimal perspective, calm witty mood, small figures with realistic '
+    'proportions, dot eyes and deadpan neutral faces (no smiles), every person has exactly two arms and two hands, '
+    'not dark, not gloomy, not 3D, not glossy, not photorealistic, no CGI render look, no neon glow, no decorative '
+    'clouds, no text, no letters, no numbers, no logos, no real people'
 )
 STYLE_SUFFIX = (
-    f'{_BRIGHT_LOOK}, one bold symbolic object as the hero, subject on the right side of a landscape frame, '
-    'plain flat soft-colored uncluttered negative space on the left 45% of the frame'
+    f'{_BRIGHT_LOOK}, one visual irony as the hero, subject on the right side of a landscape frame, '
+    'plain flat uncluttered negative space on the left 45% of the frame'
 )
 # 본문 중간 그림: 같은 색감, 제목을 얹지 않으므로 가운데 구도
-BODY_STYLE_SUFFIX = f'{_BRIGHT_LOOK}, one clear symbolic scene or object centered in a landscape frame, simple uncluttered background'
+BODY_STYLE_SUFFIX = f'{_BRIGHT_LOOK}, one clear visual irony centered in a landscape frame, simple uncluttered background'
 BODY_WIDTH = 1000
 BODY_MAX_BYTES = 120 * 1024
 CACHE_CONTROL = 'public, max-age=31536000, immutable'
