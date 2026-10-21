@@ -433,7 +433,7 @@
     "area": "생활경제",
     "kind": "case",
     "months": [],
-    "tool": "minimum-wage-calculator",
+    "tool": "weekly-holiday-pay-calculator",
     "sources": [
       {
         "name": "고용노동부 고객상담센터 「주휴수당 관련 문의」 답변",
@@ -456,7 +456,7 @@
     "area": "생활경제",
     "kind": "case",
     "months": [],
-    "tool": "minimum-wage-calculator",
+    "tool": "weekly-holiday-pay-calculator",
     "sources": [
       {
         "name": "대한민국 정책브리핑 「저도 주휴수당을 받을 수 있나요?」",
@@ -1778,7 +1778,7 @@
     "slug": "weekly-holiday-pay-calculation",
     "area": "생활경제",
     "months": [],
-    "tool": "",
+    "tool": "weekly-holiday-pay-calculator",
     "sources": [
       {
         "name": "고용노동부 고객상담센터 「주휴수당 관련 문의」 답변",

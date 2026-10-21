@@ -161,7 +161,6 @@
     "url": "https://tools.woodyway88.com/minimum-wage-calculator/",
     "keywords": [
       "최저임금",
-      "주휴수당",
       "최저시급"
     ],
     "context_keywords": [
@@ -174,6 +173,22 @@
       "209시간"
     ],
     "blurb": "주 근무시간만 넣으면 주휴수당을 포함한 월급이 바로 나와요."
+  },
+  {
+    "title": "주휴수당 계산기",
+    "url": "https://tools.woodyway88.com/weekly-holiday-pay-calculator/",
+    "keywords": [
+      "주휴수당",
+      "주휴시간"
+    ],
+    "context_keywords": [
+      "주 15시간",
+      "근무일수",
+      "개근",
+      "알바",
+      "아르바이트"
+    ],
+    "blurb": "시급과 일하는 날·시간만 넣으면 이번 주 주휴수당이 바로 나와요."
   },
   {
     "title": "연말정산 신용카드 공제 계산기",
