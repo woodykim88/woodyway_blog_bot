@@ -825,5 +825,21 @@
     "status": "SCHEDULED",
     "slot": "2026-10-20T20:00",
     "tool": "2027"
+  },
+  {
+    "publish_date": "2026-10-21",
+    "post_id": "8490436939136750758",
+    "title": "월급 300 실업급여, 3년 가입이면 약 1,188만원",
+    "url": "https://www.woodyway88.com/2026/10/monthly-salary-3m-unemployment-benefit.html",
+    "source_url": "https://www.easylaw.go.kr/CSP/CnpClsMainBtr.laf?popMenu=ov&csmSeq=722&ccfNo=2&cciNo=3&cnpClsNo=2",
+    "geeknews_url": "https://www.easylaw.go.kr/CSP/CnpClsMainBtr.laf?popMenu=ov&csmSeq=722&ccfNo=2&cciNo=3&cnpClsNo=2",
+    "labels": [
+      "생활가이드",
+      "생활경제",
+      "계산사례"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-10-21T20:00",
+    "tool": "unemployment-benefit-calculator"
   }
 ]
