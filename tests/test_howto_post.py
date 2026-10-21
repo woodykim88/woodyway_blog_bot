@@ -83,6 +83,23 @@ def test_order_puts_todays_kind_first_then_new_kinds_then_old_guides():
     assert howto_topic.order_guides([old, change, schedule_, case], (), THU)[0] == change
 
 
+def test_morning_slot_kind_is_old_guide_and_evening_follows_weekday():
+    assert howto_topic.kind_for_slot(datetime(2026, 10, 19, 8, 0, tzinfo=KST)) == howto_topic.GUIDE
+    assert howto_topic.kind_for_slot(MON) == howto_topic.CASE
+    assert howto_topic.kind_for_slot(THU) == howto_topic.CHANGE
+    assert howto_topic.kind_for_slot(None) == ''  # 수동 발행은 요일 규칙 그대로
+
+
+def test_order_with_old_guide_kind_puts_old_guides_first_then_new_kinds():
+    old = guide('실업급여 신청 방법', 1)
+    change = guide('2027 최저임금', 2, kind=howto_topic.CHANGE)
+    case = guide('퇴직금 3년 월급 300', 4, kind=howto_topic.CASE)
+    order = howto_topic.order_guides([change, case, old], (), MON, want=howto_topic.GUIDE)
+    assert order == [old, change, case]
+    used_old = (make_entry(url='https://www.woodyway88.com/2026/10/slug-1.html'),)
+    assert howto_topic.order_guides([old, case], used_old, MON, want=howto_topic.GUIDE) == [case, old]
+
+
 def test_unused_other_kind_beats_reusing_todays_kind():
     case = guide('퇴직금 3년 월급 300', 4, kind=howto_topic.CASE)
     change = guide('2027 최저임금', 2, kind=howto_topic.CHANGE)
@@ -290,6 +307,27 @@ def test_run_routes_slot_by_time(routed, monkeypatch, at, howto_time, expected):
     env = {'PUBLISH_TIMES': '08:00,12:30,20:00', 'HOWTO_TIME': howto_time}
     result = pipeline.run('preview', None, env, providers.load_ai_settings({}), None, now=NOW)
     assert result.outcome == 'success' and routed == [expected]
+
+
+@pytest.mark.parametrize('at, want', [((8, 0), howto_topic.GUIDE), ((20, 0), howto_topic.CASE)])
+def test_run_passes_slot_kind_to_howto_post(monkeypatch, tmp_path, at, want):
+    monkeypatch.setattr(history, 'DEFAULT_HISTORY_PATH', tmp_path / 'history.json')
+    monkeypatch.setattr(pipeline.providers, 'build_text_backend', lambda p, env: None)
+    monkeypatch.setattr(pipeline.providers, 'build_image_backend', lambda p, env: None)
+    monkeypatch.setattr(pipeline, 'attach_hero_image', lambda c, *a, **k: c)
+    monkeypatch.setattr(pipeline, 'write_preview', lambda c: 'preview.html')
+    seen = {}
+
+    def howto(*a, want='', **k):
+        seen['want'] = want
+        return pipeline.Composed(make_article(), make_draft())
+
+    monkeypatch.setattr(pipeline, 'compose_howto_post', howto)
+    target = pipeline.Target('slot', datetime(2026, 10, 19, *at, tzinfo=KST), 'preview')  # 월요일
+    monkeypatch.setattr(pipeline, 'plan_targets', lambda *a, **k: [target])
+    env = {'PUBLISH_TIMES': '08:00,20:00'}
+    result = pipeline.run('preview', None, env, providers.load_ai_settings({}), None, now=NOW)
+    assert result.outcome == 'success' and seen['want'] == want
 
 
 def test_run_manual_post_is_news(routed):

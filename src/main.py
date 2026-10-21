@@ -388,11 +388,13 @@ def compose_howto_post(
     footer_url: str | None = DEFAULT_FOOTER_URL,
     day: date | None = None,
     limit: int = MAX_HOWTO_ATTEMPTS,
+    want: str = '',
 ) -> Composed | None:
-    """20:00 칸: 공식 안내 페이지로 검색형 생활 가이드 글을 씁니다. limit개 글감까지 써 보고 못 쓰면 None."""
+    """생활 가이드 칸: 공식 안내 페이지로 검색형 생활 가이드 글을 씁니다. limit개 글감까지 써 보고 못 쓰면 None.
+    want: 먼저 쓸 글 종류 (howto_topic.kind_for_slot)."""
     theme = topics.SPECS[topics.HOWTO].themes[0]
     fetch = lambda candidate: fetcher.fetch_article(get, candidate)  # noqa: E731
-    for tried, (guide, article) in enumerate(howto_topic.iter_guides(past, fetch, now), start=1):
+    for tried, (guide, article) in enumerate(howto_topic.iter_guides(past, fetch, now, want=want), start=1):
         print(f'[생활 가이드] {guide.kind} · {guide.query} (공식 안내 {1 + len(article.references)}곳)')
         draft = draft_article(llm, models, article, theme, past, is_alive, topics.HOWTO, target_query=guide.query, day=day,
                               kind_rules=howto_kind_rules(guide.kind))
@@ -424,11 +426,12 @@ def compose_evening_post(
     is_alive: Callable[[str], bool] = url_is_alive,
     footer_url: str | None = DEFAULT_FOOTER_URL,
     day: date | None = None,
+    want: str = '',
 ) -> Composed:
     """생활 가이드 칸(08:00·20:00): 생활 가이드 → (못 쓰면) 평소 뉴스 글. 칸은 절대 비우지 않는다."""
     kwargs = {'get': get, 'is_alive': is_alive, 'footer_url': footer_url, 'day': day}
     try:
-        composed = compose_howto_post(llm, models, now, past, **kwargs)
+        composed = compose_howto_post(llm, models, now, past, want=want, **kwargs)
     except LLMError as e:
         print(f'[생활 가이드] AI 응답 오류: {e}')
         composed = None
@@ -804,7 +807,8 @@ def run(
             if is_skill_slot(target.publish_at, skill_time):
                 composed = compose_slot_post(llm, models, now, past, footer_url=footer_url, day=day)
             elif any(is_skill_slot(target.publish_at, t) for t in howto_times):
-                composed = compose_evening_post(llm, models, now, past, footer_url=footer_url, day=day)
+                composed = compose_evening_post(llm, models, now, past, footer_url=footer_url, day=day,
+                                                want=howto_topic.kind_for_slot(target.publish_at))
             else:
                 composed = compose_post(llm, models, now, past, footer_url=footer_url, day=day)
             composed = attach_hero_image(

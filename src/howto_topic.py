@@ -103,6 +103,14 @@ def kind_of_day(now: datetime) -> str:
     return KIND_BY_WEEKDAY[now.astimezone(KST).weekday()]
 
 
+def kind_for_slot(publish_at: datetime | None) -> str:
+    """예약 칸의 글 종류. 오전 칸(08:00)은 기존 안내형, 오후·저녁 칸은 요일 종류. 시각이 없으면 '' (요일 규칙).
+    2026-10-21 하루 2편(08:00·20:00)으로 늘리며 같은 날 같은 종류 글이 겹치지 않게 했다 (사용자 승인)."""
+    if publish_at is None:
+        return ''
+    return GUIDE if publish_at.astimezone(KST).hour < 12 else kind_of_day(publish_at)
+
+
 def _kind_priority(want: str) -> Callable[[HowtoGuide], int]:
     """오늘의 종류 → 다른 새 종류(계산 사례·일정·숫자 변경) → 기존 안내형."""
     return lambda g: 0 if g.kind == want else (2 if g.kind == GUIDE else 1)
@@ -136,11 +144,13 @@ def _is_truncation(posted: str, slug: str) -> bool:
 
 def order_guides(
     guides: Sequence[HowtoGuide], past: Sequence[HistoryEntry], now: datetime, hints: Sequence[dict] = (),
+    want: str = '',
 ) -> list[HowtoGuide]:
     """제철(또는 사계절) 글감을 먼저: 안 쓴 것(오늘의 종류 먼저) → 오래전에 쓴 것. 제철 아닌 글감은 맨 뒤 (같은 규칙).
-    hints(지식창고 조사)가 있으면 조사가 보낸 글감 → 조사 키워드가 든 목록 글감 순으로 같은 종류 안에서 앞세운다."""
+    hints(지식창고 조사)가 있으면 조사가 보낸 글감 → 조사 키워드가 든 목록 글감 순으로 같은 종류 안에서 앞세운다.
+    want: 먼저 쓸 종류 (kind_for_slot). 비어 있으면 요일 종류."""
     month = now.astimezone(KST).month
-    want = kind_of_day(now)
+    want = want or kind_of_day(now)
     listed = {g.slug for g in guides if g.slug}
     research = [g for g in hint_guides(hints) if not g.slug or g.slug not in listed]
     guides = [*research, *guides]
@@ -208,10 +218,11 @@ def iter_guides(
     fetch: Callable[[Candidate], Article | None],
     now: datetime,
     guides: Sequence[HowtoGuide] | None = None,
+    want: str = '',
 ) -> Iterator[tuple[HowtoGuide, Article]]:
     """공식 페이지를 읽어 낸 글감을 차례로. 필요한 만큼만 페이지를 연다."""
     hints = topic_hints.load(now.astimezone(KST).date()) if guides is None else ()
-    for guide in order_guides(load_guides() if guides is None else guides, past, now, hints):
+    for guide in order_guides(load_guides() if guides is None else guides, past, now, hints, want):
         article = build_article(guide, fetch, now)
         if article is not None:
             yield guide, article
