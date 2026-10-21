@@ -518,9 +518,9 @@ def drop_howto_label(draft: PostDraft, fallback: str) -> PostDraft:
 
 
 def headline_of(draft: PostDraft, category: str = topics.TECH) -> thumbnail.Headline:
-    """대표 이미지에 얹을 썸네일 문구. 왼쪽 위 라벨은 글의 첫 번째 라벨, 왼쪽 색은 분야별."""
+    """대표 이미지에 얹을 썸네일 문구. 왼쪽 위 라벨은 글의 첫 번째 라벨, 왼쪽 색은 그림 배경색(2026-10-21, 전엔 분야별)."""
     label = draft.labels[0] if draft.labels else ''
-    return thumbnail.Headline(draft.thumbnail_text, draft.thumbnail_highlight, label, thumbnail.tint_for(category))
+    return thumbnail.Headline(draft.thumbnail_text, draft.thumbnail_highlight, label)  # 왼쪽 색은 그림 배경색에서 뽑는다
 
 
 def attach_hero_image(

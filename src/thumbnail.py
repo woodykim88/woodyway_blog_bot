@@ -11,7 +11,7 @@ from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
+from PIL import Image, ImageDraw, ImageFont, ImageOps, ImageStat
 
 CANVAS = (1200, 800)
 MARGIN_X = 60
@@ -19,7 +19,8 @@ MAX_TEXT_WIDTH = round(CANVAS[0] * 0.52)
 START_SIZE = 110
 MIN_SIZE = 56
 LINE_HEIGHT = 1.18
-STROKE_RATIO = 0.022     # 같은 색 테두리로 글자를 한 단계 더 굵게 (Noto Bold → Black 느낌)
+STROKE_RATIO = 0.022     # 강조 단어: 같은 색 테두리로 한 단계 더 굵게 (Noto Bold → Black 느낌)
+OUTLINE_RATIO = 0.06     # 흰 글자의 진한 남색 테두리 두께 (2026-10-21: 흰 테두리+흐린 그림자는 밝은 배경에서 뭉개졌다)
 SIZE_STEP = 4
 GRADIENT_ALPHA = 0.92      # 맨 왼쪽 색 농도
 GRADIENT_HOLD = 0.46       # 이 비율 지점까지는 색을 그대로 유지 (글자 뒤가 탁해지지 않게)
@@ -27,9 +28,9 @@ GRADIENT_END = 0.62        # 이 비율 지점에서 그라데이션이 0이 된
 TEXT_COLOR = (255, 255, 255)
 HIGHLIGHT_COLOR = (255, 214, 10, 255)  # 선명한 노랑 형광펜 (2026-10-13: 반투명은 파랑·초록 위에서 탁해져 불투명으로)
 HIGHLIGHT_TEXT_COLOR = (20, 24, 64)    # 노랑 위 진한 남색 글자
-SHADOW_OFFSET = 5
-SHADOW_BLUR = 6
-SHADOW_ALPHA = 200
+OUTLINE_COLOR = HIGHLIGHT_TEXT_COLOR
+YELLOWISH_DISTANCE = 110  # 배경색이 형광펜 노랑과 이만큼 가까우면 강조 상자를 뒤집는다 (남색 상자 + 노랑 글자)
+SAMPLE_WIDTH = 0.4       # 배경색을 뽑는 왼쪽 영역 비율
 LABEL_COLOR = '#FF3B5C'
 LABEL_SIZE = 32
 LABEL_TOP = 64
@@ -62,7 +63,7 @@ class Headline:
     text: str             # 2줄 문구, 줄바꿈 1개
     highlight: str = ''   # 노란 형광펜으로 칠할 단어
     label: str = ''       # 왼쪽 위 빨간 알약 (블로그 라벨)
-    tint: tuple[int, int, int] = DEFAULT_TINT  # 왼쪽 색 오버레이
+    tint: tuple[int, int, int] | None = None  # 왼쪽 색 오버레이. None이면 그림 왼쪽 배경색을 뽑아 쓴다(2026-10-21)
 
 
 FONT_CANDIDATES: tuple[FontSpec, ...] = (
@@ -110,6 +111,21 @@ def cover(image: Image.Image, size: tuple[int, int] = CANVAS) -> Image.Image:
     return ImageOps.fit(image.convert('RGB'), size, Image.LANCZOS)
 
 
+def sample_tint(image: Image.Image) -> tuple[int, int, int]:
+    """그림 왼쪽 영역의 중앙값 색. 단색 배경 일러스트에서는 그 배경색이 나온다."""
+    left = image.convert('RGB').crop((0, 0, round(image.width * SAMPLE_WIDTH), image.height))
+    r, g, b = (round(v) for v in ImageStat.Stat(left).median)
+    return r, g, b
+
+
+def highlight_colors(tint: tuple[int, int, int]) -> tuple[tuple[int, int, int, int], tuple[int, int, int]]:
+    """강조 상자 색과 그 위 글자 색. 노랑 배경에서는 노랑 상자가 묻히므로 남색 상자 + 노랑 글자 (2026-10-21)."""
+    distance = sum((a - b) ** 2 for a, b in zip(tint, HIGHLIGHT_COLOR[:3])) ** 0.5
+    if distance < YELLOWISH_DISTANCE:
+        return (*HIGHLIGHT_TEXT_COLOR, 255), HIGHLIGHT_COLOR[:3]
+    return HIGHLIGHT_COLOR, HIGHLIGHT_TEXT_COLOR
+
+
 def darken_left(image: Image.Image, tint: tuple[int, int, int] = (0, 0, 0)) -> Image.Image:
     """왼쪽은 tint 색 92%, GRADIENT_END 지점에서 0이 되는 그라데이션을 덮습니다."""
     width, height = image.size
@@ -140,42 +156,34 @@ def _baselines(font: ImageFont.FreeTypeFont, count: int, height: int) -> list[in
     return [first + i * step for i in range(count)]
 
 
-def _draw_shadow(image: Image.Image, lines: Sequence[str], font: ImageFont.FreeTypeFont,
-                 baselines: Sequence[int]) -> Image.Image:
-    layer = Image.new('RGBA', image.size, (0, 0, 0, 0))
-    draw = ImageDraw.Draw(layer)
-    for line, y in zip(lines, baselines):
-        draw.text((MARGIN_X + SHADOW_OFFSET, y + SHADOW_OFFSET), line, font=font, anchor='ls',
-                  fill=(0, 0, 0, SHADOW_ALPHA), stroke_width=_stroke(font), stroke_fill=(0, 0, 0, SHADOW_ALPHA))
-    layer = layer.filter(ImageFilter.GaussianBlur(SHADOW_BLUR))
-    return Image.alpha_composite(image, layer)
-
-
-def _paint_box(canvas: Image.Image, box: tuple[float, float, float, float], radius: int) -> None:
+def _paint_box(canvas: Image.Image, box: tuple[float, float, float, float], radius: int,
+               fill: tuple[int, int, int, int] = HIGHLIGHT_COLOR) -> None:
     """반투명 상자는 별도 층에 그려 합성합니다 (RGBA 캔버스에 바로 칠하면 섞이지 않고 구멍이 난다)."""
     layer = Image.new('RGBA', canvas.size, (0, 0, 0, 0))
-    ImageDraw.Draw(layer).rounded_rectangle(box, radius=radius, fill=HIGHLIGHT_COLOR)
+    ImageDraw.Draw(layer).rounded_rectangle(box, radius=radius, fill=fill)
     canvas.alpha_composite(layer)
 
 
-def _draw_line(canvas: Image.Image, line: str, highlight: str, font: ImageFont.FreeTypeFont, y: int) -> None:
+def _draw_line(canvas: Image.Image, line: str, highlight: str, font: ImageFont.FreeTypeFont, y: int,
+               tint: tuple[int, int, int] = DEFAULT_TINT) -> None:
     before, marked, after = split_highlight(line, highlight)
     x = MARGIN_X
-    stroke = _stroke(font)
+    stroke, outline = _stroke(font), round(font.size * OUTLINE_RATIO)
     draw = ImageDraw.Draw(canvas)
-    draw.text((x, y), before, font=font, anchor='ls', fill=TEXT_COLOR, stroke_width=stroke, stroke_fill=TEXT_COLOR)
+    draw.text((x, y), before, font=font, anchor='ls', fill=TEXT_COLOR, stroke_width=outline, stroke_fill=OUTLINE_COLOR)
     x += font.getlength(before)
     if marked:
         top, bottom = _glyph_box(font)
         pad_x, pad_y = round(font.size * 0.14), round(font.size * 0.03)
         width = font.getlength(marked)
+        box_color, marked_color = highlight_colors(tint)
         _paint_box(canvas, (x - pad_x / 2, y + top - pad_y, x + width + pad_x, y + bottom + pad_y),
-                   round(font.size * 0.14))
+                   round(font.size * 0.14), box_color)
         draw = ImageDraw.Draw(canvas)
-        draw.text((x + pad_x / 4, y), marked, font=font, anchor='ls', fill=HIGHLIGHT_TEXT_COLOR,
-                  stroke_width=stroke, stroke_fill=HIGHLIGHT_TEXT_COLOR)
+        draw.text((x + pad_x / 4, y), marked, font=font, anchor='ls', fill=marked_color,
+                  stroke_width=stroke, stroke_fill=marked_color)
         x += width + pad_x * 1.25
-    draw.text((x, y), after, font=font, anchor='ls', fill=TEXT_COLOR, stroke_width=stroke, stroke_fill=TEXT_COLOR)
+    draw.text((x, y), after, font=font, anchor='ls', fill=TEXT_COLOR, stroke_width=outline, stroke_fill=OUTLINE_COLOR)
 
 
 def _draw_label(draw: ImageDraw.ImageDraw, label: str, font_spec: FontSpec) -> None:
@@ -188,13 +196,15 @@ def _draw_label(draw: ImageDraw.ImageDraw, label: str, font_spec: FontSpec) -> N
 
 
 def render(image: Image.Image, headline: Headline, font_spec: FontSpec) -> Image.Image:
-    """CANVAS 크기로 맞춘 뒤 그라데이션 → 그림자 → 문구 → 라벨 순서로 그립니다."""
+    """CANVAS 크기로 맞춘 뒤 그라데이션 → 문구(남색 테두리) → 라벨 순서로 그립니다."""
     lines = [line.strip() for line in headline.text.strip().split('\n') if line.strip()]
     font = fit_font(font_spec, lines)
     baselines = _baselines(font, len(lines), CANVAS[1])
-    canvas = _draw_shadow(darken_left(cover(image), headline.tint).convert('RGBA'), lines, font, baselines)
+    picture = cover(image)
+    tint = headline.tint or sample_tint(picture)
+    canvas = darken_left(picture, tint).convert('RGBA')
     for line, y in zip(lines, baselines):
-        _draw_line(canvas, line, headline.highlight.strip(), font, y)
+        _draw_line(canvas, line, headline.highlight.strip(), font, y, tint)
     if headline.label.strip():
         _draw_label(ImageDraw.Draw(canvas), headline.label.strip(), font_spec)
     return canvas.convert('RGB')

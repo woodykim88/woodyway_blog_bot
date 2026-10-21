@@ -83,12 +83,33 @@ def test_add_headline_bad_font_path_returns_original(capsys):
 
 @needs_font
 def test_add_headline_renders_cover_size_and_darkens_left():
-    out = thumbnail.add_headline(solid(), HEADLINE, FONT)
+    out = thumbnail.add_headline(solid(), replace(HEADLINE, tint=(0, 150, 110)), FONT)
     im = opened(out)
     assert im.size == thumbnail.CANVAS
     left, right = im.getpixel((20, 790)), im.getpixel((1180, 790))
-    assert left == pytest.approx(thumbnail.DEFAULT_TINT, abs=12)  # 왼쪽은 분야 색 오버레이가 덮인다
+    assert left == pytest.approx((3, 143, 117), abs=12)  # 지정한 색이 92%로 덮인다
     assert right == pytest.approx((40, 90, 200), abs=6)  # 오른쪽 주제 영역은 그대로
+
+
+def test_headline_without_tint_uses_picture_background_color():
+    """2026-10-21: 단색 배경 일러스트와 분야 색이 섞여 탁해지지 않게, 기본은 그림 왼쪽의 배경색을 뽑아 깐다."""
+    im = opened(thumbnail.add_headline(solid(color=(245, 210, 40)), HEADLINE, FONT))
+    assert im.getpixel((20, 790)) == pytest.approx((245, 210, 40), abs=10)
+
+
+def test_sample_tint_takes_median_of_left_area():
+    picture = Image.new('RGB', (1200, 800), (30, 80, 200))
+    picture.paste((250, 250, 250), (1000, 0, 1200, 800))  # 오른쪽 주제는 무시
+    assert thumbnail.sample_tint(picture) == pytest.approx((30, 80, 200), abs=2)
+
+
+@needs_font
+def test_white_text_has_dark_outline_for_readability():
+    """흰 글자에 진한 남색 테두리 (2026-10-21: 흰 테두리+흐린 그림자는 밝은 배경에서 뭉개졌다)."""
+    im = opened(thumbnail.add_headline(solid(color=(245, 210, 40)), thumbnail.Headline('월 3만원\n아끼는 설정'), FONT))
+    text_area = im.crop((0, 0, round(im.width * 0.6), im.height))
+    navy = sum(1 for r, g, b in pixels(text_area) if r < 60 and g < 60 and b < 110)
+    assert navy > 3000
 
 
 @needs_font
@@ -128,3 +149,12 @@ def test_split_highlight():
     assert thumbnail.split_highlight('배터리 2배', '2배') == ('배터리 ', '2배', '')
     assert thumbnail.split_highlight('배터리 2배', '') == ('배터리 2배', '', '')
     assert thumbnail.split_highlight('배터리 2배', '3배') == ('배터리 2배', '', '')
+
+
+@needs_font
+def test_highlight_box_turns_navy_on_yellow_background():
+    """2026-10-21: 노랑 배경 일러스트에서 노랑 강조 상자가 배경에 묻혔다 → 배경이 노랑에 가까우면 남색 상자 + 노랑 글자."""
+    im = opened(thumbnail.add_headline(solid(color=(250, 215, 30)), HEADLINE, FONT))
+    navy_box = sum(1 for r, g, b in pixels(im) if r < 40 and g < 40 and 50 < b < 90)
+    assert navy_box > 5000
+    assert thumbnail.highlight_colors((40, 90, 200)) == (thumbnail.HIGHLIGHT_COLOR, thumbnail.HIGHLIGHT_TEXT_COLOR)

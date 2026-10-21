@@ -4,13 +4,15 @@ from __future__ import annotations
 import re
 from collections.abc import Callable
 from dataclasses import dataclass
-from datetime import date
+from datetime import date, timedelta, timezone
 
 from src import kr_calendar
 from src.history import HistoryEntry
 from src.llm import LLMClient, load_prompt
 from src.models import Article, ClaimCheck, FactCheck, PostDraft
 from src.selector import TITLE_SIMILARITY_THRESHOLD, title_similarity
+
+KST = timezone(timedelta(hours=9))
 
 # 품질 하한 (2026-10-03 사용자 결정): 최근 글이 1,900~3,100자에 소제목(h2)이 없어 검색 유입이 줄었다.
 # 본문 2,500자 이상, h2 섹션 3개 이상. 못 채우면 한 번 다시 쓰고, 그래도 모자라면 발행은 한다 (발행 건너뛰기 금지).
@@ -229,11 +231,18 @@ def check_source(article: Article, is_alive: Callable[[str], bool]) -> list[str]
     return [] if is_alive(article.source_url) else [f'출처 링크가 열리지 않습니다: {article.source_url}']
 
 
+def article_date(article: Article) -> date:
+    """원문 기사의 한국 날짜 (발행 시각이 UTC로 들어온다)."""
+    return article.candidate.published.astimezone(KST).date()
+
+
 def check_fact_claims(
     llm: LLMClient, model: str, draft: PostDraft, article: Article, day: date | None = None,
 ) -> list[ClaimCheck]:
     calendar = f'--- 달력 사실 (근거로 인정) ---\n{kr_calendar.calendar_facts(day)}\n\n' if day is not None else ''
-    user_input = f'{calendar}--- 원문 ---\n{article.text}\n\n--- 작성된 글 ---\n{fact_check_text(draft)}'
+    # 원문의 '올해·지난해·내년'을 숫자 연도로 바꾼 문장을 근거 없음으로 잡지 않게 기사 날짜를 함께 준다 (2026-10-21)
+    dated = f'원문 기사 날짜: {article_date(article).isoformat()}\n\n'
+    user_input = f'{calendar}{dated}--- 원문 ---\n{article.text}\n\n--- 작성된 글 ---\n{fact_check_text(draft)}'
     result = llm.parse(model, load_prompt('factcheck'), user_input, FactCheck, effort=CHECK_EFFORT, stage='factcheck')
     return [c for c in result.claims if c.kind == 'unsupported_fact']
 

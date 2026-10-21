@@ -111,3 +111,17 @@ def test_rescue_removes_wrong_timing_sentence_only():
     fixed = rescue.rescue(llm, 'f', draft, make_article(), report.unsupported, (), ALIVE, SUN)
     assert fixed is not None
     assert '월요일 출근' not in fixed.why_it_matters and '시간이 절약됩니다' in fixed.why_it_matters
+
+
+def test_factcheck_input_has_article_date_for_relative_years():
+    """2026-10-21: '올해 1~9월'을 '2026년 1~9월'로 바꾼 문장이 근거 없음으로 빠져 핵심 문장이 사라졌다.
+    검수에 원문 기사 날짜를 함께 넘겨 올해·지난해·내년을 숫자 연도로 바꾼 것을 근거로 인정하게 한다."""
+    llm, client = fake_llm({'FactCheck': [OK]})
+    quality.check_fact_claims(llm, 'fast', make_draft(), make_article())
+    sent = str(client.requests[0]['input'])
+    assert '원문 기사 날짜: 2026-09-25' in sent and sent.index('원문 기사 날짜') < sent.index('--- 원문 ---')
+
+
+def test_factcheck_prompt_accepts_relative_year_conversion():
+    prompt = quality.load_prompt('factcheck')
+    assert '올해' in prompt and '원문 기사 날짜' in prompt
