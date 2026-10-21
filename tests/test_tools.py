@@ -51,7 +51,7 @@ def test_calculator_button_sits_above_key_points_and_repeats_at_end():
     assert first < html.find('<h2>핵심 내용</h2>')  # 첫 화면에서 바로 보이게
     assert last > html.find('<h2>내일 바로 써먹기</h2>')  # 다 읽은 사람에게 한 번 더
     assert html.count(TRANSIT.url) == 2
-    assert 'display:block' in html[first - 300:first + 300]  # 글자 링크가 아니라 큰 버튼
+    assert 'class="im-btn"' in html[max(0, first - 300):first + 300]  # 글자 링크가 아니라 큰 버튼 (테마 CSS)
 
 
 def test_success_message_includes_tool_idea():

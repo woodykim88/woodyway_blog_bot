@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:css='false' b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true' expr:dir='data:blog.languageDirection' lang='ko-KR' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+  <meta charset='utf-8'/>
+  <meta content='width=device-width, initial-scale=1' name='viewport'/>
+  <b:if cond='data:view.isHomepage'>
+    <title>정보마스터 | 실업급여·퇴직금·연말정산 계산과 생활 제도 정리</title>
+  <b:elseif cond='data:view.isLabelSearch'/>
+    <title><data:view.search.label/> 글 모음 - 정보마스터</title>
+  <b:elseif cond='data:view.isSingleItem'/>
+    <title><data:view.title.escaped/> - 정보마스터</title>
+  <b:else/>
+    <title><data:blog.pageTitle/></title>
+  </b:if>
+  <meta content='blogger' name='generator'/>
+  <link expr:href='data:blog.blogspotFaviconUrl' rel='icon' type='image/x-icon'/>
+  <link expr:href='data:view.url.canonical' rel='canonical'/>
+  <link expr:href='data:blog.homepageUrl.canonical + &quot;feeds/posts/default&quot;' expr:title='data:blog.title + &quot; - Atom&quot;' rel='alternate' type='application/atom+xml'/>
+  <link expr:href='data:blog.homepageUrl.canonical + &quot;feeds/posts/default?alt=rss&quot;' expr:title='data:blog.title + &quot; - RSS&quot;' rel='alternate' type='application/rss+xml'/>
+  <b:comment>글별 검색 설명이 없으면 블로그 공통 설명을 모든 글에 붙이지 않는다(중복 설명 방지, 구글이 본문에서 요약).</b:comment>
+  <b:if cond='data:view.isSingleItem'>
+    <b:if cond='data:blog.metaDescription'>
+      <meta expr:content='data:blog.metaDescription' name='description'/>
+      <meta expr:content='data:blog.metaDescription' property='og:description'/>
+    </b:if>
+  <b:elseif cond='data:view.description'/>
+    <meta expr:content='data:view.description.escaped' name='description'/>
+    <meta expr:content='data:view.description.escaped' property='og:description'/>
+  </b:if>
+  <meta expr:content='data:view.url.canonical' property='og:url'/>
+  <meta expr:content='data:view.title.escaped' property='og:title'/>
+  <b:if cond='data:view.featuredImage'>
+    <meta expr:content='resizeImage(data:view.featuredImage, 1200, &quot;1200:630&quot;)' property='og:image'/>
+  </b:if>
+  <b:if cond='data:view.isSearch or data:view.isArchive or data:view.isError'>
+    <meta content='noindex,follow' name='robots'/>
+  <b:else/>
+    <meta content='index,follow,max-image-preview:large' name='robots'/>
+  </b:if>
+  <meta content='#f3eee3' name='theme-color'/>
+  <meta content='정보마스터' property='og:site_name'/>
+  <meta content='ko_KR' property='og:locale'/>
+  <b:if cond='data:view.isPost'>
+    <meta content='article' property='og:type'/>
+  <b:else/>
+    <meta content='website' property='og:type'/>
+  </b:if>
+  <meta content='summary_large_image' name='twitter:card'/>
+  <meta expr:content='data:view.title.escaped' name='twitter:title'/>
+  <b:if cond='data:view.featuredImage'>
+    <meta expr:content='data:view.featuredImage' name='twitter:image'/>
+  </b:if>
+  <meta content='98e0641f1492a0734e63b91fac6b8791f510f53d' name='naver-site-verification'/>
+  <meta content='8d19c09b7cc0cd9c9293b999e6aff56899e9d9a5' name='naver-site-verification'/>
+  <meta content='9C53EB32A56F1E031330EEA37B8A227C' name='msvalidate.01'/>
+  <link href='https://cdn.jsdelivr.net' rel='preconnect'/>
+  <link href='https://fonts.googleapis.com' rel='preconnect'/>
+  <link crossorigin='anonymous' href='https://fonts.gstatic.com' rel='preconnect'/>
+  <link href='https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css' rel='stylesheet'/>
+  <link href='https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@900&amp;display=swap' rel='stylesheet'/>
+  <script async='async' crossorigin='anonymous' src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1848068079213715'/>
+  <b:if cond='data:view.isHomepage'>
+    <script type='application/ld+json'>{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.woodyway88.com/#website","url":"https://www.woodyway88.com/","name":"정보마스터","description":"실업급여·퇴직금·주휴수당·연말정산, 내 금액을 숫자로 먼저 보여 주고 기준일과 출처를 함께 적는 생활 제도 계산 노트","inLanguage":"ko-KR","publisher":{"@id":"https://www.woodyway88.com/#org"},"potentialAction":{"@type":"SearchAction","target":"https://www.woodyway88.com/search?q={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"Organization","@id":"https://www.woodyway88.com/#org","name":"정보마스터","url":"https://www.woodyway88.com/","sameAs":["https://tools.woodyway88.com/"]}]}</script>
+  </b:if>
+  <b:skin><![CDATA[
+/* 정보마스터 theme (2026-10-22): 첫 화면·썸네일은 에디토리얼(B), 본문은 차분한 흰 바탕(A) */
+:root{--ink:#161616;--paper:#f3eee3;--card:#ffffff;--muted:#4b4b4b;--line:#e4e1d8;--lemon:#f4d23c;--cobalt:#2b5fd9;--clay:#e2622e;--green:#23743f;--link:#1f5fd1}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
+a{color:var(--link)}
+img{max-width:100%;height:auto}
+.wrap{max-width:1160px;margin:0 auto;padding:0 16px}
+.serif{font-family:'Noto Serif KR',serif;font-weight:900;letter-spacing:-.02em}
+.num{font-variant-numeric:tabular-nums}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:#fff;padding:8px 12px;z-index:9}
+.skip:focus{left:8px}
+/* header */
+.site-head{background:var(--paper);border-bottom:2px solid var(--ink);position:relative;z-index:5}
+.head-row{display:flex;align-items:center;gap:12px 28px;min-height:66px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;margin:0;font-size:22px}
+.logo svg{flex:0 0 auto}
+.nav{display:flex;align-items:center;gap:2px 22px;flex:1 1 auto;font-size:15px;font-weight:700}
+.nav>a,.nav summary{color:var(--ink);text-decoration:none;padding:10px 0;cursor:pointer;list-style:none;display:block}
+.nav summary::-webkit-details-marker{display:none}
+.nav summary:after{content:"";display:inline-block;width:6px;height:6px;border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(45deg);margin:0 0 3px 7px}
+.nav details{position:relative}
+.nav details ul{position:absolute;left:-12px;top:100%;margin:0;padding:8px 0;list-style:none;background:#fff;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);min-width:220px}
+.nav details li a{display:block;padding:9px 16px;color:var(--ink);text-decoration:none;font-weight:600}
+.nav details li a:hover{background:#fbf3c9}
+.nav>a:hover,.nav summary:hover{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px}
+.search-box{position:relative}
+.search-box summary{list-style:none;width:44px;height:44px;border:2px solid var(--ink);background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.search-box summary::-webkit-details-marker{display:none}
+.search-box form{position:absolute;right:0;top:52px;display:flex;gap:6px;background:#fff;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:10px;width:min(360px,calc(100vw - 32px))}
+.search-box input{flex:1;min-width:0;height:44px;border:2px solid var(--ink);padding:0 12px;font:inherit}
+.search-box button,.btn-ink{height:44px;border:2px solid var(--ink);background:var(--ink);color:var(--paper);font:inherit;font-weight:800;padding:0 16px;cursor:pointer}
+/* home hero */
+.hero{display:flex;flex-wrap:wrap;gap:28px 44px;align-items:center;padding:44px 0 36px}
+.hero-text{flex:1 1 420px;min-width:0}
+.kicker{display:inline-block;font-size:13px;font-weight:800;letter-spacing:.06em;border:2px solid var(--ink);background:#fff;padding:3px 10px}
+.hero h1{font-size:44px;line-height:1.28;margin:16px 0 14px}
+.hero p{font-size:17px;line-height:1.7;color:#333;margin:0 0 20px}
+.hero form{display:flex;gap:8px;flex-wrap:wrap}
+.hero input{flex:1 1 240px;min-width:0;height:54px;border:2px solid var(--ink);background:#fff;padding:0 16px;font:inherit;font-size:16px}
+.hero .btn-ink{height:54px;padding:0 24px}
+.hero-list{flex:1 1 420px;min-width:0;border:2px solid var(--ink);background:#fff;box-shadow:6px 6px 0 var(--ink)}
+.hero-list h2{margin:0;font-size:15px;font-weight:800;padding:12px 18px;background:var(--lemon);border-bottom:2px solid var(--ink)}
+.hero-list a{display:flex;gap:6px 16px;align-items:baseline;flex-wrap:wrap;padding:16px 18px;border-bottom:1px solid var(--ink);color:var(--ink);text-decoration:none}
+.hero-list a:last-child{border-bottom:0}
+.hero-list a:hover{background:#fbf6e6}
+.hero-list b{font-size:26px;font-weight:800;letter-spacing:-.02em;flex:0 0 auto}
+.hero-list span{font-size:15px;color:#333}
+/* calculator tiles */
+.tiles{border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);background:#fff}
+.tiles .wrap{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:0}
+.tile{display:flex;flex-direction:column;gap:8px;padding:24px 22px;text-decoration:none;border-right:2px solid var(--ink);min-height:148px}
+.tile:last-child{border-right:0}
+.tile small{font-size:12px;font-weight:800;letter-spacing:.08em}
+.tile strong{font-family:'Noto Serif KR',serif;font-weight:900;font-size:24px;letter-spacing:-.02em}
+.tile span{font-size:14px;line-height:1.55;font-weight:500}
+.tile:hover strong{text-decoration:underline;text-underline-offset:5px}
+.t-cobalt{background:var(--cobalt);color:#fff}.t-lemon{background:var(--lemon);color:var(--ink)}.t-clay{background:var(--clay);color:var(--ink)}.t-green{background:var(--green);color:#fff}
+/* lists */
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:10px;margin:40px 0 22px}
+.sec-head h2,.sec-head h1{margin:0;font-size:26px}
+.sec-head a{font-size:14px;font-weight:800;color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px}
+.card{display:flex;flex-direction:column;background:#fff;border:2px solid var(--ink);color:var(--ink);text-decoration:none;transition:transform .12s,box-shadow .12s}
+.card:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink)}
+.card-img{aspect-ratio:3/2;background:var(--cobalt);border-bottom:2px solid var(--ink);overflow:hidden}
+.card-img img{width:100%;height:100%;object-fit:cover;display:block}
+.card-body{padding:16px 18px 20px;display:flex;flex-direction:column;gap:8px}
+.card-meta{font-size:13px;font-weight:700;color:#444}
+.card h3{margin:0;font-family:'Noto Serif KR',serif;font-weight:900;font-size:20px;line-height:1.45;letter-spacing:-.01em}
+.ad-feed{grid-column:1/-1;min-height:120px}
+.pager{display:flex;justify-content:center;margin:34px 0 10px}
+.pager a{display:inline-block;border:2px solid var(--ink);background:#fff;color:var(--ink);font-weight:800;text-decoration:none;padding:12px 26px;box-shadow:4px 4px 0 var(--ink)}
+/* post (A: calm white reading) */
+.post-wrap{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start;padding:28px 0 56px}
+.post-main{flex:999 1 600px;min-width:0;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:32px 36px 40px}
+.rail{flex:1 1 280px;min-width:0;display:flex;flex-direction:column;gap:20px}
+.crumb{display:flex;gap:6px;flex-wrap:wrap;font-size:14px;color:#555;margin:0 0 12px}
+.crumb a{color:#555;text-decoration:none}
+.crumb a:hover{text-decoration:underline}
+.post-title{font-size:32px;line-height:1.38;font-weight:800;letter-spacing:-.03em;margin:0 0 14px}
+.post-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 26px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.badge{font-size:13px;font-weight:700;padding:5px 12px;border-radius:999px;background:#eef3fd;color:#1a4fb8;text-decoration:none}
+.badge-date{background:#fff6d6;color:#5a4500}
+.post-body{font-size:17px;line-height:1.85;color:#222}
+.post-body p{margin:0 0 1.1em}
+.post-body h2{font-size:24px;line-height:1.4;letter-spacing:-.02em;margin:1.9em 0 .7em;padding-top:.2em}
+.post-body h3{font-size:19px;line-height:1.45;margin:1.5em 0 .6em}
+.post-body ul,.post-body ol{padding-left:1.3em;margin:0 0 1.2em}
+.post-body li{margin:.3em 0}
+.post-body img{border-radius:10px}
+.post-body table{border-collapse:collapse;width:100%;margin:1.2em 0;font-size:15.5px;display:block;overflow-x:auto;font-variant-numeric:tabular-nums}
+.post-body th,.post-body td{border:1px solid #e1e4ea;padding:10px 12px;text-align:left;vertical-align:top}
+.post-body th{background:#f5f7fa;font-weight:700}
+.post-body blockquote{margin:1.2em 0;padding:12px 18px;background:#f6f7f9;border-radius:10px}
+.post-body pre{overflow-x:auto}
+.post-body a{word-break:break-all}
+.post-note{margin:34px 0 0;padding:18px 20px;background:#f6f7f9;border-radius:12px;font-size:14px;line-height:1.7;color:#444}
+.post-note b{color:var(--ink)}
+.ad-mid{margin:26px 0;min-height:100px}
+.rail-box{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px}
+.rail-box h2{margin:0 0 10px;font-size:16px;font-weight:800}
+.rail-calc{background:var(--cobalt);color:#fff;border:2px solid var(--ink);border-radius:0;box-shadow:6px 6px 0 var(--ink)}
+.rail-calc h2{font-family:'Noto Serif KR',serif;font-weight:900;font-size:21px}
+.rail-calc a{display:block;color:#fff;text-decoration:none;padding:9px 0;border-top:1px solid rgba(255,255,255,.35);font-weight:600}
+.rail-calc a:hover{text-decoration:underline}
+.rail-calc .all{margin-top:8px;text-align:center;background:var(--lemon);color:var(--ink);border:2px solid var(--ink);font-weight:800}
+.empty{padding:40px 0;text-align:center}
+/* post body blocks from templates/post.html.j2 (im-*) */
+.im-hero{margin:0 0 24px}.im-hero img{width:100%;display:block;border-radius:12px}
+.im-figure{margin:22px 0;text-align:center}.im-figure img{border-radius:12px}
+.post-body .im-lead{font-size:1.12em;line-height:1.8;font-weight:500;color:#161616}
+.im-calc{margin:20px 0;padding:18px 20px;background:#f2f6fd;border:1px solid #dbe5f6;border-radius:14px}
+.im-calc p{margin:0 0 12px!important}
+.im-btn{display:block;text-align:center;padding:14px 18px;background:var(--ink);color:#fff!important;border-radius:12px;text-decoration:none!important;font-weight:800;font-size:1.02em;word-break:keep-all!important}
+.im-btn:hover{background:#000}
+.im-calc-end{background:#fbf6e6;border-color:#efe3bd}
+.post-body .im-tip{padding:14px 16px;background:#fbf6e6;border-radius:10px;font-size:.97em}
+.post-body .im-related{padding:12px 16px;background:#f6f7f9;border-radius:10px;font-size:.97em}
+.post-body .im-asof,.post-body .im-muted{font-size:.9em;color:#555}
+.im-box{margin:20px 0;padding:18px 20px;background:#f6f7f9;border-radius:14px}
+.im-box-title{font-weight:800;margin:0 0 8px!important}
+.im-code{margin:0;padding:10px 12px;background:#1e1e1e;color:#f5f5f5;border-radius:8px;overflow-x:auto;white-space:pre}
+.im-points li::marker{color:var(--cobalt)}
+.im-sources{font-size:.92em;color:#444}
+.im-footer{text-align:center}
+.post-body strong{font-weight:800;color:#161616}
+/* footer */
+.site-foot{background:var(--ink);color:#e9e4d8;margin-top:40px}
+.site-foot .wrap{padding-top:34px;padding-bottom:40px;display:flex;flex-direction:column;gap:12px}
+.site-foot p{margin:0;font-size:14px;line-height:1.7;color:#d6d0c2}
+.site-foot nav{display:flex;flex-wrap:wrap;gap:6px 20px;font-size:14px;font-weight:700}
+.site-foot a{color:#f3eee3}
+.site-foot a.hl{color:var(--lemon)}
+@media (max-width:900px){.tiles .wrap{grid-template-columns:repeat(2,minmax(0,1fr))}.tile:nth-child(2){border-right:0}.tile:nth-child(-n+2){border-bottom:2px solid var(--ink)}}
+@media (max-width:720px){
+.head-row{min-height:58px;gap:6px 16px}
+.nav{order:3;flex:1 1 100%;overflow-x:auto;gap:0 18px;padding-bottom:2px;white-space:nowrap}
+.nav details ul{position:fixed;left:16px;right:16px;top:auto;min-width:0}
+.search-box{margin-left:auto}
+.hero{padding:28px 0 26px}.hero h1{font-size:32px}
+.grid{grid-template-columns:1fr;gap:20px}
+.post-main{padding:22px 18px 28px;border-radius:12px}
+.post-title{font-size:26px}
+.post-body{font-size:16.5px}
+.post-body h2{font-size:21px}
+.sec-head h2,.sec-head h1{font-size:22px}
+}
+@media (max-width:480px){.tiles .wrap{grid-template-columns:1fr}.tile{border-right:0;border-bottom:2px solid var(--ink);min-height:0}.tile:last-child{border-bottom:0}}
+]]></b:skin>
+</head>
+<body>
+<a class='skip' href='#content'>본문으로 건너뛰기</a>
+<header class='site-head'>
+  <div class='wrap head-row'>
+    <b:if cond='data:view.isHomepage'>
+      <h1 class='logo serif'><a expr:href='data:blog.homepageUrl' style='color:inherit;text-decoration:none;display:flex;align-items:center;gap:10px'><svg aria-hidden='true' height='34' viewBox='0 0 34 34' width='34'><rect fill='#f4d23c' height='32' stroke='#161616' stroke-width='2' width='32' x='1' y='1'/><rect fill='#161616' height='3' width='16' x='9' y='12'/><rect fill='#161616' height='3' width='16' x='9' y='19'/></svg>정보마스터</a></h1>
+    <b:else/>
+      <a class='logo serif' expr:href='data:blog.homepageUrl'><svg aria-hidden='true' height='34' viewBox='0 0 34 34' width='34'><rect fill='#f4d23c' height='32' stroke='#161616' stroke-width='2' width='32' x='1' y='1'/><rect fill='#161616' height='3' width='16' x='9' y='12'/><rect fill='#161616' height='3' width='16' x='9' y='19'/></svg>정보마스터</a>
+    </b:if>
+    <nav aria-label='주 메뉴' class='nav'>
+      <details>
+        <summary>계산기</summary>
+        <ul>
+          <li><a href='https://tools.woodyway88.com/unemployment-benefit-calculator/'>실업급여</a></li>
+          <li><a href='https://tools.woodyway88.com/severance-pay-calculator/'>퇴직금</a></li>
+          <li><a href='https://tools.woodyway88.com/weekly-holiday-pay-calculator/'>주휴수당</a></li>
+          <li><a href='https://tools.woodyway88.com/year-end-tax-calculator/'>연말정산 환급액</a></li>
+          <li><a href='https://tools.woodyway88.com/minimum-wage-calculator/'>최저임금 월급</a></li>
+          <li><a href='https://tools.woodyway88.com/annual-leave-calculator/'>연차</a></li>
+          <li><a href='https://tools.woodyway88.com/'>전체 계산기 보기</a></li>
+        </ul>
+      </details>
+      <details>
+        <summary>일정</summary>
+        <ul>
+          <li><a href='https://tools.woodyway88.com/holidays/2027/'>2027 공휴일·연차 꿀조합</a></li>
+          <li><a href='https://tools.woodyway88.com/calendar/'>월별 캘린더</a></li>
+          <li><a href='https://www.woodyway88.com/search/label/%EC%9D%BC%EC%A0%95'>일정 글 모아보기</a></li>
+        </ul>
+      </details>
+      <a href='https://www.woodyway88.com/search/label/%EA%B3%84%EC%82%B0%EC%82%AC%EB%A1%80'>계산 사례</a>
+      <a href='https://www.woodyway88.com/search/label/%EB%B0%94%EB%80%8C%EB%8A%94%EC%A0%9C%EB%8F%84'>바뀌는 제도</a>
+      <a href='https://www.woodyway88.com/search/label/%EC%83%9D%ED%99%9C%EA%B0%80%EC%9D%B4%EB%93%9C'>생활 가이드</a>
+    </nav>
+    <details class='search-box'>
+      <summary aria-label='검색'><svg aria-hidden='true' fill='none' height='18' stroke='#161616' stroke-linecap='round' stroke-width='2.2' viewBox='0 0 24 24' width='18'><circle cx='11' cy='11' r='7'/><path d='M20 20l-3.5-3.5'/></svg></summary>
+      <form action='/search' method='get' role='search'>
+        <label class='sr-only' for='q-head'>블로그 검색</label>
+        <input id='q-head' name='q' placeholder='예: 실업급여' type='search'/>
+        <button type='submit'>찾기</button>
+      </form>
+    </details>
+  </div>
+</header>
+
+<b:if cond='data:view.isHomepage'>
+  <section class='wrap hero'>
+    <div class='hero-text'>
+      <span class='kicker'>생활 제도 계산 노트</span>
+      <h2 class='serif' style='font-size:44px;line-height:1.28;margin:16px 0 14px'>복잡한 제도,<br/>한 장면과 한 숫자로.</h2>
+      <p>실업급여·퇴직금·주휴수당·연말정산. 내 금액을 먼저 보여 드리고, 기준일과 출처를 꼭 적습니다.</p>
+      <form action='/search' method='get' role='search'>
+        <label class='sr-only' for='q-hero'>궁금한 금액 검색</label>
+        <input id='q-hero' name='q' placeholder='예: 실업급여 얼마 받아요?' type='search'/>
+        <button class='btn-ink' type='submit'>찾기</button>
+      </form>
+    </div>
+    <div class='hero-list'>
+      <h2>요즘 많이 찾는 숫자</h2>
+      <a href='https://tools.woodyway88.com/minimum-wage-calculator/'><b class='num'>10,700원</b><span>2027년 최저 시급, 내 월급으로 바꿔 보기</span></a>
+      <a href='https://tools.woodyway88.com/holidays/2027/'><b class='num'>2027</b><span>공휴일에 연차를 붙이면 며칠 쉴까</span></a>
+      <a href='https://tools.woodyway88.com/unemployment-benefit-calculator/'><b class='num'>66,048원</b><span>2026년 실업급여 하루 최저액, 내 금액은?</span></a>
+    </div>
+  </section>
+  <section aria-label='많이 쓰는 계산기' class='tiles'>
+    <div class='wrap'>
+      <a class='tile t-cobalt' href='https://tools.woodyway88.com/unemployment-benefit-calculator/'><small>계산기</small><strong>실업급여</strong><span>퇴사 전 임금과 가입 기간으로 하루 금액·받는 기간</span></a>
+      <a class='tile t-lemon' href='https://tools.woodyway88.com/severance-pay-calculator/'><small>계산기</small><strong>퇴직금</strong><span>입사일·퇴사일과 3개월 임금으로 예상 퇴직금</span></a>
+      <a class='tile t-clay' href='https://tools.woodyway88.com/weekly-holiday-pay-calculator/'><small>계산기</small><strong>주휴수당</strong><span>시급과 1주 소정근로시간으로 주휴수당</span></a>
+      <a class='tile t-green' href='https://tools.woodyway88.com/year-end-tax-calculator/'><small>계산기</small><strong>연말정산</strong><span>급여와 공제 항목으로 예상 환급액</span></a>
+    </div>
+  </section>
+</b:if>
+
+<main class='wrap' id='content'>
+  <b:section id='main' preferred='yes' showaddelement='true'>
+    <b:widget id='Blog1' locked='true' title='블로그 게시물' type='Blog' version='2' visible='true'>
+      <b:widget-settings>
+        <b:widget-setting name='showDateHeader'>false</b:widget-setting>
+        <b:widget-setting name='style.textcolor'>#161616</b:widget-setting>
+        <b:widget-setting name='showShareButtons'>false</b:widget-setting>
+        <b:widget-setting name='showCommentLink'>false</b:widget-setting>
+        <b:widget-setting name='style.urlcolor'>#1f5fd1</b:widget-setting>
+        <b:widget-setting name='showAuthor'>false</b:widget-setting>
+        <b:widget-setting name='style.linkcolor'>#1f5fd1</b:widget-setting>
+        <b:widget-setting name='style.unittype'>TextAndImage</b:widget-setting>
+        <b:widget-setting name='style.bgcolor'>#ffffff</b:widget-setting>
+        <b:widget-setting name='timestampLabel'/>
+        <b:widget-setting name='reactionsLabel'/>
+        <b:widget-setting name='showAuthorProfile'>false</b:widget-setting>
+        <b:widget-setting name='style.layout'>1x1</b:widget-setting>
+        <b:widget-setting name='showLabels'>true</b:widget-setting>
+        <b:widget-setting name='showLocation'>false</b:widget-setting>
+        <b:widget-setting name='showTimestamp'>true</b:widget-setting>
+        <b:widget-setting name='postsPerAd'>1</b:widget-setting>
+        <b:widget-setting name='showBacklinks'>false</b:widget-setting>
+        <b:widget-setting name='style.bordercolor'>#ffffff</b:widget-setting>
+        <b:widget-setting name='showInlineAds'>false</b:widget-setting>
+        <b:widget-setting name='showReactions'>false</b:widget-setting>
+      </b:widget-settings>
+      <b:includable id='main' var='top'>
+        <b:if cond='data:view.isSingleItem'>
+          <b:loop values='data:posts' var='post'>
+            <b:include data='post' name='itemView'/>
+          </b:loop>
+        <b:else/>
+          <b:include name='listView'/>
+        </b:if>
+      </b:includable>
+
+      <b:includable id='listView'>
+        <div class='sec-head'>
+          <b:if cond='data:view.isLabelSearch'>
+            <h1 class='serif'><data:view.search.label/> 글 모음</h1>
+          <b:elseif cond='data:view.isSearch'/>
+            <h1 class='serif'>‘<data:view.search.query/>’ 검색 결과</h1>
+          <b:elseif cond='data:view.isArchive'/>
+            <h1 class='serif'><data:view.archive.rangeMessage/></h1>
+          <b:else/>
+            <h2 class='serif'>최신 계산 사례</h2>
+            <a href='https://www.woodyway88.com/search/label/%EA%B3%84%EC%82%B0%EC%82%AC%EB%A1%80'>계산 사례 전체</a>
+          </b:if>
+        </div>
+        <b:if cond='data:posts.empty'>
+          <p class='empty'>아직 글이 없습니다. 위 메뉴의 계산기를 먼저 써 보세요.</p>
+        <b:else/>
+          <div class='grid'>
+            <b:loop index='i' values='data:posts' var='post'>
+              <a class='card' expr:href='data:post.url'>
+                <div class='card-img'>
+                  <b:if cond='data:post.featuredImage'>
+                    <img expr:alt='data:post.title' expr:loading='data:i lt 2 ? &quot;eager&quot; : &quot;lazy&quot;' expr:src='resizeImage(data:post.featuredImage, 720)' height='480' width='720'/>
+                  </b:if>
+                </div>
+                <div class='card-body'>
+                  <span class='card-meta'><b:loop index='j' values='data:post.labels' var='label'><b:if cond='data:j == 0'><data:label.name/> · </b:if></b:loop><time expr:datetime='data:post.date.iso8601'><b:eval expr='format(data:post.date, &quot;yyyy년 M월 d일&quot;)'/></time></span>
+                  <h3><data:post.title/></h3>
+                </div>
+              </a>
+              <b:if cond='data:i == 3'>
+                <div class='ad-feed'>
+                  <ins class='adsbygoogle' data-ad-client='ca-pub-1848068079213715' data-ad-format='auto' data-ad-slot='1318812914' data-full-width-responsive='true' style='display:block'/>
+                  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                </div>
+              </b:if>
+            </b:loop>
+          </div>
+        </b:if>
+        <b:if cond='data:olderPageUrl'>
+          <div class='pager'><a expr:href='data:olderPageUrl'>이전 글 더 보기</a></div>
+        </b:if>
+      </b:includable>
+
+      <b:includable id='itemView' var='post'>
+        <div class='post-wrap'>
+          <article class='post-main'>
+            <b:if cond='data:view.isPost'>
+              <nav aria-label='위치' class='crumb'>
+                <a expr:href='data:blog.homepageUrl'>홈</a>
+                <b:loop index='j' values='data:post.labels' var='label'><b:if cond='data:j == 0'><span aria-hidden='true'>›</span><a expr:href='data:label.url'><data:label.name/></a></b:if></b:loop>
+              </nav>
+            </b:if>
+            <h1 class='post-title'><data:post.title/></h1>
+            <b:if cond='data:view.isPost'>
+              <div class='post-meta'>
+                <span class='badge badge-date'><time expr:datetime='data:post.lastUpdated.iso8601'><b:eval expr='format(data:post.lastUpdated, &quot;yyyy년 M월 d일&quot;)'/></time> 업데이트</span>
+                <b:loop values='data:post.labels' var='label'><a class='badge' expr:href='data:label.url'><data:label.name/></a></b:loop>
+              </div>
+            </b:if>
+            <div class='post-body' expr:id='&quot;post-body-&quot; + data:post.id'>
+              <data:post.body/>
+            </div>
+            <b:if cond='data:view.isPost'>
+              <div class='ad-mid' id='ad-mid'>
+                <ins class='adsbygoogle' data-ad-client='ca-pub-1848068079213715' data-ad-format='auto' data-ad-slot='1573931961' data-full-width-responsive='true' style='display:block'/>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+              </div>
+              <p class='post-note'><b>기준과 출처</b> · 이 글의 숫자는 정부·공공기관이 공개한 기준으로 계산했고, 글 안의 출처에서 원문을 확인할 수 있습니다. 실제 금액은 개인 조건에 따라 달라질 수 있으니 계산기로 내 조건을 넣어 다시 확인해 보세요.</p>
+              <script type='application/ld+json'>{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","headline":"<b:eval expr='data:post.title.jsonEscaped'/>","description":"<b:eval expr='data:post.snippets.short.jsonEscaped'/>","datePublished":"<b:eval expr='data:post.date.iso8601'/>","dateModified":"<b:eval expr='data:post.lastUpdated.iso8601'/>","mainEntityOfPage":"<b:eval expr='data:post.url.canonical'/>","url":"<b:eval expr='data:post.url.canonical'/>",<b:if cond='data:post.featuredImage'>"image":["<b:eval expr='data:post.featuredImage'/>"],</b:if>"inLanguage":"ko-KR","author":{"@type":"Organization","name":"정보마스터","url":"https://www.woodyway88.com/"},"publisher":{"@id":"https://www.woodyway88.com/#org","@type":"Organization","name":"정보마스터","url":"https://www.woodyway88.com/"}}<b:if cond='data:post.labels'>,{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://www.woodyway88.com/"}<b:loop index='j' values='data:post.labels' var='label'><b:if cond='data:j == 0'>,{"@type":"ListItem","position":2,"name":"<b:eval expr='data:label.name.jsonEscaped'/>","item":"<b:eval expr='data:label.url.canonical'/>"}</b:if></b:loop>]}</b:if>]}</script>
+            </b:if>
+          </article>
+          <aside aria-label='관련 정보' class='rail'>
+            <div class='rail-box rail-calc'>
+              <h2>내 금액 계산하기</h2>
+              <a href='https://tools.woodyway88.com/unemployment-benefit-calculator/'>실업급여 계산기</a>
+              <a href='https://tools.woodyway88.com/severance-pay-calculator/'>퇴직금 계산기</a>
+              <a href='https://tools.woodyway88.com/weekly-holiday-pay-calculator/'>주휴수당 계산기</a>
+              <a href='https://tools.woodyway88.com/year-end-tax-calculator/'>연말정산 환급액 계산기</a>
+              <a class='all' href='https://tools.woodyway88.com/'>전체 계산기 보기</a>
+            </div>
+            <div class='rail-box' style='min-height:280px'>
+              <ins class='adsbygoogle' data-ad-client='ca-pub-1848068079213715' data-ad-format='auto' data-ad-slot='2132905981' data-full-width-responsive='true' style='display:block'/>
+              <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            </div>
+          </aside>
+        </div>
+      </b:includable>
+    </b:widget>
+  </b:section>
+</main>
+
+<footer class='site-foot'>
+  <div class='wrap'>
+    <span class='serif' style='font-size:20px'>정보마스터</span>
+    <p>모든 계산은 정부·공공기관이 공개한 기준으로 하며, 글마다 기준일과 출처를 적습니다. 실제 금액은 개인 조건에 따라 달라질 수 있습니다.</p>
+    <nav aria-label='사이트 정보'>
+      <a href='/p/about.html'>운영자 소개</a>
+      <a href='/p/contact.html'>문의</a>
+      <a href='/p/privacy-policy.html'>개인정보처리방침</a>
+      <a class='hl' href='https://tools.woodyway88.com/'>계산기 모음</a>
+    </nav>
+    <p>© 2026 정보마스터</p>
+  </div>
+</footer>
+
+<script>
+//<![CDATA[
+(function(){
+  var ad=document.getElementById('ad-mid');
+  var body=document.querySelector('.post-body');
+  if(ad&&body){
+    var hs=body.querySelectorAll('h2');
+    if(hs.length>=3){body.insertBefore(ad,hs[Math.floor(hs.length/2)]);}
+  }
+  document.querySelectorAll('.nav details').forEach(function(d){
+    d.addEventListener('toggle',function(){if(d.open){document.querySelectorAll('.nav details').forEach(function(o){if(o!==d)o.open=false;});}});
+  });
+  document.addEventListener('click',function(e){
+    document.querySelectorAll('.nav details[open],.search-box[open]').forEach(function(d){if(!d.contains(e.target))d.open=false;});
+  });
+})();
+//]]>
+</script>
+</body>
+</html>

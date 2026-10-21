@@ -1,48 +1,49 @@
+{#- 2026-10-22: 색·모양은 테마(theme/jungbomaster-theme.xml)의 im-* 클래스가 정한다. 본문은 차분한 흰 바탕(A안). 이모지 없음. -#}
 {% if hero_image_url %}
-<div style="text-align:center;margin:0 0 24px;">
-  <img src="{{ hero_image_url }}" alt="{{ draft.image_alt }}" width="1200" style="max-width:100%;height:auto;border-radius:8px;" loading="eager">
+<div class="im-hero">
+  <img src="{{ hero_image_url }}" alt="{{ draft.image_alt }}" width="1200" height="800" loading="eager">
 </div>
 {% endif %}
 {% for p in hook_paragraphs %}
-<p style="font-size:1.2em;line-height:1.8;font-weight:500;">{{ p }}</p>
+<p class="im-lead">{{ p|md }}</p>
 {% endfor %}
 {% if tool %}
-<div style="padding:16px;background:#e8f0fe;border-radius:10px;margin:16px 0;text-align:center;">
-  <p style="margin:0 0 10px;">🧮 <strong>내 경우는 얼마일까?</strong> {{ tool.blurb }}</p>
-  <a href="{{ tool.url }}" target="_blank" rel="noopener" style="display:block;padding:14px 18px;background:#1a73e8;color:#fff;border-radius:999px;text-decoration:none;font-weight:bold;font-size:1.1em;">{{ tool.title }} 바로 가기 →</a>
+<div class="im-calc">
+  <p><strong>내 경우는 얼마일까?</strong> {{ tool.blurb }}</p>
+  <a class="im-btn" href="{{ tool.url }}" target="_blank" rel="noopener">{{ tool.title }} 바로 가기 →</a>
 </div>
 {% endif %}
 {% set summary_card = infographic.get('summary') %}
 {% if summary_card %}
-<div style="text-align:center;margin:20px 0;">
-  <img src="{{ summary_card[0] }}" alt="{{ summary_card[1] }}" width="1000" style="max-width:100%;height:auto;border-radius:10px;" loading="lazy">
+<div class="im-figure">
+  <img src="{{ summary_card[0] }}" alt="{{ summary_card[1] }}" width="1000" loading="lazy">
 </div>
 {% endif %}
 
 <h2>핵심 내용</h2>
-<ul>
+<ul class="im-points">
 {% for point in draft.key_points %}
-  <li>{{ point }}</li>
+  <li>{{ point|md }}</li>
 {% endfor %}
 </ul>
 {% if skill %}
 
-<div style="padding:16px;background:#f4f6fa;border:1px solid #dfe3ea;border-radius:10px;margin:16px 0;">
-  <p style="margin:0 0 8px;font-weight:bold;">🧩 {{ skill.name }} 한눈에 보기</p>
-  <ul style="margin:0 0 10px;padding-left:18px;">
+<div class="im-box">
+  <p class="im-box-title">{{ skill.name }} 한눈에 보기</p>
+  <ul>
     <li>누적 설치 {{ '{:,}'.format(skill.installs) }}회 · GitHub 별 {{ '{:,}'.format(skill.stars) }}개</li>
     <li>저장소: <a href="{{ skill.github_url }}" target="_blank" rel="noopener nofollow">{{ skill.ref.owner_repo }}</a></li>
 {% if skill.audits_clean %}
     <li>보안 감사 3종 모두 통과 (skills.sh 기준)</li>
 {% endif %}
   </ul>
-  <p style="margin:0 0 4px;font-size:0.9em;color:#555;">터미널에 붙여 넣으면 설치됩니다.</p>
-  <pre style="margin:0;padding:10px 12px;background:#1e1e1e;color:#f5f5f5;border-radius:6px;overflow-x:auto;white-space:pre;"><code>{{ skill.install_cmd }}</code></pre>
+  <p class="im-muted">터미널에 붙여 넣으면 설치됩니다.</p>
+  <pre class="im-code"><code>{{ skill.install_cmd }}</code></pre>
 </div>
 {% endif %}
 
 {% if as_of_note %}
-<p style="font-size:0.9em;color:#555;">{{ as_of_note }}</p>
+<p class="im-asof">{{ as_of_note }}</p>
 {% endif %}
 
 {% for heading, blocks, tip, picture in sections %}
@@ -51,42 +52,45 @@
 {% if b.kind == 'ol' %}
 <ol>
 {% for item in b.items %}
-  <li>{{ item }}</li>
+  <li>{{ item|md }}</li>
 {% endfor %}
 </ol>
 {% elif b.kind == 'q' %}
-<h3>{{ b.text }}</h3>
+<h3>{{ b.text|md }}</h3>
 {% else %}
-<p>{{ b.text }}</p>
+<p>{{ b.text|md }}</p>
 {% endif %}
 {% endfor %}
-<p style="padding:12px 16px;background:#fff8e6;border-left:4px solid #f5b400;border-radius:4px;">💡 <strong>꿀팁</strong> · {{ tip }}</p>
+<p class="im-tip"><strong>꿀팁</strong> · {{ tip|md }}</p>
 {% if loop.index0 == 0 and featured %}
-<p style="padding:12px 16px;background:#f4f6fa;border-radius:8px;">👉 함께 보면 좋은 글: <a href="{{ featured.url }}">{{ featured.title }}</a></p>
+<p class="im-related">함께 보면 좋은 글: <a href="{{ featured.url }}">{{ featured.title }}</a></p>
 {% endif %}
 {% if picture %}
-<div style="text-align:center;margin:20px 0;">
-  <img src="{{ picture[0] }}" alt="{{ picture[1] }}" width="1000" style="max-width:100%;height:auto;border-radius:10px;" loading="lazy">
+<div class="im-figure">
+  <img src="{{ picture[0] }}" alt="{{ picture[1] }}" width="1000" loading="lazy">
 </div>
 {% endif %}
 {% endfor %}
 
 <h2>그래서 나에게 무엇이 달라질까</h2>
-<p>{{ draft.why_it_matters }}</p>
+<p>{{ draft.why_it_matters|md }}</p>
 
 <h2>내일 바로 써먹기</h2>
 <ol>
 {% for item in draft.action_items %}
-  <li>{{ item }}</li>
+  <li>{{ item|md }}</li>
 {% endfor %}
 </ol>
 {% if tool %}
-<p style="padding:14px 16px;background:#e8f0fe;border-radius:8px;">🧮 다 읽으셨다면 내 숫자로 확인해 보세요. <a href="{{ tool.url }}" target="_blank" rel="noopener" style="font-weight:bold;">{{ tool.title }} 바로 가기 →</a></p>
+<div class="im-calc im-calc-end">
+  <p>다 읽으셨다면 내 숫자로 확인해 보세요.</p>
+  <a class="im-btn" href="{{ tool.url }}" target="_blank" rel="noopener">{{ tool.title }} 바로 가기 →</a>
+</div>
 {% endif %}
 {% set checklist_card = infographic.get('checklist') %}
 {% if checklist_card %}
-<div style="text-align:center;margin:20px 0;">
-  <img src="{{ checklist_card[0] }}" alt="{{ checklist_card[1] }}" width="1000" style="max-width:100%;height:auto;border-radius:10px;" loading="lazy">
+<div class="im-figure">
+  <img src="{{ checklist_card[0] }}" alt="{{ checklist_card[1] }}" width="1000" loading="lazy">
 </div>
 {% endif %}
 
@@ -94,13 +98,13 @@
 <h3>용어사전</h3>
 <ul>
 {% for item in draft.glossary %}
-  <li><strong>{{ item.term }}</strong> · {{ item.meaning }}</li>
+  <li><strong>{{ item.term }}</strong> · {{ item.meaning|md }}</li>
 {% endfor %}
 </ul>
 
 {% endif %}
 <h3>출처</h3>
-<ul>
+<ul class="im-sources">
 {% if via_url %}
   <li>원문: <a href="{{ source_url }}" target="_blank" rel="noopener nofollow">{{ source_url }}</a></li>
   <li>via <a href="{{ via_url }}" target="_blank" rel="noopener">{{ source_name }}</a></li>
@@ -112,7 +116,7 @@
 {% endfor %}
 </ul>
 {% if money_note %}
-<p style="font-size:0.9em;color:#666;">{{ money_note }}</p>
+<p class="im-muted">{{ money_note }}</p>
 {% endif %}
 {% if short_news %}
 
@@ -126,7 +130,7 @@
 {% if related %}
 
 <h3>함께 읽으면 좋은 글</h3>
-<ul>
+<ul class="im-more">
 {% for post in related %}
   <li><a href="{{ post.url }}">{{ post.title }}</a></li>
 {% endfor %}
@@ -135,8 +139,8 @@
 
 {% if footer_url %}
 
-<div style="margin-top:40px;padding:20px;text-align:center;background:#fff8ee;border:1px solid #f3dcb8;border-radius:8px;">
-  <p style="margin:0 0 12px;">오늘 글이 재미있으셨다면, 제 공간에도 한 번 놀러 와 주세요 🙂</p>
-  <a href="{{ footer_url }}" target="_blank" rel="noopener" style="display:inline-block;padding:10px 22px;background:#ff8a3d;color:#fff;border-radius:999px;text-decoration:none;font-weight:bold;">제 인포크 링크 둘러보기</a>
+<div class="im-box im-footer">
+  <p>오늘 글이 도움이 되셨다면, 제 공간에도 한 번 놀러 와 주세요.</p>
+  <a class="im-btn" href="{{ footer_url }}" target="_blank" rel="noopener">제 인포크 링크 둘러보기</a>
 </div>
 {% endif %}

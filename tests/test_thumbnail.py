@@ -81,35 +81,42 @@ def test_add_headline_bad_font_path_returns_original(capsys):
     assert '썸네일' in capsys.readouterr().out
 
 
+def caption_pixels(headline: thumbnail.Headline, color=(40, 90, 200)) -> list[tuple[int, int, int]]:
+    return pixels(opened(thumbnail.add_headline(solid(color=color), headline, FONT)))
+
+
+def near(p, q, tol=12) -> bool:
+    return all(abs(a - b) <= tol for a, b in zip(p, q))
+
+
 @needs_font
-def test_add_headline_renders_cover_size_and_darkens_left():
-    out = thumbnail.add_headline(solid(), replace(HEADLINE, tint=(0, 150, 110)), FONT)
-    im = opened(out)
+def test_add_headline_keeps_picture_clean_outside_caption_box():
+    """2026-10-22 B안: 그라데이션을 깔지 않고 그림을 그대로 둔다. 글은 종이색 상자 안에만."""
+    im = opened(thumbnail.add_headline(solid(), HEADLINE, FONT))
     assert im.size == thumbnail.CANVAS
-    left, right = im.getpixel((20, 790)), im.getpixel((1180, 790))
-    assert left == pytest.approx((3, 143, 117), abs=12)  # 지정한 색이 92%로 덮인다
-    assert right == pytest.approx((40, 90, 200), abs=6)  # 오른쪽 주제 영역은 그대로
-
-
-def test_headline_without_tint_uses_picture_background_color():
-    """2026-10-21: 단색 배경 일러스트와 분야 색이 섞여 탁해지지 않게, 기본은 그림 왼쪽의 배경색을 뽑아 깐다."""
-    im = opened(thumbnail.add_headline(solid(color=(245, 210, 40)), HEADLINE, FONT))
-    assert im.getpixel((20, 790)) == pytest.approx((245, 210, 40), abs=10)
-
-
-def test_sample_tint_takes_median_of_left_area():
-    picture = Image.new('RGB', (1200, 800), (30, 80, 200))
-    picture.paste((250, 250, 250), (1000, 0, 1200, 800))  # 오른쪽 주제는 무시
-    assert thumbnail.sample_tint(picture) == pytest.approx((30, 80, 200), abs=2)
+    assert im.getpixel((10, 790)) == pytest.approx((40, 90, 200), abs=8)
+    assert im.getpixel((1180, 790)) == pytest.approx((40, 90, 200), abs=8)
 
 
 @needs_font
-def test_white_text_has_dark_outline_for_readability():
-    """흰 글자에 진한 남색 테두리 (2026-10-21: 흰 테두리+흐린 그림자는 밝은 배경에서 뭉개졌다)."""
-    im = opened(thumbnail.add_headline(solid(color=(245, 210, 40)), thumbnail.Headline('월 3만원\n아끼는 설정'), FONT))
-    text_area = im.crop((0, 0, round(im.width * 0.6), im.height))
-    navy = sum(1 for r, g, b in pixels(text_area) if r < 60 and g < 60 and b < 110)
-    assert navy > 3000
+def test_caption_box_is_paper_with_ink_border_and_shadow():
+    ps = caption_pixels(thumbnail.Headline('월 3만원\n아끼는 설정'))
+    paper = sum(1 for p in ps if near(p, thumbnail.PAPER_COLOR, 6))
+    ink = sum(1 for p in ps if near(p, thumbnail.INK_COLOR, 20))
+    assert paper > 60000
+    assert ink > 15000  # 테두리 + 판화 그림자 + 글자
+
+
+@needs_font
+def test_caption_text_is_ink_not_white():
+    ps = caption_pixels(thumbnail.Headline('월 3만원\n아끼는 설정'), color=(0, 0, 0))
+    assert sum(1 for p in ps if min(p) > 240) < 500
+
+
+def test_headline_lines_splits_literal_backslash_n():
+    """2026-10-22: 모델이 줄바꿈을 글자 '\\n'으로 보내 썸네일에 그대로 찍혔다."""
+    assert thumbnail.headline_lines('파손 발견\\n먼저 할 일') == ['파손 발견', '먼저 할 일']
+    assert thumbnail.headline_lines(' 3년 뒤 \n\n 약 881만원 ') == ['3년 뒤', '약 881만원']
 
 
 @needs_font
@@ -119,23 +126,18 @@ def test_add_headline_crops_wide_image_to_3_2():
 
 
 @needs_font
-def test_add_headline_paints_solid_yellow_highlight_box():
-    def count(headline, test):
-        black = replace(headline, tint=(0, 0, 0))  # 오버레이 색이 노랑 판별을 흐리지 않게 검정으로
-        im = opened(thumbnail.add_headline(solid(color=(0, 0, 0)), black, FONT))
-        return sum(1 for p in pixels(im) if test(*p))
-
-    solid_yellow = lambda r, g, b: r > 230 and g > 190 and b < 60
-    assert count(HEADLINE, solid_yellow) > 5000  # 강조 단어 뒤에 선명한 노랑 상자 (2026-10-13 불투명으로 변경)
-    assert count(thumbnail.Headline('코파일럿\n24시간 일한다?', '없는말'), solid_yellow) == 0
+def test_add_headline_paints_lemon_highlight_box():
+    lemon = lambda p: near(p, thumbnail.HIGHLIGHT_COLOR[:3], 14)
+    assert sum(1 for p in caption_pixels(HEADLINE) if lemon(p)) > 3000
+    plain = thumbnail.Headline('코파일럿\n24시간 일한다?', '없는말')
+    assert sum(1 for p in caption_pixels(plain) if lemon(p)) == 0
 
 
 @needs_font
-def test_add_headline_draws_white_text_on_left():
-    im = opened(thumbnail.add_headline(solid(color=(0, 0, 0)), thumbnail.Headline('월 3만원\n아끼는 설정'), FONT))
-    text_area = im.crop((0, 0, round(im.width * 0.6), im.height))
-    whites = sum(1 for p in pixels(text_area) if min(p) > 230)
-    assert whites > 5000
+def test_label_is_ink_tag_with_lemon_text():
+    with_label = sum(1 for p in caption_pixels(HEADLINE) if near(p, thumbnail.INK_COLOR, 20))
+    without = sum(1 for p in caption_pixels(replace(HEADLINE, label='')) if near(p, thumbnail.INK_COLOR, 20))
+    assert with_label - without > 4000
 
 
 @needs_font
@@ -149,12 +151,3 @@ def test_split_highlight():
     assert thumbnail.split_highlight('배터리 2배', '2배') == ('배터리 ', '2배', '')
     assert thumbnail.split_highlight('배터리 2배', '') == ('배터리 2배', '', '')
     assert thumbnail.split_highlight('배터리 2배', '3배') == ('배터리 2배', '', '')
-
-
-@needs_font
-def test_highlight_box_turns_navy_on_yellow_background():
-    """2026-10-21: 노랑 배경 일러스트에서 노랑 강조 상자가 배경에 묻혔다 → 배경이 노랑에 가까우면 남색 상자 + 노랑 글자."""
-    im = opened(thumbnail.add_headline(solid(color=(250, 215, 30)), HEADLINE, FONT))
-    navy_box = sum(1 for r, g, b in pixels(im) if r < 40 and g < 40 and 50 < b < 90)
-    assert navy_box > 5000
-    assert thumbnail.highlight_colors((40, 90, 200)) == (thumbnail.HIGHLIGHT_COLOR, thumbnail.HIGHLIGHT_TEXT_COLOR)

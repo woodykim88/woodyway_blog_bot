@@ -72,7 +72,7 @@ def test_style_suffix_is_flat_ligne_claire_with_bans():
     suffix = image.STYLE_SUFFIX
     for ban in ('no text', 'no letters', 'no numbers', 'no logos', 'no real people', 'not 3D', 'not glossy'):
         assert ban in suffix
-    for word in ('ligne claire', 'flat', 'paper grain', 'deadpan', 'exactly two arms', 'negative space on the left'):
+    for word in ('ligne claire', 'flat', 'paper grain', 'deadpan', 'exactly two arms', 'negative space across the upper-left'):
         assert word in suffix
     assert 'office' not in suffix and 'cinematic' not in suffix and 'gradient' in suffix  # "no gradients"
 

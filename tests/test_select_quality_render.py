@@ -237,8 +237,8 @@ def test_render_post_contains_sections_and_sources():
 
 def test_render_post_hook_tips_and_glossary():
     html = renderer.render_post(make_draft(), make_article())
-    assert html.count('<p style="font-size:1.2em') == 2  # 도입부 문단 2개
-    assert '회의 시작 전에 녹음 버튼부터 누르세요.' in html and '💡' in html
+    assert html.count('<p class="im-lead">') == 2  # 도입부 문단 2개
+    assert '회의 시작 전에 녹음 버튼부터 누르세요.' in html and '<p class="im-tip"><strong>꿀팁</strong>' in html
     assert '용어사전' in html and 'STT' in html
     assert html.index('내일 바로 써먹기') < html.index('용어사전') < html.index('출처')
 

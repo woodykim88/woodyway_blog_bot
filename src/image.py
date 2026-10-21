@@ -29,8 +29,8 @@ _BRIGHT_LOOK = (
     'clouds, no text, no letters, no numbers, no logos, no real people'
 )
 STYLE_SUFFIX = (
-    f'{_BRIGHT_LOOK}, one visual irony as the hero, subject on the right side of a landscape frame, '
-    'plain flat uncluttered negative space on the left 45% of the frame'
+    f'{_BRIGHT_LOOK}, one visual irony as the hero, subject in the lower right of a landscape frame, '
+    'plain flat uncluttered negative space across the upper-left 60% of the frame'  # 2026-10-22 문구 상자가 왼쪽 위
 )
 # 본문 중간 그림: 같은 색감, 제목을 얹지 않으므로 가운데 구도
 BODY_STYLE_SUFFIX = f'{_BRIGHT_LOOK}, one clear visual irony centered in a landscape frame, simple uncluttered background'

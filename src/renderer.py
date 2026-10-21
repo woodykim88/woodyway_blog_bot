@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
+from markupsafe import Markup, escape
 
 from src import topics
 from src.skills import Skill
@@ -23,6 +24,16 @@ _env = Environment(
     trim_blocks=True,
     lstrip_blocks=True,
 )
+
+_BOLD = re.compile(r'\*\*(?=\S)(.+?)(?<=\S)\*\*')
+
+
+def md(text: str) -> Markup:
+    """이스케이프한 뒤 **강조**만 <strong>으로 바꾼다 (2026-10-22: 별표가 글에 그대로 찍혔다)."""
+    return Markup(_BOLD.sub(r'<strong>\1</strong>', str(escape(text))))
+
+
+_env.filters['md'] = md
 
 
 def split_paragraphs(text: str) -> list[str]:
