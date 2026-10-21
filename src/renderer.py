@@ -1,6 +1,7 @@
 """PostDraft를 Blogger용 HTML로 렌더링한다. LLM 출력은 모두 자동 이스케이프된다."""
 from __future__ import annotations
 
+import json
 import re
 from collections.abc import Sequence
 from dataclasses import dataclass
@@ -70,6 +71,17 @@ def to_blocks(body: str) -> list[Block]:
     return blocks
 
 
+def faq_jsonld(blocks: Sequence[Block]) -> Markup | None:
+    """'Q.' 질문 블록과 바로 다음 문단을 FAQPage 구조화 데이터로 (2026-10-22, AI 검색·구글이 질문·답을 뽑기 쉽게)."""
+    pairs = [(q.text, a.text) for q, a in zip(blocks, blocks[1:]) if q.kind == 'q' and a.kind == 'p']
+    if not pairs:
+        return None
+    plain = lambda s: _BOLD.sub(r'\1', s).strip()
+    data = {'@context': 'https://schema.org', '@type': 'FAQPage', 'mainEntity': [
+        {'@type': 'Question', 'name': plain(q), 'acceptedAnswer': {'@type': 'Answer', 'text': plain(a)}} for q, a in pairs]}
+    return Markup(json.dumps(data, ensure_ascii=False).replace('</', '<\\/'))
+
+
 def as_of_note(as_of: str) -> str:
     if not as_of:
         return ''
@@ -109,10 +121,12 @@ def render_post(
     """as_of(기준 시점)가 있으면 생활 가이드 글: 기준 시점 안내를 붙이고 출처를 '공식 안내'로 표시한다."""
     slots = body_image_slots(len(draft.sections), len(body_images))
     body_image_at = dict(zip(slots, body_images))
+    sections = [(s.heading, to_blocks(s.body), s.tip, body_image_at.get(i)) for i, s in enumerate(draft.sections)]
     return _env.get_template('post.html.j2').render(
         draft=draft,
         hook_paragraphs=split_paragraphs(draft.hook),
-        sections=[(s.heading, to_blocks(s.body), s.tip, body_image_at.get(i)) for i, s in enumerate(draft.sections)],
+        sections=sections,
+        faq_jsonld=faq_jsonld([b for _, blocks, _, _ in sections for b in blocks]),
         as_of_note=as_of_note(as_of),
         source_prefix='공식 안내' if as_of else '원문',
         reference_prefix='함께 본 공식 안내' if as_of else '함께 본 기사',

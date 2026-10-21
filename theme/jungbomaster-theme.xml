@@ -14,7 +14,9 @@
     <title><data:blog.pageTitle/></title>
   </b:if>
   <meta content='blogger' name='generator'/>
-  <link expr:href='data:blog.blogspotFaviconUrl' rel='icon' type='image/x-icon'/>
+  <link href='https://pub-fd864ccf43554761bb9e2bddaca65799.r2.dev/site/favicon-48.png' rel='icon' sizes='48x48' type='image/png'/>
+  <link href='https://pub-fd864ccf43554761bb9e2bddaca65799.r2.dev/site/favicon-192.png' rel='icon' sizes='192x192' type='image/png'/>
+  <link href='https://pub-fd864ccf43554761bb9e2bddaca65799.r2.dev/site/favicon-192.png' rel='apple-touch-icon'/>
   <link expr:href='data:view.url.canonical' rel='canonical'/>
   <link expr:href='data:blog.homepageUrl.canonical + &quot;feeds/posts/default&quot;' expr:title='data:blog.title + &quot; - Atom&quot;' rel='alternate' type='application/atom+xml'/>
   <link expr:href='data:blog.homepageUrl.canonical + &quot;feeds/posts/default?alt=rss&quot;' expr:title='data:blog.title + &quot; - RSS&quot;' rel='alternate' type='application/rss+xml'/>
@@ -57,11 +59,12 @@
   <link href='https://cdn.jsdelivr.net' rel='preconnect'/>
   <link href='https://fonts.googleapis.com' rel='preconnect'/>
   <link crossorigin='anonymous' href='https://fonts.gstatic.com' rel='preconnect'/>
-  <link href='https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css' rel='stylesheet'/>
-  <link href='https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@900&amp;display=swap' rel='stylesheet'/>
+  <link as='style' href='https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css' onload='this.onload=null;this.rel=&quot;stylesheet&quot;' rel='preload'/>
+  <link as='style' href='https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@900&amp;display=swap' onload='this.onload=null;this.rel=&quot;stylesheet&quot;' rel='preload'/>
+  <noscript><link href='https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css' rel='stylesheet'/><link href='https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@900&amp;display=swap' rel='stylesheet'/></noscript>
   <script async='async' crossorigin='anonymous' src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1848068079213715'/>
   <b:if cond='data:view.isHomepage'>
-    <script type='application/ld+json'>{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.woodyway88.com/#website","url":"https://www.woodyway88.com/","name":"정보마스터","description":"실업급여·퇴직금·주휴수당·연말정산, 내 금액을 숫자로 먼저 보여 주고 기준일과 출처를 함께 적는 생활 제도 계산 노트","inLanguage":"ko-KR","publisher":{"@id":"https://www.woodyway88.com/#org"},"potentialAction":{"@type":"SearchAction","target":"https://www.woodyway88.com/search?q={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"Organization","@id":"https://www.woodyway88.com/#org","name":"정보마스터","url":"https://www.woodyway88.com/","sameAs":["https://tools.woodyway88.com/"]}]}</script>
+    <script type='application/ld+json'>{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.woodyway88.com/#website","url":"https://www.woodyway88.com/","name":"정보마스터","description":"실업급여·퇴직금·주휴수당·연말정산, 내 금액을 숫자로 먼저 보여 주고 기준일과 출처를 함께 적는 생활 제도 계산 노트","inLanguage":"ko-KR","publisher":{"@id":"https://www.woodyway88.com/#org"},"potentialAction":{"@type":"SearchAction","target":"https://www.woodyway88.com/search?q={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"Organization","@id":"https://www.woodyway88.com/#org","name":"정보마스터","url":"https://www.woodyway88.com/","logo":{"@type":"ImageObject","url":"https://pub-fd864ccf43554761bb9e2bddaca65799.r2.dev/site/logo-512.png","width":512,"height":512},"email":"jjongwoo777@gmail.com","founder":{"@type":"Person","name":"woodykim","url":"https://www.woodyway88.com/p/about.html"},"sameAs":["https://tools.woodyway88.com/"]}]}</script>
   </b:if>
   <b:skin><![CDATA[
 /* 정보마스터 theme (2026-10-22): 첫 화면·썸네일은 에디토리얼(B), 본문은 차분한 흰 바탕(A) */
@@ -149,6 +152,7 @@ img{max-width:100%;height:auto}
 .post-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 26px;padding-bottom:20px;border-bottom:1px solid var(--line)}
 .badge{font-size:13px;font-weight:700;padding:5px 12px;border-radius:999px;background:#eef3fd;color:#1a4fb8;text-decoration:none}
 .badge-date{background:#fff6d6;color:#5a4500}
+.badge-author{background:var(--ink);color:#fff}
 .post-body{font-size:17px;line-height:1.85;color:#222}
 .post-body p{margin:0 0 1.1em}
 .post-body h2{font-size:24px;line-height:1.4;letter-spacing:-.02em;margin:1.9em 0 .7em;padding-top:.2em}
@@ -381,7 +385,8 @@ img{max-width:100%;height:auto}
             <h1 class='post-title'><data:post.title/></h1>
             <b:if cond='data:view.isPost'>
               <div class='post-meta'>
-                <span class='badge badge-date'><time expr:datetime='data:post.lastUpdated.iso8601'><b:eval expr='format(data:post.lastUpdated, &quot;yyyy년 M월 d일&quot;)'/></time> 업데이트</span>
+                <a class='badge badge-author' href='/p/about.html' rel='author'>글 woodykim</a>
+                <span class='badge badge-date'><time expr:datetime='data:post.date.iso8601'><b:eval expr='format(data:post.date, &quot;yyyy년 M월 d일&quot;)'/></time> 작성</span>
                 <b:loop values='data:post.labels' var='label'><a class='badge' expr:href='data:label.url'><data:label.name/></a></b:loop>
               </div>
             </b:if>
@@ -394,7 +399,7 @@ img{max-width:100%;height:auto}
                 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
               </div>
               <p class='post-note'><b>기준과 출처</b> · 이 글의 숫자는 정부·공공기관이 공개한 기준으로 계산했고, 글 안의 출처에서 원문을 확인할 수 있습니다. 실제 금액은 개인 조건에 따라 달라질 수 있으니 계산기로 내 조건을 넣어 다시 확인해 보세요.</p>
-              <script type='application/ld+json'>{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","headline":"<b:eval expr='data:post.title.jsonEscaped'/>","description":"<b:eval expr='data:post.snippets.short.jsonEscaped'/>","datePublished":"<b:eval expr='data:post.date.iso8601'/>","dateModified":"<b:eval expr='data:post.lastUpdated.iso8601'/>","mainEntityOfPage":"<b:eval expr='data:post.url.canonical'/>","url":"<b:eval expr='data:post.url.canonical'/>",<b:if cond='data:post.featuredImage'>"image":["<b:eval expr='data:post.featuredImage'/>"],</b:if>"inLanguage":"ko-KR","author":{"@type":"Organization","name":"정보마스터","url":"https://www.woodyway88.com/"},"publisher":{"@id":"https://www.woodyway88.com/#org","@type":"Organization","name":"정보마스터","url":"https://www.woodyway88.com/"}}<b:if cond='data:post.labels'>,{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://www.woodyway88.com/"}<b:loop index='j' values='data:post.labels' var='label'><b:if cond='data:j == 0'>,{"@type":"ListItem","position":2,"name":"<b:eval expr='data:label.name.jsonEscaped'/>","item":"<b:eval expr='data:label.url.canonical'/>"}</b:if></b:loop>]}</b:if>]}</script>
+              <script type='application/ld+json'>{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","headline":"<b:eval expr='data:post.title.jsonEscaped'/>","description":"<b:eval expr='data:post.snippets.short.jsonEscaped'/>","datePublished":"<b:eval expr='data:post.date.iso8601'/>","dateModified":"<b:eval expr='data:post.lastUpdated.iso8601'/>","mainEntityOfPage":"<b:eval expr='data:post.url.canonical'/>","url":"<b:eval expr='data:post.url.canonical'/>",<b:if cond='data:post.featuredImage'>"image":["<b:eval expr='data:post.featuredImage'/>"],</b:if>"inLanguage":"ko-KR","author":{"@type":"Person","name":"woodykim","url":"https://www.woodyway88.com/p/about.html"},"publisher":{"@id":"https://www.woodyway88.com/#org","@type":"Organization","name":"정보마스터","url":"https://www.woodyway88.com/","logo":{"@type":"ImageObject","url":"https://pub-fd864ccf43554761bb9e2bddaca65799.r2.dev/site/logo-512.png"}}}<b:if cond='data:post.labels'>,{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://www.woodyway88.com/"}<b:loop index='j' values='data:post.labels' var='label'><b:if cond='data:j == 0'>,{"@type":"ListItem","position":2,"name":"<b:eval expr='data:label.name.jsonEscaped'/>","item":"<b:eval expr='data:label.url.canonical'/>"}</b:if></b:loop>]}</b:if>]}</script>
             </b:if>
           </article>
           <aside aria-label='관련 정보' class='rail'>

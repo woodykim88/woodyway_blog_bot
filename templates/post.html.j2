@@ -1,7 +1,9 @@
-{#- 2026-10-22: 색·모양은 테마(theme/jungbomaster-theme.xml)의 im-* 클래스가 정한다. 본문은 차분한 흰 바탕(A안). 이모지 없음. -#}
+{#- 2026-10-22: 색·모양은 테마(theme/jungbomaster-theme.xml)의 im-* 클래스가 정한다. 본문은 차분한 흰 바탕(A안). 이모지 없음.
+    첫 줄 im-meta 주석은 도구/색인요청/describe.py가 읽어 Blogger 검색 설명으로 넣는다(API로는 못 넣음). -#}
+<!-- im-meta: {{ draft.meta_description }} -->
 {% if hero_image_url %}
 <div class="im-hero">
-  <img src="{{ hero_image_url }}" alt="{{ draft.image_alt }}" width="1200" height="800" loading="eager">
+  <img src="{{ hero_image_url }}" alt="{{ draft.image_alt }}" width="1200" height="800" loading="eager" fetchpriority="high">
 </div>
 {% endif %}
 {% for p in hook_paragraphs %}
@@ -143,4 +145,7 @@
   <p>오늘 글이 도움이 되셨다면, 제 공간에도 한 번 놀러 와 주세요.</p>
   <a class="im-btn" href="{{ footer_url }}" target="_blank" rel="noopener">제 인포크 링크 둘러보기</a>
 </div>
+{% endif %}
+{% if faq_jsonld %}
+<script type="application/ld+json">{{ faq_jsonld }}</script>
 {% endif %}
