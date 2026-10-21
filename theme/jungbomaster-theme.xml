@@ -198,6 +198,12 @@ img{max-width:100%;height:auto}
 .im-sources{font-size:.92em;color:#444}
 .im-footer{text-align:center}
 .post-body strong{font-weight:800;color:#161616}
+.im-answer{margin:0 0 26px;padding:22px 22px 20px;background:#fff;border:1.5px solid #c9dafc;border-radius:18px}
+.post-body .im-answer-cond{margin:0 0 6px;font-size:14px;font-weight:600;color:#4b5567}
+.post-body .im-answer-value{margin:0;font-size:40px;line-height:1.2;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:#161616}
+.im-answer-value{display:inline;background:linear-gradient(transparent 62%,#fff0c2 62%)}
+.post-body .im-answer-detail{margin:10px 0 16px;font-size:15px;color:#333;font-variant-numeric:tabular-nums}
+@media (max-width:720px){.post-body .im-answer-value{font-size:32px}}
 /* footer */
 .site-foot{background:var(--ink);color:#e9e4d8;margin-top:40px}
 .site-foot .wrap{padding-top:34px;padding-bottom:40px;display:flex;flex-direction:column;gap:12px}

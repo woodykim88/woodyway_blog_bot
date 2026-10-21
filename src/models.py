@@ -147,6 +147,16 @@ class PostDraft(BaseModel):
     thumbnail_highlight: str = Field(
         default='', description='thumbnail_text 안에 그대로 있는 강조 단어·숫자 하나 (6자 이내). 노란 형광펜으로 칠한다',
     )
+    # 정답 카드 (2026-10-22): 글 맨 위에 조건 → 큰 숫자 → 근거. 숫자로 답할 글이 아니면 셋 다 빈 문자열
+    answer_condition: str = Field(
+        default='', description='정답 카드의 조건 한 줄, 가운뎃점(·)으로 구분 (예: "월급 300만 원 · 고용보험 3년 · 50세 미만"). 숫자 답이 없는 글이면 빈 문자열',
+    )
+    answer_value: str = Field(
+        default='', description='그 조건의 핵심 숫자 답 15자 이내 (예: "약 1,188만 원", "10번", "40점"). 본문에 나온 숫자 그대로. 없으면 빈 문자열',
+    )
+    answer_detail: str = Field(
+        default='', description='그 숫자가 나오는 근거 한 줄 30자 이내 (예: "하루 66,048원 × 180일"). 없으면 빈 문자열',
+    )
 
 
 class FittedFields(BaseModel):

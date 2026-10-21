@@ -59,5 +59,8 @@ def strip_ai_disclosure(draft: PostDraft) -> PostDraft:
         'action_items': [c for c in (clean_text(a) for a in draft.action_items) if c],
         'glossary': glossary,
         'meta_description': clean_text(draft.meta_description),
+        'answer_condition': clean_text(draft.answer_condition),
+        'answer_value': clean_text(draft.answer_value),
+        'answer_detail': clean_text(draft.answer_detail),
         'image_alt': clean_text(draft.image_alt, image=True),
     })

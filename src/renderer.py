@@ -71,6 +71,19 @@ def to_blocks(body: str) -> list[Block]:
     return blocks
 
 
+_NUMBER = re.compile(r'\d[\d,]*')
+
+
+def answer_supported(draft: PostDraft) -> bool:
+    """정답 카드의 숫자가 본문에 그대로 있는가. 없으면 지어낸 값일 수 있어 카드를 숨긴다 (2026-10-22)."""
+    numbers = [n.replace(',', '') for n in _NUMBER.findall(draft.answer_value)]
+    if not draft.answer_value.strip() or not numbers:
+        return False
+    body = ' '.join([draft.hook, *draft.key_points, *(s.body for s in draft.sections), draft.why_it_matters])
+    plain = re.sub(r'[,\s]', '', body)
+    return all(n in plain for n in numbers)
+
+
 def faq_jsonld(blocks: Sequence[Block]) -> Markup | None:
     """'Q.' 질문 블록과 바로 다음 문단을 FAQPage 구조화 데이터로 (2026-10-22, AI 검색·구글이 질문·답을 뽑기 쉽게)."""
     pairs = [(q.text, a.text) for q, a in zip(blocks, blocks[1:]) if q.kind == 'q' and a.kind == 'p']
@@ -124,6 +137,7 @@ def render_post(
     sections = [(s.heading, to_blocks(s.body), s.tip, body_image_at.get(i)) for i, s in enumerate(draft.sections)]
     return _env.get_template('post.html.j2').render(
         draft=draft,
+        answer=answer_supported(draft),
         hook_paragraphs=split_paragraphs(draft.hook),
         sections=sections,
         faq_jsonld=faq_jsonld([b for _, blocks, _, _ in sections for b in blocks]),

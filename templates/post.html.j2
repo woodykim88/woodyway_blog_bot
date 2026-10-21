@@ -6,10 +6,24 @@
   <img src="{{ hero_image_url }}" alt="{{ draft.image_alt }}" width="1200" height="800" loading="eager" fetchpriority="high">
 </div>
 {% endif %}
+{% if answer %}
+<div class="im-answer">
+{% if draft.answer_condition %}
+  <p class="im-answer-cond">{{ draft.answer_condition }}</p>
+{% endif %}
+  <p class="im-answer-value">{{ draft.answer_value }}</p>
+{% if draft.answer_detail %}
+  <p class="im-answer-detail">{{ draft.answer_detail }}</p>
+{% endif %}
+{% if tool %}
+  <a class="im-btn" href="{{ tool.url }}" target="_blank" rel="noopener">내 조건으로 다시 계산하기 →</a>
+{% endif %}
+</div>
+{% endif %}
 {% for p in hook_paragraphs %}
 <p class="im-lead">{{ p|md }}</p>
 {% endfor %}
-{% if tool %}
+{% if tool and not answer %}
 <div class="im-calc">
   <p><strong>내 경우는 얼마일까?</strong> {{ tool.blurb }}</p>
   <a class="im-btn" href="{{ tool.url }}" target="_blank" rel="noopener">{{ tool.title }} 바로 가기 →</a>

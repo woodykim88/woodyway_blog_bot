@@ -82,6 +82,7 @@ def fact_check_text(draft: PostDraft) -> str:
         draft.why_it_matters,
         *(f'{g.term}: {g.meaning}' for g in draft.glossary),
         draft.thumbnail_text.replace('\n', ' '),
+        ' '.join(x for x in (draft.answer_condition, draft.answer_value, draft.answer_detail) if x),
     ]
     return '\n'.join(parts)
 
