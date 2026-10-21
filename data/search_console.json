@@ -1,18 +1,11 @@
 {
- "updated": "2026-10-20",
+ "updated": "2026-10-21",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-09-22",
-  "2026-10-19"
+  "2026-09-23",
+  "2026-10-20"
  ],
  "daily": [
-  {
-   "date": "2026-09-22",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0,
-   "position": 43
-  },
   {
    "date": "2026-09-23",
    "clicks": 0,
@@ -187,6 +180,13 @@
    "impressions": 2,
    "ctr": 0,
    "position": 18
+  },
+  {
+   "date": "2026-10-18",
+   "clicks": 0,
+   "impressions": 9,
+   "ctr": 0,
+   "position": 34.3
   }
  ],
  "top_queries": [
@@ -254,6 +254,13 @@
    "position": 29.7
   },
   {
+   "query": "상속포기 기간 지나면",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 54
+  },
+  {
    "query": "실업급여 계산기 2026",
    "clicks": 0,
    "impressions": 1,
@@ -270,16 +277,16 @@
   {
    "query": "퇴직금 계산 방법",
    "clicks": 0,
-   "impressions": 2,
+   "impressions": 4,
    "ctr": 0,
-   "position": 72
+   "position": 60.5
   },
   {
    "query": "퇴직금 계산법",
    "clicks": 0,
-   "impressions": 1,
+   "impressions": 2,
    "ctr": 0,
-   "position": 58
+   "position": 67.5
   }
  ],
  "top_pages": [
@@ -340,13 +347,6 @@
    "position": 5.6
   },
   {
-   "page": "https://www.woodyway88.com/2025/03/blog-post_969.html",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0,
-   "position": 43
-  },
-  {
    "page": "https://www.woodyway88.com/2026/09/15-900.html",
    "clicks": 0,
    "impressions": 1,
@@ -366,6 +366,13 @@
    "impressions": 6,
    "ctr": 0,
    "position": 14
+  },
+  {
+   "page": "https://www.woodyway88.com/2026/09/ai-3.html",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 38
   },
   {
    "page": "https://www.woodyway88.com/2026/09/llm-api-3.html",
@@ -391,16 +398,16 @@
   {
    "page": "https://www.woodyway88.com/2026/10/claude-code-claude-md-guide.html",
    "clicks": 0,
-   "impressions": 1,
+   "impressions": 2,
    "ctr": 0,
-   "position": 9
+   "position": 7.5
   },
   {
    "page": "https://www.woodyway88.com/2026/10/claude-code-design-taste-frontend.html",
    "clicks": 0,
-   "impressions": 2,
+   "impressions": 3,
    "ctr": 0,
-   "position": 5
+   "position": 6.7
   },
   {
    "page": "https://www.woodyway88.com/2026/10/claude-google-docs-integration.html",
@@ -431,28 +438,10 @@
   },
   "www.woodyway88.com": {
    "clicks": 0,
-   "impressions": 57
+   "impressions": 65
   }
  },
  "index": [
-  {
-   "url": "https://www.woodyway88.com/2026/10/senior-flu-vaccination-schedule.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-08T10:47:26Z"
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/10/claude-code-figma-skill.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-07T07:59:48Z"
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/10/unemployment-benefit-eligibility.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-08T06:13:11Z"
-  },
   {
    "url": "https://www.woodyway88.com/2026/10/blux-semi-automatic-mode.html",
    "verdict": "PASS",
@@ -523,7 +512,7 @@
    "url": "https://www.woodyway88.com/2026/10/onlyoffice-ai-features-update.html",
    "verdict": "NEUTRAL",
    "coverage": "Redirect error",
-   "last_crawl": "2026-10-19T12:52:44Z"
+   "last_crawl": "2026-10-21T00:14:20Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/severance-pay-under-one-year.html",
@@ -590,6 +579,12 @@
    "verdict": "NEUTRAL",
    "coverage": "Redirect error",
    "last_crawl": "2026-10-20T00:15:07Z"
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/korea-public-holidays-2027.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Redirect error",
+   "last_crawl": "2026-10-21T00:14:20Z"
   }
  ]
 }
