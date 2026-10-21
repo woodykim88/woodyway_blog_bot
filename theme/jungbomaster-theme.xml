@@ -56,12 +56,11 @@
   <meta content='98e0641f1492a0734e63b91fac6b8791f510f53d' name='naver-site-verification'/>
   <meta content='8d19c09b7cc0cd9c9293b999e6aff56899e9d9a5' name='naver-site-verification'/>
   <meta content='9C53EB32A56F1E031330EEA37B8A227C' name='msvalidate.01'/>
-  <link href='https://cdn.jsdelivr.net' rel='preconnect'/>
+  <link href='https://pub-fd864ccf43554761bb9e2bddaca65799.r2.dev' rel='preconnect'/>
   <link href='https://fonts.googleapis.com' rel='preconnect'/>
   <link crossorigin='anonymous' href='https://fonts.gstatic.com' rel='preconnect'/>
-  <link as='style' href='https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css' onload='this.onload=null;this.rel=&quot;stylesheet&quot;' rel='preload'/>
-  <link as='style' href='https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@900&amp;display=swap' onload='this.onload=null;this.rel=&quot;stylesheet&quot;' rel='preload'/>
-  <noscript><link href='https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css' rel='stylesheet'/><link href='https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@900&amp;display=swap' rel='stylesheet'/></noscript>
+  <link as='style' href='https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@900&amp;display=optional' onload='this.onload=null;this.rel=&quot;stylesheet&quot;' rel='preload'/>
+  <noscript><link href='https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@900&amp;display=optional' rel='stylesheet'/></noscript>
   <script async='async' crossorigin='anonymous' src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1848068079213715'/>
   <b:if cond='data:view.isHomepage'>
     <script type='application/ld+json'>{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.woodyway88.com/#website","url":"https://www.woodyway88.com/","name":"정보마스터","description":"실업급여·퇴직금·주휴수당·연말정산, 내 금액을 숫자로 먼저 보여 주고 기준일과 출처를 함께 적는 생활 제도 계산 노트","inLanguage":"ko-KR","publisher":{"@id":"https://www.woodyway88.com/#org"},"potentialAction":{"@type":"SearchAction","target":"https://www.woodyway88.com/search?q={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"Organization","@id":"https://www.woodyway88.com/#org","name":"정보마스터","url":"https://www.woodyway88.com/","logo":{"@type":"ImageObject","url":"https://pub-fd864ccf43554761bb9e2bddaca65799.r2.dev/site/logo-512.png","width":512,"height":512},"email":"jjongwoo777@gmail.com","founder":{"@type":"Person","name":"woodykim","url":"https://www.woodyway88.com/p/about.html"},"sameAs":["https://tools.woodyway88.com/"]}]}</script>
@@ -71,7 +70,7 @@
 :root{--ink:#161616;--paper:#f3eee3;--card:#ffffff;--muted:#4b4b4b;--line:#e4e1d8;--lemon:#f4d23c;--cobalt:#2b5fd9;--clay:#e2622e;--green:#23743f;--link:#1f5fd1}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
 a{color:var(--link)}
 img{max-width:100%;height:auto}
 .wrap{max-width:1160px;margin:0 auto;padding:0 16px}
@@ -138,7 +137,7 @@ img{max-width:100%;height:auto}
 .card-body{padding:16px 18px 20px;display:flex;flex-direction:column;gap:8px}
 .card-meta{font-size:13px;font-weight:700;color:#444}
 .card h3{margin:0;font-family:'Noto Serif KR',serif;font-weight:900;font-size:20px;line-height:1.45;letter-spacing:-.01em}
-.ad-feed{grid-column:1/-1;min-height:120px}
+.ad-feed{grid-column:1/-1;min-height:280px}
 .pager{display:flex;justify-content:center;margin:34px 0 10px}
 .pager a{display:inline-block;border:2px solid var(--ink);background:#fff;color:var(--ink);font-weight:800;text-decoration:none;padding:12px 26px;box-shadow:4px 4px 0 var(--ink)}
 /* post (A: calm white reading) */
@@ -160,6 +159,7 @@ img{max-width:100%;height:auto}
 .post-body ul,.post-body ol{padding-left:1.3em;margin:0 0 1.2em}
 .post-body li{margin:.3em 0}
 .post-body img{border-radius:10px}
+.post-body img[width='1200']{aspect-ratio:3/2;width:100%;height:auto}  /* 옛 글 대표 이미지(1200x800, 높이 없음) 자리 미리 잡기 */
 .post-body table{border-collapse:collapse;width:100%;margin:1.2em 0;font-size:15.5px;display:block;overflow-x:auto;font-variant-numeric:tabular-nums}
 .post-body th,.post-body td{border:1px solid #e1e4ea;padding:10px 12px;text-align:left;vertical-align:top}
 .post-body th{background:#f5f7fa;font-weight:700}
@@ -168,7 +168,7 @@ img{max-width:100%;height:auto}
 .post-body a{word-break:break-all}
 .post-note{margin:34px 0 0;padding:18px 20px;background:#f6f7f9;border-radius:12px;font-size:14px;line-height:1.7;color:#444}
 .post-note b{color:var(--ink)}
-.ad-mid{margin:26px 0;min-height:100px}
+.ad-mid{margin:26px 0;min-height:280px}
 .rail-box{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px}
 .rail-box h2{margin:0 0 10px;font-size:16px;font-weight:800}
 .rail-calc{background:var(--cobalt);color:#fff;border:2px solid var(--ink);border-radius:0;box-shadow:6px 6px 0 var(--ink)}
