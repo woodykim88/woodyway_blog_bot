@@ -182,14 +182,13 @@ def _png(size=(1200, 800), color=(30, 30, 30)) -> bytes:
     return buf.getvalue()
 
 
-def test_mascot_for_category():
-    assert thumbnail.mascot_for(topics.SKILL).name == 'louis-laptop.png'
-    assert thumbnail.mascot_for(topics.TECH).name == 'louis-front.png'
-    assert thumbnail.mascot_for(topics.MONEY) is None
+def test_mascot_retired_for_all_categories():
+    """2026-10-21 사용자 결정: 루이 마스코트를 더 이상 붙이지 않는다."""
+    assert all(thumbnail.mascot_for(c) is None for c in (topics.SKILL, topics.TECH, topics.GUIDE, topics.MONEY))
 
 
 def test_add_mascot_paints_bottom_right_only():
-    out = Image.open(BytesIO(thumbnail.add_mascot(_png(), thumbnail.mascot_for(topics.SKILL)))).convert('RGB')
+    out = Image.open(BytesIO(thumbnail.add_mascot(_png(), thumbnail.MASCOT_DIR / 'louis-laptop.png'))).convert('RGB')
     assert out.size == (1200, 800)
     assert out.getpixel((1050, 700)) != (30, 30, 30)   # 오른쪽 아래에 루이
     assert out.getpixel((100, 400)) == (30, 30, 30)    # 제목이 있는 왼쪽은 그대로

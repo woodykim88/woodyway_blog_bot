@@ -148,9 +148,9 @@ def test_slot_uses_tech_news_only_as_last_resort(monkeypatch):
     assert seen['only'] == topics.TECH  # 생활경제 기사가 12:30 칸에 오지 않게
 
 
-def test_guide_posts_do_not_count_toward_news_balance_and_get_louis():
+def test_guide_posts_do_not_count_toward_news_balance():
     assert topics.category_of(make_entry(labels=('AI사용법', 'AI활용'))) == topics.SKILL
-    assert thumbnail.mascot_for(topics.GUIDE) is not None
+    assert thumbnail.mascot_for(topics.GUIDE) is None  # 루이는 2026-10-21부터 쓰지 않는다
 
 
 # --- 계산기 링크 ---
