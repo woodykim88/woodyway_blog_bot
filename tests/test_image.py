@@ -260,3 +260,17 @@ def test_attach_body_images_uses_one_image_by_default(tmp_path):
         preview_dir=tmp_path,
     )
     assert [u for u, _ in result.body_images] == ['body1.webp']  # 10/15: 일러스트 1장
+
+
+def test_background_rotates_by_prompt_and_is_stable():
+    """2026-10-22: 배경색을 정하지 않으니 대표 그림이 4장 연속 노랑이었다 → 프롬프트마다 배경색을 돌려 붙인다."""
+    picks = {image.background_for(f'scene {i}') for i in range(40)}
+    assert picks == set(image.BACKGROUNDS)
+    assert image.background_for('same scene') == image.background_for('same scene')
+
+
+def test_generate_image_names_one_dominant_background():
+    image_backend, client = backend(b'webp-bytes')
+    image.generate_image(image_backend, 'gpt-image-2', 'medium', 'a desk')
+    prompt = client.images.generate.call_args.kwargs['prompt']
+    assert f"dominant flat background color: {image.background_for('a desk')}" in prompt

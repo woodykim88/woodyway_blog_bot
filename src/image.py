@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import io
+import zlib
 from collections.abc import Mapping
 from dataclasses import dataclass
 from typing import Any
@@ -32,6 +33,8 @@ STYLE_SUFFIX = (
     f'{_BRIGHT_LOOK}, one visual irony as the hero, subject in the lower right of a landscape frame, '
     'plain flat uncluttered negative space across the upper-left 60% of the frame'  # 2026-10-22 문구 상자가 왼쪽 위
 )
+# 2026-10-22: 배경색을 정하지 않으면 그림 AI가 계속 노랑을 골라(대표 그림 4장 연속) 글마다 배경색을 돌려 붙인다
+BACKGROUNDS = ('lemon yellow', 'cobalt blue', 'clay orange', 'grass green', 'tomato red')
 # 본문 중간 그림: 같은 색감, 제목을 얹지 않으므로 가운데 구도
 BODY_STYLE_SUFFIX = f'{_BRIGHT_LOOK}, one clear visual irony centered in a landscape frame, simple uncluttered background'
 BODY_WIDTH = 1000
@@ -76,6 +79,15 @@ def load_r2_config(env: Mapping[str, str]) -> R2Config | None:
     )
 
 
+def background_for(seed: str) -> str:
+    """같은 글(프롬프트)은 늘 같은 배경색, 글이 바뀌면 BACKGROUNDS를 고르게 돈다."""
+    return BACKGROUNDS[zlib.crc32(seed.encode('utf-8')) % len(BACKGROUNDS)]
+
+
+def with_background(prompt: str) -> str:
+    return f'{prompt.rstrip(" .,")}, dominant flat background color: {background_for(prompt)}'
+
+
 def with_style(prompt: str) -> str:
     """LLM이 스타일 문구를 빠뜨려도 항상 같은 톤과 금지 조건이 붙도록 합니다."""
     return prompt if STYLE_SUFFIX in prompt else f'{prompt.rstrip(" .,")}, {STYLE_SUFFIX}'
@@ -87,12 +99,12 @@ def with_body_style(prompt: str) -> str:
 
 def generate_body_image(backend: ImageBackend, model: str, quality: str, prompt: str) -> bytes:
     """본문 중간에 넣는 보조 그림. 대표 이미지와 같은 색감이지만 제목 자리를 비우지 않는다."""
-    return backend.generate(model, with_body_style(prompt), quality)
+    return backend.generate(model, with_body_style(with_background(prompt)), quality)
 
 
 def generate_image(backend: ImageBackend, model: str, quality: str, prompt: str) -> bytes:
     """선택한 AI 회사의 이미지 모델로 대표 이미지를 만듭니다. 스타일/금지 조건은 항상 붙입니다."""
-    return backend.generate(model, with_style(prompt), quality)
+    return backend.generate(model, with_style(with_background(prompt)), quality)
 
 
 def optimize_image(data: bytes, width: int = TARGET_WIDTH, max_bytes: int = MAX_BYTES) -> bytes:
