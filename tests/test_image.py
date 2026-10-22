@@ -274,3 +274,20 @@ def test_generate_image_names_one_dominant_background():
     image.generate_image(image_backend, 'gpt-image-2', 'medium', 'a desk')
     prompt = client.images.generate.call_args.kwargs['prompt']
     assert f"dominant flat background color: {image.background_for('a desk')}" in prompt
+
+
+def test_first_body_image_also_uploads_jpeg_copy_for_threads():
+    """2026-10-22: 혼자써봄 Threads 연작에 블로그 그림을 붙인다. Threads는 WebP를 못 받아 같은 경로에 JPEG 사본을 둔다."""
+    s3 = MagicMock()
+    result = pipeline.attach_body_images(
+        BODY_COMPOSED, backend(noisy_webp(300, 200))[0], 'gpt-image-2', 'medium', image.load_r2_config(R2_ENV),
+        '2026-09-26', False, make_s3=lambda cfg: s3,
+    )
+    keys = {c.kwargs['Key']: c.kwargs['ContentType'] for c in s3.put_object.call_args_list}
+    webp = image.object_key('2026-09-26', BODY_DRAFT.title, '-b1')
+    assert keys[webp] == 'image/webp' and keys[webp[:-len('.webp')] + '.jpg'] == 'image/jpeg'
+    assert result.body_images[0][0].endswith('-b1.webp')  # 블로그 본문은 그대로 WebP
+
+
+def test_to_jpeg_returns_jpeg_bytes():
+    assert image.to_jpeg(noisy_webp(300, 200))[:3] == b'\xff\xd8\xff'

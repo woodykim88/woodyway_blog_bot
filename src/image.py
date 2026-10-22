@@ -39,6 +39,7 @@ BACKGROUNDS = ('lemon yellow', 'cobalt blue', 'clay orange', 'grass green', 'tom
 BODY_STYLE_SUFFIX = f'{_BRIGHT_LOOK}, one clear visual irony centered in a landscape frame, simple uncluttered background'
 BODY_WIDTH = 1000
 BODY_MAX_BYTES = 120 * 1024
+JPEG_QUALITY = 85
 CACHE_CONTROL = 'public, max-age=31536000, immutable'
 R2_ENV_KEYS = ('R2_ACCOUNT_ID', 'R2_ACCESS_KEY_ID', 'R2_SECRET_ACCESS_KEY', 'R2_BUCKET', 'R2_PUBLIC_BASE_URL')
 
@@ -142,6 +143,19 @@ def make_s3_client(config: R2Config) -> Any:
     )
 
 
-def upload_to_r2(s3: Any, config: R2Config, key: str, data: bytes) -> str:
-    s3.put_object(Bucket=config.bucket, Key=key, Body=data, ContentType='image/webp', CacheControl=CACHE_CONTROL)
+def to_jpeg(data: bytes, quality: int = JPEG_QUALITY) -> bytes:
+    """Threads 게시용 JPEG 사본 (Threads는 WebP를 받지 않는다, 2026-10-22)."""
+    with Image.open(io.BytesIO(data)) as source:
+        buffer = io.BytesIO()
+        source.convert('RGB').save(buffer, format='JPEG', quality=quality)
+    return buffer.getvalue()
+
+
+def jpeg_key(key: str) -> str:
+    """posts/…-b1.webp → posts/…-b1.jpg (혼자써봄 Threads가 같은 규칙으로 주소를 만든다)."""
+    return key.removesuffix('.webp') + '.jpg'
+
+
+def upload_to_r2(s3: Any, config: R2Config, key: str, data: bytes, content_type: str = 'image/webp') -> str:
+    s3.put_object(Bucket=config.bucket, Key=key, Body=data, ContentType=content_type, CacheControl=CACHE_CONTROL)
     return f'{config.public_base_url}/{key}'

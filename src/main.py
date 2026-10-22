@@ -559,6 +559,14 @@ def attach_hero_image(
 BODY_IMAGE_COUNT = 1  # 본문 중간 일러스트 수 (10/13 2장 → 10/15 사용자: 그림이 많아 1장, 인포그래픽 1장과 함께)
 
 
+def upload_threads_copy(s3: Any, r2: image.R2Config, key: str, data: bytes) -> None:
+    """첫 본문 그림의 JPEG 사본. 혼자써봄 Threads 연작이 이 그림을 붙인다. 실패해도 글은 그대로."""
+    try:
+        image.upload_to_r2(s3, r2, image.jpeg_key(key), image.to_jpeg(data), 'image/jpeg')
+    except IMAGE_ERRORS as e:
+        print(f'[Threads용 JPEG 실패] {e.__class__.__name__}: {e}')
+
+
 def attach_body_images(
     composed: Composed,
     backend: providers.ImageBackend,
@@ -586,7 +594,10 @@ def attach_body_images(
                 url = f'body{n}.webp'
                 (preview_dir / url).write_bytes(data)
             else:
-                url = image.upload_to_r2(make_s3(r2), r2, image.object_key(key_date, composed.draft.title, f'-b{n}'), data)
+                key = image.object_key(key_date, composed.draft.title, f'-b{n}')
+                url = image.upload_to_r2(make_s3(r2), r2, key, data)
+                if n == 1:
+                    upload_threads_copy(make_s3(r2), r2, key, data)
         except IMAGE_ERRORS as e:
             print(f'[본문 이미지 {n} 실패] {e.__class__.__name__}: {e} → 이 그림은 건너뜁니다.')
             continue
