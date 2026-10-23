@@ -1,18 +1,11 @@
 {
- "updated": "2026-10-22",
+ "updated": "2026-10-23",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-09-24",
-  "2026-10-21"
+  "2026-09-25",
+  "2026-10-22"
  ],
  "daily": [
-  {
-   "date": "2026-09-24",
-   "clicks": 0,
-   "impressions": 0,
-   "ctr": 0,
-   "position": 0
-  },
   {
    "date": "2026-09-25",
    "clicks": 0,
@@ -187,6 +180,13 @@
    "impressions": 0,
    "ctr": 0,
    "position": 0
+  },
+  {
+   "date": "2026-10-20",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 7
   }
  ],
  "top_queries": [
@@ -438,16 +438,10 @@
   },
   "www.woodyway88.com": {
    "clicks": 0,
-   "impressions": 65
+   "impressions": 66
   }
  },
  "index": [
-  {
-   "url": "https://www.woodyway88.com/2026/10/unemployment-benefit-calculation.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-09T05:08:40Z"
-  },
   {
    "url": "https://www.woodyway88.com/2026/10/annual-leave-calculation.html",
    "verdict": "PASS",
@@ -534,6 +528,18 @@
   },
   {
    "url": "https://www.woodyway88.com/2026/10/jeonse-deposit-return-guarantee.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Redirect error",
+   "last_crawl": "2026-10-23T00:14:50Z"
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/health-insurance-rate-2027.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Redirect error",
+   "last_crawl": "2026-10-23T00:13:21Z"
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/parental-leave-benefit-how-to-apply.html",
    "verdict": "NEUTRAL",
    "coverage": "Discovered - currently not indexed",
    "last_crawl": ""

@@ -1,8 +1,8 @@
-## Search Console (2026-09-24 ~ 2026-10-21, 갱신 2026-10-22)
-- 검색 클릭 4회 · 노출 158회 (최근 28일)
-- 최근 14일 글 색인: 11/16편
+## Search Console (2026-09-25 ~ 2026-10-22, 갱신 2026-10-23)
+- 검색 클릭 4회 · 노출 159회 (최근 28일)
+- 최근 14일 글 색인: 10/17편
 - tools.woodyway88.com: 클릭 4 · 노출 96
-- www.woodyway88.com: 클릭 0 · 노출 65
+- www.woodyway88.com: 클릭 0 · 노출 66
 
 ### 상위 검색어
 - 11월 마케팅 캘린더: 클릭 1 · 노출 24 · 평균 3.9위
@@ -21,4 +21,6 @@
 - https://www.woodyway88.com/2026/10/three-years-work-severance-pay.html — Redirect error
 - https://www.woodyway88.com/2026/10/korea-public-holidays-2027.html — Redirect error
 - https://www.woodyway88.com/2026/10/monthly-salary-3m-unemployment-benefit.html — Redirect error
-- https://www.woodyway88.com/2026/10/jeonse-deposit-return-guarantee.html — Discovered - currently not indexed
+- https://www.woodyway88.com/2026/10/jeonse-deposit-return-guarantee.html — Redirect error
+- https://www.woodyway88.com/2026/10/health-insurance-rate-2027.html — Redirect error
+- https://www.woodyway88.com/2026/10/parental-leave-benefit-how-to-apply.html — Discovered - currently not indexed
