@@ -903,5 +903,20 @@
     "status": "SCHEDULED",
     "slot": "2026-10-23T20:00",
     "tool": "severance-pay-calculator"
+  },
+  {
+    "publish_date": "2026-10-24",
+    "post_id": "8541508737047025289",
+    "title": "전세 보증금 인상 한도, 5%와 1년 기준 확인",
+    "url": "https://www.woodyway88.com/2026/10/jeonse-deposit-increase-limit.html",
+    "source_url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=629&ccfNo=4&cciNo=1&cnpClsNo=2",
+    "geeknews_url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=629&ccfNo=4&cciNo=1&cnpClsNo=2",
+    "labels": [
+      "생활가이드",
+      "부동산"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-10-24T08:00",
+    "tool": "jeonse-loan-interest-calculator"
   }
 ]
