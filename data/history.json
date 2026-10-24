@@ -934,5 +934,20 @@
     "status": "SCHEDULED",
     "slot": "2026-10-24T20:00",
     "tool": "2027"
+  },
+  {
+    "publish_date": "2026-10-25",
+    "post_id": "3226039411537659471",
+    "title": "전월세 신고 방법, 대상부터 온라인·주민센터 신고까지",
+    "url": "https://www.woodyway88.com/2026/10/rental-contract-report-how-to.html",
+    "source_url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=629&ccfNo=2&cciNo=2&cnpClsNo=5",
+    "geeknews_url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=629&ccfNo=2&cciNo=2&cnpClsNo=5",
+    "labels": [
+      "생활가이드",
+      "부동산"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-10-25T08:00",
+    "tool": "jeonse-loan-interest-calculator"
   }
 ]
