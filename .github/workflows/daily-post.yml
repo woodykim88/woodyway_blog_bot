@@ -2,9 +2,10 @@ name: daily-post
 
 on:
   schedule:
-    # 2시간마다 "지금 준비할 발행 시각이 있는지"만 가볍게 확인한다 (UTC 기준, KST 09:17/11:17/.../07:17).
-    # 발행 시각 자체는 Blogger 예약이 정확히 지키고, 각 시각마다 준비 기회가 약 3번 있다.
-    - cron: '17 */2 * * *'
+    # 정시 준비는 Cloudflare 알람(KST 02:15·04:15·14:15·16:15, mode=auto)이 맡고 cron은 슬롯당 예비 1번 (UTC).
+    # KST 05:17 → 08:00 글, 17:17 → 20:00 글. 할 일 없는 실행도 1분씩 청구돼 2시간마다에서 줄였다 (2026-10-24).
+    # 발행 시각 자체는 Blogger 예약이 정확히 지키고, 각 시각마다 준비 기회가 3번 있다.
+    - cron: '17 20,8 * * *'
   workflow_dispatch:
     inputs:
       mode:
@@ -36,13 +37,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # cron과 Cloudflare 알람(mode=auto)은 준비할 슬롯이 있을 때만 무거운 단계로 넘어간다.
+      # 다른 수동 모드는 이 점검을 건너뛰므로 due가 비어 있고, 아래 조건(!= 'false')에서 항상 실행된다.
       - name: Check due slots
         id: due
-        if: github.event_name == 'schedule'
+        if: github.event_name == 'schedule' || inputs.mode == 'auto'
         run: python3 scripts/due_check.py
 
       - uses: actions/setup-python@v5
-        if: github.event_name != 'schedule' || steps.due.outputs.due == 'true'
+        if: steps.due.outputs.due != 'false'
         with:
           python-version: '3.12'
           cache: pip
@@ -50,22 +53,22 @@ jobs:
 
       - name: Install Korean fonts
         # 대표 이미지에 썸네일 문구를 얹을 굵은 한글 글꼴 (src/thumbnail.py). 설치에 실패해도 문구 없이 발행한다
-        if: github.event_name != 'schedule' || steps.due.outputs.due == 'true'
+        if: steps.due.outputs.due != 'false'
         continue-on-error: true
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq fonts-noto-cjk
 
       - name: Install dependencies
-        if: github.event_name != 'schedule' || steps.due.outputs.due == 'true'
+        if: steps.due.outputs.due != 'false'
         run: pip install -r requirements-dev.txt
 
       - name: Run tests
-        if: github.event_name != 'schedule' || steps.due.outputs.due == 'true'
+        if: steps.due.outputs.due != 'false'
         run: python -m pytest -q
 
       - name: Generate and publish
-        if: github.event_name != 'schedule' || steps.due.outputs.due == 'true'
+        if: steps.due.outputs.due != 'false'
         env:
           BLOG_ID: ${{ secrets.BLOG_ID }}
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
@@ -108,7 +111,7 @@ jobs:
           retention-days: 14
 
       - name: Commit history and run log
-        if: always() && (github.event_name != 'schedule' || steps.due.outputs.due == 'true')
+        if: always() && (steps.due.outputs.due != 'false')
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
