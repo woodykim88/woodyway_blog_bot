@@ -965,5 +965,20 @@
     "status": "SCHEDULED",
     "slot": "2026-10-25T20:00",
     "tool": "year-end-tax-calculator"
+  },
+  {
+    "publish_date": "2026-10-26",
+    "post_id": "9028020583608806126",
+    "title": "퇴직금 지급기한, 퇴사 뒤 14일과 지연이자",
+    "url": "https://www.woodyway88.com/2026/10/severance-pay-payment-deadline.html",
+    "source_url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=999&ccfNo=3&cciNo=2&cnpClsNo=1",
+    "geeknews_url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=999&ccfNo=3&cciNo=2&cnpClsNo=1",
+    "labels": [
+      "생활가이드",
+      "생활경제"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-10-26T08:00",
+    "tool": "severance-pay-calculator"
   }
 ]
