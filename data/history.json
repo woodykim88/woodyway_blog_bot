@@ -949,5 +949,21 @@
     "status": "SCHEDULED",
     "slot": "2026-10-25T08:00",
     "tool": "jeonse-loan-interest-calculator"
+  },
+  {
+    "publish_date": "2026-10-25",
+    "post_id": "3428261558612888774",
+    "title": "2027 연말정산 미리보기, 월세·가족 공제 어떻게 바뀌나",
+    "url": "https://www.woodyway88.com/2026/10/year-end-tax-2027-changes-preview.html",
+    "source_url": "https://www.korea.kr/news/policyNewsView.do?newsId=148969870",
+    "geeknews_url": "https://www.korea.kr/news/policyNewsView.do?newsId=148969870",
+    "labels": [
+      "생활가이드",
+      "생활경제",
+      "바뀌는제도"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-10-25T20:00",
+    "tool": "year-end-tax-calculator"
   }
 ]
