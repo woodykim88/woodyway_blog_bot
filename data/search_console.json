@@ -1,18 +1,11 @@
 {
- "updated": "2026-10-25",
+ "updated": "2026-10-26",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-09-27",
-  "2026-10-24"
+  "2026-09-28",
+  "2026-10-25"
  ],
  "daily": [
-  {
-   "date": "2026-09-27",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0,
-   "position": 10
-  },
   {
    "date": "2026-09-28",
    "clicks": 0,
@@ -187,6 +180,13 @@
    "impressions": 6,
    "ctr": 0,
    "position": 8.8
+  },
+  {
+   "date": "2026-10-23",
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0,
+   "position": 8
   }
  ],
  "top_queries": [
@@ -349,9 +349,9 @@
   {
    "page": "https://www.woodyway88.com/",
    "clicks": 0,
-   "impressions": 1,
+   "impressions": 2,
    "ctr": 0,
-   "position": 3
+   "position": 7
   },
   {
    "page": "https://www.woodyway88.com/2025/03/blog-post_08.html",
@@ -370,9 +370,9 @@
   {
    "page": "https://www.woodyway88.com/2026/09/a16z-3.html",
    "clicks": 0,
-   "impressions": 6,
+   "impressions": 5,
    "ctr": 0,
-   "position": 14
+   "position": 14.8
   },
   {
    "page": "https://www.woodyway88.com/2026/09/ai-3.html",
@@ -438,22 +438,10 @@
   },
   "www.woodyway88.com": {
    "clicks": 0,
-   "impressions": 74
+   "impressions": 75
   }
  },
  "index": [
-  {
-   "url": "https://www.woodyway88.com/2026/10/severance-pay-under-one-year.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-12T01:53:32Z"
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/10/spouse-maternity-leave-pay-apply.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-12T01:35:53Z"
-  },
   {
    "url": "https://www.woodyway88.com/2026/10/implicit-lease-renewal-termination.html",
    "verdict": "PASS",
@@ -541,7 +529,7 @@
   {
    "url": "https://www.woodyway88.com/2026/10/jeonse-deposit-increase-limit.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -552,6 +540,18 @@
   },
   {
    "url": "https://www.woodyway88.com/2026/10/rental-contract-report-how-to.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/year-end-tax-2027-changes-preview.html",
+   "verdict": "NEUTRAL",
+   "coverage": "URL is unknown to Google",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/severance-pay-payment-deadline.html",
    "verdict": "NEUTRAL",
    "coverage": "Discovered - currently not indexed",
    "last_crawl": ""

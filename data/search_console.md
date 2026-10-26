@@ -1,8 +1,8 @@
-## Search Console (2026-09-27 ~ 2026-10-24, 갱신 2026-10-25)
-- 검색 클릭 4회 · 노출 167회 (최근 28일)
-- 최근 14일 글 색인: 10/19편
+## Search Console (2026-09-28 ~ 2026-10-25, 갱신 2026-10-26)
+- 검색 클릭 4회 · 노출 168회 (최근 28일)
+- 최근 14일 글 색인: 8/19편
 - tools.woodyway88.com: 클릭 4 · 노출 96
-- www.woodyway88.com: 클릭 0 · 노출 74
+- www.woodyway88.com: 클릭 0 · 노출 75
 
 ### 상위 검색어
 - 11월 마케팅 캘린더: 클릭 1 · 노출 24 · 평균 3.9위
@@ -23,6 +23,8 @@
 - https://www.woodyway88.com/2026/10/monthly-salary-3m-unemployment-benefit.html — Redirect error
 - https://www.woodyway88.com/2026/10/jeonse-deposit-return-guarantee.html — Redirect error
 - https://www.woodyway88.com/2026/10/health-insurance-rate-2027.html — Redirect error
-- https://www.woodyway88.com/2026/10/jeonse-deposit-increase-limit.html — URL is unknown to Google
+- https://www.woodyway88.com/2026/10/jeonse-deposit-increase-limit.html — Discovered - currently not indexed
 - https://www.woodyway88.com/2026/10/substitute-holidays-2027.html — Discovered - currently not indexed
 - https://www.woodyway88.com/2026/10/rental-contract-report-how-to.html — Discovered - currently not indexed
+- https://www.woodyway88.com/2026/10/year-end-tax-2027-changes-preview.html — URL is unknown to Google
+- https://www.woodyway88.com/2026/10/severance-pay-payment-deadline.html — Discovered - currently not indexed
