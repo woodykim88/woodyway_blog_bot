@@ -1,18 +1,11 @@
 {
- "updated": "2026-10-26",
+ "updated": "2026-10-27",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-09-28",
-  "2026-10-25"
+  "2026-09-29",
+  "2026-10-26"
  ],
  "daily": [
-  {
-   "date": "2026-09-28",
-   "clicks": 0,
-   "impressions": 0,
-   "ctr": 0,
-   "position": 0
-  },
   {
    "date": "2026-09-29",
    "clicks": 0,
@@ -187,6 +180,13 @@
    "impressions": 2,
    "ctr": 0,
    "position": 8
+  },
+  {
+   "date": "2026-10-24",
+   "clicks": 0,
+   "impressions": 3,
+   "ctr": 0,
+   "position": 33
   }
  ],
  "top_queries": [
@@ -242,9 +242,9 @@
   {
    "query": "api 플랫폼 선택 기준",
    "clicks": 0,
-   "impressions": 8,
+   "impressions": 9,
    "ctr": 0,
-   "position": 36.8
+   "position": 37
   },
   {
    "query": "llm api",
@@ -273,6 +273,20 @@
    "impressions": 1,
    "ctr": 0,
    "position": 25
+  },
+  {
+   "query": "제미나이4 사용량",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 7
+  },
+  {
+   "query": "퇴직금 간단 계산",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 53
   },
   {
    "query": "퇴직금 계산 방법",
@@ -384,9 +398,9 @@
   {
    "page": "https://www.woodyway88.com/2026/09/llm-api-3.html",
    "clicks": 0,
-   "impressions": 14,
+   "impressions": 15,
    "ctr": 0,
-   "position": 37.4
+   "position": 37.5
   },
   {
    "page": "https://www.woodyway88.com/2026/10/ai-hacking-career-skills.html",
@@ -438,16 +452,10 @@
   },
   "www.woodyway88.com": {
    "clicks": 0,
-   "impressions": 75
+   "impressions": 78
   }
  },
  "index": [
-  {
-   "url": "https://www.woodyway88.com/2026/10/implicit-lease-renewal-termination.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-12T18:27:15Z"
-  },
   {
    "url": "https://www.woodyway88.com/2026/10/weekly-holiday-pay-calculation.html",
    "verdict": "PASS",
@@ -529,7 +537,7 @@
   {
    "url": "https://www.woodyway88.com/2026/10/jeonse-deposit-increase-limit.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -552,6 +560,18 @@
   },
   {
    "url": "https://www.woodyway88.com/2026/10/severance-pay-payment-deadline.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/overseas-direct-purchase-customs-tax.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/mortgage-refinance-conditions.html",
    "verdict": "NEUTRAL",
    "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
