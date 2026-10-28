@@ -1042,5 +1042,21 @@
     "status": "SCHEDULED",
     "slot": "2026-10-28T08:00",
     "tool": "unemployment-benefit-calculator"
+  },
+  {
+    "publish_date": "2026-10-28",
+    "post_id": "3688308380109801748",
+    "title": "연금저축 IRP 세액공제 한도, ISA 전환분 300만원 계산",
+    "url": "https://www.woodyway88.com/2026/10/pension-savings-irp-tax-credit-limit.html",
+    "source_url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?cntntsId=7875",
+    "geeknews_url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?cntntsId=7875",
+    "labels": [
+      "생활가이드",
+      "재테크",
+      "계산사례"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-10-28T20:00",
+    "tool": "year-end-tax-calculator"
   }
 ]
