@@ -248,6 +248,8 @@ img{max-width:100%;height:auto}
           <li><a href='https://tools.woodyway88.com/year-end-tax-calculator/'>연말정산 환급액</a></li>
           <li><a href='https://tools.woodyway88.com/minimum-wage-calculator/'>최저임금 월급</a></li>
           <li><a href='https://tools.woodyway88.com/annual-leave-calculator/'>연차</a></li>
+          <li><a href='https://tools.woodyway88.com/salary-take-home-calculator/'>연봉 실수령액</a></li>
+          <li><a href='https://tools.woodyway88.com/loan-interest-calculator/'>대출 이자</a></li>
           <li><a href='https://tools.woodyway88.com/'>전체 계산기 보기</a></li>
         </ul>
       </details>
@@ -291,6 +293,7 @@ img{max-width:100%;height:auto}
       <a href='https://tools.woodyway88.com/minimum-wage-calculator/'><b class='num'>10,700원</b><span>2027년 최저 시급, 내 월급으로 바꿔 보기</span></a>
       <a href='https://tools.woodyway88.com/holidays/2027/'><b class='num'>2027</b><span>공휴일에 연차를 붙이면 며칠 쉴까</span></a>
       <a href='https://tools.woodyway88.com/unemployment-benefit-calculator/'><b class='num'>66,048원</b><span>2026년 실업급여 하루 최저액, 내 금액은?</span></a>
+      <a href='https://tools.woodyway88.com/salary-take-home-calculator/'><b class='num'>294만원</b><span>연봉 4천만원 월 실수령액, 내 연봉은?</span></a>
     </div>
   </section>
   <section aria-label='많이 쓰는 계산기' class='tiles'>
@@ -403,6 +406,14 @@ img{max-width:100%;height:auto}
         <a class='rail-pick' href='https://tools.woodyway88.com/mortgage-refinance-calculator/'><small>이 글의 계산기</small>주담대 갈아타기 계산기 →</a>
         <b:elseif cond='data:post.title contains &quot;모두의카드&quot;'/>
         <a class='rail-pick' href='https://tools.woodyway88.com/transit-refund-calculator/'><small>이 글의 계산기</small>모두의카드 환급 계산기 →</a>
+        <b:elseif cond='data:post.title contains &quot;갈아타기&quot;'/>
+        <a class='rail-pick' href='https://tools.woodyway88.com/mortgage-refinance-calculator/'><small>이 글의 계산기</small>주담대 갈아타기 계산기 →</a>
+        <b:elseif cond='data:post.title contains &quot;실수령&quot;'/>
+        <a class='rail-pick' href='https://tools.woodyway88.com/salary-take-home-calculator/'><small>이 글의 계산기</small>연봉 실수령액 계산기 →</a>
+        <b:elseif cond='data:post.title contains &quot;대출&quot;'/>
+        <a class='rail-pick' href='https://tools.woodyway88.com/loan-interest-calculator/'><small>이 글의 계산기</small>대출 이자 계산기 →</a>
+        <b:elseif cond='data:post.title contains &quot;전기요금&quot;'/>
+        <a class='rail-pick' href='https://tools.woodyway88.com/heater-electricity-cost-calculator/'><small>이 글의 계산기</small>난방기 전기요금 계산기 →</a>
         </b:if>
       </b:includable>
 
@@ -443,6 +454,7 @@ img{max-width:100%;height:auto}
               <a href='https://tools.woodyway88.com/severance-pay-calculator/'>퇴직금 계산기</a>
               <a href='https://tools.woodyway88.com/weekly-holiday-pay-calculator/'>주휴수당 계산기</a>
               <a href='https://tools.woodyway88.com/year-end-tax-calculator/'>연말정산 환급액 계산기</a>
+              <a href='https://tools.woodyway88.com/salary-take-home-calculator/'>연봉 실수령액 계산기</a>
               <a class='all' href='https://tools.woodyway88.com/'>전체 계산기 보기</a>
             </div>
             <div class='rail-box' style='min-height:280px'>
