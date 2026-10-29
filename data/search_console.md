@@ -1,7 +1,7 @@
-## Search Console (2026-09-30 ~ 2026-10-27, 갱신 2026-10-28)
-- 검색 클릭 4회 · 노출 178회 (최근 28일)
-- 최근 14일 글 색인: 6/21편
-- tools.woodyway88.com: 클릭 4 · 노출 96
+## Search Console (2026-10-01 ~ 2026-10-28, 갱신 2026-10-29)
+- 검색 클릭 4회 · 노출 177회 (최근 28일)
+- 최근 14일 글 색인: 5/22편
+- tools.woodyway88.com: 클릭 4 · 노출 95
 - www.woodyway88.com: 클릭 0 · 노출 112
 
 ### 상위 검색어
@@ -23,12 +23,14 @@
 - https://www.woodyway88.com/2026/10/monthly-salary-3m-unemployment-benefit.html — Redirect error
 - https://www.woodyway88.com/2026/10/jeonse-deposit-return-guarantee.html — Redirect error
 - https://www.woodyway88.com/2026/10/health-insurance-rate-2027.html — Redirect error
-- https://www.woodyway88.com/2026/10/jeonse-deposit-increase-limit.html — Discovered - currently not indexed
+- https://www.woodyway88.com/2026/10/jeonse-deposit-increase-limit.html — URL is unknown to Google
 - https://www.woodyway88.com/2026/10/substitute-holidays-2027.html — Discovered - currently not indexed
 - https://www.woodyway88.com/2026/10/rental-contract-report-how-to.html — Discovered - currently not indexed
 - https://www.woodyway88.com/2026/10/year-end-tax-2027-changes-preview.html — Discovered - currently not indexed
-- https://www.woodyway88.com/2026/10/severance-pay-payment-deadline.html — URL is unknown to Google
+- https://www.woodyway88.com/2026/10/severance-pay-payment-deadline.html — Discovered - currently not indexed
 - https://www.woodyway88.com/2026/10/overseas-direct-purchase-customs-tax.html — Discovered - currently not indexed
 - https://www.woodyway88.com/2026/10/mortgage-refinance-conditions.html — URL is unknown to Google
-- https://www.woodyway88.com/2026/10/energy-voucher-application-period.html — URL is unknown to Google
-- https://www.woodyway88.com/2026/10/reduced-working-hours-childcare-pay.html — Discovered - currently not indexed
+- https://www.woodyway88.com/2026/10/energy-voucher-application-period.html — Discovered - currently not indexed
+- https://www.woodyway88.com/2026/10/reduced-working-hours-childcare-pay.html — URL is unknown to Google
+- https://www.woodyway88.com/2026/10/pension-savings-irp-tax-credit-limit.html — Discovered - currently not indexed
+- https://www.woodyway88.com/2026/10/lease-renewal-right-how-to-use.html — Discovered - currently not indexed

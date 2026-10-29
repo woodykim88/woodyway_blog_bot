@@ -1,18 +1,11 @@
 {
- "updated": "2026-10-28",
+ "updated": "2026-10-29",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-09-30",
-  "2026-10-27"
+  "2026-10-01",
+  "2026-10-28"
  ],
  "daily": [
-  {
-   "date": "2026-09-30",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0,
-   "position": 5
-  },
   {
    "date": "2026-10-01",
    "clicks": 0,
@@ -187,6 +180,13 @@
    "impressions": 7,
    "ctr": 0,
    "position": 26.3
+  },
+  {
+   "date": "2026-10-26",
+   "clicks": 0,
+   "impressions": 0,
+   "ctr": 0,
+   "position": 0
   }
  ],
  "top_queries": [
@@ -356,9 +356,9 @@
   {
    "page": "https://tools.woodyway88.com/transit-refund-calculator/",
    "clicks": 0,
-   "impressions": 9,
+   "impressions": 8,
    "ctr": 0,
-   "position": 8
+   "position": 8.4
   },
   {
    "page": "https://tools.woodyway88.com/unemployment-benefit-calculator/",
@@ -455,7 +455,7 @@
  "by_site": {
   "tools.woodyway88.com": {
    "clicks": 4,
-   "impressions": 96
+   "impressions": 95
   },
   "www.woodyway88.com": {
    "clicks": 0,
@@ -463,12 +463,6 @@
   }
  },
  "index": [
-  {
-   "url": "https://www.woodyway88.com/2026/10/inheritance-renunciation-deadline-passed.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-14T18:34:27Z"
-  },
   {
    "url": "https://www.woodyway88.com/2026/10/drivers-license-penalty-points.html",
    "verdict": "PASS",
@@ -538,7 +532,7 @@
   {
    "url": "https://www.woodyway88.com/2026/10/jeonse-deposit-increase-limit.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -562,7 +556,7 @@
   {
    "url": "https://www.woodyway88.com/2026/10/severance-pay-payment-deadline.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -580,11 +574,23 @@
   {
    "url": "https://www.woodyway88.com/2026/10/energy-voucher-application-period.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/10/reduced-working-hours-childcare-pay.html",
+   "verdict": "NEUTRAL",
+   "coverage": "URL is unknown to Google",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/pension-savings-irp-tax-credit-limit.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/lease-renewal-right-how-to-use.html",
    "verdict": "NEUTRAL",
    "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
