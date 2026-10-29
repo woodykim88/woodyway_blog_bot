@@ -5,7 +5,7 @@
   <meta charset='utf-8'/>
   <meta content='width=device-width, initial-scale=1' name='viewport'/>
   <b:if cond='data:view.isHomepage'>
-    <title>정보마스터 | 실업급여·퇴직금·연말정산 계산과 생활 제도 정리</title>
+    <title>정보마스터 | 실업급여&#183;퇴직금&#183;연말정산 계산과 생활 제도 정리</title>
   <b:elseif cond='data:view.isLabelSearch'/>
     <title><data:view.search.label/> 글 모음 - 정보마스터</title>
   <b:elseif cond='data:view.isSingleItem'/>
@@ -64,7 +64,7 @@
   <noscript><link href='https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@900&amp;display=optional' rel='stylesheet'/></noscript>
   <script async='async' crossorigin='anonymous' src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1848068079213715'/>
   <b:if cond='data:view.isHomepage'>
-    <script type='application/ld+json'>{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.woodyway88.com/#website","url":"https://www.woodyway88.com/","name":"정보마스터","description":"실업급여·퇴직금·주휴수당·연말정산, 내 금액을 숫자로 먼저 보여 주고 기준일과 출처를 함께 적는 생활 제도 계산 노트","inLanguage":"ko-KR","publisher":{"@id":"https://www.woodyway88.com/#org"},"potentialAction":{"@type":"SearchAction","target":"https://www.woodyway88.com/search?q={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"Organization","@id":"https://www.woodyway88.com/#org","name":"정보마스터","url":"https://www.woodyway88.com/","logo":{"@type":"ImageObject","url":"https://pub-fd864ccf43554761bb9e2bddaca65799.r2.dev/site/logo-512.png","width":512,"height":512},"email":"jjongwoo777@gmail.com","founder":{"@type":"Person","name":"woodykim","url":"https://www.woodyway88.com/p/about.html"},"sameAs":["https://tools.woodyway88.com/"]}]}</script>
+    <script type='application/ld+json'>{&quot;@context&quot;:&quot;https://schema.org&quot;,&quot;@graph&quot;:[{&quot;@type&quot;:&quot;WebSite&quot;,&quot;@id&quot;:&quot;https://www.woodyway88.com/#website&quot;,&quot;url&quot;:&quot;https://www.woodyway88.com/&quot;,&quot;name&quot;:&quot;정보마스터&quot;,&quot;description&quot;:&quot;실업급여&#183;퇴직금&#183;주휴수당&#183;연말정산, 내 금액을 숫자로 먼저 보여 주고 기준일과 출처를 함께 적는 생활 제도 계산 노트&quot;,&quot;inLanguage&quot;:&quot;ko-KR&quot;,&quot;publisher&quot;:{&quot;@id&quot;:&quot;https://www.woodyway88.com/#org&quot;},&quot;potentialAction&quot;:{&quot;@type&quot;:&quot;SearchAction&quot;,&quot;target&quot;:&quot;https://www.woodyway88.com/search?q={search_term_string}&quot;,&quot;query-input&quot;:&quot;required name=search_term_string&quot;}},{&quot;@type&quot;:&quot;Organization&quot;,&quot;@id&quot;:&quot;https://www.woodyway88.com/#org&quot;,&quot;name&quot;:&quot;정보마스터&quot;,&quot;url&quot;:&quot;https://www.woodyway88.com/&quot;,&quot;logo&quot;:{&quot;@type&quot;:&quot;ImageObject&quot;,&quot;url&quot;:&quot;https://pub-fd864ccf43554761bb9e2bddaca65799.r2.dev/site/logo-512.png&quot;,&quot;width&quot;:512,&quot;height&quot;:512},&quot;email&quot;:&quot;jjongwoo777@gmail.com&quot;,&quot;founder&quot;:{&quot;@type&quot;:&quot;Person&quot;,&quot;name&quot;:&quot;woodykim&quot;,&quot;url&quot;:&quot;https://www.woodyway88.com/p/about.html&quot;},&quot;sameAs&quot;:[&quot;https://tools.woodyway88.com/&quot;]}]}</script>
   </b:if>
   <b:skin><![CDATA[
 /* 정보마스터 theme (2026-10-22): 첫 화면·썸네일은 에디토리얼(B), 본문은 차분한 흰 바탕(A) */
@@ -256,7 +256,7 @@ img{max-width:100%;height:auto}
       <details>
         <summary>일정</summary>
         <ul>
-          <li><a href='https://tools.woodyway88.com/holidays/2027/'>2027 공휴일·연차 꿀조합</a></li>
+          <li><a href='https://tools.woodyway88.com/holidays/2027/'>2027 공휴일&#183;연차 꿀조합</a></li>
           <li><a href='https://tools.woodyway88.com/calendar/'>월별 캘린더</a></li>
           <li><a href='https://www.woodyway88.com/search/label/%EC%9D%BC%EC%A0%95'>일정 글 모아보기</a></li>
         </ul>
@@ -281,7 +281,7 @@ img{max-width:100%;height:auto}
     <div class='hero-text'>
       <span class='kicker'>생활 제도 계산 노트</span>
       <h2 class='serif' style='font-size:44px;line-height:1.28;margin:16px 0 14px'>복잡한 제도,<br/>한 장면과 한 숫자로.</h2>
-      <p>실업급여·퇴직금·주휴수당·연말정산. 내 금액을 먼저 보여 드리고, 기준일과 출처를 꼭 적습니다.</p>
+      <p>실업급여&#183;퇴직금&#183;주휴수당&#183;연말정산. 내 금액을 먼저 보여 드리고, 기준일과 출처를 꼭 적습니다.</p>
       <form action='/search' method='get' role='search'>
         <label class='sr-only' for='q-hero'>궁금한 금액 검색</label>
         <input id='q-hero' name='q' placeholder='예: 실업급여 얼마 받아요?' type='search'/>
@@ -290,6 +290,7 @@ img{max-width:100%;height:auto}
     </div>
     <div class='hero-list'>
       <h2>요즘 많이 찾는 숫자</h2>
+      <a href='https://tools.woodyway88.com/year-end-tax-calculator/'><b class='num'>900만원</b><span>연금저축+IRP 세액공제 한도, 연말 전 내 환급액은?</span></a>
       <a href='https://tools.woodyway88.com/minimum-wage-calculator/'><b class='num'>10,700원</b><span>2027년 최저 시급, 내 월급으로 바꿔 보기</span></a>
       <a href='https://tools.woodyway88.com/holidays/2027/'><b class='num'>2027</b><span>공휴일에 연차를 붙이면 며칠 쉴까</span></a>
       <a href='https://tools.woodyway88.com/unemployment-benefit-calculator/'><b class='num'>66,048원</b><span>2026년 실업급여 하루 최저액, 내 금액은?</span></a>
@@ -298,8 +299,8 @@ img{max-width:100%;height:auto}
   </section>
   <section aria-label='많이 쓰는 계산기' class='tiles'>
     <div class='wrap'>
-      <a class='tile t-cobalt' href='https://tools.woodyway88.com/unemployment-benefit-calculator/'><small>계산기</small><strong>실업급여</strong><span>퇴사 전 임금과 가입 기간으로 하루 금액·받는 기간</span></a>
-      <a class='tile t-lemon' href='https://tools.woodyway88.com/severance-pay-calculator/'><small>계산기</small><strong>퇴직금</strong><span>입사일·퇴사일과 3개월 임금으로 예상 퇴직금</span></a>
+      <a class='tile t-cobalt' href='https://tools.woodyway88.com/unemployment-benefit-calculator/'><small>계산기</small><strong>실업급여</strong><span>퇴사 전 임금과 가입 기간으로 하루 금액&#183;받는 기간</span></a>
+      <a class='tile t-lemon' href='https://tools.woodyway88.com/severance-pay-calculator/'><small>계산기</small><strong>퇴직금</strong><span>입사일&#183;퇴사일과 3개월 임금으로 예상 퇴직금</span></a>
       <a class='tile t-clay' href='https://tools.woodyway88.com/weekly-holiday-pay-calculator/'><small>계산기</small><strong>주휴수당</strong><span>시급과 1주 소정근로시간으로 주휴수당</span></a>
       <a class='tile t-green' href='https://tools.woodyway88.com/year-end-tax-calculator/'><small>계산기</small><strong>연말정산</strong><span>급여와 공제 항목으로 예상 환급액</span></a>
     </div>
@@ -311,24 +312,22 @@ img{max-width:100%;height:auto}
     <b:widget id='Blog1' locked='true' title='블로그 게시물' type='Blog' version='2' visible='true'>
       <b:widget-settings>
         <b:widget-setting name='showDateHeader'>false</b:widget-setting>
-        <b:widget-setting name='style.textcolor'>#161616</b:widget-setting>
+        <b:widget-setting name='commentLabel'>comments</b:widget-setting>
         <b:widget-setting name='showShareButtons'>false</b:widget-setting>
         <b:widget-setting name='showCommentLink'>false</b:widget-setting>
-        <b:widget-setting name='style.urlcolor'>#1f5fd1</b:widget-setting>
+        <b:widget-setting name='postLocationLabel'>Location:</b:widget-setting>
         <b:widget-setting name='showAuthor'>false</b:widget-setting>
-        <b:widget-setting name='style.linkcolor'>#1f5fd1</b:widget-setting>
         <b:widget-setting name='style.unittype'>TextAndImage</b:widget-setting>
-        <b:widget-setting name='style.bgcolor'>#ffffff</b:widget-setting>
         <b:widget-setting name='timestampLabel'/>
         <b:widget-setting name='reactionsLabel'/>
         <b:widget-setting name='showAuthorProfile'>false</b:widget-setting>
         <b:widget-setting name='style.layout'>1x1</b:widget-setting>
         <b:widget-setting name='showLabels'>true</b:widget-setting>
         <b:widget-setting name='showLocation'>false</b:widget-setting>
+        <b:widget-setting name='postLabelsLabel'/>
         <b:widget-setting name='showTimestamp'>true</b:widget-setting>
         <b:widget-setting name='postsPerAd'>1</b:widget-setting>
         <b:widget-setting name='showBacklinks'>false</b:widget-setting>
-        <b:widget-setting name='style.bordercolor'>#ffffff</b:widget-setting>
         <b:widget-setting name='showInlineAds'>false</b:widget-setting>
         <b:widget-setting name='showReactions'>false</b:widget-setting>
       </b:widget-settings>
@@ -341,89 +340,350 @@ img{max-width:100%;height:auto}
           <b:include name='listView'/>
         </b:if>
       </b:includable>
-
-      <b:includable id='listView'>
-        <div class='sec-head'>
-          <b:if cond='data:view.isLabelSearch'>
-            <h1 class='serif'><data:view.search.label/> 글 모음</h1>
-          <b:elseif cond='data:view.isSearch'/>
-            <h1 class='serif'>‘<data:view.search.query/>’ 검색 결과</h1>
-          <b:elseif cond='data:view.isArchive'/>
-            <h1 class='serif'><data:view.archive.rangeMessage/></h1>
-          <b:else/>
-            <h2 class='serif'>최신 계산 사례</h2>
-            <a href='https://www.woodyway88.com/search/label/%EA%B3%84%EC%82%B0%EC%82%AC%EB%A1%80'>계산 사례 전체</a>
-          </b:if>
-        </div>
-        <b:if cond='data:posts.empty'>
-          <p class='empty'>아직 글이 없습니다. 위 메뉴의 계산기를 먼저 써 보세요.</p>
-        <b:else/>
-          <div class='grid'>
-            <b:loop index='i' values='data:posts' var='post'>
-              <a class='card' expr:href='data:post.url'>
-                <div class='card-img'>
-                  <b:if cond='data:post.featuredImage'>
-                    <img expr:alt='data:post.title' expr:loading='data:i lt 2 ? &quot;eager&quot; : &quot;lazy&quot;' expr:src='resizeImage(data:post.featuredImage, 720)' height='480' width='720'/>
-                  </b:if>
-                </div>
-                <div class='card-body'>
-                  <span class='card-meta'><b:loop index='j' values='data:post.labels' var='label'><b:if cond='data:j == 0'><data:label.name/> · </b:if></b:loop><time expr:datetime='data:post.date.iso8601'><b:eval expr='format(data:post.date, &quot;yyyy년 M월 d일&quot;)'/></time></span>
-                  <h3><data:post.title/></h3>
-                </div>
-              </a>
-              <b:if cond='data:i == 3'>
-                <div class='ad-feed'>
-                  <ins class='adsbygoogle' data-ad-client='ca-pub-1848068079213715' data-ad-format='auto' data-ad-slot='1318812914' data-full-width-responsive='true' style='display:block'/>
-                  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-                </div>
-              </b:if>
-            </b:loop>
-          </div>
-        </b:if>
-        <b:if cond='data:olderPageUrl'>
-          <div class='pager'><a expr:href='data:olderPageUrl'>이전 글 더 보기</a></div>
-        </b:if>
-      </b:includable>
-
+      <b:includable id='aboutPostAuthor'>
+  <div class='author-name'>
+    <a class='g-profile' expr:href='data:post.author.profileUrl' rel='author' title='author profile'>
+      <span>
+        <data:post.author.name/>
+      </span>
+    </a>
+  </div>
+  <div>
+    <span class='author-desc'>
+      <data:post.author.aboutMe/>
+    </span>
+  </div>
+</b:includable>
+      <b:includable id='addComments'>
+  <a expr:href='data:post.commentsUrl' expr:onclick='data:post.commentsUrlOnclick'>
+    <b:message name='messages.postAComment'/>
+  </a>
+</b:includable>
+      <b:includable id='blogThisShare'>
+  <b:with value='&quot;window.open(this.href, \&quot;_blank\&quot;, \&quot;height=270,width=475\&quot;); return false;&quot;' var='onclick'>
+    <b:include name='platformShare'/>
+  </b:with>
+</b:includable>
+      <b:includable id='bylineByName' var='byline'>
+  <b:switch var='data:byline.name'>
+  <b:case value='share'/>
+    <b:include cond='data:post.shareUrl' name='postShareButtons'/>
+  <b:case value='comments'/>
+    <b:include cond='data:post.allowComments' name='postCommentsLink'/>
+  <b:case value='location'/>
+    <b:include cond='data:post.location' name='postLocation'/>
+  <b:case value='timestamp'/>
+    <b:include cond='not data:view.isPage' name='postTimestamp'/>
+  <b:case value='author'/>
+    <b:include name='postAuthor'/>
+  <b:case value='labels'/>
+    <b:include cond='data:post.labels' name='postLabels'/>
+  <b:case value='icons'/>
+    <b:include cond='data:post.emailPostUrl' name='emailPostIcon'/>
+  </b:switch>
+</b:includable>
+      <b:includable id='bylineRegion' var='regionItems'>
+  <b:loop values='data:regionItems' var='byline'>
+    <b:include data='byline' name='bylineByName'/>
+  </b:loop>
+</b:includable>
       <b:includable id='calcPick' var='post'>
         <b:if cond='data:post.title contains &quot;주휴수당&quot;'>
-        <a class='rail-pick' href='https://tools.woodyway88.com/weekly-holiday-pay-calculator/'><small>이 글의 계산기</small>주휴수당 계산기 →</a>
+        <a class='rail-pick' href='https://tools.woodyway88.com/weekly-holiday-pay-calculator/'><small>이 글의 계산기</small>주휴수당 계산기 &#8594;</a>
         <b:elseif cond='data:post.title contains &quot;실업급여&quot;'/>
-        <a class='rail-pick' href='https://tools.woodyway88.com/unemployment-benefit-calculator/'><small>이 글의 계산기</small>실업급여 계산기 →</a>
+        <a class='rail-pick' href='https://tools.woodyway88.com/unemployment-benefit-calculator/'><small>이 글의 계산기</small>실업급여 계산기 &#8594;</a>
         <b:elseif cond='data:post.title contains &quot;퇴직금&quot;'/>
-        <a class='rail-pick' href='https://tools.woodyway88.com/severance-pay-calculator/'><small>이 글의 계산기</small>퇴직금 계산기 →</a>
+        <a class='rail-pick' href='https://tools.woodyway88.com/severance-pay-calculator/'><small>이 글의 계산기</small>퇴직금 계산기 &#8594;</a>
         <b:elseif cond='data:post.title contains &quot;연차&quot;'/>
-        <a class='rail-pick' href='https://tools.woodyway88.com/annual-leave-calculator/'><small>이 글의 계산기</small>연차 계산기 →</a>
+        <a class='rail-pick' href='https://tools.woodyway88.com/annual-leave-calculator/'><small>이 글의 계산기</small>연차 계산기 &#8594;</a>
         <b:elseif cond='data:post.title contains &quot;최저임금&quot;'/>
-        <a class='rail-pick' href='https://tools.woodyway88.com/minimum-wage-calculator/'><small>이 글의 계산기</small>최저임금 월급 계산기 →</a>
+        <a class='rail-pick' href='https://tools.woodyway88.com/minimum-wage-calculator/'><small>이 글의 계산기</small>최저임금 월급 계산기 &#8594;</a>
         <b:elseif cond='data:post.title contains &quot;연말정산&quot;'/>
-        <a class='rail-pick' href='https://tools.woodyway88.com/year-end-tax-calculator/'><small>이 글의 계산기</small>연말정산 환급액 계산기 →</a>
+        <a class='rail-pick' href='https://tools.woodyway88.com/year-end-tax-calculator/'><small>이 글의 계산기</small>연말정산 환급액 계산기 &#8594;</a>
         <b:elseif cond='data:post.title contains &quot;공휴일&quot;'/>
-        <a class='rail-pick' href='https://tools.woodyway88.com/holidays/2027/'><small>이 글의 계산기</small>2027 공휴일·연차 꿀조합 →</a>
+        <a class='rail-pick' href='https://tools.woodyway88.com/holidays/2027/'><small>이 글의 계산기</small>2027 공휴일&#183;연차 꿀조합 &#8594;</a>
         <b:elseif cond='data:post.title contains &quot;고속도로&quot;'/>
-        <a class='rail-pick' href='https://tools.woodyway88.com/highway-toll-reentry/'><small>이 글의 계산기</small>고속도로 재진입 요금 계산기 →</a>
+        <a class='rail-pick' href='https://tools.woodyway88.com/highway-toll-reentry/'><small>이 글의 계산기</small>고속도로 재진입 요금 계산기 &#8594;</a>
         <b:elseif cond='data:post.title contains &quot;주담대&quot;'/>
-        <a class='rail-pick' href='https://tools.woodyway88.com/mortgage-refinance-calculator/'><small>이 글의 계산기</small>주담대 갈아타기 계산기 →</a>
+        <a class='rail-pick' href='https://tools.woodyway88.com/mortgage-refinance-calculator/'><small>이 글의 계산기</small>주담대 갈아타기 계산기 &#8594;</a>
         <b:elseif cond='data:post.title contains &quot;모두의카드&quot;'/>
-        <a class='rail-pick' href='https://tools.woodyway88.com/transit-refund-calculator/'><small>이 글의 계산기</small>모두의카드 환급 계산기 →</a>
+        <a class='rail-pick' href='https://tools.woodyway88.com/transit-refund-calculator/'><small>이 글의 계산기</small>모두의카드 환급 계산기 &#8594;</a>
         <b:elseif cond='data:post.title contains &quot;갈아타기&quot;'/>
-        <a class='rail-pick' href='https://tools.woodyway88.com/mortgage-refinance-calculator/'><small>이 글의 계산기</small>주담대 갈아타기 계산기 →</a>
+        <a class='rail-pick' href='https://tools.woodyway88.com/mortgage-refinance-calculator/'><small>이 글의 계산기</small>주담대 갈아타기 계산기 &#8594;</a>
         <b:elseif cond='data:post.title contains &quot;실수령&quot;'/>
-        <a class='rail-pick' href='https://tools.woodyway88.com/salary-take-home-calculator/'><small>이 글의 계산기</small>연봉 실수령액 계산기 →</a>
+        <a class='rail-pick' href='https://tools.woodyway88.com/salary-take-home-calculator/'><small>이 글의 계산기</small>연봉 실수령액 계산기 &#8594;</a>
         <b:elseif cond='data:post.title contains &quot;대출&quot;'/>
-        <a class='rail-pick' href='https://tools.woodyway88.com/loan-interest-calculator/'><small>이 글의 계산기</small>대출 이자 계산기 →</a>
+        <a class='rail-pick' href='https://tools.woodyway88.com/loan-interest-calculator/'><small>이 글의 계산기</small>대출 이자 계산기 &#8594;</a>
         <b:elseif cond='data:post.title contains &quot;전기요금&quot;'/>
-        <a class='rail-pick' href='https://tools.woodyway88.com/heater-electricity-cost-calculator/'><small>이 글의 계산기</small>난방기 전기요금 계산기 →</a>
+        <a class='rail-pick' href='https://tools.woodyway88.com/heater-electricity-cost-calculator/'><small>이 글의 계산기</small>난방기 전기요금 계산기 &#8594;</a>
         </b:if>
       </b:includable>
+      <b:includable id='commentAuthorAvatar'>
+  <div class='avatar-image-container'>
+    <img class='author-avatar' expr:src='data:comment.authorAvatarSrc' height='35' width='35'/>
+  </div>
+</b:includable>
+      <b:includable id='commentDeleteIcon' var='comment'>
+  <span expr:class='&quot;item-control &quot; + data:comment.adminClass'>
+    <b:if cond='data:showCmtPopup'>
+      <div class='goog-toggle-button'>
+        <div class='goog-inline-block comment-action-icon'/>
+      </div>
+    <b:else/>
+      <a class='comment-delete' expr:href='data:comment.deleteUrl' expr:title='data:messages.deleteComment'>
+        <img src='https://resources.blogblog.com/img/icon_delete13.gif'/>
+      </a>
+    </b:if>
+  </span>
+</b:includable>
+      <b:includable id='commentForm' var='post'>
+  <div class='comment-form'>
+    <a name='comment-form'/>
+    <h4 id='comment-post-message'><data:messages.postAComment/></h4>
+    <b:if cond='data:this.messages.blogComment != &quot;&quot;'>
+      <p><data:this.messages.blogComment/></p>
+    </b:if>
+    <b:include data='post' name='commentFormIframeSrc'/>
+    <iframe allowtransparency='allowtransparency' class='blogger-iframe-colorize blogger-comment-from-post' expr:height='data:cmtIframeInitialHeight ?: &quot;90px&quot;' frameborder='0' id='comment-editor' name='comment-editor' src='' width='100%'/>
+    <data:post.cmtfpIframe/>
+    <script type='text/javascript'>
+      BLOG_CMT_createIframe(&#39;<data:post.appRpcRelayPath/>&#39;);
+    </script>
+  </div>
+</b:includable>
+      <b:includable id='commentFormIframeSrc' var='post'>
+  <a expr:href='data:post.commentFormIframeSrc' id='comment-editor-src'/>
+</b:includable>
+      <b:includable id='commentItem' var='comment'>
+  <div class='comment' expr:id='&quot;c&quot; + data:comment.id'>
+    <b:include cond='data:blog.enabledCommentProfileImages' name='commentAuthorAvatar'/>
 
+    <div class='comment-block'>
+      <div class='comment-author'>
+        <b:if cond='data:comment.authorUrl'>
+          <b:message name='messages.authorSaidWithLink'>
+            <b:param expr:value='data:comment.author' name='authorName'/>
+            <b:param expr:value='data:comment.authorUrl' name='authorUrl'/>
+          </b:message>
+        <b:else/>
+          <b:message name='messages.authorSaid'>
+            <b:param expr:value='data:comment.author' name='authorName'/>
+          </b:message>
+        </b:if>
+      </div>
+      <div expr:class='&quot;comment-body&quot; + (data:comment.isDeleted ? &quot; deleted&quot; : &quot;&quot;)'>
+        <data:comment.body/>
+      </div>
+      <div class='comment-footer'>
+        <span class='comment-timestamp'>
+          <a expr:href='data:comment.url' title='comment permalink'>
+            <data:comment.timestamp/>
+          </a>
+          <b:include data='comment' name='commentDeleteIcon'/>
+        </span>
+      </div>
+    </div>
+  </div>
+</b:includable>
+      <b:includable id='commentList' var='comments'>
+  <div id='comments-block'>
+    <b:loop values='data:comments' var='comment'>
+      <b:include data='comment' name='commentItem'/>
+    </b:loop>
+  </div>
+</b:includable>
+      <b:includable id='commentPicker' var='post'>
+  <b:if cond='data:post.showThreadedComments'>
+    <b:include data='post' name='threadedComments'/>
+  <b:else/>
+    <b:include data='post' name='comments'/>
+  </b:if>
+</b:includable>
+      <b:includable id='comments' var='post'>
+  <section expr:class='&quot;comments&quot; + (data:post.embedCommentForm ? &quot; embed&quot; : &quot;&quot;)' expr:data-num-comments='data:post.numberOfComments' id='comments'>
+    <a name='comments'/>
+    <b:if cond='data:post.allowComments'>
+
+      <b:include name='commentsTitle'/>
+
+      <div expr:id='data:widget.instanceId + &quot;_comments-block-wrapper&quot;'>
+        <b:include cond='data:post.comments' data='post.comments' name='commentList'/>
+      </div>
+
+      <b:if cond='data:post.commentPagingRequired'>
+        <div class='paging-control-container'>
+          <b:if cond='data:post.hasOlderLinks'>
+            <a expr:class='data:post.oldLinkClass' expr:href='data:post.oldestLinkUrl'>
+              <data:messages.oldest/>
+            </a>
+            <a expr:class='data:post.oldLinkClass' expr:href='data:post.olderLinkUrl'>
+              <data:messages.older/>
+            </a>
+          </b:if>
+
+          <span class='comment-range-text'>
+            <data:post.commentRangeText/>
+          </span>
+
+          <b:if cond='data:post.hasNewerLinks'>
+            <a expr:class='data:post.newLinkClass' expr:href='data:post.newerLinkUrl'>
+              <data:messages.newer/>
+            </a>
+            <a expr:class='data:post.newLinkClass' expr:href='data:post.newestLinkUrl'>
+              <data:messages.newest/>
+            </a>
+          </b:if>
+        </div>
+      </b:if>
+
+      <div class='footer'>
+        <b:if cond='data:post.embedCommentForm'>
+          <b:if cond='data:post.allowNewComments'>
+            <b:include data='post' name='commentForm'/>
+          <b:else/>
+            <data:post.noNewCommentsText/>
+          </b:if>
+        <b:else/>
+          <b:if cond='data:post.allowComments'>
+            <b:include data='post' name='addComments'/>
+          </b:if>
+        </b:if>
+      </div>
+    </b:if>
+    <b:if cond='data:showCmtPopup'>
+      <div id='comment-popup'>
+        <iframe allowtransparency='allowtransparency' frameborder='0' id='comment-actions' name='comment-actions' scrolling='no'>
+        </iframe>
+      </div>
+    </b:if>
+  </section>
+</b:includable>
+      <b:includable id='commentsLink'>
+  <a class='comment-link' expr:href='data:post.commentsUrl' expr:onclick='data:post.commentsUrlOnclick'>
+    <b:if cond='data:post.numberOfComments &gt; 0'>
+      <b:message name='messages.numberOfComments'>
+        <b:param expr:value='data:post.numberOfComments' name='numComments'/>
+      </b:message>
+    <b:else/>
+      <data:messages.postAComment/>
+    </b:if>
+  </a>
+</b:includable>
+      <b:includable id='commentsLinkIframe'>
+  <!-- G+ comments, no longer available. The includable is retained for backwards-compatibility. -->
+</b:includable>
+      <b:includable id='commentsTitle'>
+  <h3 class='title'><data:messages.comments/></h3>
+</b:includable>
+      <b:includable id='defaultAdUnit'>
+  <ins class='adsbygoogle' data-ad-format='auto' expr:data-ad-client='data:adClientId ?: data:blog.adsenseClientId' expr:data-ad-host='data:blog.adsenseHostId' expr:style='data:style ?: &quot;display: block;&quot;'>
+    <b:attr cond='not data:blog.analytics4' expr:value='data:blog.analyticsAccountNumber' name='data-analytics-uacct'/>
+  </ins>
+  <script>
+   (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</b:includable>
+      <b:includable id='emailPostIcon'>
+  <span class='byline post-icons'>
+    <!-- email post links -->
+    <span class='item-action'>
+      <a expr:href='data:post.emailPostUrl' expr:title='data:messages.emailPost'>
+        <b:include data='{ iconClass: &quot;touch-icon sharing-icon&quot; }' name='emailIcon'/>
+      </a>
+    </span>
+  </span>
+</b:includable>
+      <b:includable id='facebookShare'>
+  <b:with value='&quot;window.open(this.href, \&quot;_blank\&quot;, \&quot;height=430,width=640\&quot;); return false;&quot;' var='onclick'>
+    <b:include name='platformShare'/>
+  </b:with>
+</b:includable>
+      <b:includable id='feedLinks'>
+  <b:if cond='!data:view.isPost'> <!-- Blog feed links -->
+    <b:if cond='data:feedLinks'>
+      <div class='blog-feeds'>
+        <b:include data='feedLinks' name='feedLinksBody'/>
+      </div>
+    </b:if>
+  <b:else/> <!--Post feed links -->
+    <div class='post-feeds'>
+      <b:loop values='data:posts' var='post'>
+        <b:if cond='data:post.allowComments and data:post.feedLinks'>
+          <b:include data='post.feedLinks' name='feedLinksBody'/>
+        </b:if>
+      </b:loop>
+    </div>
+  </b:if>
+</b:includable>
+      <b:includable id='feedLinksBody' var='links'>
+  <div class='feed-links'>
+  <data:messages.subscribeTo/>
+  <b:loop values='data:links' var='f'>
+     <a class='feed-link' expr:href='data:f.url' expr:type='data:f.mimeType' target='_blank'><data:f.name/> (<data:f.feedType/>)</a>
+  </b:loop>
+  </div>
+</b:includable>
+      <b:includable id='footerBylines'>
+  <b:if cond='data:widgets.Blog.first.footerBylines'>
+    <b:loop index='i' values='data:widgets.Blog.first.footerBylines' var='region'>
+      <b:if cond='not data:region.items.empty'>
+        <div expr:class='&quot;post-footer-line post-footer-line-&quot; + (data:i + 1)'>
+          <b:with value='&quot;footer-&quot; + (data:i + 1)' var='regionName'>
+            <b:include data='region.items' name='bylineRegion'/>
+          </b:with>
+        </div>
+      </b:if>
+    </b:loop>
+  </b:if>
+</b:includable>
+      <b:includable id='googlePlusShare'>
+</b:includable>
+      <b:includable id='headerByline'>
+  <b:if cond='data:widgets.Blog.first.headerByline'>
+    <div class='post-header'>
+      <div class='post-header-line-1'>
+        <b:with value='&quot;header-1&quot;' var='regionName'>
+          <b:include data='data:widgets.Blog.first.headerByline.items' name='bylineRegion'/>
+        </b:with>
+      </div>
+    </div>
+  </b:if>
+</b:includable>
+      <b:includable id='homePageLink'>
+  <a class='home-link' expr:href='data:blog.homepageUrl'>
+    <data:messages.home/>
+  </a>
+</b:includable>
+      <b:includable id='iframeComments' var='post'>
+  <!-- G+ comments, no longer available. The includable is retained for backwards-compatibility. -->
+</b:includable>
+      <b:includable id='inlineAd' var='post'>
+  <b:if cond='!data:view.isPreview'>
+    <b:if cond='data:this.adCode or data:this.adClientId or data:blog.adsenseClientId'>
+      <!-- Ad -->
+      <div class='inline-ad'>
+        <b:if cond='data:this.adCode != &quot;&quot;'>
+          <data:this.adCode/>
+        <b:else/>
+          <b:include cond='data:this.adClientId or data:blog.adsenseClientId' name='defaultAdUnit'/>
+        </b:if>
+      </div>
+    </b:if>
+  <b:else/>
+    <div class='inline-ad'>
+      <div class='inline-ad-placeholder'>
+        <span><b:message name='messages.adsGoHere'/></span>
+      </div>
+    </div>
+  </b:if>
+</b:includable>
       <b:includable id='itemView' var='post'>
         <div class='post-wrap'>
           <article class='post-main'>
             <b:if cond='data:view.isPost'>
               <nav aria-label='위치' class='crumb'>
                 <a expr:href='data:blog.homepageUrl'>홈</a>
-                <b:loop index='j' values='data:post.labels' var='label'><b:if cond='data:j == 0'><span aria-hidden='true'>›</span><a expr:href='data:label.url'><data:label.name/></a></b:if></b:loop>
+                <b:loop index='j' values='data:post.labels' var='label'><b:if cond='data:j == 0'><span aria-hidden='true'>&#8250;</span><a expr:href='data:label.url'><data:label.name/></a></b:if></b:loop>
               </nav>
             </b:if>
             <h1 class='post-title'><data:post.title/></h1>
@@ -442,8 +702,8 @@ img{max-width:100%;height:auto}
                 <ins class='adsbygoogle' data-ad-client='ca-pub-1848068079213715' data-ad-format='auto' data-ad-slot='1573931961' data-full-width-responsive='true' style='display:block'/>
                 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
               </div>
-              <p class='post-note'><b>기준과 출처</b> · 이 글의 숫자는 정부·공공기관이 공개한 기준으로 계산했고, 글 안의 출처에서 원문을 확인할 수 있습니다. 실제 금액은 개인 조건에 따라 달라질 수 있으니 계산기로 내 조건을 넣어 다시 확인해 보세요.</p>
-              <script type='application/ld+json'>{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","headline":"<b:eval expr='data:post.title.jsonEscaped'/>","description":"<b:eval expr='data:post.snippets.short.jsonEscaped'/>","datePublished":"<b:eval expr='data:post.date.iso8601'/>","dateModified":"<b:eval expr='data:post.lastUpdated.iso8601'/>","mainEntityOfPage":"<b:eval expr='data:post.url.canonical'/>","url":"<b:eval expr='data:post.url.canonical'/>",<b:if cond='data:post.featuredImage'>"image":["<b:eval expr='data:post.featuredImage'/>"],</b:if>"inLanguage":"ko-KR","author":{"@type":"Person","name":"woodykim","url":"https://www.woodyway88.com/p/about.html"},"publisher":{"@id":"https://www.woodyway88.com/#org","@type":"Organization","name":"정보마스터","url":"https://www.woodyway88.com/","logo":{"@type":"ImageObject","url":"https://pub-fd864ccf43554761bb9e2bddaca65799.r2.dev/site/logo-512.png"}}}<b:if cond='data:post.labels'>,{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://www.woodyway88.com/"}<b:loop index='j' values='data:post.labels' var='label'><b:if cond='data:j == 0'>,{"@type":"ListItem","position":2,"name":"<b:eval expr='data:label.name.jsonEscaped'/>","item":"<b:eval expr='data:label.url.canonical'/>"}</b:if></b:loop>]}</b:if>]}</script>
+              <p class='post-note'><b>기준과 출처</b> &#183; 이 글의 숫자는 정부&#183;공공기관이 공개한 기준으로 계산했고, 글 안의 출처에서 원문을 확인할 수 있습니다. 실제 금액은 개인 조건에 따라 달라질 수 있으니 계산기로 내 조건을 넣어 다시 확인해 보세요.</p>
+              <script type='application/ld+json'>{&quot;@context&quot;:&quot;https://schema.org&quot;,&quot;@graph&quot;:[{&quot;@type&quot;:&quot;BlogPosting&quot;,&quot;headline&quot;:&quot;<b:eval expr='data:post.title.jsonEscaped'/>&quot;,&quot;description&quot;:&quot;<b:eval expr='data:post.snippets.short.jsonEscaped'/>&quot;,&quot;datePublished&quot;:&quot;<b:eval expr='data:post.date.iso8601'/>&quot;,&quot;dateModified&quot;:&quot;<b:eval expr='data:post.lastUpdated.iso8601'/>&quot;,&quot;mainEntityOfPage&quot;:&quot;<b:eval expr='data:post.url.canonical'/>&quot;,&quot;url&quot;:&quot;<b:eval expr='data:post.url.canonical'/>&quot;,<b:if cond='data:post.featuredImage'>&quot;image&quot;:[&quot;<b:eval expr='data:post.featuredImage'/>&quot;],</b:if>&quot;inLanguage&quot;:&quot;ko-KR&quot;,&quot;author&quot;:{&quot;@type&quot;:&quot;Person&quot;,&quot;name&quot;:&quot;woodykim&quot;,&quot;url&quot;:&quot;https://www.woodyway88.com/p/about.html&quot;},&quot;publisher&quot;:{&quot;@id&quot;:&quot;https://www.woodyway88.com/#org&quot;,&quot;@type&quot;:&quot;Organization&quot;,&quot;name&quot;:&quot;정보마스터&quot;,&quot;url&quot;:&quot;https://www.woodyway88.com/&quot;,&quot;logo&quot;:{&quot;@type&quot;:&quot;ImageObject&quot;,&quot;url&quot;:&quot;https://pub-fd864ccf43554761bb9e2bddaca65799.r2.dev/site/logo-512.png&quot;}}}<b:if cond='data:post.labels'>,{&quot;@type&quot;:&quot;BreadcrumbList&quot;,&quot;itemListElement&quot;:[{&quot;@type&quot;:&quot;ListItem&quot;,&quot;position&quot;:1,&quot;name&quot;:&quot;홈&quot;,&quot;item&quot;:&quot;https://www.woodyway88.com/&quot;}<b:loop index='j' values='data:post.labels' var='label'><b:if cond='data:j == 0'>,{&quot;@type&quot;:&quot;ListItem&quot;,&quot;position&quot;:2,&quot;name&quot;:&quot;<b:eval expr='data:label.name.jsonEscaped'/>&quot;,&quot;item&quot;:&quot;<b:eval expr='data:label.url.canonical'/>&quot;}</b:if></b:loop>]}</b:if>]}</script>
             </b:if>
           </article>
           <aside aria-label='관련 정보' class='rail'>
@@ -464,6 +724,393 @@ img{max-width:100%;height:auto}
           </aside>
         </div>
       </b:includable>
+      <b:includable id='linkShare'>
+  <b:with value='&quot;window.prompt(\&quot;Copy to clipboard: Ctrl+C, Enter\&quot;, \&quot;&quot; + data:originalUrl + &quot;\&quot;); return false;&quot;' var='onclick'>
+    <b:include name='platformShare'/>
+  </b:with>
+</b:includable>
+      <b:includable id='listView'>
+        <div class='sec-head'>
+          <b:if cond='data:view.isLabelSearch'>
+            <h1 class='serif'><data:view.search.label/> 글 모음</h1>
+          <b:elseif cond='data:view.isSearch'/>
+            <h1 class='serif'>&#8216;<data:view.search.query/>&#8217; 검색 결과</h1>
+          <b:elseif cond='data:view.isArchive'/>
+            <h1 class='serif'><data:view.archive.rangeMessage/></h1>
+          <b:else/>
+            <h2 class='serif'>최신 계산 사례</h2>
+            <a href='https://www.woodyway88.com/search/label/%EA%B3%84%EC%82%B0%EC%82%AC%EB%A1%80'>계산 사례 전체</a>
+          </b:if>
+        </div>
+        <b:if cond='data:posts.empty'>
+          <p class='empty'>아직 글이 없습니다. 위 메뉴의 계산기를 먼저 써 보세요.</p>
+        <b:else/>
+          <div class='grid'>
+            <b:loop index='i' values='data:posts' var='post'>
+              <a class='card' expr:href='data:post.url'>
+                <div class='card-img'>
+                  <b:if cond='data:post.featuredImage'>
+                    <img expr:alt='data:post.title' expr:loading='data:i lt 2 ? &quot;eager&quot; : &quot;lazy&quot;' expr:src='resizeImage(data:post.featuredImage, 720)' height='480' width='720'/>
+                  </b:if>
+                </div>
+                <div class='card-body'>
+                  <span class='card-meta'><b:loop index='j' values='data:post.labels' var='label'><b:if cond='data:j == 0'><data:label.name/> &#183; </b:if></b:loop><time expr:datetime='data:post.date.iso8601'><b:eval expr='format(data:post.date, &quot;yyyy년 M월 d일&quot;)'/></time></span>
+                  <h3><data:post.title/></h3>
+                </div>
+              </a>
+              <b:if cond='data:i == 3'>
+                <div class='ad-feed'>
+                  <ins class='adsbygoogle' data-ad-client='ca-pub-1848068079213715' data-ad-format='auto' data-ad-slot='1318812914' data-full-width-responsive='true' style='display:block'/>
+                  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                </div>
+              </b:if>
+            </b:loop>
+          </div>
+        </b:if>
+        <b:if cond='data:olderPageUrl'>
+          <div class='pager'><a expr:href='data:olderPageUrl'>이전 글 더 보기</a></div>
+        </b:if>
+      </b:includable>
+      <b:includable id='nextPageLink'>
+  <a class='blog-pager-older-link' expr:href='data:olderPageUrl' expr:id='data:widget.instanceId + &quot;_blog-pager-older-link&quot;' expr:title='data:messages.olderPosts'>
+    <data:messages.olderPosts/>
+  </a>
+</b:includable>
+      <b:includable id='otherSharingButton'>
+  <span class='sharing-platform-button sharing-element-other' expr:aria-label='data:messages.shareToOtherApps.escaped' expr:data-url='data:originalUrl' expr:title='data:messages.shareToOtherApps.escaped' role='menuitem' tabindex='-1'>
+    <b:with value='{key: &quot;sharingOther&quot;}' var='platform'>
+      <b:include name='sharingPlatformIcon'/>
+    </b:with>
+    <span class='platform-sharing-text'><data:messages.shareOtherApps.escaped/></span>
+  </span>
+</b:includable>
+      <b:includable id='platformShare'>
+  <a expr:class='&quot;goog-inline-block sharing-&quot; + data:platform.key' expr:data-url='data:originalUrl' expr:href='data:shareUrl + &quot;&amp;target=&quot; + data:platform.target' expr:onclick='data:onclick ? data:onclick : &quot;&quot;' expr:title='data:platform.shareMessage' target='_blank'>
+    <span class='share-button-link-text'>
+      <data:platform.shareMessage/>
+    </span>
+  </a>
+</b:includable>
+      <b:includable id='post' var='post'>
+  <div class='post'>
+    <b:include data='post' name='postMeta'/>
+    <b:include data='post' name='postTitle'/>
+    <b:include name='headerByline'/>
+    <b:if cond='data:view.isSingleItem'>
+      <b:include data='post' name='postBody'/>
+    <b:else/>
+      <b:include data='post' name='postBodySnippet'/>
+      <b:include data='post' name='postJumpLink'/>
+    </b:if>
+    <b:include data='post' name='postFooter'/>
+  </div>
+</b:includable>
+      <b:includable id='postAuthor'>
+  <span class='byline post-author vcard'>
+    <span class='post-author-label'>
+      <data:byline.label/>
+    </span>
+    <span class='fn'>
+      <b:if cond='data:post.author.profileUrl'>
+        <meta expr:content='data:post.author.profileUrl'/>
+        <a class='g-profile' expr:href='data:post.author.profileUrl' rel='author' title='author profile'>
+          <span><data:post.author.name/></span>
+        </a>
+      <b:else/>
+        <span><data:post.author.name/></span>
+      </b:if>
+    </span>
+  </span>
+</b:includable>
+      <b:includable id='postBody' var='post'>
+  <!-- If metaDescription is empty, use the post body as the schema.org description too, for G+/FB snippeting. -->
+  <div class='post-body entry-content float-container' expr:id='&quot;post-body-&quot; + data:post.id'>
+    <data:post.body/>
+  </div>
+</b:includable>
+      <b:includable id='postBodySnippet' var='post'>
+  <b:include data='post' name='postBody'/>
+</b:includable>
+      <b:includable id='postCommentsAndAd' var='post'>
+  <article class='post-outer-container'>
+    <!-- Post title and body -->
+    <div class='post-outer'>
+      <b:include data='post' name='post'/>
+    </div>
+
+    <!-- Comments -->
+    <b:include cond='data:view.isSingleItem' data='post' name='commentPicker'/>
+
+    <!-- Show ad inside post container, after comments, if single item. -->
+    <b:include cond='data:view.isSingleItem and data:post.includeAd' data='post' name='inlineAd'/>
+  </article>
+
+  <!-- Show ad outside post container (between posts) for feed pages. -->
+  <b:include cond='data:view.isMultipleItems and data:post.includeAd' data='post' name='inlineAd'/>
+</b:includable>
+      <b:includable id='postCommentsLink'>
+  <b:if cond='data:view.isMultipleItems'>
+    <span class='byline post-comment-link container'>
+      <b:include cond='data:post.commentSource != 1' name='commentsLink'/>
+    </span>
+  </b:if>
+</b:includable>
+      <b:includable id='postFooter' var='post'>
+  <div class='post-footer'>
+    <b:include name='footerBylines'/>
+    <b:include data='post' name='postFooterAuthorProfile'/>
+  </div>
+</b:includable>
+      <b:includable id='postFooterAuthorProfile' var='post'>
+  <b:if cond='data:post.author.aboutMe and data:view.isPost'>
+    <div class='author-profile'>
+      <b:if cond='data:post.author.authorPhoto.url'>
+        <img class='author-image' expr:src='data:post.author.authorPhoto.url' width='50px'/>
+        <div class='author-about'>
+          <b:include data='post' name='aboutPostAuthor'/>
+        </div>
+      <b:else/>
+        <b:include data='post' name='aboutPostAuthor'/>
+      </b:if>
+    </div>
+  </b:if>
+</b:includable>
+      <b:includable id='postHeader' var='post'>
+  <b:include name='headerByline'/>
+</b:includable>
+      <b:includable id='postJumpLink' var='post'>
+  <div class='jump-link flat-button'>
+    <a expr:href='data:post.url fragment &quot;more&quot;' expr:title='data:post.title'>
+      <b:eval expr='data:blog.jumpLinkMessage'/>
+    </a>
+  </div>
+</b:includable>
+      <b:includable id='postLabels'>
+  <span class='byline post-labels'>
+    <span class='byline-label'><data:byline.label/></span>
+    <b:loop index='i' values='data:post.labels' var='label'>
+      <a expr:href='data:label.url' rel='tag'>
+        <data:label.name/>
+      </a>
+    </b:loop>
+  </span>
+</b:includable>
+      <b:includable id='postLocation'>
+  <span class='byline post-location'>
+    <data:byline.label/>
+    <a expr:href='data:post.location.mapsUrl' target='_blank'><data:post.location.name/></a>
+  </span>
+</b:includable>
+      <b:includable id='postMeta' var='post'>
+  <b:include data='post' name='postMetadataJSON'/>
+</b:includable>
+      <b:includable id='postMetadataJSONImage'>
+  &quot;image&quot;: {
+    &quot;@type&quot;: &quot;ImageObject&quot;,
+    <b:if cond='data:post.featuredImage.isResizable'>
+    &quot;url&quot;: &quot;<b:eval expr='resizeImage(data:post.featuredImage, 1200, &quot;1200:630&quot;)'/>&quot;,
+    &quot;height&quot;: 630,
+    &quot;width&quot;: 1200
+    <b:else/>
+    &quot;url&quot;: &quot;https://blogger.googleusercontent.com/img/b/U2hvZWJveA/AVvXsEgfMvYAhAbdHksiBA24JKmb2Tav6K0GviwztID3Cq4VpV96HaJfy0viIu8z1SSw_G9n5FQHZWSRao61M3e58ImahqBtr7LiOUS6m_w59IvDYwjmMcbq3fKW4JSbacqkbxTo8B90dWp0Cese92xfLMPe_tg11g/w1200/&quot;,
+    &quot;height&quot;: 348,
+    &quot;width&quot;: 1200
+    </b:if>
+  },
+</b:includable>
+      <b:includable id='postMetadataJSONPublisher'>
+ &quot;publisher&quot;: {
+    &quot;@type&quot;: &quot;Organization&quot;,
+    &quot;name&quot;: &quot;Blogger&quot;,
+    &quot;logo&quot;: {
+      &quot;@type&quot;: &quot;ImageObject&quot;,
+      &quot;url&quot;: &quot;https://blogger.googleusercontent.com/img/b/U2hvZWJveA/AVvXsEgfMvYAhAbdHksiBA24JKmb2Tav6K0GviwztID3Cq4VpV96HaJfy0viIu8z1SSw_G9n5FQHZWSRao61M3e58ImahqBtr7LiOUS6m_w59IvDYwjmMcbq3fKW4JSbacqkbxTo8B90dWp0Cese92xfLMPe_tg11g/h60/&quot;,
+      &quot;width&quot;: 206,
+      &quot;height&quot;: 60
+    }
+  },
+</b:includable>
+      <b:includable id='postPagination'>
+  <div class='blog-pager container' id='blog-pager'>
+    <b:include cond='data:newerPageUrl' name='previousPageLink'/>
+    <b:include cond='data:olderPageUrl' name='nextPageLink'/>
+    <b:include cond='data:view.url != data:blog.homepageUrl' name='homePageLink'/>
+  </div>
+</b:includable>
+      <b:includable id='postReactions'>
+  <!-- Reaction feature no longer available. The includable is retained for backwards-compatibility. -->
+</b:includable>
+      <b:includable id='postShareButtons'>
+  <div class='byline post-share-buttons goog-inline-block'>
+    <b:with value='data:sharingId ?: ((data:widget.instanceId ?: &quot;sharing&quot;) + &quot;-&quot; + (data:regionName ?: &quot;byline&quot;) + &quot;-&quot; + data:post.id)' var='sharingId'>
+      <!-- Note: 'sharingButtons' includable is from the default Sharing widget markup. -->
+      <b:include data='{                                                sharingId: data:sharingId,                                                originalUrl: data:post.url,                                                platforms: data:this.sharing.platforms,                                                shareUrl: data:post.shareUrl,                                                shareTitle: data:post.title,                                              }' name='sharingButtons'/>
+    </b:with>
+  </div>
+</b:includable>
+      <b:includable id='postTimestamp'>
+  <span class='byline post-timestamp'>
+    <data:byline.label/>
+    <b:if cond='data:post.url'>
+      <meta expr:content='data:post.url.canonical'/>
+      <a class='timestamp-link' expr:href='data:post.url' rel='bookmark' title='permanent link'>
+        <time class='published' expr:datetime='data:post.date.iso8601' expr:title='data:post.date.iso8601'>
+          <data:post.date/>
+        </time>
+      </a>
+    </b:if>
+  </span>
+</b:includable>
+      <b:includable id='postTitle' var='post'>
+  <a expr:name='data:post.id'/>
+  <b:if cond='data:post.title != &quot;&quot;'>
+    <h3 class='post-title entry-title'>
+      <b:if cond='data:post.link or (data:post.url and data:view.url != data:post.url)'>
+        <a expr:href='data:post.link ?: data:post.url'><data:post.title/></a>
+      <b:else/>
+        <data:post.title/>
+      </b:if>
+    </h3>
+  </b:if>
+</b:includable>
+      <b:includable id='previousPageLink'>
+  <a class='blog-pager-newer-link' expr:href='data:newerPageUrl' expr:id='data:widget.instanceId + &quot;_blog-pager-newer-link&quot;' expr:title='data:messages.newerPosts'>
+    <data:messages.newerPosts/>
+  </a>
+</b:includable>
+      <b:includable id='sharingButton'>
+  <span expr:aria-label='data:platform.shareMessage' expr:class='&quot;sharing-platform-button sharing-element-&quot; + data:platform.key' expr:data-href='data:shareUrl + &quot;&amp;target=&quot; + data:platform.target' expr:data-url='data:originalUrl' expr:title='data:platform.shareMessage' role='menuitem' tabindex='-1'>
+    <b:include name='sharingPlatformIcon'/>
+    <span class='platform-sharing-text'><data:platform.name/></span>
+  </span>
+</b:includable>
+      <b:includable id='sharingButtonContent'>
+  <div class='flat-icon-button ripple'>
+    <b:include name='shareIcon'/>
+  </div>
+</b:includable>
+      <b:includable id='sharingButtons'>
+  <div class='sharing' expr:aria-owns='&quot;sharing-popup-&quot; + data:sharingId' expr:data-title='data:shareTitle'>
+    <button class='sharing-button touch-icon-button' expr:aria-controls='&quot;sharing-popup-&quot; + data:sharingId' expr:aria-label='data:messages.share.escaped' expr:id='&quot;sharing-button-&quot; + data:sharingId' role='button'>
+      <b:include name='sharingButtonContent'/>
+    </button>
+    <b:include name='sharingButtonsMenu'/>
+  </div>
+</b:includable>
+      <b:includable id='sharingButtonsMenu'>
+  <div class='share-buttons-container'>
+    <ul aria-hidden='true' class='share-buttons hidden' expr:aria-label='data:messages.share.escaped' expr:id='&quot;sharing-popup-&quot; + data:sharingId' role='menu'>
+      <b:loop values='(data:platforms ?: data:blog.sharing.platforms) filter (p =&gt; p.key not in {&quot;blogThis&quot;})' var='platform'>
+        <li>
+          <b:include name='sharingButton'/>
+        </li>
+      </b:loop>
+      <li aria-hidden='true' class='hidden'>
+        <b:include name='otherSharingButton'/>
+      </li>
+    </ul>
+  </div>
+</b:includable>
+      <b:includable id='sharingPlatformIcon'>
+  <b:include data='{ iconClass: (&quot;touch-icon sharing-&quot; + data:platform.key) }' expr:name='data:platform.key + &quot;Icon&quot;'/>
+</b:includable>
+      <b:includable id='threadedCommentForm' var='post'>
+  <div class='comment-form'>
+    <a name='comment-form'/>
+    <h4 id='comment-post-message'><data:messages.postAComment/></h4>
+    <b:if cond='data:this.messages.blogComment != &quot;&quot;'>
+      <p><data:this.messages.blogComment/></p>
+    </b:if>
+    <b:include data='post' name='commentFormIframeSrc'/>
+    <iframe allowtransparency='allowtransparency' class='blogger-iframe-colorize blogger-comment-from-post' expr:height='data:cmtIframeInitialHeight ?: &quot;90px&quot;' frameborder='0' id='comment-editor' name='comment-editor' src='' width='100%'/>
+    <data:post.cmtfpIframe/>
+    <script type='text/javascript'>
+      BLOG_CMT_createIframe(&#39;<data:post.appRpcRelayPath/>&#39;);
+    </script>
+  </div>
+</b:includable>
+      <b:includable id='threadedCommentJs' var='post'>
+  <script async='async' expr:src='data:post.commentSrc' type='text/javascript'/>
+  <b:template-script inline='true' name='threaded_comments'/>
+  <script type='text/javascript'>
+    blogger.widgets.blog.initThreadedComments(
+        <data:post.commentJso/>,
+        <data:post.commentMsgs/>,
+        <data:post.commentConfig/>);
+  </script>
+</b:includable>
+      <b:includable id='threadedComments' var='post'>
+  <section class='comments threaded' expr:data-embed='data:post.embedCommentForm' expr:data-num-comments='data:post.numberOfComments' id='comments'>
+    <a name='comments'/>
+
+    <b:include name='commentsTitle'/>
+
+    <div class='comments-content'>
+      <b:if cond='data:post.embedCommentForm'>
+        <b:include data='post' name='threadedCommentJs'/>
+      </b:if>
+      <div id='comment-holder'>
+         <data:post.commentHtml/>
+      </div>
+    </div>
+
+    <p class='comment-footer'>
+      <b:if cond='data:post.allowNewComments'>
+        <b:include data='post' name='threadedCommentForm'/>
+      <b:else/>
+        <data:post.noNewCommentsText/>
+      </b:if>
+      <b:if cond='data:post.showManageComments'>
+        <b:include data='post' name='manageComments'/>
+      </b:if>
+    </p>
+
+    <b:if cond='data:showCmtPopup'>
+      <div id='comment-popup'>
+        <iframe allowtransparency='allowtransparency' frameborder='0' id='comment-actions' name='comment-actions' scrolling='no'>
+        </iframe>
+      </div>
+    </b:if>
+  </section>
+</b:includable>
+      <b:includable id='tooltipCss'>
+  <!-- LINT.IfChange -->
+  <style>
+    .post-body a.b-tooltip-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .post-body a.b-tooltip-container .b-tooltip {
+      display: block !important;
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translate(-20%, 1px);
+      visibility: hidden;
+      opacity: 0;
+      z-index: 1;
+      transition: opacity 0.2s ease-in-out;
+    }
+
+    .post-body a.b-tooltip-container .b-tooltip iframe {
+      width: 200px;
+      height: 198px;
+      max-width: none;
+      border: none;
+      border-radius: 20px;
+      box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (hover: hover) {
+      .post-body a.b-tooltip-container:hover .b-tooltip {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  </style>
+  <!-- LINT.ThenChange(//depot/google3/java/com/google/blogger/b2/layouts/widgets/v2-style.css) -->
+</b:includable>
     </b:widget>
   </b:section>
 </main>
@@ -471,14 +1118,14 @@ img{max-width:100%;height:auto}
 <footer class='site-foot'>
   <div class='wrap'>
     <span class='serif' style='font-size:20px'>정보마스터</span>
-    <p>모든 계산은 정부·공공기관이 공개한 기준으로 하며, 글마다 기준일과 출처를 적습니다. 실제 금액은 개인 조건에 따라 달라질 수 있습니다.</p>
+    <p>모든 계산은 정부&#183;공공기관이 공개한 기준으로 하며, 글마다 기준일과 출처를 적습니다. 실제 금액은 개인 조건에 따라 달라질 수 있습니다.</p>
     <nav aria-label='사이트 정보'>
       <a href='/p/about.html'>운영자 소개</a>
       <a href='/p/contact.html'>문의</a>
       <a href='/p/privacy-policy.html'>개인정보처리방침</a>
       <a class='hl' href='https://tools.woodyway88.com/'>계산기 모음</a>
     </nav>
-    <p>© 2026 정보마스터</p>
+    <p>&#169; 2026 정보마스터</p>
   </div>
 </footer>
 
