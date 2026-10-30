@@ -1,18 +1,11 @@
 {
- "updated": "2026-10-29",
+ "updated": "2026-10-30",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-10-01",
-  "2026-10-28"
+  "2026-10-02",
+  "2026-10-29"
  ],
  "daily": [
-  {
-   "date": "2026-10-01",
-   "clicks": 0,
-   "impressions": 4,
-   "ctr": 0,
-   "position": 8.5
-  },
   {
    "date": "2026-10-02",
    "clicks": 0,
@@ -187,6 +180,13 @@
    "impressions": 0,
    "ctr": 0,
    "position": 0
+  },
+  {
+   "date": "2026-10-27",
+   "clicks": 1,
+   "impressions": 8,
+   "ctr": 0.125,
+   "position": 60.8
   }
  ],
  "top_queries": [
@@ -282,6 +282,13 @@
    "position": 7
   },
   {
+   "query": "퇴직 급여 계산",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 40
+  },
+  {
    "query": "퇴직금 간단 계산",
    "clicks": 0,
    "impressions": 1,
@@ -289,11 +296,18 @@
    "position": 53
   },
   {
+   "query": "퇴직금 계산",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 62
+  },
+  {
    "query": "퇴직금 계산 방법",
    "clicks": 0,
-   "impressions": 5,
+   "impressions": 7,
    "ctr": 0,
-   "position": 60
+   "position": 60.4
   },
   {
    "query": "퇴직금 계산공식",
@@ -305,9 +319,9 @@
   {
    "query": "퇴직금 계산법",
    "clicks": 0,
-   "impressions": 3,
+   "impressions": 4,
    "ctr": 0,
-   "position": 68.3
+   "position": 73.5
   }
  ],
  "top_pages": [
@@ -326,6 +340,13 @@
    "position": 5.9
   },
   {
+   "page": "https://www.woodyway88.com/2026/10/gemini-4-argon-output-limit.html",
+   "clicks": 1,
+   "impressions": 12,
+   "ctr": 0.0833,
+   "position": 18.7
+  },
+  {
    "page": "https://tools.woodyway88.com/calendar/",
    "clicks": 0,
    "impressions": 8,
@@ -340,25 +361,18 @@
    "position": 11.3
   },
   {
-   "page": "https://tools.woodyway88.com/highway-toll-reentry/",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0,
-   "position": 7
-  },
-  {
    "page": "https://tools.woodyway88.com/mortgage-refinance-calculator/",
    "clicks": 0,
-   "impressions": 5,
+   "impressions": 3,
    "ctr": 0,
-   "position": 8
+   "position": 6.7
   },
   {
    "page": "https://tools.woodyway88.com/transit-refund-calculator/",
    "clicks": 0,
-   "impressions": 8,
+   "impressions": 7,
    "ctr": 0,
-   "position": 8.4
+   "position": 8.6
   },
   {
    "page": "https://tools.woodyway88.com/unemployment-benefit-calculator/",
@@ -424,6 +438,13 @@
    "position": 37.5
   },
   {
+   "page": "https://www.woodyway88.com/2026/09/underground-utility-check-korea.html",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 8
+  },
+  {
    "page": "https://www.woodyway88.com/2026/10/ai-hacking-career-skills.html",
    "clicks": 0,
    "impressions": 4,
@@ -443,32 +464,19 @@
    "impressions": 2,
    "ctr": 0,
    "position": 7.5
-  },
-  {
-   "page": "https://www.woodyway88.com/2026/10/claude-code-design-taste-frontend.html",
-   "clicks": 0,
-   "impressions": 4,
-   "ctr": 0,
-   "position": 12.2
   }
  ],
  "by_site": {
   "tools.woodyway88.com": {
    "clicks": 4,
-   "impressions": 95
+   "impressions": 91
   },
   "www.woodyway88.com": {
-   "clicks": 0,
-   "impressions": 112
+   "clicks": 1,
+   "impressions": 120
   }
  },
  "index": [
-  {
-   "url": "https://www.woodyway88.com/2026/10/drivers-license-penalty-points.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-15T20:55:35Z"
-  },
   {
    "url": "https://www.woodyway88.com/2026/10/moving-company-damage-compensation.html",
    "verdict": "PASS",
@@ -485,37 +493,37 @@
    "url": "https://www.woodyway88.com/2026/10/minimum-wage-2027-monthly-pay.html",
    "verdict": "NEUTRAL",
    "coverage": "Redirect error",
-   "last_crawl": "2026-10-24T00:16:27Z"
+   "last_crawl": "2026-10-29T14:07:23Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/three-years-work-severance-pay.html",
    "verdict": "NEUTRAL",
    "coverage": "Redirect error",
-   "last_crawl": "2026-10-20T00:15:07Z"
+   "last_crawl": "2026-10-29T14:07:26Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/korea-public-holidays-2027.html",
    "verdict": "NEUTRAL",
    "coverage": "Redirect error",
-   "last_crawl": "2026-10-21T00:14:20Z"
+   "last_crawl": "2026-10-29T14:08:58Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/monthly-salary-3m-unemployment-benefit.html",
    "verdict": "NEUTRAL",
    "coverage": "Redirect error",
-   "last_crawl": "2026-10-22T00:13:01Z"
+   "last_crawl": "2026-10-29T14:08:58Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/jeonse-deposit-return-guarantee.html",
    "verdict": "NEUTRAL",
    "coverage": "Redirect error",
-   "last_crawl": "2026-10-23T00:14:50Z"
+   "last_crawl": "2026-10-29T14:09:22Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/health-insurance-rate-2027.html",
    "verdict": "NEUTRAL",
    "coverage": "Redirect error",
-   "last_crawl": "2026-10-23T00:13:21Z"
+   "last_crawl": "2026-10-29T14:07:27Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/parental-leave-benefit-how-to-apply.html",
@@ -544,7 +552,7 @@
   {
    "url": "https://www.woodyway88.com/2026/10/rental-contract-report-how-to.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -593,6 +601,18 @@
    "url": "https://www.woodyway88.com/2026/10/lease-renewal-right-how-to-use.html",
    "verdict": "NEUTRAL",
    "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/median-income-standard-2027.html",
+   "verdict": "NEUTRAL",
+   "coverage": "URL is unknown to Google",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/inheritance-order-spouse.html",
+   "verdict": "NEUTRAL",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   }
  ]
