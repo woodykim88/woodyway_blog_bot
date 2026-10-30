@@ -1120,5 +1120,20 @@
     "status": "SCHEDULED",
     "slot": "2026-10-30T20:00",
     "tool": "transit-refund-calculator"
+  },
+  {
+    "publish_date": "2026-10-31",
+    "post_id": "5500542125580140153",
+    "title": "모두의 카드 신청 방법, 기존 K-패스로 자동 적용",
+    "url": "https://www.woodyway88.com/2026/10/modu-card-transit-refund-how-to.html",
+    "source_url": "https://www.korea.kr/news/policyNewsView.do?newsId=148958997",
+    "geeknews_url": "https://www.korea.kr/news/policyNewsView.do?newsId=148958997",
+    "labels": [
+      "생활가이드",
+      "절약꿀팁"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-10-31T08:00",
+    "tool": "transit-refund-calculator"
   }
 ]
