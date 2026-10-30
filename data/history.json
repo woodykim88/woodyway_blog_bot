@@ -1104,5 +1104,21 @@
     "status": "SCHEDULED",
     "slot": "2026-10-30T08:00",
     "tool": ""
+  },
+  {
+    "publish_date": "2026-10-30",
+    "post_id": "9025072974099661450",
+    "title": "K패스 환급 계산, 월평균 4만 1300원은 어떻게 달라질까",
+    "url": "https://www.woodyway88.com/2026/10/k-pass-refund-calculation-october.html",
+    "source_url": "https://www.korea.kr/news/policyNewsView.do?newsId=148972677",
+    "geeknews_url": "https://www.korea.kr/news/policyNewsView.do?newsId=148972677",
+    "labels": [
+      "생활가이드",
+      "절약꿀팁",
+      "계산사례"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-10-30T20:00",
+    "tool": "transit-refund-calculator"
   }
 ]
