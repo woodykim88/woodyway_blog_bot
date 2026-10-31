@@ -1135,5 +1135,21 @@
     "status": "SCHEDULED",
     "slot": "2026-10-31T08:00",
     "tool": "transit-refund-calculator"
+  },
+  {
+    "publish_date": "2026-10-31",
+    "post_id": "580887937865635930",
+    "title": "자동차 정기검사 기간, 만료일 전 90일부터 후 31일까지",
+    "url": "https://www.woodyway88.com/2026/10/car-periodic-inspection-period-penalty.html",
+    "source_url": "https://gangdong.go.kr/web/newportal/contents/gdp_001_003_005",
+    "geeknews_url": "https://gangdong.go.kr/web/newportal/contents/gdp_001_003_005",
+    "labels": [
+      "생활가이드",
+      "생활경제",
+      "일정"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-10-31T20:00",
+    "tool": ""
   }
 ]
