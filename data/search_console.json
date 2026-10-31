@@ -187,6 +187,13 @@
    "impressions": 10,
    "ctr": 0,
    "position": 30.4
+  },
+  {
+   "date": "2026-10-29",
+   "clicks": 0,
+   "impressions": 3,
+   "ctr": 0,
+   "position": 21.7
   }
  ],
  "top_queries": [
@@ -249,9 +256,9 @@
   {
    "query": "ftc조사대응",
    "clicks": 0,
-   "impressions": 2,
+   "impressions": 3,
    "ctr": 0,
-   "position": 6
+   "position": 4.7
   },
   {
    "query": "llm api",
@@ -454,9 +461,9 @@
   {
    "page": "https://www.woodyway88.com/2026/09/llm-api-3.html",
    "clicks": 0,
-   "impressions": 14,
+   "impressions": 15,
    "ctr": 0,
-   "position": 36.7
+   "position": 37.9
   },
   {
    "page": "https://www.woodyway88.com/2026/09/underground-utility-check-korea.html",
@@ -480,7 +487,7 @@
   },
   "www.woodyway88.com": {
    "clicks": 1,
-   "impressions": 135
+   "impressions": 138
   }
  },
  "index": [
@@ -583,7 +590,7 @@
   {
    "url": "https://www.woodyway88.com/2026/10/energy-voucher-application-period.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -627,6 +634,161 @@
    "verdict": "NEUTRAL",
    "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/10/car-periodic-inspection-period-penalty.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  }
+ ],
+ "query_pages": [
+  {
+   "query": "11월 마케팅 캘린더",
+   "page": "https://tools.woodyway88.com/calendar/2026-11/",
+   "clicks": 1,
+   "impressions": 24,
+   "position": 3.9
+  },
+  {
+   "query": "11월 일정",
+   "page": "https://tools.woodyway88.com/calendar/2026-11/",
+   "clicks": 0,
+   "impressions": 1,
+   "position": 10
+  },
+  {
+   "query": "11월일정",
+   "page": "https://tools.woodyway88.com/calendar/2026-11/",
+   "clicks": 0,
+   "impressions": 1,
+   "position": 11
+  },
+  {
+   "query": "2026 11월",
+   "page": "https://tools.woodyway88.com/calendar/2026-11/",
+   "clicks": 0,
+   "impressions": 1,
+   "position": 10
+  },
+  {
+   "query": "2027 마케팅 캘린더",
+   "page": "https://tools.woodyway88.com/calendar/2027-04/",
+   "clicks": 0,
+   "impressions": 2,
+   "position": 6
+  },
+  {
+   "query": "2027년 마케팅 캘린더",
+   "page": "https://tools.woodyway88.com/calendar/",
+   "clicks": 0,
+   "impressions": 3,
+   "position": 5.7
+  },
+  {
+   "query": "2027년 마케팅 캘린더",
+   "page": "https://tools.woodyway88.com/calendar/2027-04/",
+   "clicks": 0,
+   "impressions": 4,
+   "position": 5
+  },
+  {
+   "query": "api 플랫폼 선택 가이드 및 추천",
+   "page": "https://www.woodyway88.com/2026/09/llm-api-3.html",
+   "clicks": 0,
+   "impressions": 3,
+   "position": 47
+  },
+  {
+   "query": "api 플랫폼 선택 기준",
+   "page": "https://www.woodyway88.com/2026/09/llm-api-3.html",
+   "clicks": 0,
+   "impressions": 9,
+   "position": 37
+  },
+  {
+   "query": "ftc조사대응",
+   "page": "https://www.woodyway88.com/2026/10/openai-ftc-ai-investigation.html",
+   "clicks": 0,
+   "impressions": 3,
+   "position": 4.7
+  },
+  {
+   "query": "llm api",
+   "page": "https://www.woodyway88.com/2026/09/llm-api-3.html",
+   "clicks": 0,
+   "impressions": 3,
+   "position": 29.7
+  },
+  {
+   "query": "상속포기 기간 지나면",
+   "page": "https://www.woodyway88.com/2026/10/inheritance-renunciation-deadline-passed.html",
+   "clicks": 0,
+   "impressions": 1,
+   "position": 54
+  },
+  {
+   "query": "실업급여 계산기 2026",
+   "page": "https://tools.woodyway88.com/unemployment-benefit-calculator/",
+   "clicks": 0,
+   "impressions": 1,
+   "position": 1
+  },
+  {
+   "query": "제미나이 아르곤 한도",
+   "page": "https://www.woodyway88.com/2026/10/gemini-4-argon-output-limit.html",
+   "clicks": 0,
+   "impressions": 1,
+   "position": 25
+  },
+  {
+   "query": "제미나이4 사용량",
+   "page": "https://www.woodyway88.com/2026/10/gemini-4-argon-output-limit.html",
+   "clicks": 0,
+   "impressions": 1,
+   "position": 7
+  },
+  {
+   "query": "퇴직 급여 계산",
+   "page": "https://www.woodyway88.com/2026/10/severance-pay-calculation.html",
+   "clicks": 0,
+   "impressions": 1,
+   "position": 40
+  },
+  {
+   "query": "퇴직금 간단 계산",
+   "page": "https://www.woodyway88.com/2026/10/severance-pay-calculation.html",
+   "clicks": 0,
+   "impressions": 1,
+   "position": 53
+  },
+  {
+   "query": "퇴직금 계산",
+   "page": "https://www.woodyway88.com/2026/10/severance-pay-calculation.html",
+   "clicks": 0,
+   "impressions": 2,
+   "position": 63
+  },
+  {
+   "query": "퇴직금 계산 방법",
+   "page": "https://www.woodyway88.com/2026/10/severance-pay-calculation.html",
+   "clicks": 0,
+   "impressions": 9,
+   "position": 60.2
+  },
+  {
+   "query": "퇴직금 계산공식",
+   "page": "https://www.woodyway88.com/2026/10/severance-pay-calculation.html",
+   "clicks": 0,
+   "impressions": 1,
+   "position": 43
+  },
+  {
+   "query": "퇴직금 계산법",
+   "page": "https://www.woodyway88.com/2026/10/severance-pay-calculation.html",
+   "clicks": 0,
+   "impressions": 5,
+   "position": 76.2
   }
  ]
 }
