@@ -1151,5 +1151,20 @@
     "status": "SCHEDULED",
     "slot": "2026-10-31T20:00",
     "tool": ""
+  },
+  {
+    "publish_date": "2026-11-01",
+    "post_id": "6774663357104497239",
+    "title": "실업급여 수급기간 연기, 최대 4년까지 가능한 사유",
+    "url": "https://www.woodyway88.com/2026/11/unemployment-benefit-period-postponement.html",
+    "source_url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=722&ccfNo=2&cciNo=3&cnpClsNo=3",
+    "geeknews_url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=722&ccfNo=2&cciNo=3&cnpClsNo=3",
+    "labels": [
+      "생활가이드",
+      "생활경제"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-11-01T08:00",
+    "tool": "unemployment-benefit-calculator"
   }
 ]
