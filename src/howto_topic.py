@@ -19,6 +19,9 @@
   ① 조사가 공식 출처까지 확인해 보낸 글감(hints 항목의 howto)은 오늘의 종류와 같으면 맨 먼저,
   ② 목록 글감 중 조사 키워드가 검색어에 들어간 것은 같은 종류 안에서 먼저. 요일별 종류 순환은 그대로 지킨다
   (조사는 재료일 뿐, 채널 구성이 우선 — 2026-10-15 사용자 원칙).
+- 2026-10-31 Search Console 롱테일 (src/sc_longtail.py): 같은 종류 안에서 ① 조사 글감 ② 구글에 실제로 노출됐지만
+  아직 첫 페이지가 아닌 검색어가 든 글감 ③ 조사 키워드가 든 글감 ④ 나머지 순. 그 안에서는 넓은 검색어
+  ("근로장려금 신청 방법")를 구체적인 검색어("실업급여 자진퇴사 조건") 뒤로 미룬다 (넓은 검색어 글은 50~76위였다).
 """
 from __future__ import annotations
 
@@ -29,7 +32,7 @@ from dataclasses import dataclass, replace
 from datetime import datetime
 from pathlib import Path
 
-from src import topic_hints
+from src import sc_longtail, topic_hints
 from src.history import HistoryEntry
 from src.models import Article, Candidate, Reference
 from src.schedule import KST
@@ -125,11 +128,13 @@ def _rank(
     group: Sequence[HowtoGuide], used_at: Callable[[HowtoGuide], int | None], want: str = '',
     boosted: Callable[[HowtoGuide], int] = lambda g: 0,
 ) -> list[HowtoGuide]:
-    """안 쓴 글감(오늘의 종류 먼저, 같은 종류 안에서는 조사 소재 먼저, 같으면 목록 순서) 다음에 쓴 글감(가장 오래전에 쓴 순)."""
+    """안 쓴 글감(오늘의 종류 먼저, 같은 종류 안에서는 조사·검색 수요 먼저, 넓은 검색어는 뒤로, 같으면 목록 순서)
+    다음에 쓴 글감(가장 오래전에 쓴 순)."""
     fresh = [g for g in group if used_at(g) is None]
     if want:
         priority = _kind_priority(want)
-        fresh = sorted(fresh, key=lambda g: (priority(g), boosted(g)))  # 안정 정렬이라 같은 칸 안에서는 목록 순서 유지
+        # 안정 정렬이라 같은 칸 안에서는 목록 순서 유지
+        fresh = sorted(fresh, key=lambda g: (priority(g), boosted(g), sc_longtail.is_generic(g.query)))
     used = sorted((g for g in group if used_at(g) is not None), key=lambda g: used_at(g) or 0)
     return [*fresh, *used]
 
@@ -144,11 +149,12 @@ def _is_truncation(posted: str, slug: str) -> bool:
 
 def order_guides(
     guides: Sequence[HowtoGuide], past: Sequence[HistoryEntry], now: datetime, hints: Sequence[dict] = (),
-    want: str = '',
+    want: str = '', demand: Sequence[str] = (),
 ) -> list[HowtoGuide]:
     """제철(또는 사계절) 글감을 먼저: 안 쓴 것(오늘의 종류 먼저) → 오래전에 쓴 것. 제철 아닌 글감은 맨 뒤 (같은 규칙).
     hints(지식창고 조사)가 있으면 조사가 보낸 글감 → 조사 키워드가 든 목록 글감 순으로 같은 종류 안에서 앞세운다.
-    want: 먼저 쓸 종류 (kind_for_slot). 비어 있으면 요일 종류."""
+    want: 먼저 쓸 종류 (kind_for_slot). 비어 있으면 요일 종류.
+    demand: Search Console에서 노출됐지만 첫 페이지가 아닌 검색어 (sc_longtail.demand_queries)."""
     month = now.astimezone(KST).month
     want = want or kind_of_day(now)
     listed = {g.slug for g in guides if g.slug}
@@ -158,7 +164,9 @@ def order_guides(
     def boosted(g: HowtoGuide) -> int:
         if g in research:
             return 0
-        return 1 if topic_hints.matches(g.query, list(hints)) else 2
+        if sc_longtail.matches_demand(g.query, demand):
+            return 1
+        return 2 if topic_hints.matches(g.query, list(hints)) else 3
 
     last_used: dict[str, int] = {}
     last_slug: dict[str, int] = {}
@@ -222,7 +230,8 @@ def iter_guides(
 ) -> Iterator[tuple[HowtoGuide, Article]]:
     """공식 페이지를 읽어 낸 글감을 차례로. 필요한 만큼만 페이지를 연다."""
     hints = topic_hints.load(now.astimezone(KST).date()) if guides is None else ()
-    for guide in order_guides(load_guides() if guides is None else guides, past, now, hints, want):
+    demand = sc_longtail.demand_queries(sc_longtail.load(), {e.url for e in past}) if guides is None else ()
+    for guide in order_guides(load_guides() if guides is None else guides, past, now, hints, want, demand):
         article = build_article(guide, fetch, now)
         if article is not None:
             yield guide, article

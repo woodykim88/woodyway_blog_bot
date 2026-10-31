@@ -1,6 +1,7 @@
 from datetime import date
 
 from src import search_console as sc
+from tests.helpers import make_entry
 
 
 class FakeQuery:
@@ -10,7 +11,7 @@ class FakeQuery:
 
     def query(self, siteUrl, body):
         self.body = body
-        self.dim = body['dimensions'][0]
+        self.dim = '+'.join(body['dimensions'])
         return self
 
     def execute(self):
@@ -28,6 +29,8 @@ class FakeService:
 ROWS = {
     'date': [{'keys': ['2026-10-01'], 'clicks': 1, 'impressions': 40, 'ctr': 0.025, 'position': 12.34}],
     'query': [{'keys': ['교통비 환급'], 'clicks': 1, 'impressions': 30, 'ctr': 0.033, 'position': 8.0}],
+    'query+page': [{'keys': ['퇴직금 계산 방법', 'https://www.woodyway88.com/2026/10/severance.html'],
+                    'clicks': 0, 'impressions': 9, 'ctr': 0.0, 'position': 60.24}],
 }
 HISTORY = [
     {'url': 'https://www.woodyway88.com/a.html', 'status': 'LIVE', 'publish_date': '2026-10-01'},
@@ -52,11 +55,15 @@ def test_collect_and_summary():
     assert data['range'] == ['2026-09-05', '2026-10-02']
     assert data['daily'][0] == {'date': '2026-10-01', 'clicks': 1, 'impressions': 40, 'ctr': 0.025, 'position': 12.3}
     assert data['top_pages'] == [] and seen == ['https://www.woodyway88.com/a.html']
-    text = sc.summary(data)
+    text = sc.summary(data, (make_entry(url='https://www.woodyway88.com/2026/10/severance.html'),))
     assert '검색 클릭 1회 · 노출 40회' in text
     assert '색인: 0/1편' in text
     assert '교통비 환급: 클릭 1' in text
     assert 'a.html — Discovered - currently not indexed' in text
+    assert data['query_pages'] == [{'query': '퇴직금 계산 방법', 'page': 'https://www.woodyway88.com/2026/10/severance.html',
+                                    'clicks': 0, 'impressions': 9, 'position': 60.2}]
+    assert "severance.html: 노출 9 · 클릭 0 · '퇴직금 계산 방법' 평균 60.2위" in text
+    assert '- 퇴직금 계산 방법' in text  # 수요는 있는데 첫 페이지 밖인 검색어
 
 
 def test_by_site_splits_blog_and_tools_clicks():
