@@ -1,18 +1,11 @@
 {
- "updated": "2026-10-31",
+ "updated": "2026-11-01",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-10-03",
-  "2026-10-30"
+  "2026-10-04",
+  "2026-10-31"
  ],
  "daily": [
-  {
-   "date": "2026-10-03",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0,
-   "position": 13
-  },
   {
    "date": "2026-10-04",
    "clicks": 0,
@@ -384,9 +377,9 @@
   {
    "page": "https://tools.woodyway88.com/transit-refund-calculator/",
    "clicks": 0,
-   "impressions": 7,
+   "impressions": 6,
    "ctr": 0,
-   "position": 8.6
+   "position": 7.8
   },
   {
    "page": "https://tools.woodyway88.com/unemployment-benefit-calculator/",
@@ -483,7 +476,7 @@
  "by_site": {
   "tools.woodyway88.com": {
    "clicks": 4,
-   "impressions": 90
+   "impressions": 89
   },
   "www.woodyway88.com": {
    "clicks": 1,
@@ -491,12 +484,6 @@
   }
  },
  "index": [
-  {
-   "url": "https://www.woodyway88.com/2026/10/unemployment-benefit-job-search.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-17T18:52:07Z"
-  },
   {
    "url": "https://www.woodyway88.com/2026/10/minimum-wage-2027-monthly-pay.html",
    "verdict": "NEUTRAL",
@@ -584,13 +571,13 @@
   {
    "url": "https://www.woodyway88.com/2026/10/mortgage-refinance-conditions.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/10/energy-voucher-application-period.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -613,9 +600,9 @@
   },
   {
    "url": "https://www.woodyway88.com/2026/10/median-income-standard-2027.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
+   "verdict": "PASS",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-31T15:08:56Z"
   },
   {
    "url": "https://www.woodyway88.com/2026/10/inheritance-order-spouse.html",
@@ -637,6 +624,12 @@
   },
   {
    "url": "https://www.woodyway88.com/2026/10/car-periodic-inspection-period-penalty.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/11/unemployment-benefit-period-postponement.html",
    "verdict": "NEUTRAL",
    "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
