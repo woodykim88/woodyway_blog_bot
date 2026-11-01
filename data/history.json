@@ -1166,5 +1166,21 @@
     "status": "SCHEDULED",
     "slot": "2026-11-01T08:00",
     "tool": "unemployment-benefit-calculator"
+  },
+  {
+    "publish_date": "2026-11-01",
+    "post_id": "4914048966714339200",
+    "title": "2027년 국민연금 요율, 10%로 오르면 월급 300만원은",
+    "url": "https://www.woodyway88.com/2026/11/national-pension-rate-2027.html",
+    "source_url": "https://www.mohw.go.kr/menu.es?mid=a10714060000",
+    "geeknews_url": "https://www.mohw.go.kr/menu.es?mid=a10714060000",
+    "labels": [
+      "생활가이드",
+      "생활경제",
+      "바뀌는제도"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-11-01T20:00",
+    "tool": "salary-take-home-calculator"
   }
 ]
