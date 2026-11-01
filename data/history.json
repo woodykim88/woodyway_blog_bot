@@ -1182,5 +1182,20 @@
     "status": "SCHEDULED",
     "slot": "2026-11-01T20:00",
     "tool": "salary-take-home-calculator"
+  },
+  {
+    "publish_date": "2026-11-02",
+    "post_id": "3545213023133523524",
+    "title": "퇴직금 중간정산 사유, 전세보증금은 한 사업장 1회",
+    "url": "https://www.woodyway88.com/2026/11/severance-pay-interim-settlement-reasons.html",
+    "source_url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=999&ccfNo=2&cciNo=1&cnpClsNo=1",
+    "geeknews_url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=999&ccfNo=2&cciNo=1&cnpClsNo=1",
+    "labels": [
+      "생활가이드",
+      "생활경제"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-11-02T08:00",
+    "tool": "severance-pay-calculator"
   }
 ]
