@@ -1213,5 +1213,20 @@
     "status": "SCHEDULED",
     "slot": "2026-11-02T20:00",
     "tool": "weekly-holiday-pay-calculator"
+  },
+  {
+    "publish_date": "2026-11-03",
+    "post_id": "8913104552928984610",
+    "title": "퇴직금 미지급 신고 방법, 온라인 진정과 관할 노동관서",
+    "url": "https://www.woodyway88.com/2026/11/unpaid-severance-pay-report.html",
+    "source_url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=999&ccfNo=4&cciNo=1&cnpClsNo=1",
+    "geeknews_url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=999&ccfNo=4&cciNo=1&cnpClsNo=1",
+    "labels": [
+      "생활가이드",
+      "생활경제"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-11-03T08:00",
+    "tool": "severance-pay-calculator"
   }
 ]
