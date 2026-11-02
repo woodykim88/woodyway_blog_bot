@@ -1197,5 +1197,21 @@
     "status": "SCHEDULED",
     "slot": "2026-11-02T08:00",
     "tool": "severance-pay-calculator"
+  },
+  {
+    "publish_date": "2026-11-02",
+    "post_id": "1039630517055289979",
+    "title": "주 15시간 근무 주휴수당, 최저시급이면 월 80만4960원",
+    "url": "https://www.woodyway88.com/2026/11/15-hours-per-week-weekly-holiday.html",
+    "source_url": "https://1350.moel.go.kr/rtmview.do?id=1000059852",
+    "geeknews_url": "https://1350.moel.go.kr/rtmview.do?id=1000059852",
+    "labels": [
+      "생활가이드",
+      "생활경제",
+      "계산사례"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-11-02T20:00",
+    "tool": "weekly-holiday-pay-calculator"
   }
 ]
