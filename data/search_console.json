@@ -1,18 +1,11 @@
 {
- "updated": "2026-11-02",
+ "updated": "2026-11-03",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-10-05",
-  "2026-11-01"
+  "2026-10-06",
+  "2026-11-02"
  ],
  "daily": [
-  {
-   "date": "2026-10-05",
-   "clicks": 0,
-   "impressions": 4,
-   "ctr": 0,
-   "position": 42.5
-  },
   {
    "date": "2026-10-06",
    "clicks": 0,
@@ -187,6 +180,13 @@
    "impressions": 0,
    "ctr": 0,
    "position": 0
+  },
+  {
+   "date": "2026-10-31",
+   "clicks": 0,
+   "impressions": 0,
+   "ctr": 0,
+   "position": 0
   }
  ],
  "top_queries": [
@@ -235,16 +235,16 @@
   {
    "query": "api 플랫폼 선택 가이드 및 추천",
    "clicks": 0,
-   "impressions": 3,
+   "impressions": 2,
    "ctr": 0,
-   "position": 47
+   "position": 47.5
   },
   {
    "query": "api 플랫폼 선택 기준",
    "clicks": 0,
-   "impressions": 8,
+   "impressions": 6,
    "ctr": 0,
-   "position": 35.5
+   "position": 27.2
   },
   {
    "query": "ftc조사대응",
@@ -454,9 +454,9 @@
   {
    "page": "https://www.woodyway88.com/2026/09/llm-api-3.html",
    "clicks": 0,
-   "impressions": 15,
+   "impressions": 12,
    "ctr": 0,
-   "position": 37.9
+   "position": 33.5
   },
   {
    "page": "https://www.woodyway88.com/2026/09/underground-utility-check-korea.html",
@@ -480,16 +480,10 @@
   },
   "www.woodyway88.com": {
    "clicks": 1,
-   "impressions": 138
+   "impressions": 134
   }
  },
  "index": [
-  {
-   "url": "https://www.woodyway88.com/2026/10/three-years-work-severance-pay.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Redirect error",
-   "last_crawl": "2026-10-29T14:07:26Z"
-  },
   {
    "url": "https://www.woodyway88.com/2026/10/korea-public-holidays-2027.html",
    "verdict": "NEUTRAL",
@@ -529,7 +523,7 @@
   {
    "url": "https://www.woodyway88.com/2026/10/jeonse-deposit-increase-limit.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -541,7 +535,7 @@
   {
    "url": "https://www.woodyway88.com/2026/10/rental-contract-report-how-to.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -571,13 +565,13 @@
   {
    "url": "https://www.woodyway88.com/2026/10/energy-voucher-application-period.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/10/reduced-working-hours-childcare-pay.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -625,7 +619,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/unemployment-benefit-period-postponement.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -636,6 +630,18 @@
   },
   {
    "url": "https://www.woodyway88.com/2026/11/severance-pay-interim-settlement-reasons.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/11/15-hours-per-week-weekly-holiday.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/11/unpaid-severance-pay-report.html",
    "verdict": "NEUTRAL",
    "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
