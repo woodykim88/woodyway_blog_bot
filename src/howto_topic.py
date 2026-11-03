@@ -29,7 +29,7 @@ import json
 from collections import Counter
 from collections.abc import Callable, Iterator, Sequence
 from dataclasses import dataclass, replace
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 
 from src import sc_longtail, topic_hints
@@ -50,6 +50,7 @@ KINDS = (CASE, SCHEDULE, CHANGE, GUIDE)
 KIND_LABELS = {CASE: '계산사례', SCHEDULE: '일정', CHANGE: '바뀌는제도'}
 # 월~일. 계산 사례 3 · 일정 2 · 숫자 변경 2 (2026-10-18 사용자 승인)
 KIND_BY_WEEKDAY = (CASE, SCHEDULE, CASE, CHANGE, CASE, SCHEDULE, CHANGE)
+NOON_SLOT_END_HOUR = 17     # 12~16시 칸은 점심 칸
 
 
 @dataclass(frozen=True)
@@ -107,11 +108,15 @@ def kind_of_day(now: datetime) -> str:
 
 
 def kind_for_slot(publish_at: datetime | None) -> str:
-    """예약 칸의 글 종류. 오전 칸(08:00)은 기존 안내형, 오후·저녁 칸은 요일 종류. 시각이 없으면 '' (요일 규칙).
-    2026-10-21 하루 2편(08:00·20:00)으로 늘리며 같은 날 같은 종류 글이 겹치지 않게 했다 (사용자 승인)."""
+    """예약 칸의 글 종류. 오전 칸(08:00)은 기존 안내형, 점심 칸(12:30)은 다음 날 요일 종류, 저녁 칸은 그날 요일 종류.
+    시각이 없으면 '' (요일 규칙). 2026-10-21 하루 2편, 11/4 하루 3편으로 늘리며 같은 날 같은 종류가 겹치지 않게 했다
+    (KIND_BY_WEEKDAY는 이웃한 요일끼리 종류가 다르다)."""
     if publish_at is None:
         return ''
-    return GUIDE if publish_at.astimezone(KST).hour < 12 else kind_of_day(publish_at)
+    hour = publish_at.astimezone(KST).hour
+    if hour < 12:
+        return GUIDE
+    return kind_of_day(publish_at + timedelta(days=1)) if hour < NOON_SLOT_END_HOUR else kind_of_day(publish_at)
 
 
 def _kind_priority(want: str) -> Callable[[HowtoGuide], int]:

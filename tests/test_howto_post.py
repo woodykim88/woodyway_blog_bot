@@ -90,6 +90,16 @@ def test_morning_slot_kind_is_old_guide_and_evening_follows_weekday():
     assert howto_topic.kind_for_slot(None) == ''  # 수동 발행은 요일 규칙 그대로
 
 
+def test_noon_slot_takes_next_days_kind_so_three_slots_differ():
+    # 2026-11-04 하루 3편(08:00·12:30·20:00): 점심 칸은 다음 날 요일 종류라 저녁 칸과 겹치지 않는다
+    for day in range(19, 26):                                          # 10/19(월)~10/25(일)
+        noon = datetime(2026, 10, day, 12, 30, tzinfo=KST)
+        evening = datetime(2026, 10, day, 20, 0, tzinfo=KST)
+        kinds = {howto_topic.kind_for_slot(datetime(2026, 10, day, 8, 0, tzinfo=KST)),
+                 howto_topic.kind_for_slot(noon), howto_topic.kind_for_slot(evening)}
+        assert len(kinds) == 3, (day, kinds)
+
+
 def test_order_with_old_guide_kind_puts_old_guides_first_then_new_kinds():
     old = guide('실업급여 신청 방법', 1)
     change = guide('2027 최저임금', 2, kind=howto_topic.CHANGE)
