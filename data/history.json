@@ -1259,5 +1259,20 @@
     "status": "SCHEDULED",
     "slot": "2026-11-04T08:00",
     "tool": ""
+  },
+  {
+    "publish_date": "2026-11-04",
+    "post_id": "7952139740443026355",
+    "title": "클로드 코드 스킬 사용법, 긴 지침은 필요할 때만",
+    "url": "https://www.woodyway88.com/2026/11/claude-code-skills-guide.html",
+    "source_url": "https://code.claude.com/docs/ko/skills",
+    "geeknews_url": "https://code.claude.com/docs/ko/skills",
+    "labels": [
+      "AI사용법",
+      "업무생산성"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-11-04T12:30",
+    "tool": ""
   }
 ]
