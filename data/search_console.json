@@ -1,18 +1,11 @@
 {
- "updated": "2026-11-03",
+ "updated": "2026-11-04",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-10-06",
-  "2026-11-02"
+  "2026-10-07",
+  "2026-11-03"
  ],
  "daily": [
-  {
-   "date": "2026-10-06",
-   "clicks": 0,
-   "impressions": 3,
-   "ctr": 0,
-   "position": 28.7
-  },
   {
    "date": "2026-10-07",
    "clicks": 0,
@@ -187,6 +180,13 @@
    "impressions": 0,
    "ctr": 0,
    "position": 0
+  },
+  {
+   "date": "2026-11-01",
+   "clicks": 1,
+   "impressions": 2,
+   "ctr": 0.5,
+   "position": 4
   }
  ],
  "top_queries": [
@@ -242,23 +242,23 @@
   {
    "query": "api 플랫폼 선택 기준",
    "clicks": 0,
-   "impressions": 6,
+   "impressions": 5,
    "ctr": 0,
-   "position": 27.2
+   "position": 23
   },
   {
    "query": "ftc조사대응",
    "clicks": 0,
-   "impressions": 3,
+   "impressions": 4,
    "ctr": 0,
-   "position": 4.7
+   "position": 4.8
   },
   {
    "query": "llm api",
    "clicks": 0,
-   "impressions": 3,
+   "impressions": 2,
    "ctr": 0,
-   "position": 29.7
+   "position": 30
   },
   {
    "query": "상속포기 기간 지나면",
@@ -347,6 +347,13 @@
    "position": 5.9
   },
   {
+   "page": "https://www.woodyway88.com/2026/10/galaxy-watch-recording-app.html",
+   "clicks": 1,
+   "impressions": 15,
+   "ctr": 0.0667,
+   "position": 9.7
+  },
+  {
    "page": "https://www.woodyway88.com/2026/10/gemini-4-argon-output-limit.html",
    "clicks": 1,
    "impressions": 12,
@@ -410,13 +417,6 @@
    "position": 10
   },
   {
-   "page": "https://www.woodyway88.com/2026/09/15-900.html",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0,
-   "position": 9
-  },
-  {
    "page": "https://www.woodyway88.com/2026/09/3.html",
    "clicks": 0,
    "impressions": 1,
@@ -454,9 +454,9 @@
   {
    "page": "https://www.woodyway88.com/2026/09/llm-api-3.html",
    "clicks": 0,
-   "impressions": 12,
+   "impressions": 10,
    "ctr": 0,
-   "position": 33.5
+   "position": 32.5
   },
   {
    "page": "https://www.woodyway88.com/2026/09/underground-utility-check-korea.html",
@@ -479,17 +479,11 @@
    "impressions": 89
   },
   "www.woodyway88.com": {
-   "clicks": 1,
-   "impressions": 134
+   "clicks": 2,
+   "impressions": 133
   }
  },
  "index": [
-  {
-   "url": "https://www.woodyway88.com/2026/10/korea-public-holidays-2027.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Redirect error",
-   "last_crawl": "2026-10-29T14:08:58Z"
-  },
   {
    "url": "https://www.woodyway88.com/2026/10/monthly-salary-3m-unemployment-benefit.html",
    "verdict": "NEUTRAL",
@@ -547,25 +541,25 @@
   {
    "url": "https://www.woodyway88.com/2026/10/severance-pay-payment-deadline.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/10/overseas-direct-purchase-customs-tax.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/10/mortgage-refinance-conditions.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/10/energy-voucher-application-period.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -583,7 +577,7 @@
   {
    "url": "https://www.woodyway88.com/2026/10/lease-renewal-right-how-to-use.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -613,7 +607,7 @@
   {
    "url": "https://www.woodyway88.com/2026/10/car-periodic-inspection-period-penalty.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -644,6 +638,24 @@
    "url": "https://www.woodyway88.com/2026/11/unpaid-severance-pay-report.html",
    "verdict": "NEUTRAL",
    "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/11/eitc-late-application-deadline.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/11/forced-heirship-claim-time-limit.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/11/claude-code-skills-guide.html",
+   "verdict": "NEUTRAL",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   }
  ],
@@ -715,8 +727,8 @@
    "query": "ftc조사대응",
    "page": "https://www.woodyway88.com/2026/10/openai-ftc-ai-investigation.html",
    "clicks": 0,
-   "impressions": 3,
-   "position": 4.7
+   "impressions": 4,
+   "position": 4.8
   },
   {
    "query": "llm api",
