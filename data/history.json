@@ -1290,5 +1290,20 @@
     "status": "SCHEDULED",
     "slot": "2026-11-04T20:00",
     "tool": "year-end-tax-calculator"
+  },
+  {
+    "publish_date": "2026-11-05",
+    "post_id": "23646574945193365",
+    "title": "실업급여 부정수급 걸리는 이유, 근로·활동 허위 신고",
+    "url": "https://www.woodyway88.com/2026/11/unemployment-benefit-fraud-cases.html",
+    "source_url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=722&ccfNo=5&cciNo=2&cnpClsNo=1",
+    "geeknews_url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=722&ccfNo=5&cciNo=2&cnpClsNo=1",
+    "labels": [
+      "생활가이드",
+      "생활경제"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-11-05T08:00",
+    "tool": "unemployment-benefit-calculator"
   }
 ]
