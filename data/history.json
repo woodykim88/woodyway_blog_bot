@@ -1274,5 +1274,21 @@
     "status": "SCHEDULED",
     "slot": "2026-11-04T12:30",
     "tool": ""
+  },
+  {
+    "publish_date": "2026-11-04",
+    "post_id": "3536759199366050724",
+    "title": "연말정산 의료비 공제 계산, 4천만원·300만원이면 27만원",
+    "url": "https://www.woodyway88.com/2026/11/year-end-tax-medical-expense-credit.html",
+    "source_url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=6595&cntntsId=7874",
+    "geeknews_url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=6595&cntntsId=7874",
+    "labels": [
+      "생활가이드",
+      "생활경제",
+      "계산사례"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-11-04T20:00",
+    "tool": "year-end-tax-calculator"
   }
 ]
