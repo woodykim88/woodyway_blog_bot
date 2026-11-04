@@ -1305,5 +1305,20 @@
     "status": "SCHEDULED",
     "slot": "2026-11-05T08:00",
     "tool": "unemployment-benefit-calculator"
+  },
+  {
+    "publish_date": "2026-11-05",
+    "post_id": "3989151916826103463",
+    "title": "클로드 코드 MCP 사용법, 복붙 없이 도구를 잇는 법",
+    "url": "https://www.woodyway88.com/2026/11/claude-code-mcp-setup.html",
+    "source_url": "https://code.claude.com/docs/ko/mcp",
+    "geeknews_url": "https://code.claude.com/docs/ko/mcp",
+    "labels": [
+      "AI사용법",
+      "업무생산성"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-11-05T12:30",
+    "tool": ""
   }
 ]
