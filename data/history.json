@@ -1336,5 +1336,20 @@
     "status": "SCHEDULED",
     "slot": "2026-11-05T20:00",
     "tool": ""
+  },
+  {
+    "publish_date": "2026-11-06",
+    "post_id": "7901693196577819134",
+    "title": "부동산 중개수수료 요율, 시·도 조례 상한 안에서 협의",
+    "url": "https://www.woodyway88.com/2026/11/real-estate-brokerage-fee-rates.html",
+    "source_url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=629&ccfNo=2&cciNo=2&cnpClsNo=3",
+    "geeknews_url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=629&ccfNo=2&cciNo=2&cnpClsNo=3",
+    "labels": [
+      "생활가이드",
+      "부동산"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-11-06T08:00",
+    "tool": "jeonse-loan-interest-calculator"
   }
 ]
