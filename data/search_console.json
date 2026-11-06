@@ -1,18 +1,11 @@
 {
- "updated": "2026-11-05",
+ "updated": "2026-11-06",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-10-08",
-  "2026-11-04"
+  "2026-10-09",
+  "2026-11-05"
  ],
  "daily": [
-  {
-   "date": "2026-10-08",
-   "clicks": 0,
-   "impressions": 2,
-   "ctr": 0,
-   "position": 7
-  },
   {
    "date": "2026-10-09",
    "clicks": 0,
@@ -187,6 +180,13 @@
    "impressions": 9,
    "ctr": 0.1111,
    "position": 15.8
+  },
+  {
+   "date": "2026-11-03",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 37
   }
  ],
  "top_queries": [
@@ -384,16 +384,16 @@
   {
    "page": "https://tools.woodyway88.com/mortgage-refinance-calculator/",
    "clicks": 0,
-   "impressions": 2,
+   "impressions": 1,
    "ctr": 0,
-   "position": 7
+   "position": 9
   },
   {
    "page": "https://tools.woodyway88.com/transit-refund-calculator/",
    "clicks": 0,
-   "impressions": 4,
+   "impressions": 3,
    "ctr": 0,
-   "position": 7.2
+   "position": 6.7
   },
   {
    "page": "https://tools.woodyway88.com/unemployment-benefit-calculator/",
@@ -476,26 +476,14 @@
  "by_site": {
   "tools.woodyway88.com": {
    "clicks": 4,
-   "impressions": 87
+   "impressions": 85
   },
   "www.woodyway88.com": {
    "clicks": 3,
-   "impressions": 141
+   "impressions": 142
   }
  },
  "index": [
-  {
-   "url": "https://www.woodyway88.com/2026/10/jeonse-deposit-return-guarantee.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Redirect error",
-   "last_crawl": "2026-10-29T14:09:22Z"
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/10/health-insurance-rate-2027.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Redirect error",
-   "last_crawl": "2026-10-29T14:07:27Z"
-  },
   {
    "url": "https://www.woodyway88.com/2026/10/parental-leave-benefit-how-to-apply.html",
    "verdict": "PASS",
@@ -511,7 +499,7 @@
   {
    "url": "https://www.woodyway88.com/2026/10/jeonse-deposit-increase-limit.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -523,7 +511,7 @@
   {
    "url": "https://www.woodyway88.com/2026/10/rental-contract-report-how-to.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -547,19 +535,19 @@
   {
    "url": "https://www.woodyway88.com/2026/10/mortgage-refinance-conditions.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/10/energy-voucher-application-period.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/10/reduced-working-hours-childcare-pay.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -583,7 +571,7 @@
   {
    "url": "https://www.woodyway88.com/2026/10/inheritance-order-spouse.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -607,7 +595,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/unemployment-benefit-period-postponement.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -619,7 +607,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/severance-pay-interim-settlement-reasons.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -661,11 +649,29 @@
   {
    "url": "https://www.woodyway88.com/2026/11/unemployment-benefit-fraud-cases.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/11/claude-code-mcp-setup.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/11/livelihood-benefit-2027-increase.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/11/real-estate-brokerage-fee-rates.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/11/notebooklm-source-summary-guide.html",
    "verdict": "NEUTRAL",
    "coverage": "URL is unknown to Google",
    "last_crawl": ""
