@@ -1397,5 +1397,20 @@
     "status": "SCHEDULED",
     "slot": "2026-11-07T08:00",
     "tool": ""
+  },
+  {
+    "publish_date": "2026-11-07",
+    "post_id": "7437076373580745209",
+    "title": "클로드 코드 훅 사용법, 기다릴 때만 알림 받기",
+    "url": "https://www.woodyway88.com/2026/11/claude-code-hooks-guide.html",
+    "source_url": "https://code.claude.com/docs/ko/hooks-guide",
+    "geeknews_url": "https://code.claude.com/docs/ko/hooks-guide",
+    "labels": [
+      "AI사용법",
+      "업무생산성"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-11-07T12:30",
+    "tool": ""
   }
 ]
