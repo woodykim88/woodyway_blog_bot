@@ -1443,5 +1443,20 @@
     "status": "SCHEDULED",
     "slot": "2026-11-08T08:00",
     "tool": "jeonse-loan-interest-calculator"
+  },
+  {
+    "publish_date": "2026-11-08",
+    "post_id": "1532449395649201884",
+    "title": "클로드 코드 되돌리기 사용법, 망친 수정만 되돌릴 수 있나",
+    "url": "https://www.woodyway88.com/2026/11/claude-code-rewind-guide.html",
+    "source_url": "https://code.claude.com/docs/ko/checkpointing",
+    "geeknews_url": "https://code.claude.com/docs/ko/checkpointing",
+    "labels": [
+      "AI사용법",
+      "업무생산성"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-11-08T12:30",
+    "tool": ""
   }
 ]
