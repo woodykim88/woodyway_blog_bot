@@ -22,6 +22,8 @@
 - 2026-10-31 Search Console 롱테일 (src/sc_longtail.py): 같은 종류 안에서 ① 조사 글감 ② 구글에 실제로 노출됐지만
   아직 첫 페이지가 아닌 검색어가 든 글감 ③ 조사 키워드가 든 글감 ④ 나머지 순. 그 안에서는 넓은 검색어
   ("근로장려금 신청 방법")를 구체적인 검색어("실업급여 자진퇴사 조건") 뒤로 미룬다 (넓은 검색어 글은 50~76위였다).
+- 2026-11-08 시즌 집중(사용자 승인): 같은 종류 안에서 조사 글감 다음으로 *그 달 글감*(months 지정)을 사계절 글감보다
+  먼저 쓴다. 11~2월 연말정산·2027 연휴 수요에 화력을 모으기 위해서다. 요일 종류 순환은 그대로 우선.
 """
 from __future__ import annotations
 
@@ -139,7 +141,9 @@ def _rank(
     if want:
         priority = _kind_priority(want)
         # 안정 정렬이라 같은 칸 안에서는 목록 순서 유지
-        fresh = sorted(fresh, key=lambda g: (priority(g), boosted(g), sc_longtail.is_generic(g.query)))
+        # 조사 글감(boosted 0) → 그 달 글감 → 사계절 글감 (2026-11-08 시즌 집중)
+        fresh = sorted(fresh, key=lambda g: (priority(g), boosted(g) != 0, not g.months, boosted(g),
+                                             sc_longtail.is_generic(g.query)))
     used = sorted((g for g in group if used_at(g) is not None), key=lambda g: used_at(g) or 0)
     return [*fresh, *used]
 

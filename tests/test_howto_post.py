@@ -50,15 +50,25 @@ def test_order_prefers_in_season_unused_then_least_recently_used_then_off_season
     used_new = guide('전입신고 방법', 5)
     past = (make_entry(source_url=used_old.urls[1]), make_entry(source_url=used_new.urls[0]))
     order = howto_topic.order_guides([may_only, used_new, evergreen, used_old, october], past, OCT)
-    assert order == [evergreen, october, used_old, used_new, may_only]
+    assert order == [october, evergreen, used_old, used_new, may_only]
 
 
 def test_off_season_topic_is_picked_in_its_month():
     may_only = guide('종합소득세 신고 방법', 3, months=(5,))
     evergreen = guide('실업급여 신청 방법', 1)
     may = datetime(2026, 5, 10, tzinfo=KST)
-    assert howto_topic.order_guides([evergreen, may_only], (), may)[0] == evergreen  # 둘 다 제철이면 목록 순서
+    assert howto_topic.order_guides([evergreen, may_only], (), may)[0] == may_only  # 그 달 글감이 사계절 글감보다 먼저
     assert howto_topic.order_guides([may_only, evergreen], (), OCT) == [evergreen, may_only]
+
+
+def test_month_specific_topic_beats_year_round_topic_of_same_kind():
+    # 2026-11-08: 시즌(연말정산·2027 연휴)에 화력을 모은다. 같은 종류면 그 달 글감이 사계절 글감보다 먼저
+    nov = datetime(2026, 11, 9, 20, 0, tzinfo=KST)  # 월요일 = 계산 사례
+    year_round = guide('알바 퇴직금 얼마', 1, kind=howto_topic.CASE)
+    year_end = guide('연봉 3000 연말정산', 2, months=(11, 12, 1, 2), kind=howto_topic.CASE)
+    holiday = guide('2027 설날 연휴', 3, months=(1, 2, 11, 12), kind=howto_topic.SCHEDULE)
+    order = howto_topic.order_guides([year_round, holiday, year_end], (), nov)
+    assert order == [year_end, year_round, holiday]  # 요일 종류가 시즌보다 우선
 
 
 # --- 2026-10-18 글 종류 요일 순환 (계산 사례 3 · 일정 2 · 숫자 변경 2) ---
