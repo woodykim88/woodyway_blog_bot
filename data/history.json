@@ -1474,5 +1474,21 @@
     "status": "SCHEDULED",
     "slot": "2026-11-08T20:00",
     "tool": "unemployment-benefit-calculator"
+  },
+  {
+    "publish_date": "2026-11-09",
+    "post_id": "6306654272679977235",
+    "title": "고향사랑기부제 세액공제, 10만 원 기부하면 전액 공제",
+    "url": "https://www.woodyway88.com/2026/11/hometown-donation-tax-credit.html",
+    "source_url": "https://www.korea.kr/news/policyNewsView.do?newsId=148956582",
+    "geeknews_url": "https://www.korea.kr/news/policyNewsView.do?newsId=148956582",
+    "labels": [
+      "생활가이드",
+      "절약꿀팁",
+      "계산사례"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-11-09T20:00",
+    "tool": "year-end-tax-calculator"
   }
 ]
