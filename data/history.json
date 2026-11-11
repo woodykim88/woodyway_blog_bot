@@ -1506,5 +1506,21 @@
     "status": "SCHEDULED",
     "slot": "2026-11-10T20:00",
     "tool": "2027"
+  },
+  {
+    "publish_date": "2026-11-11",
+    "post_id": "4404378489846125542",
+    "title": "연금저축 세액공제 600 만원, 총급여별 90만·72만원",
+    "url": "https://www.woodyway88.com/2026/11/pension-savings-tax-credit-6m.html",
+    "source_url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=6596&cntntsId=7875",
+    "geeknews_url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=6596&cntntsId=7875",
+    "labels": [
+      "생활가이드",
+      "생활경제",
+      "계산사례"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-11-11T20:00",
+    "tool": "year-end-tax-calculator"
   }
 ]
