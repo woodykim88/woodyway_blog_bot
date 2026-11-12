@@ -1,18 +1,11 @@
 {
- "updated": "2026-11-11",
+ "updated": "2026-11-12",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-10-14",
-  "2026-11-10"
+  "2026-10-15",
+  "2026-11-11"
  ],
  "daily": [
-  {
-   "date": "2026-10-14",
-   "clicks": 0,
-   "impressions": 3,
-   "ctr": 0,
-   "position": 9.3
-  },
   {
    "date": "2026-10-15",
    "clicks": 0,
@@ -187,6 +180,13 @@
    "impressions": 1,
    "ctr": 0,
    "position": 10
+  },
+  {
+   "date": "2026-11-09",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 6
   }
  ],
  "top_queries": [
@@ -279,9 +279,9 @@
   {
    "page": "https://www.woodyway88.com/2026/10/gemini-4-argon-output-limit.html",
    "clicks": 1,
-   "impressions": 11,
-   "ctr": 0.0909,
-   "position": 19.7
+   "impressions": 10,
+   "ctr": 0.1,
+   "position": 20.7
   },
   {
    "page": "https://www.woodyway88.com/2026/10/median-income-standard-2027.html",
@@ -347,11 +347,18 @@
    "position": 9
   },
   {
+   "page": "https://www.woodyway88.com/2026/09/9-833.html",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 6
+  },
+  {
    "page": "https://www.woodyway88.com/2026/09/a16z-3.html",
    "clicks": 0,
-   "impressions": 2,
+   "impressions": 1,
    "ctr": 0,
-   "position": 12
+   "position": 15
   },
   {
    "page": "https://www.woodyway88.com/2026/09/ai-3.html",
@@ -401,19 +408,12 @@
    "impressions": 1,
    "ctr": 0,
    "position": 7
-  },
-  {
-   "page": "https://www.woodyway88.com/2026/10/annual-salary-40m-severance-pay.html",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0,
-   "position": 19
   }
  ],
  "by_site": {
   "www.woodyway88.com": {
    "clicks": 3,
-   "impressions": 151
+   "impressions": 149
   },
   "tools.woodyway88.com": {
    "clicks": 0,
@@ -422,21 +422,9 @@
  },
  "index": [
   {
-   "url": "https://www.woodyway88.com/2026/10/reduced-working-hours-childcare-pay.html",
-   "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
-   "last_crawl": ""
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/10/pension-savings-irp-tax-credit-limit.html",
-   "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
-   "last_crawl": ""
-  },
-  {
    "url": "https://www.woodyway88.com/2026/10/lease-renewal-right-how-to-use.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -460,7 +448,7 @@
   {
    "url": "https://www.woodyway88.com/2026/10/modu-card-transit-refund-how-to.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -472,13 +460,13 @@
   {
    "url": "https://www.woodyway88.com/2026/11/unemployment-benefit-period-postponement.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/11/national-pension-rate-2027.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -496,7 +484,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/unpaid-severance-pay-report.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -550,19 +538,19 @@
   {
    "url": "https://www.woodyway88.com/2026/11/notebooklm-source-summary-guide.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/11/property-tax-installment-payment.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/11/find-dormant-financial-assets.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -574,7 +562,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/civil-service-exam-2027-schedule.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -603,6 +591,12 @@
   },
   {
    "url": "https://www.woodyway88.com/2026/11/long-weekends-2027-korea.html",
+   "verdict": "NEUTRAL",
+   "coverage": "URL is unknown to Google",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/11/pension-savings-tax-credit-6m.html",
    "verdict": "NEUTRAL",
    "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
