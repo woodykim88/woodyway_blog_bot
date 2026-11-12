@@ -1522,5 +1522,21 @@
     "status": "SCHEDULED",
     "slot": "2026-11-11T20:00",
     "tool": "year-end-tax-calculator"
+  },
+  {
+    "publish_date": "2026-11-12",
+    "post_id": "5001284466000607578",
+    "title": "2027 최저임금 월급 세후, 세전 223만6300원",
+    "url": "https://www.woodyway88.com/2026/11/minimum-wage-2027-take-home-pay.html",
+    "source_url": "https://www.moel.go.kr/news/enews/report/enewsView.do?news_seq=19744",
+    "geeknews_url": "https://www.moel.go.kr/news/enews/report/enewsView.do?news_seq=19744",
+    "labels": [
+      "생활가이드",
+      "생활경제",
+      "바뀌는제도"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-11-12T20:00",
+    "tool": "minimum-wage-calculator"
   }
 ]
