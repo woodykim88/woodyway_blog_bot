@@ -1,25 +1,11 @@
 {
- "updated": "2026-11-12",
+ "updated": "2026-11-14",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-10-15",
-  "2026-11-11"
+  "2026-10-17",
+  "2026-11-13"
  ],
  "daily": [
-  {
-   "date": "2026-10-15",
-   "clicks": 0,
-   "impressions": 3,
-   "ctr": 0,
-   "position": 5.3
-  },
-  {
-   "date": "2026-10-16",
-   "clicks": 0,
-   "impressions": 6,
-   "ctr": 0,
-   "position": 19.7
-  },
   {
    "date": "2026-10-17",
    "clicks": 0,
@@ -187,15 +173,22 @@
    "impressions": 1,
    "ctr": 0,
    "position": 6
+  },
+  {
+   "date": "2026-11-10",
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0,
+   "position": 59.5
   }
  ],
  "top_queries": [
   {
    "query": "api 플랫폼 선택 기준",
    "clicks": 0,
-   "impressions": 3,
+   "impressions": 2,
    "ctr": 0,
-   "position": 26.3
+   "position": 30
   },
   {
    "query": "ftc조사대응",
@@ -210,13 +203,6 @@
    "impressions": 1,
    "ctr": 0,
    "position": 54
-  },
-  {
-   "query": "제미나이 아르곤 한도",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0,
-   "position": 25
   },
   {
    "query": "제미나이4 사용량",
@@ -249,9 +235,9 @@
   {
    "query": "퇴직금 계산 방법",
    "clicks": 0,
-   "impressions": 7,
+   "impressions": 8,
    "ctr": 0,
-   "position": 56.9
+   "position": 56.6
   },
   {
    "query": "퇴직금 계산공식",
@@ -263,25 +249,25 @@
   {
    "query": "퇴직금 계산법",
    "clicks": 0,
-   "impressions": 4,
+   "impressions": 5,
    "ctr": 0,
-   "position": 80.8
+   "position": 77.4
   }
  ],
  "top_pages": [
   {
    "page": "https://www.woodyway88.com/2026/10/galaxy-watch-recording-app.html",
    "clicks": 1,
-   "impressions": 9,
-   "ctr": 0.1111,
-   "position": 10.6
+   "impressions": 7,
+   "ctr": 0.1429,
+   "position": 7.3
   },
   {
    "page": "https://www.woodyway88.com/2026/10/gemini-4-argon-output-limit.html",
    "clicks": 1,
-   "impressions": 10,
-   "ctr": 0.1,
-   "position": 20.7
+   "impressions": 6,
+   "ctr": 0.1667,
+   "position": 26.8
   },
   {
    "page": "https://www.woodyway88.com/2026/10/median-income-standard-2027.html",
@@ -289,13 +275,6 @@
    "impressions": 3,
    "ctr": 0.3333,
    "position": 8.7
-  },
-  {
-   "page": "https://tools.woodyway88.com/calendar/2027-03/",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0,
-   "position": 22
   },
   {
    "page": "https://www.woodyway88.com/",
@@ -384,9 +363,9 @@
   {
    "page": "https://www.woodyway88.com/2026/09/llm-api-3.html",
    "clicks": 0,
-   "impressions": 4,
+   "impressions": 3,
    "ctr": 0,
-   "position": 33.5
+   "position": 38.3
   },
   {
    "page": "https://www.woodyway88.com/2026/09/underground-utility-check-korea.html",
@@ -398,9 +377,9 @@
   {
    "page": "https://www.woodyway88.com/2026/10/ai-hacking-career-skills.html",
    "clicks": 0,
-   "impressions": 5,
+   "impressions": 4,
    "ctr": 0,
-   "position": 6.2
+   "position": 7
   },
   {
    "page": "https://www.woodyway88.com/2026/10/ai-skills-salary-premium.html",
@@ -408,47 +387,26 @@
    "impressions": 1,
    "ctr": 0,
    "position": 7
+  },
+  {
+   "page": "https://www.woodyway88.com/2026/10/annual-salary-40m-severance-pay.html",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 19
   }
  ],
  "by_site": {
   "www.woodyway88.com": {
    "clicks": 3,
-   "impressions": 149
-  },
-  "tools.woodyway88.com": {
-   "clicks": 0,
-   "impressions": 1
+   "impressions": 143
   }
  },
  "index": [
   {
-   "url": "https://www.woodyway88.com/2026/10/lease-renewal-right-how-to-use.html",
-   "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
-   "last_crawl": ""
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/10/median-income-standard-2027.html",
-   "verdict": "PASS",
-   "coverage": "Submitted and indexed",
-   "last_crawl": "2026-10-31T15:08:56Z"
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/10/inheritance-order-spouse.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/10/k-pass-refund-calculation-october.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
-  },
-  {
    "url": "https://www.woodyway88.com/2026/10/modu-card-transit-refund-how-to.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -460,7 +418,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/unemployment-benefit-period-postponement.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -478,13 +436,13 @@
   {
    "url": "https://www.woodyway88.com/2026/11/15-hours-per-week-weekly-holiday.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/11/unpaid-severance-pay-report.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -568,7 +526,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/lease-registration-order-how-to-apply.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -592,11 +550,17 @@
   {
    "url": "https://www.woodyway88.com/2026/11/long-weekends-2027-korea.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/11/pension-savings-tax-credit-6m.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/11/minimum-wage-2027-take-home-pay.html",
    "verdict": "NEUTRAL",
    "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
@@ -733,8 +697,8 @@
    "query": "퇴직금 계산 방법",
    "page": "https://www.woodyway88.com/2026/10/severance-pay-calculation.html",
    "clicks": 0,
-   "impressions": 9,
-   "position": 60.2
+   "impressions": 10,
+   "position": 59.7
   },
   {
    "query": "퇴직금 계산공식",
@@ -747,8 +711,8 @@
    "query": "퇴직금 계산법",
    "page": "https://www.woodyway88.com/2026/10/severance-pay-calculation.html",
    "clicks": 0,
-   "impressions": 5,
-   "position": 76.2
+   "impressions": 6,
+   "position": 74.2
   }
  ]
 }
