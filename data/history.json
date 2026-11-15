@@ -1554,5 +1554,21 @@
     "status": "SCHEDULED",
     "slot": "2026-11-14T20:00",
     "tool": ""
+  },
+  {
+    "publish_date": "2026-11-15",
+    "post_id": "8301810530274831203",
+    "title": "2027 실업급여 하한액, 금액 대신 103% 연동 추진",
+    "url": "https://www.woodyway88.com/2026/11/unemployment-benefit-2027-daily-limits.html",
+    "source_url": "https://www.moel.go.kr/news/enews/report/enewsView.do?news_seq=19866",
+    "geeknews_url": "https://www.moel.go.kr/news/enews/report/enewsView.do?news_seq=19866",
+    "labels": [
+      "생활가이드",
+      "생활경제",
+      "바뀌는제도"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-11-15T20:00",
+    "tool": "unemployment-benefit-calculator"
   }
 ]
