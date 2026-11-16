@@ -1,18 +1,11 @@
 {
- "updated": "2026-11-15",
+ "updated": "2026-11-16",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-10-18",
-  "2026-11-14"
+  "2026-10-19",
+  "2026-11-15"
  ],
  "daily": [
-  {
-   "date": "2026-10-18",
-   "clicks": 0,
-   "impressions": 9,
-   "ctr": 0,
-   "position": 34.3
-  },
   {
    "date": "2026-10-19",
    "clicks": 0,
@@ -187,6 +180,13 @@
    "impressions": 0,
    "ctr": 0,
    "position": 0
+  },
+  {
+   "date": "2026-11-13",
+   "clicks": 0,
+   "impressions": 0,
+   "ctr": 0,
+   "position": 0
   }
  ],
  "top_queries": [
@@ -203,13 +203,6 @@
    "impressions": 6,
    "ctr": 0,
    "position": 4.8
-  },
-  {
-   "query": "상속포기 기간 지나면",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0,
-   "position": 54
   },
   {
    "query": "제미나이4 사용량",
@@ -242,9 +235,9 @@
   {
    "query": "퇴직금 계산 방법",
    "clicks": 0,
-   "impressions": 8,
+   "impressions": 6,
    "ctr": 0,
-   "position": 56.6
+   "position": 59.2
   },
   {
    "query": "퇴직금 계산공식",
@@ -256,25 +249,25 @@
   {
    "query": "퇴직금 계산법",
    "clicks": 0,
-   "impressions": 5,
+   "impressions": 4,
    "ctr": 0,
-   "position": 77.4
+   "position": 77.5
   }
  ],
  "top_pages": [
   {
    "page": "https://www.woodyway88.com/2026/10/galaxy-watch-recording-app.html",
    "clicks": 1,
-   "impressions": 7,
-   "ctr": 0.1429,
-   "position": 7.3
+   "impressions": 6,
+   "ctr": 0.1667,
+   "position": 7.5
   },
   {
    "page": "https://www.woodyway88.com/2026/10/gemini-4-argon-output-limit.html",
    "clicks": 1,
-   "impressions": 6,
-   "ctr": 0.1667,
-   "position": 26.8
+   "impressions": 5,
+   "ctr": 0.2,
+   "position": 28.2
   },
   {
    "page": "https://www.woodyway88.com/2026/10/median-income-standard-2027.html",
@@ -342,9 +335,9 @@
   {
    "page": "https://www.woodyway88.com/2026/09/ai-3.html",
    "clicks": 0,
-   "impressions": 2,
+   "impressions": 1,
    "ctr": 0,
-   "position": 31
+   "position": 24
   },
   {
    "page": "https://www.woodyway88.com/2026/09/blog-post.html",
@@ -396,32 +389,20 @@
    "position": 19
   },
   {
-   "page": "https://www.woodyway88.com/2026/10/claude-code-claude-md-guide.html",
+   "page": "https://www.woodyway88.com/2026/10/claude-code-design-taste-frontend.html",
    "clicks": 0,
    "impressions": 1,
    "ctr": 0,
-   "position": 6
+   "position": 29
   }
  ],
  "by_site": {
   "www.woodyway88.com": {
    "clicks": 3,
-   "impressions": 141
+   "impressions": 132
   }
  },
  "index": [
-  {
-   "url": "https://www.woodyway88.com/2026/11/unemployment-benefit-period-postponement.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/11/national-pension-rate-2027.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
-  },
   {
    "url": "https://www.woodyway88.com/2026/11/severance-pay-interim-settlement-reasons.html",
    "verdict": "NEUTRAL",
@@ -443,7 +424,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/eitc-late-application-deadline.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -455,7 +436,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/claude-code-skills-guide.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -467,7 +448,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/unemployment-benefit-fraud-cases.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -479,7 +460,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/livelihood-benefit-2027-increase.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -491,7 +472,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/notebooklm-source-summary-guide.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -509,13 +490,13 @@
   {
    "url": "https://www.woodyway88.com/2026/11/claude-code-hooks-guide.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/11/civil-service-exam-2027-schedule.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -533,7 +514,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/four-social-insurance-rates-2027.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -557,11 +538,17 @@
   {
    "url": "https://www.woodyway88.com/2026/11/minimum-wage-2027-take-home-pay.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/11/lunar-new-year-holiday-2027.html",
+   "verdict": "NEUTRAL",
+   "coverage": "URL is unknown to Google",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/11/unemployment-benefit-2027-daily-limits.html",
    "verdict": "NEUTRAL",
    "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
