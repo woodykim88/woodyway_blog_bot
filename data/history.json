@@ -1570,5 +1570,21 @@
     "status": "SCHEDULED",
     "slot": "2026-11-15T20:00",
     "tool": "unemployment-benefit-calculator"
+  },
+  {
+    "publish_date": "2026-11-16",
+    "post_id": "4759730389711597176",
+    "title": "신용카드 소득공제 계산 예시, 4천만 원이면 11만2500원 감소",
+    "url": "https://www.woodyway88.com/2026/11/credit-card-deduction-calculation.html",
+    "source_url": "https://www.korea.kr/news/policyNewsView.do?newsId=148957247",
+    "geeknews_url": "https://www.korea.kr/news/policyNewsView.do?newsId=148957247",
+    "labels": [
+      "생활가이드",
+      "생활경제",
+      "계산사례"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-11-16T20:00",
+    "tool": "year-end-tax-calculator"
   }
 ]
