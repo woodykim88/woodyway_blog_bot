@@ -1,18 +1,11 @@
 {
- "updated": "2026-11-16",
+ "updated": "2026-11-17",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-10-19",
-  "2026-11-15"
+  "2026-10-20",
+  "2026-11-16"
  ],
  "daily": [
-  {
-   "date": "2026-10-19",
-   "clicks": 0,
-   "impressions": 0,
-   "ctr": 0,
-   "position": 0
-  },
   {
    "date": "2026-10-20",
    "clicks": 0,
@@ -183,6 +176,13 @@
   },
   {
    "date": "2026-11-13",
+   "clicks": 0,
+   "impressions": 0,
+   "ctr": 0,
+   "position": 0
+  },
+  {
+   "date": "2026-11-14",
    "clicks": 0,
    "impressions": 0,
    "ctr": 0,
@@ -404,18 +404,6 @@
  },
  "index": [
   {
-   "url": "https://www.woodyway88.com/2026/11/severance-pay-interim-settlement-reasons.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/11/15-hours-per-week-weekly-holiday.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
-  },
-  {
    "url": "https://www.woodyway88.com/2026/11/unpaid-severance-pay-report.html",
    "verdict": "NEUTRAL",
    "coverage": "Discovered - currently not indexed",
@@ -454,7 +442,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/claude-code-mcp-setup.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -466,43 +454,43 @@
   {
    "url": "https://www.woodyway88.com/2026/11/real-estate-brokerage-fee-rates.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/11/notebooklm-source-summary-guide.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/11/property-tax-installment-payment.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/11/find-dormant-financial-assets.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/11/claude-code-hooks-guide.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/11/civil-service-exam-2027-schedule.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/11/lease-registration-order-how-to-apply.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -526,13 +514,13 @@
   {
    "url": "https://www.woodyway88.com/2026/11/long-weekends-2027-korea.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/11/pension-savings-tax-credit-6m.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -544,11 +532,17 @@
   {
    "url": "https://www.woodyway88.com/2026/11/lunar-new-year-holiday-2027.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/11/unemployment-benefit-2027-daily-limits.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/11/credit-card-deduction-calculation.html",
    "verdict": "NEUTRAL",
    "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
