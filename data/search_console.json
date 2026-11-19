@@ -1,18 +1,11 @@
 {
- "updated": "2026-11-18",
+ "updated": "2026-11-19",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-10-21",
-  "2026-11-17"
+  "2026-10-22",
+  "2026-11-18"
  ],
  "daily": [
-  {
-   "date": "2026-10-21",
-   "clicks": 0,
-   "impressions": 4,
-   "ctr": 0,
-   "position": 7
-  },
   {
    "date": "2026-10-22",
    "clicks": 0,
@@ -187,6 +180,13 @@
    "impressions": 0,
    "ctr": 0,
    "position": 0
+  },
+  {
+   "date": "2026-11-16",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 8
   }
  ],
  "top_queries": [
@@ -235,9 +235,9 @@
   {
    "query": "퇴직금 계산 방법",
    "clicks": 0,
-   "impressions": 6,
+   "impressions": 7,
    "ctr": 0,
-   "position": 59.2
+   "position": 51.9
   },
   {
    "query": "퇴직금 계산공식",
@@ -265,9 +265,9 @@
   {
    "page": "https://www.woodyway88.com/2026/10/gemini-4-argon-output-limit.html",
    "clicks": 1,
-   "impressions": 4,
-   "ctr": 0.25,
-   "position": 33.5
+   "impressions": 3,
+   "ctr": 0.3333,
+   "position": 42.3
   },
   {
    "page": "https://www.woodyway88.com/2026/10/median-income-standard-2027.html",
@@ -289,13 +289,6 @@
    "impressions": 1,
    "ctr": 0,
    "position": 33
-  },
-  {
-   "page": "https://www.woodyway88.com/2025/03/blog-post_08.html",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0,
-   "position": 8
   },
   {
    "page": "https://www.woodyway88.com/2026/01/ClaudeCode.html",
@@ -394,33 +387,22 @@
    "impressions": 1,
    "ctr": 0,
    "position": 29
+  },
+  {
+   "page": "https://www.woodyway88.com/2026/10/claude-google-docs-integration.html",
+   "clicks": 0,
+   "impressions": 6,
+   "ctr": 0,
+   "position": 6
   }
  ],
  "by_site": {
   "www.woodyway88.com": {
    "clicks": 3,
-   "impressions": 131
+   "impressions": 128
   }
  },
  "index": [
-  {
-   "url": "https://www.woodyway88.com/2026/11/forced-heirship-claim-time-limit.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/11/claude-code-skills-guide.html",
-   "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
-   "last_crawl": ""
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/11/year-end-tax-medical-expense-credit.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
-  },
   {
    "url": "https://www.woodyway88.com/2026/11/unemployment-benefit-fraud-cases.html",
    "verdict": "NEUTRAL",
@@ -430,13 +412,13 @@
   {
    "url": "https://www.woodyway88.com/2026/11/claude-code-mcp-setup.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/11/livelihood-benefit-2027-increase.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -466,13 +448,13 @@
   {
    "url": "https://www.woodyway88.com/2026/11/claude-code-hooks-guide.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/11/civil-service-exam-2027-schedule.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -484,7 +466,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/claude-code-rewind-guide.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -502,7 +484,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/long-weekends-2027-korea.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -538,7 +520,13 @@
   {
    "url": "https://www.woodyway88.com/2026/11/energy-voucher-2026-deadline-amount.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/11/gift-tax-exemption-limit-calculation.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   }
  ],
@@ -673,8 +661,8 @@
    "query": "퇴직금 계산 방법",
    "page": "https://www.woodyway88.com/2026/10/severance-pay-calculation.html",
    "clicks": 0,
-   "impressions": 10,
-   "position": 59.7
+   "impressions": 11,
+   "position": 55
   },
   {
    "query": "퇴직금 계산공식",
