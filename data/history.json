@@ -1618,5 +1618,21 @@
     "status": "SCHEDULED",
     "slot": "2026-11-18T20:00",
     "tool": ""
+  },
+  {
+    "publish_date": "2026-11-19",
+    "post_id": "487046692338155118",
+    "title": "2027 주거급여 금액, 1인 131만 원·4인 332만 원 기준",
+    "url": "https://www.woodyway88.com/2026/11/housing-benefit-2027-amount.html",
+    "source_url": "https://www.mohw.go.kr/board.es?mid=a10503010100&bid=0027&act=view&list_no=1491453",
+    "geeknews_url": "https://www.mohw.go.kr/board.es?mid=a10503010100&bid=0027&act=view&list_no=1491453",
+    "labels": [
+      "생활가이드",
+      "지원금·혜택",
+      "바뀌는제도"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-11-19T20:00",
+    "tool": "salary-take-home-calculator"
   }
 ]
