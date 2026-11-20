@@ -1634,5 +1634,21 @@
     "status": "SCHEDULED",
     "slot": "2026-11-19T20:00",
     "tool": "salary-take-home-calculator"
+  },
+  {
+    "publish_date": "2026-11-20",
+    "post_id": "8948661777028160653",
+    "title": "연봉 3000 연말정산, 결정세액 약 37만 원 계산",
+    "url": "https://www.woodyway88.com/2026/11/annual-salary-30m-year-end-tax.html",
+    "source_url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=6435&cntntsId=7871",
+    "geeknews_url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=6435&cntntsId=7871",
+    "labels": [
+      "생활가이드",
+      "생활경제",
+      "계산사례"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-11-20T20:00",
+    "tool": "year-end-tax-calculator"
   }
 ]
