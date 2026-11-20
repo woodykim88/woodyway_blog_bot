@@ -774,6 +774,28 @@ def llm_calls_warning(result: RunResult, writer_model: str) -> str | None:
             '반복되면 원고 모델을 점검하세요.')
 
 
+WEEKDAY_NAMES = '월화수목금토일'
+
+
+def parse_weekdays(raw: str | None) -> frozenset[int] | None:
+    """PUBLISH_WEEKDAYS('월수금' 또는 '0,2,4')를 요일 번호로 바꿉니다. 비어 있으면 매일(None)."""
+    text = (raw or '').strip()
+    if not text:
+        return None
+    days = {WEEKDAY_NAMES.index(ch) for ch in text if ch in WEEKDAY_NAMES}
+    days |= {int(part) for part in text.replace(' ', '').split(',') if part.isdigit() and int(part) < 7}
+    if not days:
+        raise ValueError(f'PUBLISH_WEEKDAYS 값을 읽을 수 없습니다: {raw!r}')
+    return frozenset(days)
+
+
+def filter_weekdays(targets: list[Target], days: frozenset[int] | None) -> list[Target]:
+    """발행 요일이 아닌 예약 슬롯을 뺍니다(2026-11-20 주 3편 전환)."""
+    if days is None:
+        return targets
+    return [t for t in targets if t.publish_at is None or t.publish_at.astimezone(schedule.KST).weekday() in days]
+
+
 def is_paused(env: Mapping[str, str]) -> bool:
     return (env.get('PAUSED') or '').strip().lower() in ('1', 'true', 'yes', 'on')
 
@@ -795,6 +817,8 @@ def run(
     skill_time = schedule.parse_times(env.get('SKILL_TIME') or DEFAULT_SKILL_TIME)[0]
     howto_times = schedule.parse_times(env.get('HOWTO_TIME') or DEFAULT_HOWTO_TIME)
     targets = plan_targets(mode, now, times, history.done_slots(past), at)
+    if mode == 'auto':
+        targets = filter_weekdays(targets, parse_weekdays(env.get('PUBLISH_WEEKDAYS')))
     if not targets:
         return RunResult('skipped', '지금 준비할 발행 시각이 없습니다.')
     print(f'[계획] {len(targets)}편: ' + ', '.join(t.slot for t in targets))
