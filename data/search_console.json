@@ -1,18 +1,11 @@
 {
- "updated": "2026-11-20",
+ "updated": "2026-11-21",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-10-23",
-  "2026-11-19"
+  "2026-10-24",
+  "2026-11-20"
  ],
  "daily": [
-  {
-   "date": "2026-10-23",
-   "clicks": 0,
-   "impressions": 2,
-   "ctr": 0,
-   "position": 8
-  },
   {
    "date": "2026-10-24",
    "clicks": 0,
@@ -187,6 +180,13 @@
    "impressions": 2,
    "ctr": 0,
    "position": 9.5
+  },
+  {
+   "date": "2026-11-18",
+   "clicks": 0,
+   "impressions": 3,
+   "ctr": 0,
+   "position": 19.7
   }
  ],
  "top_queries": [
@@ -228,9 +228,9 @@
   {
    "query": "퇴직금 계산",
    "clicks": 0,
-   "impressions": 4,
+   "impressions": 5,
    "ctr": 0,
-   "position": 40.8
+   "position": 34
   },
   {
    "query": "퇴직금 계산 방법",
@@ -252,6 +252,13 @@
    "impressions": 4,
    "ctr": 0,
    "position": 77.5
+  },
+  {
+   "query": "퇴직금 계산하는 법",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 42
   },
   {
    "query": "퇴직금계산",
@@ -286,9 +293,9 @@
   {
    "page": "https://www.woodyway88.com/",
    "clicks": 0,
-   "impressions": 8,
+   "impressions": 7,
    "ctr": 0,
-   "position": 2.2
+   "position": 1
   },
   {
    "page": "https://www.woodyway88.com/2025/01/berachain.html",
@@ -406,38 +413,20 @@
  "by_site": {
   "www.woodyway88.com": {
    "clicks": 3,
-   "impressions": 124
+   "impressions": 125
   }
  },
  "index": [
   {
-   "url": "https://www.woodyway88.com/2026/11/real-estate-brokerage-fee-rates.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/11/notebooklm-source-summary-guide.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
-  },
-  {
-   "url": "https://www.woodyway88.com/2026/11/property-tax-installment-payment.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
-  },
-  {
    "url": "https://www.woodyway88.com/2026/11/find-dormant-financial-assets.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/11/claude-code-hooks-guide.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -449,7 +438,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/lease-registration-order-how-to-apply.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -461,19 +450,19 @@
   {
    "url": "https://www.woodyway88.com/2026/11/four-social-insurance-rates-2027.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/11/hometown-donation-tax-credit.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/11/long-weekends-2027-korea.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -503,7 +492,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/credit-card-deduction-calculation.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -520,6 +509,12 @@
   },
   {
    "url": "https://www.woodyway88.com/2026/11/housing-benefit-2027-amount.html",
+   "verdict": "NEUTRAL",
+   "coverage": "URL is unknown to Google",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/11/annual-salary-30m-year-end-tax.html",
    "verdict": "NEUTRAL",
    "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
@@ -649,8 +644,8 @@
    "query": "퇴직금 계산",
    "page": "https://www.woodyway88.com/2026/10/severance-pay-calculation.html",
    "clicks": 0,
-   "impressions": 4,
-   "position": 40.8
+   "impressions": 5,
+   "position": 34
   },
   {
    "query": "퇴직금 계산 방법",
@@ -672,6 +667,13 @@
    "clicks": 0,
    "impressions": 6,
    "position": 74.2
+  },
+  {
+   "query": "퇴직금 계산하는 법",
+   "page": "https://www.woodyway88.com/2026/10/severance-pay-calculation.html",
+   "clicks": 0,
+   "impressions": 1,
+   "position": 42
   },
   {
    "query": "퇴직금계산",
