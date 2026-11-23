@@ -1650,5 +1650,21 @@
     "status": "SCHEDULED",
     "slot": "2026-11-20T20:00",
     "tool": "year-end-tax-calculator"
+  },
+  {
+    "publish_date": "2026-11-23",
+    "post_id": "3794743066242643047",
+    "title": "연말정산 체크카드 신용카드 비율, 4천만원 땐 27만원 차이",
+    "url": "https://www.woodyway88.com/2026/11/year-end-tax-debit-credit-card.html",
+    "source_url": "https://www.korea.kr/news/policyNewsView.do?newsId=148957247",
+    "geeknews_url": "https://www.korea.kr/news/policyNewsView.do?newsId=148957247",
+    "labels": [
+      "생활가이드",
+      "생활경제",
+      "계산사례"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-11-23T20:00",
+    "tool": "year-end-tax-calculator"
   }
 ]
