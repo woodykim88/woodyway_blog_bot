@@ -1,18 +1,11 @@
 {
- "updated": "2026-11-23",
+ "updated": "2026-11-24",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-10-26",
-  "2026-11-22"
+  "2026-10-27",
+  "2026-11-23"
  ],
  "daily": [
-  {
-   "date": "2026-10-26",
-   "clicks": 0,
-   "impressions": 0,
-   "ctr": 0,
-   "position": 0
-  },
   {
    "date": "2026-10-27",
    "clicks": 1,
@@ -187,6 +180,13 @@
    "impressions": 2,
    "ctr": 0,
    "position": 7
+  },
+  {
+   "date": "2026-11-21",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 5
   }
  ],
  "top_queries": [
@@ -196,6 +196,13 @@
    "impressions": 6,
    "ctr": 0,
    "position": 4.8
+  },
+  {
+   "query": "인공지능 전문가 연봉",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 5
   },
   {
    "query": "지하매설물 확인방법",
@@ -363,7 +370,7 @@
   {
    "page": "https://www.woodyway88.com/2026/10/ai-skills-salary-premium.html",
    "clicks": 0,
-   "impressions": 3,
+   "impressions": 4,
    "ctr": 0,
    "position": 5
   },
@@ -406,16 +413,10 @@
  "by_site": {
   "www.woodyway88.com": {
    "clicks": 3,
-   "impressions": 99
+   "impressions": 100
   }
  },
  "index": [
-  {
-   "url": "https://www.woodyway88.com/2026/11/hometown-donation-tax-credit.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
-  },
   {
    "url": "https://www.woodyway88.com/2026/11/long-weekends-2027-korea.html",
    "verdict": "NEUTRAL",
@@ -449,7 +450,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/credit-card-deduction-calculation.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -467,13 +468,19 @@
   {
    "url": "https://www.woodyway88.com/2026/11/housing-benefit-2027-amount.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/11/annual-salary-30m-year-end-tax.html",
    "verdict": "NEUTRAL",
    "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/11/year-end-tax-debit-credit-card.html",
+   "verdict": "NEUTRAL",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   }
  ],
@@ -568,6 +575,13 @@
    "clicks": 0,
    "impressions": 1,
    "position": 1
+  },
+  {
+   "query": "인공지능 전문가 연봉",
+   "page": "https://www.woodyway88.com/2026/10/ai-skills-salary-premium.html",
+   "clicks": 0,
+   "impressions": 1,
+   "position": 5
   },
   {
    "query": "제미나이 아르곤 한도",
