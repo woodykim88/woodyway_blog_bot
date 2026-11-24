@@ -863,7 +863,11 @@ def run(
             past = history.load_history()
             edit_link = auto_blogger.edit_url(config.blog_id, result['id'])
             print(f"[발행] {target.slot} status={result.get('status')} 편집: {edit_link}")
-            notifier.notify(telegram, success_message(composed, result, target.action, edit_link))
+            done_msg = success_message(composed, result, target.action, edit_link)
+            if target.action == 'schedule':  # 자동 예약 성공은 알리지 않는다(실패만 알림, 2026-11-25)
+                print(done_msg)
+            else:  # 손으로 돌린 즉시 발행·초안은 결과를 기다리므로 알린다
+                notifier.notify(telegram, done_msg)
             posts.append(runlog.PostRecord(
                 composed.draft.title, result.get('status', ''), target.slot,
                 '' if result.get('status') == 'DRAFT' else result.get('url', ''), edit_link,

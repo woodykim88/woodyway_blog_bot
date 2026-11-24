@@ -1,4 +1,5 @@
-"""주간 성적표: 매주 월요일 아침 텔레그램으로 지난주 블로그·계산기 사이트 성과를 보낸다 (2026-10-18 추가).
+"""주간 성적표: 매주 월요일 아침 지난주 블로그·계산기 사이트 성과를 보낸다 (2026-10-18 추가).
+2026-11-25부터 텔레그램 직접 전송 대신 텔레그램 알림함(ok)에 남겨 08:30 아침 묶음 표로 간다.
 
 재료는 이미 매일 쌓이는 파일만 쓴다: data/search_console.json(검색, 2~3일 늦음), data/adsense.json(실제 방문·수익,
 로컬 전용), data/history.json(발행 글). 목표는 2026-10-18 방향 전환 때 정한 28일 검색 클릭(블로그+계산기 합계).
@@ -9,6 +10,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import subprocess
 import sys
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
@@ -16,14 +18,16 @@ from datetime import date, timedelta
 from pathlib import Path
 from typing import Any
 
-from src import notifier
-
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / 'data'
 WEEK = 7
 # 28일 검색 클릭 목표 (2026-10-18 사용자 승인 계획). 마지막 목표는 월 클릭이라 28일 합계로 근사
 GOALS: tuple[tuple[date, int], ...] = ((date(2026, 11, 15), 30), (date(2026, 12, 31), 150), (date(2027, 2, 28), 1000))
 KIND_LABELS = ('계산사례', '일정', '바뀌는제도')
+# 클라우드(main.py)는 src/notifier로 텔레그램에 직접 보내고, 로컬에서만 도는 주간 성적표는 알림함으로 보낸다
+NOTIFY = Path.home() / 'Projects/도구/텔레그램-알림함/notify'
+INBOX_PROJECT = '정보마스터 주간'
+NOTIFY_TIMEOUT = 60
 
 
 @dataclass(frozen=True)
@@ -117,6 +121,20 @@ def _load(path: Path) -> Any:
     return json.loads(path.read_text(encoding='utf-8')) if path.exists() else None
 
 
+def send_to_inbox(text: str, run: Any = subprocess.run) -> bool:
+    """알림함에 ok로 남긴다. 실패해도 예외 대신 로그와 False (성적표 본문은 이미 로그에 찍혔다)."""
+    cmd = [str(NOTIFY), '--status', 'ok', '--project', INBOX_PROJECT, '--text', text]
+    try:
+        done = run(cmd, capture_output=True, text=True, timeout=NOTIFY_TIMEOUT)
+    except (OSError, subprocess.TimeoutExpired) as e:
+        print(f'[알림함 실패] {type(e).__name__}: {e}')
+        return False
+    if done.returncode != 0:
+        print(f'[알림함 실패] 종료 코드 {done.returncode}: {(done.stderr or "").strip()[:300]}')
+        return False
+    return True
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('--dry-run', action='store_true', help='보내지 않고 화면에만 출력')
@@ -128,7 +146,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     print(text)
     if args.dry_run:
         return 0
-    return 0 if notifier.notify(notifier.load_telegram_config(env), text) else 1
+    return 0 if send_to_inbox(text) else 1
 
 
 if __name__ == '__main__':

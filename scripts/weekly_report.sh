@@ -1,5 +1,5 @@
 #!/bin/zsh
-# 매주 월요일 08:30 (launchd com.woody.weekly-report): 최신 Search Console·애드센스 자료를 받아 주간 성적표를 텔레그램으로 보낸다.
+# 매주 월요일 08:15 (launchd com.woody.weekly-report): 최신 Search Console·애드센스 자료를 받아 주간 성적표를 텔레그램 알림함(08:30 아침 묶음)에 남긴다.
 cd "$(dirname "$0")/.." || exit 1
 mkdir -p logs
 {

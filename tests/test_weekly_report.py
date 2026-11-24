@@ -54,3 +54,31 @@ def test_report_has_search_visits_posts_and_goal():
 
 def test_report_without_adsense_still_sends():
     assert '애드센스 리포트가 없어 건너뜀' in wr.build_report(SC, None, [], TODAY)
+
+
+def test_send_to_inbox_records_ok_with_project():
+    seen = {}
+
+    class Done:
+        returncode, stderr = 0, ''
+
+    def fake_run(cmd, **kw):
+        seen['cmd'], seen['kw'] = cmd, kw
+        return Done()
+
+    assert wr.send_to_inbox('본문', run=fake_run) is True
+    cmd = seen['cmd']
+    assert cmd[1:] == ['--status', 'ok', '--project', '정보마스터 주간', '--text', '본문']
+    assert seen['kw']['timeout'] == wr.NOTIFY_TIMEOUT
+
+
+def test_send_to_inbox_failure_is_logged_not_raised(capsys):
+    def boom(cmd, **kw):
+        raise wr.subprocess.TimeoutExpired(cmd, 1)
+
+    class Bad:
+        returncode, stderr = 2, '오류'
+
+    assert wr.send_to_inbox('본문', run=boom) is False
+    assert wr.send_to_inbox('본문', run=lambda cmd, **kw: Bad()) is False
+    assert capsys.readouterr().out.count('[알림함 실패]') == 2

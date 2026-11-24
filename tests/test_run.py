@@ -71,7 +71,7 @@ def test_run_auto_schedules_due_slot_and_records(wired):
     assert [p.slot for p in result.posts] == ['2026-09-27T20:00']
     saved = history.load_history(wired['hist_path'])
     assert [(e.slot, e.status) for e in saved] == [('2026-09-27T20:00', 'SCHEDULED')]
-    assert '글 예약 완료' in wired['sent'][0]
+    assert wired['sent'] == []  # 자동 예약 성공은 텔레그램으로 보내지 않는다
 
 
 def test_run_auto_skips_when_already_done(wired):
@@ -136,3 +136,13 @@ def test_llm_calls_warning_per_post():
     message = pipeline.llm_calls_warning(pipeline.RunResult('success', 'ok', (post,), 10), 'gpt-5.6-terra')
     assert '10회' in message and 'gpt-5.6-terra' in message
     assert pipeline.llm_calls_warning(pipeline.RunResult('failed', 'x', (), 13), 'm') is not None
+
+
+def test_main_failure_still_notifies(monkeypatch):
+    sent = []
+    monkeypatch.setattr(pipeline, 'load_dotenv', lambda *a, **k: None)
+    monkeypatch.setattr(pipeline, 'run', lambda *a, **k: pipeline.RunResult('failed', '주제 없음'))
+    monkeypatch.setattr(pipeline.notifier, 'notify', lambda cfg, text, **k: sent.append(text))
+    monkeypatch.delenv('GITHUB_ACTIONS', raising=False)
+    pipeline.main(['--mode', 'auto'])
+    assert len(sent) == 1 and '글 발행 실패' in sent[0]
