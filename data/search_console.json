@@ -1,18 +1,11 @@
 {
- "updated": "2026-11-24",
+ "updated": "2026-11-25",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-10-27",
-  "2026-11-23"
+  "2026-10-28",
+  "2026-11-24"
  ],
  "daily": [
-  {
-   "date": "2026-10-27",
-   "clicks": 1,
-   "impressions": 8,
-   "ctr": 0.125,
-   "position": 60.8
-  },
   {
    "date": "2026-10-28",
    "clicks": 0,
@@ -187,6 +180,13 @@
    "impressions": 1,
    "ctr": 0,
    "position": 5
+  },
+  {
+   "date": "2026-11-22",
+   "clicks": 0,
+   "impressions": 0,
+   "ctr": 0,
+   "position": 0
   }
  ],
  "top_queries": [
@@ -212,13 +212,6 @@
    "position": 51
   },
   {
-   "query": "퇴직 급여 계산",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0,
-   "position": 40
-  },
-  {
    "query": "퇴직금 간단 계산",
    "clicks": 0,
    "impressions": 2,
@@ -228,16 +221,16 @@
   {
    "query": "퇴직금 계산",
    "clicks": 0,
-   "impressions": 6,
+   "impressions": 5,
    "ctr": 0,
-   "position": 29
+   "position": 22.4
   },
   {
    "query": "퇴직금 계산 방법",
    "clicks": 0,
-   "impressions": 8,
+   "impressions": 6,
    "ctr": 0,
-   "position": 41.9
+   "position": 35.3
   },
   {
    "query": "퇴직금 계산방법",
@@ -249,9 +242,9 @@
   {
    "query": "퇴직금 계산법",
    "clicks": 0,
-   "impressions": 3,
+   "impressions": 2,
    "ctr": 0,
-   "position": 80
+   "position": 75.5
   },
   {
    "query": "퇴직금 계산하는 법",
@@ -275,13 +268,6 @@
    "impressions": 2,
    "ctr": 0.5,
    "position": 4.5
-  },
-  {
-   "page": "https://www.woodyway88.com/2026/10/gemini-4-argon-output-limit.html",
-   "clicks": 1,
-   "impressions": 1,
-   "ctr": 1,
-   "position": 112
   },
   {
    "page": "https://www.woodyway88.com/2026/10/median-income-standard-2027.html",
@@ -356,9 +342,9 @@
   {
    "page": "https://www.woodyway88.com/2026/09/underground-utility-check-korea.html",
    "clicks": 0,
-   "impressions": 4,
+   "impressions": 3,
    "ctr": 0,
-   "position": 40.8
+   "position": 51.7
   },
   {
    "page": "https://www.woodyway88.com/2026/10/ai-hacking-career-skills.html",
@@ -405,24 +391,25 @@
   {
    "page": "https://www.woodyway88.com/2026/10/moving-company-damage-compensation.html",
    "clicks": 0,
-   "impressions": 7,
+   "impressions": 6,
    "ctr": 0,
-   "position": 19.3
+   "position": 13.8
+  },
+  {
+   "page": "https://www.woodyway88.com/2026/10/openai-ftc-ai-investigation.html",
+   "clicks": 0,
+   "impressions": 6,
+   "ctr": 0,
+   "position": 4.8
   }
  ],
  "by_site": {
   "www.woodyway88.com": {
-   "clicks": 3,
-   "impressions": 100
+   "clicks": 2,
+   "impressions": 92
   }
  },
  "index": [
-  {
-   "url": "https://www.woodyway88.com/2026/11/long-weekends-2027-korea.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
-  },
   {
    "url": "https://www.woodyway88.com/2026/11/pension-savings-tax-credit-6m.html",
    "verdict": "NEUTRAL",
@@ -432,7 +419,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/minimum-wage-2027-take-home-pay.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -444,13 +431,13 @@
   {
    "url": "https://www.woodyway88.com/2026/11/unemployment-benefit-2027-daily-limits.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
    "url": "https://www.woodyway88.com/2026/11/credit-card-deduction-calculation.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -480,7 +467,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/year-end-tax-debit-credit-card.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   }
  ],
