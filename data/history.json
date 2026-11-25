@@ -1666,5 +1666,21 @@
     "status": "SCHEDULED",
     "slot": "2026-11-23T20:00",
     "tool": "year-end-tax-calculator"
+  },
+  {
+    "publish_date": "2026-11-25",
+    "post_id": "5350025922162834376",
+    "title": "모두의카드 환급, 서울 6만원 지출 시 1만5천원",
+    "url": "https://www.woodyway88.com/2026/11/k-pass-refund-monthly-fare-case.html",
+    "source_url": "https://www.bokjiro.go.kr/ssis-tbu/cms/pc/news/news/1309064_1114.html",
+    "geeknews_url": "https://www.bokjiro.go.kr/ssis-tbu/cms/pc/news/news/1309064_1114.html",
+    "labels": [
+      "생활가이드",
+      "절약꿀팁",
+      "계산사례"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-11-25T20:00",
+    "tool": "transit-refund-calculator"
   }
 ]
