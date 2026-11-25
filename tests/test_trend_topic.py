@@ -167,9 +167,9 @@ def test_evening_post_survives_any_trend_error(monkeypatch):
     assert pipeline.compose_evening_post(*fake_llm({})[:1], MODELS, NOW, (), trend=True) == 'HOWTO'
 
 
-def test_trend_first_flag_defaults_on():
-    assert pipeline.trend_first({})
-    assert not pipeline.trend_first({'TREND_FIRST': 'off'})
+def test_trend_first_flag_is_opt_in():
+    assert not pipeline.trend_first({})
+    assert pipeline.trend_first({'TREND_FIRST': 'on'})
 
 
 BING = """<?xml version="1.0"?><rss xmlns:News="https://www.bing.com/news/search?q=x&amp;format=rss" version="2.0"><channel>

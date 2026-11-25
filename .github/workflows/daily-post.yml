@@ -6,12 +6,14 @@ on:
     # KST 05:17 → 08:00 글, 09:17 → 12:30 글(11/4 하루 3편), 17:17 → 20:00 글. 할 일 없는 실행도 1분씩 청구돼 2시간마다에서 줄였다 (2026-10-24).
     # 발행 시각 자체는 Blogger 예약이 정확히 지키고, 각 시각마다 준비 기회가 3번 있다.
     - cron: '17 20,0,8 * * *'
+    # KST 09:30 화제 글 즉시 발행 (mode=trend, 2026-11-26). 급상승 검색어가 식기 전에. 끄기: 변수 TREND_DAILY=off
+    - cron: '30 0 * * *'
   workflow_dispatch:
     inputs:
       mode:
-        description: 'auto=설정된 시각 중 곧 돌아오는 것 준비 / schedule=다음 시각 1편 예약 / draft=초안 / now=즉시 발행 / preview=미리보기'
+        description: 'auto=설정된 시각 중 곧 돌아오는 것 준비 / schedule=다음 시각 1편 예약 / draft=초안 / now=즉시 발행 / preview=미리보기 / trend=화제 글 즉시 발행'
         type: choice
-        options: [auto, schedule, draft, now, preview]
+        options: [auto, schedule, draft, now, preview, trend]
         default: preview
       at:
         description: 'schedule 모드에서만: 예약 시각 HH:MM (KST). 비우면 설정된 다음 시각'
@@ -34,7 +36,9 @@ jobs:
       PUBLISH_TIMES: ${{ vars.PUBLISH_TIMES || '20:00' }}
       PAUSED: ${{ vars.PAUSED || 'false' }}
       PUBLISH_WEEKDAYS: ${{ vars.PUBLISH_WEEKDAYS || '' }}
-      HOWTO_TIME: ${{ vars.HOWTO_TIME }}   # 비우면 08:00,20:00 (생활 가이드 칸). 08:00을 뉴스로 되돌리려면 20:00
+      HOWTO_TIME: ${{ vars.HOWTO_TIME }}
+      TREND_DAILY: ${{ vars.TREND_DAILY || 'on' }}   # 오전 화제 칸
+      TREND_FIRST: ${{ vars.TREND_FIRST || 'off' }}  # 20:00 생활 가이드 칸에서도 화제 먼저 쓸지   # 비우면 08:00,20:00 (생활 가이드 칸). 08:00을 뉴스로 되돌리려면 20:00
     steps:
       - uses: actions/checkout@v4
 
@@ -42,7 +46,7 @@ jobs:
       # 다른 수동 모드는 이 점검을 건너뛰므로 due가 비어 있고, 아래 조건(!= 'false')에서 항상 실행된다.
       - name: Check due slots
         id: due
-        if: github.event_name == 'schedule' || inputs.mode == 'auto'
+        if: (github.event_name == 'schedule' && github.event.schedule != '30 0 * * *') || inputs.mode == 'auto'
         run: python3 scripts/due_check.py
 
       - uses: actions/setup-python@v5
@@ -93,7 +97,7 @@ jobs:
           IMAGE_MODEL: ${{ vars.IMAGE_MODEL }}
           IMAGE_QUALITY: ${{ vars.IMAGE_QUALITY }}
           FOOTER_LINK_URL: ${{ vars.FOOTER_LINK_URL || 'https://link.inpock.co.kr/shoperwoody' }}
-          MODE: ${{ inputs.mode || 'auto' }}
+          MODE: ${{ inputs.mode || (github.event.schedule == '30 0 * * *' && 'trend') || 'auto' }}
           AT: ${{ inputs.at }}
         run: |
           if [ -n "$AT" ]; then

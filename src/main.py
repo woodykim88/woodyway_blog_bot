@@ -86,7 +86,7 @@ def _image_errors() -> tuple[type[Exception], ...]:
 
 
 IMAGE_ERRORS = _image_errors()
-MODES = ('auto', 'schedule', 'draft', 'now', 'preview')
+MODES = ('auto', 'schedule', 'draft', 'now', 'preview', 'trend')  # trend: 오전 화제 글 즉시 발행 (src/trend_run.py)
 MAX_TOPIC_ATTEMPTS = 3
 RECENT_TITLES_FOR_SELECTOR = 12  # 선별 모델에 알려 줄 최근 발행 글 수 (같은 소식 재발행 방지)
 DEFAULT_SKILL_TIME = '12:30'  # 이 시각 칸은 Claude Code 스킬 글 (루이 채널과 원 소스 멀티 유즈)
@@ -419,8 +419,9 @@ def compose_howto_post(
 
 
 def trend_first(env: Mapping[str, str]) -> bool:
-    """화제 우선 (2026-11-26 사용자 결정, 기본 켬). TREND_FIRST=off로 끈다."""
-    return (env.get('TREND_FIRST') or 'on').strip().lower() not in ('0', 'false', 'no', 'off')
+    """생활 가이드 칸에서도 화제를 먼저 쓸지. 11/26 매일 오전 화제 칸(mode=trend)이 생겨 기본은 끔
+    (같은 날 화제 글 2편·생활 가이드 줄어듦 방지). TREND_FIRST=on으로 켠다."""
+    return (env.get('TREND_FIRST') or 'off').strip().lower() in ('1', 'true', 'yes', 'on')
 
 
 def _already_written(keyword: str, past: tuple[history.HistoryEntry, ...]) -> bool:
@@ -878,6 +879,9 @@ def run(
     now: datetime | None = None,
 ) -> RunResult:
     now = now or datetime.now(auto_blogger.UTC)
+    if mode == 'trend':
+        from src import trend_run  # trend_run이 이 모듈을 가져다 쓰므로 여기서 불러온다
+        return trend_run.run_trend(env, ai, telegram, now=now)
     if mode == 'auto' and is_paused(env):
         return RunResult('skipped', '일시정지 상태라 자동 발행을 건너뜁니다.')
 
