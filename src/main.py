@@ -53,6 +53,7 @@ from src import (
     thumbnail,
     tools,
     topics,
+    trend_topic,
     trends,
     polish,
     writer,
@@ -417,6 +418,63 @@ def compose_howto_post(
     return None
 
 
+def trend_first(env: Mapping[str, str]) -> bool:
+    """화제 우선 (2026-11-26 사용자 결정, 기본 켬). TREND_FIRST=off로 끈다."""
+    return (env.get('TREND_FIRST') or 'on').strip().lower() not in ('0', 'false', 'no', 'off')
+
+
+def _already_written(keyword: str, past: tuple[history.HistoryEntry, ...]) -> bool:
+    return any(trends.match_trending(e.title, (keyword,)) for e in past[-selector.RECENT_HISTORY_SIZE:])
+
+
+def compose_trend_post(
+    llm: LLMClient,
+    models: Models,
+    now: datetime,
+    past: tuple[history.HistoryEntry, ...],
+    get: HttpGet = http_get,
+    is_alive: Callable[[str], bool] = url_is_alive,
+    footer_url: str | None = DEFAULT_FOOTER_URL,
+    day: date | None = None,
+) -> Composed | None:
+    """화제 글: 급상승 검색어 중 이 블로그 독자에게 쓸모 있는 것을 골라 그 검색어로 글을 씁니다. 못 쓰면 None.
+    원고는 한 번만 써 본다 (실패하면 생활 가이드로 넘어갈 AI 호출 여유를 남긴다)."""
+    items = tuple(i for i in trends.fetch_trend_items(get) if not _already_written(i.keyword, past))
+    print(f'[화제] 급상승 검색어 {len(items)}개 (이미 쓴 검색어 제외)')
+    recent = tuple(e.title for e in past[-RECENT_TITLES_FOR_SELECTOR:])
+    picks = trend_topic.pick_trends(llm, models.fast, items, recent)
+    if not picks:
+        print('[화제] 이 블로그에 맞는 급상승 검색어가 없습니다')
+        return None
+    pool = [c for c in collector.fetch_candidates(get, now, collector.MONEY_SOURCES) if not selector.is_duplicate(c, past)]
+    robots = trend_topic.RobotsCheck(get)
+    for pick in picks[:trend_topic.MAX_PICKS]:
+        extra = trend_topic.search_news(get, pick.search_query)
+        sources = trend_topic.gather_sources(pick, pool, robots.allows, now, extra_news=extra)
+        print(f'[화제 시도] ({pick.score}점) {pick.search_query} · {pick.angle} · 기사 {len(sources)}건')
+        article = next((a for a in (fetcher.fetch_article(get, c) for c in sources) if a is not None), None)
+        if article is None:
+            continue
+        article = fetcher.with_references(get, article, [c for c in sources if c.link != article.candidate.link])
+        rules = f"{load_prompt('writer_trend')}\n이 글의 각도: {pick.angle}"
+        draft = draft_article(llm, models, article, '화제', past, is_alive, topics.MONEY,
+                              target_query=pick.search_query, day=day, kind_rules=rules)
+        if draft is None:
+            return None
+        draft = drop_howto_label(draft, topics.SPECS[topics.MONEY].labels[0])
+        return Composed(
+            article=article,
+            draft=draft,
+            related=history.related_posts(past, tuple(draft.labels), topic=f'{draft.search_keyword} {draft.title}'),
+            footer_url=footer_url,
+            tool=tools.match_tool(draft, tools.load_tools(), topics.MONEY),
+            category=topics.MONEY,
+            as_of=as_of_text(now),
+        )
+    print('[화제] 고른 검색어의 기사를 읽지 못했습니다')
+    return None
+
+
 def compose_evening_post(
     llm: LLMClient,
     models: Models,
@@ -427,9 +485,20 @@ def compose_evening_post(
     footer_url: str | None = DEFAULT_FOOTER_URL,
     day: date | None = None,
     want: str = '',
+    trend: bool = False,
 ) -> Composed:
-    """생활 가이드 칸(08:00·20:00): 생활 가이드 → (못 쓰면) 평소 뉴스 글. 칸은 절대 비우지 않는다."""
+    """생활 가이드 칸(08:00·20:00): (trend면) 화제 글 → 생활 가이드 → (못 쓰면) 평소 뉴스 글. 칸은 절대 비우지 않는다."""
     kwargs = {'get': get, 'is_alive': is_alive, 'footer_url': footer_url, 'day': day}
+    if trend:
+        try:
+            composed = compose_trend_post(llm, models, now, past, **kwargs)
+        except Exception as e:  # noqa: BLE001 — 화제 글은 덤이다. 어떤 오류든 생활 가이드로 넘어가 칸을 지킨다
+            print(f'[화제] 오류로 건너뜀 ({e.__class__.__name__}): {e}')
+            traceback.print_exc()
+            composed = None
+        if composed is not None:
+            return composed
+        print('[화제] 화제 글을 못 써 생활 가이드로 씁니다')
     try:
         composed = compose_howto_post(llm, models, now, past, want=want, **kwargs)
     except LLMError as e:
@@ -843,7 +912,8 @@ def run(
                 composed = compose_slot_post(llm, models, now, past, footer_url=footer_url, day=day)
             elif any(is_skill_slot(target.publish_at, t) for t in howto_times):
                 composed = compose_evening_post(llm, models, now, past, footer_url=footer_url, day=day,
-                                                want=howto_topic.kind_for_slot(target.publish_at))
+                                                want=howto_topic.kind_for_slot(target.publish_at),
+                                                trend=trend_first(env))
             else:
                 composed = compose_post(llm, models, now, past, footer_url=footer_url, day=day)
             composed = attach_hero_image(

@@ -9,6 +9,7 @@ from __future__ import annotations
 import html
 import re
 import xml.etree.ElementTree as ET
+from dataclasses import dataclass
 
 import requests
 
@@ -62,3 +63,63 @@ def fetch_trending(get: HttpGet) -> tuple[str, ...]:
             continue
         keywords.extend(k for k in found if k not in keywords)
     return tuple(keywords)
+
+
+# --- 화제 우선 글감용 (2026-11-26 사용자 결정: 뉴스 랭킹·급상승 검색어에 무게) ---
+HT_NS = '{https://trends.google.com/trending/rss}'
+
+
+@dataclass(frozen=True)
+class NewsLink:
+    title: str
+    url: str
+    source: str
+
+
+@dataclass(frozen=True)
+class TrendItem:
+    """구글 트렌드 급상승 검색어 하나와 구글이 함께 묶어 둔 기사들."""
+
+    keyword: str
+    traffic: int  # 대략 검색량 ("2,000+" → 2000)
+    news: tuple[NewsLink, ...] = ()
+
+
+def parse_traffic(text: str) -> int:
+    digits = re.sub(r'[^0-9]', '', text or '')
+    return int(digits) if digits else 0
+
+
+def _news_links(item: ET.Element) -> tuple[NewsLink, ...]:
+    links = []
+    for news in item.iter(f'{HT_NS}news_item'):
+        url = (news.findtext(f'{HT_NS}news_item_url') or '').strip()
+        if url.startswith('http'):
+            links.append(NewsLink(_clean(news.findtext(f'{HT_NS}news_item_title') or ''), url,
+                                  _clean(news.findtext(f'{HT_NS}news_item_source') or '')))
+    return tuple(links)
+
+
+def parse_google_trend_items(rss: str) -> tuple[TrendItem, ...]:
+    """한글 검색어만, 검색량·기사와 함께 (RSS 순서 유지)."""
+    items = []
+    for item in ET.fromstring(rss).iter('item'):
+        keyword = _clean(item.findtext('title') or '')
+        if _HANGUL_RE.search(keyword):
+            items.append(TrendItem(keyword, parse_traffic(item.findtext(f'{HT_NS}approx_traffic') or ''), _news_links(item)))
+    return tuple(items)[:MAX_PER_SOURCE]
+
+
+def fetch_trend_items(get: HttpGet) -> tuple[TrendItem, ...]:
+    """구글 트렌드 급상승 검색어(기사 포함) 뒤에 포털 급상승 검색어(기사 없음)를 붙인다. 실패한 출처는 건너뛴다."""
+    items: list[TrendItem] = []
+    try:
+        items.extend(parse_google_trend_items(get(GOOGLE_TRENDS_URL)))
+    except (requests.RequestException, ET.ParseError) as e:
+        print(f'[트렌드 건너뜀] 구글 트렌드: {e.__class__.__name__}')
+    try:
+        seen = {i.keyword for i in items}
+        items.extend(TrendItem(k, 0) for k in parse_whereispost(get(WHEREISPOST_URL)) if k not in seen)
+    except requests.RequestException as e:
+        print(f'[트렌드 건너뜀] 실시간 검색어: {e.__class__.__name__}')
+    return tuple(items)

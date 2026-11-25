@@ -345,7 +345,7 @@ def test_run_passes_slot_kind_to_howto_post(monkeypatch, tmp_path, at, want):
     monkeypatch.setattr(pipeline, 'compose_howto_post', howto)
     target = pipeline.Target('slot', datetime(2026, 10, 19, *at, tzinfo=KST), 'preview')  # 월요일
     monkeypatch.setattr(pipeline, 'plan_targets', lambda *a, **k: [target])
-    env = {'PUBLISH_TIMES': '08:00,20:00'}
+    env = {'PUBLISH_TIMES': '08:00,20:00', 'TREND_FIRST': 'off'}
     result = pipeline.run('preview', None, env, providers.load_ai_settings({}), None, now=NOW)
     assert result.outcome == 'success' and seen['want'] == want
 
