@@ -1,18 +1,11 @@
 {
- "updated": "2026-11-25",
+ "updated": "2026-11-26",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-10-28",
-  "2026-11-24"
+  "2026-10-29",
+  "2026-11-25"
  ],
  "daily": [
-  {
-   "date": "2026-10-28",
-   "clicks": 0,
-   "impressions": 10,
-   "ctr": 0,
-   "position": 30.4
-  },
   {
    "date": "2026-10-29",
    "clicks": 0,
@@ -187,15 +180,22 @@
    "impressions": 0,
    "ctr": 0,
    "position": 0
+  },
+  {
+   "date": "2026-11-23",
+   "clicks": 0,
+   "impressions": 0,
+   "ctr": 0,
+   "position": 0
   }
  ],
  "top_queries": [
   {
    "query": "ftc조사대응",
    "clicks": 0,
-   "impressions": 6,
+   "impressions": 4,
    "ctr": 0,
-   "position": 4.8
+   "position": 4.2
   },
   {
    "query": "인공지능 전문가 연봉",
@@ -221,16 +221,16 @@
   {
    "query": "퇴직금 계산",
    "clicks": 0,
-   "impressions": 5,
+   "impressions": 4,
    "ctr": 0,
-   "position": 22.4
+   "position": 12
   },
   {
    "query": "퇴직금 계산 방법",
    "clicks": 0,
-   "impressions": 6,
+   "impressions": 4,
    "ctr": 0,
-   "position": 35.3
+   "position": 23.2
   },
   {
    "query": "퇴직금 계산방법",
@@ -242,9 +242,9 @@
   {
    "query": "퇴직금 계산법",
    "clicks": 0,
-   "impressions": 2,
+   "impressions": 1,
    "ctr": 0,
-   "position": 75.5
+   "position": 64
   },
   {
    "query": "퇴직금 계산하는 법",
@@ -265,9 +265,9 @@
   {
    "page": "https://www.woodyway88.com/2026/10/galaxy-watch-recording-app.html",
    "clicks": 1,
-   "impressions": 2,
-   "ctr": 0.5,
-   "position": 4.5
+   "impressions": 1,
+   "ctr": 1,
+   "position": 3
   },
   {
    "page": "https://www.woodyway88.com/2026/10/median-income-standard-2027.html",
@@ -279,7 +279,7 @@
   {
    "page": "https://www.woodyway88.com/",
    "clicks": 0,
-   "impressions": 5,
+   "impressions": 4,
    "ctr": 0,
    "position": 1
   },
@@ -305,13 +305,6 @@
    "position": 10
   },
   {
-   "page": "https://www.woodyway88.com/2026/09/3.html",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0,
-   "position": 9
-  },
-  {
    "page": "https://www.woodyway88.com/2026/09/9-833.html",
    "clicks": 0,
    "impressions": 1,
@@ -324,13 +317,6 @@
    "impressions": 1,
    "ctr": 0,
    "position": 24
-  },
-  {
-   "page": "https://www.woodyway88.com/2026/09/kt.html",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0,
-   "position": 10
   },
   {
    "page": "https://www.woodyway88.com/2026/09/llm-api-3.html",
@@ -356,9 +342,9 @@
   {
    "page": "https://www.woodyway88.com/2026/10/ai-skills-salary-premium.html",
    "clicks": 0,
-   "impressions": 4,
+   "impressions": 3,
    "ctr": 0,
-   "position": 5
+   "position": 4.3
   },
   {
    "page": "https://www.woodyway88.com/2026/10/annual-salary-40m-severance-pay.html",
@@ -366,13 +352,6 @@
    "impressions": 1,
    "ctr": 0,
    "position": 19
-  },
-  {
-   "page": "https://www.woodyway88.com/2026/10/claude-google-docs-integration.html",
-   "clicks": 0,
-   "impressions": 1,
-   "ctr": 0,
-   "position": 8
   },
   {
    "page": "https://www.woodyway88.com/2026/10/drivers-license-penalty-points.html",
@@ -398,28 +377,43 @@
   {
    "page": "https://www.woodyway88.com/2026/10/openai-ftc-ai-investigation.html",
    "clicks": 0,
-   "impressions": 6,
+   "impressions": 4,
    "ctr": 0,
-   "position": 4.8
+   "position": 4.2
+  },
+  {
+   "page": "https://www.woodyway88.com/2026/10/severance-pay-calculation.html",
+   "clicks": 0,
+   "impressions": 17,
+   "ctr": 0,
+   "position": 20.1
+  },
+  {
+   "page": "https://www.woodyway88.com/2026/10/spouse-maternity-leave-pay-apply.html",
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0,
+   "position": 6.5
+  },
+  {
+   "page": "https://www.woodyway88.com/2026/10/unemployment-benefit-job-search.html",
+   "clicks": 0,
+   "impressions": 3,
+   "ctr": 0,
+   "position": 2
   }
  ],
  "by_site": {
   "www.woodyway88.com": {
    "clicks": 2,
-   "impressions": 92
+   "impressions": 73
   }
  },
  "index": [
   {
-   "url": "https://www.woodyway88.com/2026/11/pension-savings-tax-credit-6m.html",
-   "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
-   "last_crawl": ""
-  },
-  {
    "url": "https://www.woodyway88.com/2026/11/minimum-wage-2027-take-home-pay.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -431,7 +425,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/unemployment-benefit-2027-daily-limits.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -449,7 +443,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/gift-tax-exemption-limit-calculation.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -466,6 +460,30 @@
   },
   {
    "url": "https://www.woodyway88.com/2026/11/year-end-tax-debit-credit-card.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/11/k-pass-refund-monthly-fare-case.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/11/year-end-deadline-money-checklist-2026.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/11/gh-jeonse-fraud-investigation.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/11/bithumb-hacking-additional-damage.html",
    "verdict": "NEUTRAL",
    "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
