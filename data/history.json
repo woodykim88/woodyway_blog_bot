@@ -1727,5 +1727,21 @@
     "status": "LIVE",
     "slot": "trend-2026-11-26",
     "tool": ""
+  },
+  {
+    "publish_date": "2026-11-27",
+    "post_id": "8623118754386915002",
+    "title": "연봉 5000 연말정산 환급금, 환급은 미리 낸 세금 차이",
+    "url": "https://www.woodyway88.com/2026/11/annual-salary-50m-year-end-tax.html",
+    "source_url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=6435&cntntsId=7871",
+    "geeknews_url": "https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?mi=6435&cntntsId=7871",
+    "labels": [
+      "생활가이드",
+      "생활경제",
+      "계산사례"
+    ],
+    "status": "SCHEDULED",
+    "slot": "2026-11-27T20:00",
+    "tool": "year-end-tax-calculator"
   }
 ]
