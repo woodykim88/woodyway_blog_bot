@@ -1,7 +1,7 @@
-## Search Console (2026-10-30 ~ 2026-11-26, 갱신 2026-11-27)
-- 검색 클릭 2회 · 노출 48회 (최근 28일)
-- 최근 14일 글 색인: 0/12편
-- www.woodyway88.com: 클릭 2 · 노출 75
+## Search Console (2026-10-31 ~ 2026-11-27, 갱신 2026-11-28)
+- 검색 클릭 2회 · 노출 50회 (최근 28일)
+- 최근 14일 글 색인: 0/14편
+- www.woodyway88.com: 클릭 2 · 노출 77
 
 ### 상위 검색어
 - 2년 퇴직금 계산: 클릭 0 · 노출 1 · 평균 4위
@@ -13,24 +13,26 @@
 - 퇴직금 계산 방법: 클릭 0 · 노출 6 · 평균 21.3위
 - 퇴직금 계산방법: 클릭 0 · 노출 1 · 평균 5위
 - 퇴직금 계산법: 클릭 0 · 노출 1 · 평균 64위
-- 퇴직금 계산하는 법: 클릭 0 · 노출 1 · 평균 42위
+- 퇴직금 계산하기: 클릭 0 · 노출 1 · 평균 5위
 
 ### 색인 안 된 최근 글
 - https://www.woodyway88.com/2026/11/lunar-new-year-holiday-2027.html — URL is unknown to Google
 - https://www.woodyway88.com/2026/11/unemployment-benefit-2027-daily-limits.html — Discovered - currently not indexed
 - https://www.woodyway88.com/2026/11/credit-card-deduction-calculation.html — Discovered - currently not indexed
-- https://www.woodyway88.com/2026/11/energy-voucher-2026-deadline-amount.html — URL is unknown to Google
+- https://www.woodyway88.com/2026/11/energy-voucher-2026-deadline-amount.html — Discovered - currently not indexed
 - https://www.woodyway88.com/2026/11/gift-tax-exemption-limit-calculation.html — Discovered - currently not indexed
 - https://www.woodyway88.com/2026/11/housing-benefit-2027-amount.html — Discovered - currently not indexed
-- https://www.woodyway88.com/2026/11/annual-salary-30m-year-end-tax.html — Discovered - currently not indexed
+- https://www.woodyway88.com/2026/11/annual-salary-30m-year-end-tax.html — URL is unknown to Google
 - https://www.woodyway88.com/2026/11/year-end-tax-debit-credit-card.html — Discovered - currently not indexed
 - https://www.woodyway88.com/2026/11/k-pass-refund-monthly-fare-case.html — Discovered - currently not indexed
-- https://www.woodyway88.com/2026/11/year-end-deadline-money-checklist-2026.html — URL is unknown to Google
+- https://www.woodyway88.com/2026/11/year-end-deadline-money-checklist-2026.html — Discovered - currently not indexed
 - https://www.woodyway88.com/2026/11/gh-jeonse-fraud-investigation.html — Discovered - currently not indexed
 - https://www.woodyway88.com/2026/11/bithumb-hacking-additional-damage.html — Discovered - currently not indexed
+- https://www.woodyway88.com/2026/11/annual-salary-50m-year-end-tax.html — Discovered - currently not indexed
+- https://www.woodyway88.com/2026/11/samsung-securities-data-breach.html — Discovered - currently not indexed
 
 ### 리라이트 후보 (90일, 검색어×글 — 계산기 연결 글 먼저)
-- severance-pay-calculation.html: 노출 36 · 클릭 0 · '퇴직금 계산 방법' 평균 44.7위 · 계산기 severance-pay-calculator
+- severance-pay-calculation.html: 노출 37 · 클릭 0 · '퇴직금 계산 방법' 평균 44.7위 · 계산기 severance-pay-calculator
 - inheritance-renunciation-deadline-passed.html: 노출 1 · 클릭 0 · '상속포기 기간 지나면' 평균 54위
 - underground-utility-check-korea.html: 노출 1 · 클릭 0 · '지하매설물 확인방법' 평균 51위
 

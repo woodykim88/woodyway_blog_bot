@@ -1,18 +1,11 @@
 {
- "updated": "2026-11-27",
+ "updated": "2026-11-28",
  "site": "sc-domain:woodyway88.com",
  "range": [
-  "2026-10-30",
-  "2026-11-26"
+  "2026-10-31",
+  "2026-11-27"
  ],
  "daily": [
-  {
-   "date": "2026-10-30",
-   "clicks": 0,
-   "impressions": 0,
-   "ctr": 0,
-   "position": 0
-  },
   {
    "date": "2026-10-31",
    "clicks": 0,
@@ -187,6 +180,13 @@
    "impressions": 5,
    "ctr": 0,
    "position": 10.2
+  },
+  {
+   "date": "2026-11-25",
+   "clicks": 0,
+   "impressions": 2,
+   "ctr": 0,
+   "position": 6.5
   }
  ],
  "top_queries": [
@@ -252,6 +252,13 @@
    "impressions": 1,
    "ctr": 0,
    "position": 64
+  },
+  {
+   "query": "퇴직금 계산하기",
+   "clicks": 0,
+   "impressions": 1,
+   "ctr": 0,
+   "position": 5
   },
   {
    "query": "퇴직금 계산하는 법",
@@ -398,9 +405,9 @@
   {
    "page": "https://www.woodyway88.com/2026/10/severance-pay-calculation.html",
    "clicks": 0,
-   "impressions": 19,
+   "impressions": 20,
    "ctr": 0,
-   "position": 19.6
+   "position": 18.9
   },
   {
    "page": "https://www.woodyway88.com/2026/10/spouse-maternity-leave-pay-apply.html",
@@ -413,7 +420,7 @@
  "by_site": {
   "www.woodyway88.com": {
    "clicks": 2,
-   "impressions": 75
+   "impressions": 77
   }
  },
  "index": [
@@ -438,7 +445,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/energy-voucher-2026-deadline-amount.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -456,7 +463,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/annual-salary-30m-year-end-tax.html",
    "verdict": "NEUTRAL",
-   "coverage": "Discovered - currently not indexed",
+   "coverage": "URL is unknown to Google",
    "last_crawl": ""
   },
   {
@@ -474,7 +481,7 @@
   {
    "url": "https://www.woodyway88.com/2026/11/year-end-deadline-money-checklist-2026.html",
    "verdict": "NEUTRAL",
-   "coverage": "URL is unknown to Google",
+   "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
   },
   {
@@ -485,6 +492,18 @@
   },
   {
    "url": "https://www.woodyway88.com/2026/11/bithumb-hacking-additional-damage.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/11/annual-salary-50m-year-end-tax.html",
+   "verdict": "NEUTRAL",
+   "coverage": "Discovered - currently not indexed",
+   "last_crawl": ""
+  },
+  {
+   "url": "https://www.woodyway88.com/2026/11/samsung-securities-data-breach.html",
    "verdict": "NEUTRAL",
    "coverage": "Discovered - currently not indexed",
    "last_crawl": ""
@@ -665,6 +684,13 @@
    "clicks": 0,
    "impressions": 6,
    "position": 74.2
+  },
+  {
+   "query": "퇴직금 계산하기",
+   "page": "https://www.woodyway88.com/2026/10/severance-pay-calculation.html",
+   "clicks": 0,
+   "impressions": 1,
+   "position": 5
   },
   {
    "query": "퇴직금 계산하는 법",
